@@ -1,0 +1,125 @@
+/* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Custom page header */
+.header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container-small {
+    max-width: 900px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  padding: 14px 24px;
+  font-size: 21px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.wz-box {
+    height: 100px;
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+
+.wz-box:hover {
+    color: #333;
+    background-color: #e6e6e6;
+}
+
+.wz-box:active {
+    background-color: #dff0d8;
+}
+
+.wz-box .wz-title {
+    margin: 36px auto;
+    text-align: center;
+    color: #777;
+    font-weight: bold;
+}
+
+.wz-nav-control {
+    margin: 0 0 20px;
+}
+
+.wz-page-control {
+    margin-bottom: 10px;
+}
+
+.wz-edit-control {
+  margin-bottom: 15px;
+}
