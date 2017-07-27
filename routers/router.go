@@ -7,7 +7,7 @@ import (
 
 func init() {
 	beego.Router("/", &controllers.MainController{})
-	beego.Router("/page", &controllers.PageController{})
-	beego.Router("/edit", &controllers.EditController{})
-	beego.Router("/setting", &controllers.SettingController{})
+	beego.Router("/:id([0-9]+)", &controllers.PageController{})
+	beego.Router("/page/:id([0-9]+)", &controllers.EditController{})
+	beego.Router("/page/:id([0-9]+)/setting", &controllers.SettingController{})
 }
