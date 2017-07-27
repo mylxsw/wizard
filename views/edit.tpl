@@ -12,17 +12,17 @@
 
     <title>Wizard API</title>
 
-    <link href="./css/normalize.css" rel="stylesheet">
+    <link href="/static/css/normalize.css" rel="stylesheet">
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="http://v3.bootcss.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="./editor-md/css/editormd.min.css" />
+    <link rel="stylesheet" href="/static/vendor/editor-md/css/editormd.min.css" />
 
     <!-- Custom styles for this template -->
-    <link href="./css/style.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -84,11 +84,11 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-    <script src="./editor-md/editormd.min.js"></script>
+    <script src="/static/vendor/editor-md/editormd.min.js"></script>
     <script type="text/javascript">
         $(function () {
             var editor = editormd("editormd", {
-                path: "./editor-md/lib/",
+                path: "/static/vendor/editor-md/lib/",
                 height: 640,
             });
         });
