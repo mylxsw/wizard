@@ -16,4 +16,4 @@
       {{ template "layout/copyright.tpl" }}
 
     </div>
- {{ template "layout/footer.tpl" }}
+{{ template "layout/footer.tpl" }}

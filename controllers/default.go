@@ -1,11 +1,9 @@
 package controllers
 
-import (
-	"github.com/astaxie/beego"
-)
+import "github.com/mylxsw/wizard/models/project"
 
 type MainController struct {
-	beego.Controller
+	Controller
 }
 
 type Project struct {
@@ -19,21 +17,15 @@ type Project struct {
 func (c *MainController) Get() {
 	projects := []Project{}
 
-	projects = append(projects, Project{
-		ID:    1,
-		Title: "金融平台",
-	})
-	projects = append(projects, Project{
-		ID:    1,
-		Title: "数据保全服务",
-	})
-	projects = append(projects, Project{
-		ID:    1,
-		Title: "用户中心服务",
-	})
+	for _, proj := range project.All() {
+		projects = append(projects, Project{
+			ID:          proj.ID,
+			Title:       proj.Title,
+			Description: proj.Description,
+			Author:      proj.User.Username,
+			AuthorID:    proj.User.ID,
+		})
+	}
 
-	c.Data["projects"] = projects
-
-	c.TplName = "index.tpl"
-	c.Render()
+	c.Assign("projects", projects).DisplayView("index")
 }
