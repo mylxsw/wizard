@@ -5,15 +5,12 @@ import (
 )
 
 type Project struct {
-	ID          uint    `orm:"column(id);auto;pk"`
-	Title       string  `orm:"size(255)"`
-	Description string  `orm:"size(255);null"`
-	User        *User   `orm:"rel(fk)"`
-	Pages       []*Page `orm:"reverse(many)"`
+	ID          uint
+	Title       string
+	Description string
+	User        *User
+	Pages       []*Page
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
 
-func (project *Project) TableName() string {
-	return "projects"
-}

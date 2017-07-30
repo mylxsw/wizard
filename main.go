@@ -1,29 +1,59 @@
 package main
 
 import (
-	"strings"
+	"github.com/kataras/iris"
+	"github.com/kataras/iris/context"
+	"github.com/kataras/iris/view"
+	"github.com/mylxsw/wizard/handlers"
 
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/context"
-	"github.com/astaxie/beego/orm"
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/mylxsw/wizard/models"
-	_ "github.com/mylxsw/wizard/routers"
+	"github.com/mylxsw/wizard/database"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	// 增加对Restful请求方法的支持
-	beego.InsertFilter("*", beego.BeforeRouter, func(ctx *context.Context) {
-		if ctx.Input.Query("_method") != "" && ctx.Input.IsPost() {
-			ctx.Request.Method = strings.ToUpper(ctx.Input.Query("_method"))
+
+	logrus.SetLevel(logrus.DebugLevel)
+
+	app := iris.New()
+
+	app.OnErrorCode(iris.StatusInternalServerError, func(ctx context.Context) {
+		errMessage := ctx.Values().GetString("error")
+		if errMessage != "" {
+			ctx.Writef("Internal server error: %s", errMessage)
+			return
 		}
+
+		ctx.Writef("(Unexpected) internal server error")
 	})
 
-	orm.RegisterDataBase("default", "sqlite3", "data.db")
-	models.RegisterModels()
-	orm.RunSyncdb("default", false, true)
+	app.Use(func(ctx context.Context) {
+		ctx.Application().Logger().Infof("Begin request for path: %s", ctx.Path())
+		ctx.Next()
+	})
 
-	orm.Debug = true
+	app.StaticWeb("/static", "./static")
 
-	beego.Run()
+	viewEngine := view.HTML("./views", ".html").
+		Reload(true).
+		Layout("layout/default.html")
+	app.RegisterView(viewEngine)
+
+	// 首页
+	app.Get("/", handlers.HomeHandler)
+	// 项目页面，用于查API
+	app.Get("/{id:int min(1)}", handlers.ProjectHandler)
+
+	authRoute := app.Party("/")
+	{
+		// 项目配置页面
+		authRoute.Get("/{id:int min(1)/setting", handlers.ProjectSettingHandler)
+
+		// 页面编辑页面
+		authRoute.Get("/{id:int min(1)}/page/{page:int min(1)}", handlers.PageEditHandler)
+
+	}
+
+	database.CreateConnection("sqlite3", "./data.db")
+	app.Run(iris.Addr(":8080"), iris.WithCharset("UTF-8"))
 }

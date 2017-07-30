@@ -5,15 +5,11 @@ import (
 )
 
 type User struct {
-	ID        uint       `orm:"column(id);pk;auto"`
-	Username  string     `orm:"size(30)"`
-	Email     string     `orm:"size(50)"`
-	Password  string     `orm:"size(64)"`
-	Projects  []*Project `orm:"reverse(many)"`
+	ID        uint
+	Username  string
+	Email     string
+	Password  string
+	Projects  []*Project
 	CreatedAt time.Time
 	UpdatedAt time.Time
-}
-
-func (u *User) TableName() string {
-	return "users"
 }
