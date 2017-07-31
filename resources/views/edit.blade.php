@@ -5,8 +5,9 @@
     @include('layouts.navbar')
 
     <div class="row marketing">
+        @include('components.error', ['error' => $errors ?? null])
         <form class="form-inline" method="POST"
-              action="{{ $newPage ? wzRoute('page-new-show', ['id' => $project->id]) : wzRoute('page-edit-show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
+              action="{{ $newPage ? wzRoute('project:page:new:show', ['id' => $project->id]) : wzRoute('project:page:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
             {{ csrf_field() }}
             <input type="hidden" name="project_id" id="editor-project_id" value="{{ $project->id or '' }}"/>
             <input type="hidden" name="page_id" id="editor-page_id" value="{{ $pageItem->id or '' }}">

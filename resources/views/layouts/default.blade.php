@@ -35,7 +35,7 @@
 <div class="@yield('container-style')">
     @yield('content')
     <footer class="footer">
-        <p>&copy; 2017 Yunsom, Inc.</p>
+        <p>&copy; {{ date('Y') }} AICODE.CC</p>
     </footer>
 </div>
 <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
@@ -48,6 +48,12 @@
 
 <script>
     $(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         $('a.wz-logout').on('click', function () {
             $($(this).data('form')).submit();
         });

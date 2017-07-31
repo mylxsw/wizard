@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\Page;
+use App\Repositories\Project;
+use App\Repositories\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -12,9 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
-    ];
+    protected $policies = [];
 
     /**
      * Register any authentication / authorization services.
@@ -25,6 +26,43 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // 检查用户是否有对项目的编辑权限
+        Gate::define('project-setting', function (User $user, $project) {
+            if (empty($user)) {
+                return false;
+            }
+
+            if (!$project instanceof Project) {
+                $project = Project::where('id', $project)->firstOrFail();
+            }
+
+            return (int)$user->id === (int)$project->user_id;
+        });
+
+        // 检查是否有新增页面的权限
+        Gate::define('page-add', function (User $user, $project) {
+            if (empty($user)) {
+                return false;
+            }
+
+            if (!$project instanceof Project) {
+                $project = Project::where('id', $project)->firstOrFail();
+            }
+
+            return (int)$user->id === (int)$project->user_id;
+        });
+
+        // 检查是否有编辑页面的权限
+        Gate::define('page-edit', function (User $user, $page) {
+            if (empty($user)) {
+                return false;
+            }
+
+            if (!$page instanceof Page) {
+                $page = Page::where('id', $page)->firstOrFail();
+            }
+
+            return (int)$user->id === (int)$page->user_id;
+        });
     }
 }

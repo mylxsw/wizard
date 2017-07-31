@@ -21,6 +21,8 @@ class PageController extends Controller
         /** @var Project $project */
         $project = Project::where('id', $id)->firstOrFail();
 
+        $this->authorize('page-add', $project);
+
         return view('edit', [
             'newPage' => true,
             'project' => $project,
@@ -31,6 +33,8 @@ class PageController extends Controller
     {
         /** @var Page $pageItem */
         $pageItem = Page::where('project_id', $id)->where('id', $page_id)->firstOrFail();
+
+        $this->authorize('page-edit', $pageItem);
 
         return view('edit', [
             'pageItem' => $pageItem,
@@ -46,8 +50,14 @@ class PageController extends Controller
             [
                 'project_id' => "required|integer|min:1|in:{$id}|project_exist",
                 'title'      => 'required|between:1,255',
+            ],
+            [
+                'title.required' => '页面标题不能为空',
+                'title.between'  => '页面标题格式不合法',
             ]
         );
+
+        $this->authorize('page-add', $id);
 
         $pid       = $request->input('pid', 0);
         $projectID = $request->input('project_id');
@@ -66,7 +76,7 @@ class PageController extends Controller
         ]);
 
         return redirect(wzRoute(
-            'page-edit-show',
+            'project:page:edit:show',
             ['id' => $projectID, 'page_id' => $pageItem->id]
         ));
 
@@ -89,7 +99,10 @@ class PageController extends Controller
         $content   = $request->input('content');
 
         /** @var Page $pageItem */
-        $pageItem             = Page::where('id', $page_id)->firstOrFail();
+        $pageItem = Page::where('id', $page_id)->firstOrFail();
+
+        $this->authorize('page-edit', $pageItem);
+
         $pageItem->pid        = $pid;
         $pageItem->project_id = $projectID;
         $pageItem->title      = $title;
@@ -98,7 +111,7 @@ class PageController extends Controller
         $pageItem->save();
 
         return redirect(wzRoute(
-            'page-edit-show',
+            'project:page:edit:show',
             ['id' => $projectID, 'page_id' => $page_id]
         ));
     }

@@ -19,3 +19,4 @@ function wzRoute($name, $parameters = [], $absolute = false)
 {
     return route($name, $parameters, $absolute);
 }
+
