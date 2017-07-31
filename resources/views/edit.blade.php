@@ -1,23 +1,27 @@
-@extends('layout.default')
+@extends('layouts.default')
 
 @section('container-style', 'container-fluid')
 @section('content')
-    @include('layout.navbar')
+    @include('layouts.navbar')
 
     <div class="row marketing">
-        <form class="form-inline" method="POST" action="/{{ .project.ID }}/page/{{ .page.ID }}">
-            <input type="hidden" name="project_id" id="editor-project_id" value="{{ .project.ID }}" />
-            <input type="hidden" name="_method" id="editor-method" value="{{ if .params.new }}post{{ else }}put{{ end }}" />
+        <form class="form-inline" method="POST"
+              action="{{ $newPage ? wzRoute('page-new-show', ['id' => $project->id]) : wzRoute('page-edit-show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
+            {{ csrf_field() }}
+            <input type="hidden" name="project_id" id="editor-project_id" value="{{ $project->id or '' }}"/>
+            <input type="hidden" name="page_id" id="editor-page_id" value="{{ $pageItem->id or '' }}">
+            <input type="hidden" name="pid" id="editor-pid" value="{{ $pageItem->pid or '' }}">
             <div class="col-lg-12 wz-edit-control">
                 <div class="form-group">
                     <input type="text" class="form-control" name="title" id="editor-title"
-                           value="{{ .page.Title }}" placeholder="标题" >
+                           value="{{ $pageItem->title or '' }}" placeholder="标题">
                 </div>
 
                 <div class="form-group pull-right">
                     <div class="btn-group">
                         <button type="submit" class="btn btn-success">保存</button>
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
@@ -29,7 +33,7 @@
             </div>
             <div class="col-lg-12">
                 <div id="editormd">
-                    <textarea style="display:none;" name="content">{{ .page.Content }}</textarea>
+                    <textarea style="display:none;" name="content">{{ $pageItem->content or '' }}</textarea>
                 </div>
             </div>
         </form>

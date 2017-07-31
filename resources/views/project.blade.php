@@ -1,7 +1,7 @@
-@extends('layout.default')
-@section('container-style', 'container-fluid')
+@extends('layouts.default')
+@section('container-style', 'container container-fluid')
 @section('content')
-    @include('layout.navbar')
+    @include('layouts.navbar')
 
     <div class="row marketing">
         <div class="col-lg-12">
@@ -14,24 +14,24 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="">文档</a></li>
+                            <li><a href="{{ wzRoute('page-new-show', ['id' => $project->id]) }}">文档</a></li>
                             <li><a href="#">目录</a></li>
                         </ul>
                     </div>
                 </div>
                 <ul class="nav nav-pills nav-stacked">
-                    {{ range .navbars }}
-                    <li {{ if eq .ID $.current_navbar }}class="active"{{ end }}>
-                        <a href="{{ .URL }}">{{ .Title }}</a>
+                    @foreach($project->pages as $p)
+                    <li class="{{ $p->id == $pageID ? 'active' : '' }}">
+                        <a href="{{ wzRoute('project-home', ['id' =>  $project->id, 'p' => $p->id]) }}">{{ $p->title }}</a>
                     </li>
-                    {{ end }}
+                    @endforeach
                 </ul>
             </div>
             <div class="col-lg-9">
-                {{ if gt .params.page 0 }}
+                @if($pageID !== 0)
                 <nav class="wz-page-control clearfix">
                     <ul class="nav nav-pills pull-right">
-                        <li role="presentation"><a href="/{{ .project.ID }}/page/{{ .page.ID }}">编辑</a></li>
+                        <li role="presentation"><a href="{{ wzRoute('page-edit-show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">编辑</a></li>
                         <li role="presentation"><a href="#">详情</a></li>
                         <li role="presentation" class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -48,13 +48,13 @@
                 </nav>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <h1>{{ .page.Title }}</h1>
+                        <h1>{{ $pageItem->title }}</h1>
                         <div class="markdown-body" id="markdown-body">
-                            <textarea id="append-test" style="display:none;">{{ .page.Content }}</textarea>
+                            <textarea id="append-test" style="display:none;">{{ $pageItem->content }}</textarea>
                         </div>
                     </div>
                 </div>
-                {{ end }}
+                @endif
             </div>
         </div>
     </div>
@@ -65,7 +65,7 @@
 <link href="/assets/vendor/editor-md/css/editormd.preview.css" rel="stylesheet"/>
 @endpush
 
-@push('scripts')
+@push('script')
 
 <script src="/assets/vendor/editor-md/lib/marked.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/prettify.min.js"></script>

@@ -7,9 +7,10 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="../../../public/favicon.ico">
 
-    <title>Wizard API</title>
+    <title>{{ config('app.name', 'Wizard API') }}</title>
 
     <link href="/assets/css/normalize.css" rel="stylesheet">
     <!-- Bootstrap core CSS -->
@@ -31,17 +32,27 @@
 </head>
 
 <body>
-<div class="container @yield('container-style')">
+<div class="@yield('container-style')">
     @yield('content')
     <footer class="footer">
         <p>&copy; 2017 Yunsom, Inc.</p>
     </footer>
 </div>
 <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="//v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+<script>
+    $(function () {
+        $('a.wz-logout').on('click', function () {
+            $($(this).data('form')).submit();
+        });
+    });
+</script>
 
 @stack('script')
 </body>

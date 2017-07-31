@@ -1,8 +1,8 @@
-@extends('layout.default')
+@extends('layouts.default')
 
-@section('container-style', 'container-small')
+@section('container-style', 'container container-small')
 @section('content')
-    @include('layout.navbar')
+    @include('layouts.navbar')
 
     <div class="row marketing">
         <div class="col-lg-12">

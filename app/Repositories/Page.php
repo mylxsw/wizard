@@ -8,7 +8,20 @@
 
 namespace App\Repositories;
 
-
+/**
+ * Class Page
+ *
+ * @property integer $pid
+ * @property string  $title
+ * @property string  $description
+ * @property string  $content
+ * @property integer $project_id
+ * @property integer $user_id
+ * @property integer $type
+ * @property integer $status
+ *
+ * @package App\Repositories
+ */
 class Page extends Repository
 {
     protected $table = 'wz_pages';

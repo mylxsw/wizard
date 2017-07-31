@@ -1,21 +1,17 @@
 <?php
-/**
- * wizard
- *
- * @link      https://www.yunsom.com/
- * @copyright 管宜尧 <guanyiyao@yunsom.com>
- */
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Project;
 
 class HomeController extends Controller
 {
-
     public function home()
     {
 
-        return view('index');
-    }
+        /** @var Project $projects */
+        $projects = Project::where('visibility', Project::VISIBILITY_PUBLIC)->get();
 
+        return view('index', ['projects' => $projects]);
+    }
 }

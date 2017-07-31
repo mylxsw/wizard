@@ -12,6 +12,15 @@ namespace App\Repositories;
 class Project extends Repository
 {
 
+    /**
+     * 公开项目
+     */
+    const VISIBILITY_PUBLIC  = '1';
+    /**
+     * 私有项目
+     */
+    const VISIBILITY_PRIVATE = '2';
+
     protected $table = 'wz_projects';
     protected $fillable
         = [
@@ -28,7 +37,7 @@ class Project extends Repository
      */
     public function pages()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Page::class);
     }
 
     /**
