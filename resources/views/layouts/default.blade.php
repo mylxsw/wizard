@@ -45,7 +45,7 @@
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="//v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-
+<script src="/assets/vendor/layer/layer.js"></script>
 <script>
     $(function () {
         $.ajaxSetup({
@@ -54,9 +54,26 @@
             }
         });
 
-        $('a.wz-logout').on('click', function () {
-            $($(this).data('form')).submit();
+        // 超链接触发表单提交事件
+        $('a[wz-form-submit]').on('click', function(e) {
+            e.preventDefault();
+
+            var form = $($(this).data('form'));
+            var confirm = $(this).data('confirm');
+
+            if (confirm === undefined) {
+                form.submit();
+            }
+
+            layer.confirm(confirm, {}, function () {
+                form.submit();
+            })
         });
+
+        {{-- 页面提示消息（上一个页面操作的结果） --}}
+        @if (session('alert.message'))
+            layer.msg("{{ session('alert.message') }}");
+        @endif
     });
 </script>
 

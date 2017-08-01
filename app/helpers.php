@@ -23,17 +23,26 @@ function wzRoute($name, $parameters = [], $absolute = false)
 /**
  * 将页面集合转换为层级结构的菜单
  *
- * @param \Illuminate\Database\Eloquent\Collection $pages
- * @param                                          $projectID
- * @param int                                      $pageID
+ * @param \Illuminate\Database\Eloquent\Collection $pages     每一页文档
+ * @param int                                      $projectID 当前项目ID
+ * @param int                                      $pageID    选中的文档ID
+ * @param array                                    $exclude   排除的文档ID列表
  *
  * @return array
  */
-function navigator(\Illuminate\Database\Eloquent\Collection $pages, $projectID, int $pageID = 0)
-{
+function navigator(
+    \Illuminate\Database\Eloquent\Collection $pages,
+    int $projectID,
+    int $pageID = 0,
+    $exclude = []
+) {
     $navigators = [];
-    /** @var \App\Repositories\Page $page */
+    /** @var \App\Repositories\Document $page */
     foreach ($pages as $page) {
+        if (in_array((int)$page->id, $exclude)) {
+            continue;
+        }
+
         $navigators[$page->id] = [
             'id'       => (int)$page->id,
             'name'     => $page->title,
@@ -44,11 +53,13 @@ function navigator(\Illuminate\Database\Eloquent\Collection $pages, $projectID, 
     }
 
     foreach ($navigators as &$nav) {
-        if ($nav['pid'] === 0) {
+        if ($nav['pid'] === 0 || in_array($nav['id'], $exclude)) {
             continue;
         }
 
-        $navigators[$nav['pid']]['nodes'][] = $nav;
+        if (isset($navigators[$nav['pid']])) {
+            $navigators[$nav['pid']]['nodes'][] = $nav;
+        }
     }
 
     return array_filter($navigators, function ($nav) {
@@ -61,9 +72,10 @@ function navigator(\Illuminate\Database\Eloquent\Collection $pages, $projectID, 
  *
  * @return array
  */
-function wzTemplates() :array
+function wzTemplates(): array
 {
-    $template = <<<TTT
+    $template
+        = <<<TTT
 
 [TOC]
 
@@ -108,7 +120,8 @@ function wzTemplates() :array
 
 TTT;
 
-    $template2 = <<<XXXXX
+    $template2
+        = <<<XXXXX
 #### Using FlowChart
 
 setting:
@@ -140,8 +153,8 @@ XXXXX;
             'default' => true
         ],
         [
-            'id' => 2,
-            'name' => '我的模板',
+            'id'      => 2,
+            'name'    => '我的模板',
             'content' => $template2,
             'default' => false,
         ]

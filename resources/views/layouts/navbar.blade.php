@@ -13,7 +13,7 @@
                     <ul class="dropdown-menu">
                         <li role="presentation">
                             <form action="{{ wzRoute('logout') }}" method="post" id="form-logout">{{ csrf_field() }}</form>
-                            <a href="#" class="wz-logout" data-form="#form-logout">退出</a>
+                            <a href="#" wz-form-submit data-confirm="确定要退出吗？" data-form="#form-logout">退出</a>
                         </li>
                     </ul>
                 </li>

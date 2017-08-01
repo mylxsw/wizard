@@ -49,7 +49,7 @@ class PageTableSeeder extends Seeder
 EEE;
 
 
-        \App\Repositories\Page::create([
+        \App\Repositories\Document::create([
             'pid'         => 0,
             'title'       => '跟我一起学Laravel-常见问题',
             'description' => '',
@@ -92,7 +92,7 @@ EEE;
 EEE;
 
 
-        \App\Repositories\Page::create([
+        \App\Repositories\Document::create([
             'pid'         => 0,
             'title'       => 'Lumen整合DingoAPI的问题',
             'description' => '',

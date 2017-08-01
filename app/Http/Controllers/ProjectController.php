@@ -9,7 +9,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Repositories\Page;
+use App\Repositories\Document;
 use App\Repositories\Project;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -64,6 +64,7 @@ class ProjectController extends Controller
             'visibility'  => $visibility,
         ]);
 
+        $request->session()->flash('alert.message', '项目创建完成');
         return [
             'id'          => $project->id,
             'name'        => $project->name,
@@ -98,7 +99,7 @@ class ProjectController extends Controller
 
         $page = null;
         if ($pageID !== 0) {
-            $page = Page::where('project_id', $id)->where('id', $pageID)->firstOrFail();
+            $page = Document::where('project_id', $id)->where('id', $pageID)->firstOrFail();
         }
 
         return view('project', [
@@ -158,6 +159,7 @@ class ProjectController extends Controller
 
         $project->save();
 
+        $request->session()->flash('alert.message', '项目信息更新成功');
         return redirect(wzRoute(
             'project:setting:show',
             ['id' => $id]

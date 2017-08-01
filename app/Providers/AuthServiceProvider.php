@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Repositories\Page;
+use App\Repositories\Document;
 use App\Repositories\Project;
 use App\Repositories\User;
 use Illuminate\Support\Facades\Gate;
@@ -58,8 +58,8 @@ class AuthServiceProvider extends ServiceProvider
                 return false;
             }
 
-            if (!$page instanceof Page) {
-                $page = Page::where('id', $page)->firstOrFail();
+            if (!$page instanceof Document) {
+                $page = Document::where('id', $page)->firstOrFail();
             }
 
             return (int)$user->id === (int)$page->user_id;

@@ -7,7 +7,6 @@
         <div class="col-lg-12">
             <div class="col-lg-3">
 
-                <div id="wz-left-nav"></div>
                 <ul class="nav nav-pills nav-stacked wz-left-nav">
                     <li class="{{ $pageID === 0 ? 'active' : '' }}">
                         <a href="{{ wzRoute('project:home', ['id' => $project->id]) }}" class="wz-nav-item">
@@ -33,9 +32,9 @@
                                     新增 <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ wzRoute('project:page:new:show', ['id' => $project->id]) }}">文档</a>
+                                    <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id]) }}">文档</a>
                                     </li>
-                                    <li><a href="#">目录</a></li>
+                                    <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger']) }}">Swagger API</a></li>
                                 </ul>
                             </div>
                             @can('project-setting', $project)
@@ -53,9 +52,9 @@
                                 <ul class="nav nav-pills pull-right">
                                     @if($pageID !== 0)
                                         @can('page-edit', $pageItem)
-                                            <li role="presentation"><a
-                                                        href="{{ wzRoute('project:page:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">编辑</a>
-                                            </li>
+                                        <li role="presentation">
+                                            <a href="{{ wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">编辑</a>
+                                        </li>
                                         @endcan
                                     @endif
                                     <li role="presentation" class="dropdown">
@@ -66,7 +65,17 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="#">分享</a></li>
                                             <li><a href="#">导出</a></li>
-                                            <li><a href="#">复制</a></li>
+                                            <li><a href="#">页面历史</a></li>
+                                            @if($pageID !== 0)
+                                                @can('page-edit', $pageItem)
+                                                <li>
+                                                    <form id="form-{{ $pageItem->id }}" action="{{ wzRoute('project:doc:delete', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" method="post">
+                                                        {{ method_field('DELETE') }}{{ csrf_field() }}
+                                                    </form>
+                                                    <a href="#" wz-form-submit data-form="#form-{{ $pageItem->id }}" data-confirm="确定要删除文档“{{ $pageItem->title }}”？">删除</a>
+                                                </li>
+                                                @endcan
+                                            @endif
                                         </ul>
                                     </li>
                                 </ul>

@@ -9,8 +9,12 @@
 namespace App\Repositories;
 
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Project extends Repository
 {
+
+    use SoftDeletes;
 
     /**
      * 公开项目
@@ -30,6 +34,8 @@ class Project extends Repository
             'user_id',
         ];
 
+    public $dates = ['deleted_at'];
+
     /**
      * 项目下的所有页面
      *
@@ -37,7 +43,7 @@ class Project extends Repository
      */
     public function pages()
     {
-        return $this->hasMany(Page::class);
+        return $this->hasMany(Document::class);
     }
 
     /**

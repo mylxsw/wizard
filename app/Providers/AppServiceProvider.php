@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Repositories\Page;
+use App\Repositories\Document;
 use App\Repositories\Project;
 use Illuminate\Support\ServiceProvider;
 
@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * 检查页面是否存在
      *
-     * 参数：项目ID
+     * 参数：项目ID,是否验证0值
      *
      * @param string $ruleName
      */
@@ -40,9 +40,14 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->registerValidationRule(
             $ruleName,
-            '对应的页面不存在',
+            '参数 %s 对应的页面不存在',
             function ($attribute, $value, $parameters, $validator) {
-                $projectID = $parameters[0] ?? 0;
+                $projectID         = $parameters[0] ?? 0;
+                $validateZeroValue = isset($parameters[1]) ? ($parameters[1] == 'true') : true;
+
+                if (empty($value)) {
+                    return !$validateZeroValue;
+                }
 
                 $conditions   = [];
                 $conditions[] = ['id', $value];
@@ -51,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
                     $conditions[] = ['project_id', $projectID];
                 }
 
-                return Page::where($conditions)->exists();
+                return Document::where($conditions)->exists();
             }
         );
     }
@@ -65,7 +70,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->registerValidationRule(
             $ruleName,
-            '对应的项目不存在',
+            '参数 %s 对应的项目不存在',
             function ($attribute, $value, $parameters, $validator) {
                 return Project::where('id', $value)->exists();
             }
@@ -91,7 +96,7 @@ class AppServiceProvider extends ServiceProvider
                 $validationMessage
             ) {
                 if ($message == "validation.{$ruleName}") {
-                    return $validationMessage;
+                    return sprintf($validationMessage, $attribute);
                 }
 
                 return $message;

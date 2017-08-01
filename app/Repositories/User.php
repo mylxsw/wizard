@@ -51,6 +51,6 @@ class User extends Authenticatable
      */
     public function pages()
     {
-        return $this->hasMany(Page::class);
+        return $this->hasMany(Document::class);
     }
 }
