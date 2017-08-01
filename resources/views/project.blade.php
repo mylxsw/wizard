@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('container-style', 'container container-fluid')
+@section('container-style', 'container')
 @section('content')
     @include('layouts.navbar')
 
@@ -7,13 +7,18 @@
         <div class="col-lg-12">
             <div class="col-lg-3">
 
-                <ul class="nav nav-pills nav-stacked">
-                    <li class="{{ $pageID === 0 ? 'active' : '' }}"><a href="{{ wzRoute('project:home', ['id' => $project->id]) }}">首页</a></li>
-                    @foreach($project->pages as $p)
-                    <li class="{{ $p->id == $pageID ? 'active' : '' }}">
-                        <a href="{{ wzRoute('project:home', ['id' =>  $project->id, 'p' => $p->id]) }}">{{ $p->title }}</a>
+                <div id="wz-left-nav"></div>
+                <ul class="nav nav-pills nav-stacked wz-left-nav">
+                    <li class="{{ $pageID === 0 ? 'active' : '' }}">
+                        <a href="{{ wzRoute('project:home', ['id' => $project->id]) }}" class="wz-nav-item">
+                            <span class="glyphicon glyphicon-th-large"></span>
+                            {{ $project->name }}
+                            @if($project->visibility == \App\Repositories\Project::VISIBILITY_PRIVATE)
+                                <span title="私有项目" class="pull-right wz-box-tag glyphicon glyphicon-eye-close"></span>
+                            @endif
+                        </a>
                     </li>
-                    @endforeach
+                    @include('components.navbar', ['navbars' => $navigators])
                 </ul>
             </div>
             <div class="col-lg-9">
@@ -22,17 +27,20 @@
                     @can('page-add', $project)
                         <div class="btn-group wz-nav-control">
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
                                     <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
                                     新增 <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ wzRoute('project:page:new:show', ['id' => $project->id]) }}">文档</a></li>
+                                    <li><a href="{{ wzRoute('project:page:new:show', ['id' => $project->id]) }}">文档</a>
+                                    </li>
                                     <li><a href="#">目录</a></li>
                                 </ul>
                             </div>
                             @can('project-setting', $project)
-                                <a class="btn btn-default" href="{{ wzRoute('project:setting:show', ['id' => $project->id]) }}">项目配置</a>
+                                <a class="btn btn-default"
+                                   href="{{ wzRoute('project:setting:show', ['id' => $project->id]) }}">项目配置</a>
                             @endcan
                         </div>
                     @endcan
@@ -45,11 +53,14 @@
                                 <ul class="nav nav-pills pull-right">
                                     @if($pageID !== 0)
                                         @can('page-edit', $pageItem)
-                                            <li role="presentation"><a href="{{ wzRoute('project:page:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">编辑</a></li>
+                                            <li role="presentation"><a
+                                                        href="{{ wzRoute('project:page:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">编辑</a>
+                                            </li>
                                         @endcan
                                     @endif
                                     <li role="presentation" class="dropdown">
-                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                           aria-haspopup="true" aria-expanded="false">
                                             更多 <span class="caret"></span>
                                         </a>
                                         <ul class="dropdown-menu">
@@ -77,7 +88,7 @@
 @endpush
 
 @push('script')
-
+<script src="/assets/vendor/bootstrap-treeview.js"></script>
 <script src="/assets/vendor/editor-md/lib/marked.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/prettify.min.js"></script>
 
@@ -90,16 +101,22 @@
 
 <script type="text/javascript">
     $(function () {
+        // 鼠标经过提示效果
+        $('[data-toggle="tooltip"]').tooltip({
+            delay: {"show": 500, "hide": 100}
+        });
+
+        // 内容区域解析markdown
         editormd.markdownToHTML('markdown-body', {
-            htmlDecode      : "style,script,iframe",
-            tocm            : true,
-            tocDropdown     : true,
-            markdownSourceCode : true,
-            emoji           : true,
-            taskList        : true,
-            tex             : true,
-            flowChart       : true,
-            sequenceDiagram : true
+            htmlDecode: "style,script,iframe",
+            tocm: true,
+            tocDropdown: true,
+            markdownSourceCode: true,
+            emoji: true,
+            taskList: true,
+            tex: true,
+            flowChart: true,
+            sequenceDiagram: true
         });
     });
 </script>

@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Page;
 use App\Repositories\Project;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,13 @@ class ProjectController extends Controller
         return view('user-home', ['projects' => $projects]);
     }
 
-
+    /**
+     * 创建新项目
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
     public function newProjectHandle(Request $request)
     {
         $this->validate(
@@ -95,9 +102,10 @@ class ProjectController extends Controller
         }
 
         return view('project', [
-            'project'  => $project,
-            'pageID'   => $pageID,
-            'pageItem' => $page,
+            'project'    => $project,
+            'pageID'     => $pageID,
+            'pageItem'   => $page,
+            'navigators' => navigator($project->pages, $id, $pageID)
         ]);
     }
 

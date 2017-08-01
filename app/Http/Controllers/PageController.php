@@ -24,8 +24,9 @@ class PageController extends Controller
         $this->authorize('page-add', $project);
 
         return view('edit', [
-            'newPage' => true,
-            'project' => $project,
+            'newPage'   => true,
+            'project'   => $project,
+            'navigator' => navigator($project->pages, $id),
         ]);
     }
 
@@ -37,9 +38,10 @@ class PageController extends Controller
         $this->authorize('page-edit', $pageItem);
 
         return view('edit', [
-            'pageItem' => $pageItem,
-            'project'  => $pageItem->project,
-            'newPage'  => false,
+            'pageItem'  => $pageItem,
+            'project'   => $pageItem->project,
+            'newPage'   => false,
+            'navigator' => navigator(Page::where('project_id', $id)->get(), $id, $pageItem->pid),
         ]);
     }
 
@@ -70,7 +72,7 @@ class PageController extends Controller
             'description' => '',
             'content'     => $content,
             'project_id'  => $projectID,
-            'user_id'     => 1,
+            'user_id'     => \Auth::user()->id,
             'type'        => 1,
             'status'      => 1,
         ]);
