@@ -8,6 +8,7 @@
 
 namespace App\Repositories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -23,8 +24,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $last_modified_uid
  * @property integer $type
  * @property integer $status
- * @property string  $created_at
- * @property string  $updated_at
+ * @property Carbon  $created_at
+ * @property Carbon  $updated_at
  *
  * @package App\Repositories
  */

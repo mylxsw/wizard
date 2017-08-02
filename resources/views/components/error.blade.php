@@ -6,3 +6,5 @@
         @endforeach
     </div>
 @endif
+
+<div class="alert alert-danger" role="alert" id="wz-error-box" style="display: none;"></div>

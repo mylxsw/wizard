@@ -42,6 +42,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/{id}/doc/{page_id}', 'DocumentController@editPageHandle')->name('doc:edit:handle');
         Route::delete('/{id}/doc/{page_id}', 'DocumentController@deletePage')->name('doc:delete');
 
+        // ajax获取文档信息
+        Route::get('/{id}/doc/{page_id}/expired', 'DocumentController@checkPageExpired')->name('doc:expired');
+
         // 文档历史记录
         Route::get('/{id}/doc/{page_id}/histories', 'HistoryController@pages')->name('doc:history');
         Route::get('/{id}/doc/{page_id}/histories/{history_id}', 'HistoryController@page')->name('doc:history:show');

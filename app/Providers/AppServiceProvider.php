@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Repositories\Document;
 use App\Repositories\Project;
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +18,14 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->addProjectExistRules('project_exist');
         $this->addPageExistRules('page_exist');
+
+        // 在日志中输出sql历史
+        \DB::listen(function (QueryExecuted $query) {
+            \Log::debug('sql_execute', [
+                'sql'   => $query->sql,
+                'binds' => $query->bindings,
+            ]);
+        });
     }
 
     /**

@@ -78,21 +78,8 @@
         $('#wz-project-save').on('click', function () {
             var form = $('#wz-project-save-form');
 
-            $.ajax({
-                url: form.attr('action'),
-                type: 'post',
-                data: form.serialize(),
-                dataType: 'json',
-                success: function (data) {
-                    window.location.reload(true);
-                },
-                error: function (response) {
-                    if (response.status === 422) {
-                        alert(response.responseJSON.name);
-                    } else {
-                        alert('server error');
-                    }
-                }
+            $.wz.asyncForm(form, {}, function (data) {
+                window.location.reload(true);
             });
         });
     });
