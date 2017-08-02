@@ -159,7 +159,6 @@ a:hover {
 }
 
 .wz-page-control {
-    margin-bottom: 10px;
 }
 
 .wz-edit-control {
@@ -171,6 +170,10 @@ a:hover {
     display: inline-block;
     padding: 0;
     margin: 10px 0 0 10px;
+}
+
+.wz-page-content {
+    margin-top: 20px;
 }
 
 .wz-input-long {

@@ -59,4 +59,24 @@ class DocumentHistory extends Repository
             ]
         );
     }
+
+    /**
+     * 文档所属用户
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    /**
+     * 记录操作用户
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function operator()
+    {
+        return $this->belongsTo(User::class, 'operator_id', 'id');
+    }
 }
