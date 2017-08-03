@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Events\DocumentRecovered;
 use App\Repositories\Document;
 use App\Repositories\DocumentHistory;
 use App\Repositories\Project;
@@ -100,7 +101,7 @@ class HistoryController extends Controller
         $historyItem = DocumentHistory::where('project_id', $id)->where('id', $history_id)
             ->where('page_id', $page_id)->firstOrFail();
 
-        Document::recover($pageItem, $historyItem);
+        event(new DocumentRecovered(Document::recover($pageItem, $historyItem)));
         $this->alert('文档恢复成功');
 
         return redirect(wzRoute('project:home', ['id' => $id, 'p' => $page_id]));

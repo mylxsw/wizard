@@ -9,6 +9,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Events\ProjectCreated;
+use App\Events\ProjectModified;
 use App\Repositories\Document;
 use App\Repositories\Project;
 use Illuminate\Database\Eloquent\Collection;
@@ -63,6 +65,8 @@ class ProjectController extends Controller
             'user_id'     => \Auth::user()->id,
             'visibility'  => $visibility,
         ]);
+
+        event(new ProjectCreated($project));
 
         $request->session()->flash('alert.message', '项目创建完成');
         return [
@@ -158,6 +162,8 @@ class ProjectController extends Controller
         $project->visibility  = $visibility;
 
         $project->save();
+
+        event(new ProjectModified($project));
 
         $request->session()->flash('alert.message', '项目信息更新成功');
         return redirect(wzRoute(

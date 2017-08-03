@@ -9,8 +9,12 @@
 namespace App\Http\Controllers;
 
 
+use App\Events\DocumentCreated;
+use App\Events\DocumentDeleted;
+use App\Events\DocumentModified;
 use App\Repositories\Document;
 use App\Repositories\DocumentHistory;
+use App\Repositories\OperationLogs;
 use App\Repositories\Project;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -119,6 +123,8 @@ class DocumentController extends Controller
         // 记录文档变更历史
         DocumentHistory::write($pageItem);
 
+        event(new DocumentCreated($pageItem));
+
         return [
             'redirect' => wzRoute(
                 'project:doc:edit:show',
@@ -190,6 +196,8 @@ class DocumentController extends Controller
 
             // 记录文档变更历史
             DocumentHistory::write($pageItem);
+
+            event(new DocumentModified($pageItem));
         }
 
         return [
@@ -262,6 +270,8 @@ class DocumentController extends Controller
         // 删除文档
         $pageItem->delete();
         $this->alert('文档删除成功');
+
+        event(new DocumentDeleted($pageItem));
 
         return redirect(wzRoute('project:home', ['id' => $id]));
     }
