@@ -15,19 +15,19 @@
     </nav>
 
     <div class="row wz-full-box" id="wz-main-box">
-        <div id="wz-compared">
+        <div id="wz-compared" class="wz-compare-container">
             <div class="wz-compare-box">
                 <div class="wz-compare-title">
-                    <span class="label label-success">{{ $doc1title }}</span>
+                    <span class="label label-default">{{ $doc2title }}</span>
                 </div>
                 <div class="wz-compare-title">
-                    <span class="label label-default">{{ $doc2title }}</span>
+                    <span class="label label-success">{{ $doc1title }}</span>
                 </div>
             </div>
         </div>
     </div>
-    <div id="wz-doc1-content" style="display: none;">{{ $doc1 }}</div>
-    <div id="wz-doc2-content" style="display: none;">{{ $doc2 }}</div>
+    <div id="wz-doc1-content" style="display: none;">{!! base64_encode($doc1) !!}</div>
+    <div id="wz-doc2-content" style="display: none;">{!! base64_encode($doc2) !!}</div>
 @endsection
 
 @push('stylesheet')
@@ -36,19 +36,30 @@
 @endpush
 
 @push('script')
+<script src="/assets/vendor/base64.min.js"></script>
 <script src="/assets/vendor/mergely-3.4.4/lib/codemirror.min.js"></script>
 <script src="/assets/vendor/mergely-3.4.4/lib/mergely.min.js"></script>
 
 <script>
 $(function () {
-    $('#wz-compared').mergely({
-        cmsettings: { readOnly: false, lineNumbers: true },
+    var compared = $('#wz-compared');
+    compared.mergely({
+        cmsettings: {
+            readOnly: false,
+            lineNumbers: true
+        },
         editor_width: ($('#wz-main-box').width() / 2 - 40) + 'px',
+        fgcolor: {
+            a:'#eaffea',
+            c:'#cccccc',
+            d:'#ffecec'
+        },
+        sidebar: false,
         lhs: function(setValue) {
-            setValue($('#wz-doc1-content').html());
+            setValue(Base64.decode($('#wz-doc2-content').text()));
         },
         rhs: function(setValue) {
-            setValue($('#wz-doc2-content').html());
+            setValue(Base64.decode($('#wz-doc1-content').text()));
         }
     });
 });

@@ -13,6 +13,13 @@
                 </li>
             @endcan
             <li>
+                <a href="#" wz-doc-compare-submit
+                   data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
+                   data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}">
+                    差异
+                </a>
+            </li>
+            <li>
                 <a href="{{ wzRoute('project:doc:history', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}"
                    class="btn btn-link">返回</a>
             </li>
@@ -45,3 +52,4 @@
 @endsection
 
 @include('components.markdown-show')
+@include('components.doc-compare-script')

@@ -148,6 +148,7 @@ class DocumentController extends Controller
                 'title'            => 'required|between:1,255',
                 'last_modified_at' => 'required|date',
                 'force'            => 'bool',
+                'history_id'       => 'required|integer',
             ],
             [
                 'title.required' => '文档标题不能为空',
@@ -160,6 +161,7 @@ class DocumentController extends Controller
         $title          = $request->input('title');
         $content        = $request->input('content');
         $lastModifiedAt = Carbon::parse($request->input('last_modified_at'));
+        $history_id     = $request->input('history_id');
         $forceSave      = $request->input('force', false);
 
         /** @var Document $pageItem */
@@ -168,7 +170,7 @@ class DocumentController extends Controller
         $this->authorize('page-edit', $pageItem);
 
         // 检查文档是否已经被别人修改过了，避免修改覆盖
-        if (!$forceSave && !$pageItem->updated_at->equalTo($lastModifiedAt)) {
+        if (!$forceSave && (!$pageItem->updated_at->equalTo($lastModifiedAt) || $history_id != $pageItem->history_id)) {
             return $this->buildFailedValidationResponse($request, [
                 'last_modified_at' => [
                     "该页面已经被 {$pageItem->lastModifiedUser->name} 于 {$pageItem->updated_at} 修改过了",

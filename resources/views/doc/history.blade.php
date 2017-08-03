@@ -36,7 +36,7 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="#" wz-doc-compare-submit
                            data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
-                           data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}">比较</a>
+                           data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}">差异</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
 
                         @can('page-edit', $pageItem)
@@ -55,34 +55,4 @@
 
 @endsection
 
-@push('script')
-<script>
-    $(function () {
-        $('[wz-doc-compare-submit]').on('click', function (e) {
-            e.preventDefault();
-
-            var compareUrl = '{{ route('project:doc:compare') }}';
-
-            var doc1url = $(this).data('doc1');
-            var doc2url = $(this).data('doc2');
-
-            axios.all([
-                axios.get(doc1url),
-                axios.get(doc2url)
-            ]).then(axios.spread(function (resp1, resp2) {
-                $.wz.dynamicFormSubmit(
-                    'wz-compare-' + resp1.data.id + '-' + resp2.data.id,
-                    'post',
-                    compareUrl,
-                    {
-                        doc1: resp1.data.content,
-                        doc2: resp2.data.content,
-                        doc1title: '最新文档',
-                        doc2title: '历史版本'
-                    }
-                );
-            }));
-        });
-    });
-</script>
-@endpush
+@include('components.doc-compare-script')

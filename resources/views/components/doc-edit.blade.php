@@ -3,6 +3,7 @@
 <input type="hidden" name="page_id" id="editor-page_id" value="{{ $pageItem->id or '' }}">
 <input type="hidden" name="pid" id="editor-pid" value="{{ $pageItem->pid or '' }}">
 <input type="hidden" name="last_modified_at" value="{{ $pageItem->updated_at or '' }}">
+<input type="hidden" name="history_id" value="{{ $pageItem->history_id or '' }}">
 <div class="col-lg-12 wz-edit-control">
 
     <div class="form-group input-group">
@@ -28,7 +29,10 @@
             <ul class="dropdown-menu">
                 <li><a href="#">另存为模板</a></li>
                 <li><a href="#">加入草稿箱</a></li>
-                <li><a href="#" wz-doc-form-submit data-force="true">强制保存</a></li>
+                @if(!$newPage)
+                    <li><a href="#" wz-doc-form-submit data-force="true">强制保存文档</a></li>
+                    <li><a href="#" wz-doc-compare-current>比较文档差异</a></li>
+                @endif
             </ul>
         </div>
         <a href="{{ wzRoute('project:home', ['id' => $project->id] + (empty($pageItem) ? [] : ['p' => $pageItem->id])) }}" class="btn btn-default">返回</a>
@@ -63,6 +67,32 @@ $(function() {
     });
 
     @if(!$newPage)
+
+        // 文档差异对比
+        $('[wz-doc-compare-current]').on('click', function(e) {
+            e.preventDefault();
+
+            var compareUrl = '{{ route('project:doc:compare') }}';
+            var docUrl = '{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}';
+
+            $.wz.alert('如果无法弹出差异对比页面，请在浏览器设置中启用“允许弹出式窗口”选项后重试', function () {
+                axios.get(docUrl).then(function (resp) {
+                    $.wz.dynamicFormSubmit(
+                        'wz-compare-' + resp.data.id,
+                        'post',
+                        compareUrl,
+                        {
+                            doc1: $.global.getEditorContent(),
+                            doc2: resp.data.content,
+                            doc1title: '修改后',
+                            doc2title: '最新'
+                        },
+                        "_blank"
+                    );
+                });
+            });
+        });
+
         // 自动检查文档是否过期
         (function() {
             var lastModifiedAt = $('input[name=last_modified_at]').val();

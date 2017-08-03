@@ -48,16 +48,23 @@ class DocumentHistory extends Repository
      * 记录文档历史
      *
      * @param Document $document
+     *
+     * @return DocumentHistory
      */
-    public static function write(Document $document)
+    public static function write(Document $document) :DocumentHistory
     {
-        static::create(array_only(
+        $history = static::create(array_only(
                 $document->toArray(),
                 (new static)->fillable) + [
                 'operator_id' => $document->last_modified_uid,
                 'page_id'     => $document->id,
             ]
         );
+
+        $document->history_id = $history->id;
+        $document->save();
+
+        return $history;
     }
 
     /**

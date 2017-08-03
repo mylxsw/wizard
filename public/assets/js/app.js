@@ -2,6 +2,9 @@
  * Created by mylxsw on 2017/8/3.
  */
 
+// 全局变量、函数
+$.global = {};
+
 $(function() {
     $.ajaxSetup({
         headers: {

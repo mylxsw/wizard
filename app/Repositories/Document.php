@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $project_id
  * @property integer $user_id
  * @property integer $last_modified_uid
+ * @property integer $history_id
  * @property integer $type
  * @property integer $status
  * @property Carbon  $created_at
@@ -47,6 +48,7 @@ class Document extends Repository
             'project_id',
             'user_id',
             'last_modified_uid',
+            'history_id',
             'type',
             'status',
         ];

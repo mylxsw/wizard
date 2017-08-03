@@ -75,7 +75,7 @@ $.wz = {
      */
     alert: function (message, callback) {
         callback = callback || function() {};
-        layer.alert(message, {closeBtn: 0, scrollbar: false}, function () {
+        var index = layer.alert(message, {closeBtn: 0, scrollbar: false}, function () {
             callback();
             layer.close(index);
         })
@@ -97,15 +97,16 @@ $.wz = {
      * @param method
      * @param action
      * @param data
+     * @param target
      */
-    dynamicFormSubmit: function (id, method, action, data) {
+    dynamicFormSubmit: function (id, method, action, data, target) {
         var form = document.createElement('form');
 
         form.id = id;
         form.method = method;
         form.action = action;
         // 在新页面中打开会被浏览器拦截
-        // form.target = "_blank";
+        form.target = target || '_self';
         form.style.display = 'none';
 
         for (var key in data) {

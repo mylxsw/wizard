@@ -25,6 +25,8 @@ class CreatePageTable extends Migration
             $table->tinyInteger('status')->comment('页面状态');
             $table->integer('last_modified_uid', false, true)
                 ->nullable()->comment('最后修改的用户ID');
+            $table->integer('history_id', false, true)
+                ->nullable()->comment('对应的历史版本ID，用于版本控制');
             $table->softDeletes();
             $table->timestamps();
         });

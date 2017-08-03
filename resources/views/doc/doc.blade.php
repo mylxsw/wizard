@@ -6,7 +6,7 @@
 
     <div class="row marketing">
         @include('components.error', ['error' => $errors ?? null])
-        <form class="form-inline" method="POST"
+        <form class="form-inline" method="POST" id="wz-doc-edit-form"
               action="{{ $newPage ? wzRoute('project:doc:new:show', ['id' => $project->id]) : wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
 
             @include('components.doc-edit', ['project' => $project, 'pageItem' => $pageItem ?? null, 'navigator' => $navigator])
@@ -95,6 +95,10 @@
                 }
             }
         });
+
+        $.global.getEditorContent = function () {
+            return editor.getMarkdown();
+        };
     });
 </script>
 <script type="text/html" id="editor-template-dialog">

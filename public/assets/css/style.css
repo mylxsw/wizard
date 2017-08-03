@@ -196,10 +196,11 @@ a:hover {
     z-index: 10;
 }
 
-.CodeMirror {
+.wz-compare-container .CodeMirror {
     height:100%!important;
 }
-.mergely-column {
+
+.wz-compare-container .mergely-column {
     height: auto!important;
 }
 

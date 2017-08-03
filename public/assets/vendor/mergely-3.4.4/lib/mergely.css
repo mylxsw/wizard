@@ -22,7 +22,7 @@
 .mergely.a.rhs.start { border-top: 1px solid #a3d1ff; }
 .mergely.a.lhs.start.end,
 .mergely.a.rhs.end { border-bottom: 1px solid #a3d1ff; }
-.mergely.a.rhs { background-color: #ddeeff; }
+.mergely.a.rhs { background-color: #eaffea; }
 .mergely.a.lhs.start.end.first { border-bottom: 0; border-top: 1px solid #a3d1ff; }
 
 .mergely.d.lhs { background-color: #ffe9e9; }
