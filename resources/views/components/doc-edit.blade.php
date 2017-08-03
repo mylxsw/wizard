@@ -7,35 +7,35 @@
 <div class="col-lg-12 wz-edit-control">
 
     <div class="form-group input-group">
-        <span class="input-group-addon" title="项目名称">{{ $project->name }}</span>
+        <span class="input-group-addon" title="@lang('project.project_name')">{{ $project->name }}</span>
         <input type="text" class="form-control wz-input-long" name="title" id="editor-title"
-               value="{{ $pageItem->title or '' }}" placeholder="标题">
+               value="{{ $pageItem->title or '' }}" placeholder="@lang('document.title')">
     </div>
 
     <div class="form-group">
         <select class="form-control" name="pid">
-            <option value="0">无上级页面</option>
+            <option value="0">@lang('document.no_parent_page')</option>
             @include('components.doc-options', ['navbars' => $navigator, 'level' => 0])
         </select>
     </div>
 
     <div class="form-group pull-right">
         <div class="btn-group">
-            <button type="button" class="btn btn-success" wz-doc-form-submit id="wz-doc-form-submit">保存</button>
+            <button type="button" class="btn btn-success" wz-doc-form-submit id="wz-doc-form-submit">@lang('common.btn_save')</button>
             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="#">另存为模板</a></li>
-                <li><a href="#">加入草稿箱</a></li>
+                <li><a href="#">@lang('document.save_as_template')</a></li>
+                <li><a href="#">@lang('document.save_as_draft')</a></li>
                 @if(!$newPage)
-                    <li><a href="#" wz-doc-form-submit data-force="true">强制保存文档</a></li>
-                    <li><a href="#" wz-doc-compare-current>比较文档差异</a></li>
+                    <li><a href="#" wz-doc-form-submit data-force="true">@lang('document.force_save')</a></li>
+                    <li><a href="#" wz-doc-compare-current>@lang('document.show_diff')</a></li>
                 @endif
             </ul>
         </div>
-        <a href="{{ wzRoute('project:home', ['id' => $project->id] + (empty($pageItem) ? [] : ['p' => $pageItem->id])) }}" class="btn btn-default">返回</a>
+        <a href="{{ wzRoute('project:home', ['id' => $project->id] + (empty($pageItem) ? [] : ['p' => $pageItem->id])) }}" class="btn btn-default">@lang('common.btn_back')</a>
     </div>
 </div>
 

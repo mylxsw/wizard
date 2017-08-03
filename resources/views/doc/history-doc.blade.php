@@ -1,12 +1,12 @@
 @extends('layouts.project')
 @section('page-content')
     <nav class="wz-page-control clearfix">
-        <h1 class="wz-page-title">{{ $history->title }} <span class="label label-default">历史文档</span></h1>
+        <h1 class="wz-page-title">{{ $history->title }} <span class="label label-default">@lang('document.page_history')</span></h1>
         <ul class="nav nav-pills pull-right">
             @can('page-edit', $pageItem)
                 <li role="presentation">
                     <a href="#" wz-form-submit data-form="#form-recover-{{ $history->id }}"
-                       data-confirm="恢复后将覆盖当前页面，确定要恢复该记录吗？">恢复</a>
+                       data-confirm="@lang('document.recover_confirm')">@lang('document.btn_recover')</a>
                     <form id="form-recover-{{ $history->id }}"
                           action="{{ wzRoute('project:doc:history:recover', ['id' => $project->id, 'p' => $pageItem->id, 'history_id' => $history->id]) }}"
                           method="post">{{ csrf_field() }}{{ method_field('PUT') }}</form>
@@ -21,7 +21,7 @@
             </li>
             <li>
                 <a href="{{ wzRoute('project:doc:history', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}"
-                   class="btn btn-link">返回</a>
+                   class="btn btn-link">@lang('common.btn_back')</a>
             </li>
         </ul>
         <hr />
@@ -29,11 +29,11 @@
     <div class="wz-page-content" style="max-width: 400px;">
         <table class="table table-bordered">
             <tr>
-                <th>创建人</th>
+                <th>@lang('document.creator')</th>
                 <td>{{ $pageItem->user->name }}</td>
             </tr>
             <tr>
-                <th>创建时间</th>
+                <th>@lang('document.create_time')</th>
                 <td>{{ $pageItem->created_at }}</td>
             </tr>
             <tr>

@@ -2,10 +2,10 @@
     <nav>
         <ul class="nav nav-pills pull-right">
             @if(Auth::guest())
-                <li role="presentation"><a href="{{ wzRoute('login') }}">登录</a></li>
-                <li role="presentation"><a href="{{ wzRoute('register') }}">注册</a></li>
+                <li role="presentation"><a href="{{ wzRoute('login') }}">@lang('common.login')</a></li>
+                <li role="presentation"><a href="{{ wzRoute('register') }}">@lang('common.register')</a></li>
             @else
-                <li role="presentation"><a href="{{ route('user:home') }}">个人主页</a></li>
+                <li role="presentation"><a href="{{ route('user:home') }}">@lang('common.user_home')</a></li>
                 <li role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         {{ Auth::user()->name ?? Auth::user()->email }} <span class="caret"></span>
@@ -13,7 +13,7 @@
                     <ul class="dropdown-menu">
                         <li role="presentation">
                             <form action="{{ wzRoute('logout') }}" method="post" id="form-logout">{{ csrf_field() }}</form>
-                            <a href="#" wz-form-submit data-confirm="确定要退出吗？" data-form="#form-logout">退出</a>
+                            <a href="#" wz-form-submit data-confirm="@lang('common.logout_confirm')" data-form="#form-logout">@lang('common.logout')</a>
                         </li>
                     </ul>
                 </li>

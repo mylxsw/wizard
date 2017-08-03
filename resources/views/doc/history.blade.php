@@ -41,7 +41,7 @@
 
                         @can('page-edit', $pageItem)
                         <a href="#" wz-form-submit data-form="#form-recover-{{ $history->id }}"
-                           data-confirm="恢复后将覆盖当前页面，确定要恢复该记录吗？">恢复</a>
+                           data-confirm="还原后将覆盖当前页面，确定要还原该记录吗？">还原</a>
                         <form id="form-recover-{{ $history->id }}"
                               action="{{ wzRoute('project:doc:history:recover', ['id' => $project->id, 'p' => $pageItem->id, 'history_id' => $history->id]) }}"
                               method="post">{{ csrf_field() }}{{ method_field('PUT') }}</form>

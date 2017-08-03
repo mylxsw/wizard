@@ -13,7 +13,7 @@
                             <span class="glyphicon glyphicon-th-large"></span>
                             {{ $project->name }}
                             @if($project->visibility == \App\Repositories\Project::VISIBILITY_PRIVATE)
-                                <span title="私有项目" class="pull-right wz-box-tag glyphicon glyphicon-eye-close"></span>
+                                <span title="@lang('project.privilege_private')" class="pull-right wz-box-tag glyphicon glyphicon-eye-close"></span>
                             @endif
                         </a>
                     </li>
@@ -29,17 +29,17 @@
                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
                                     <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    新增 <span class="caret"></span>
+                                    @lang('common.btn_add') <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id]) }}">文档</a>
+                                    <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id]) }}">@lang('common.document')</a>
                                     </li>
-                                    <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger']) }}">Swagger API</a></li>
+                                    <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger']) }}">@lang('common.swagger')</a></li>
                                 </ul>
                             </div>
                             @can('project-setting', $project)
                                 <a class="btn btn-default"
-                                   href="{{ wzRoute('project:setting:show', ['id' => $project->id]) }}">项目配置</a>
+                                   href="{{ wzRoute('project:setting:show', ['id' => $project->id]) }}">@lang('project.setting')</a>
                             @endcan
                         </div>
                     @endcan

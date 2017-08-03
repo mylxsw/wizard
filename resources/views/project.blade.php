@@ -6,7 +6,7 @@
             <ul class="nav nav-pills pull-right">
                 @can('page-edit', $pageItem)
                     <li role="presentation">
-                        <a href="{{ wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">编辑</a>
+                        <a href="{{ wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">@lang('common.btn_edit')</a>
                     </li>
                 @endcan
                 @include('components.page-menus', ['project' => $project, 'pageItem' => $pageItem])
@@ -16,19 +16,19 @@
         <div class="wz-page-content" style="max-width: 400px;">
             <table class="table table-bordered">
                 <tr>
-                    <th>创建人</th>
+                    <th>@lang('document.creator')</th>
                     <td>{{ $pageItem->user->name or '' }}</td>
                 </tr>
                 <tr>
-                    <th>创建时间</th>
+                    <th>@lang('document.create_timet')</th>
                     <td>{{ $pageItem->created_at or '' }}</td>
                 </tr>
                 <tr>
-                    <th>最后修改人</th>
+                    <th>@lang('document.last_modified_user')</th>
                     <td>{{ $pageItem->lastModifiedUser->name or '' }}</td>
                 </tr>
                 <tr>
-                    <th>最后修改时间</th>
+                    <th>@lang('document.last_modified_time')</th>
                     <td>{{ $pageItem->updated_at or '' }}</td>
                 </tr>
 

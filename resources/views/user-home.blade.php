@@ -12,7 +12,7 @@
                     <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}"
                        title="{{ $proj->description }}">
                         @if($proj->visibility == \App\Repositories\Project::VISIBILITY_PRIVATE)
-                            <span title="私有项目" class="wz-box-tag glyphicon glyphicon-eye-close"></span>
+                            <span title="@lang('project.privilege_private')" class="wz-box-tag glyphicon glyphicon-eye-close"></span>
                         @endif
                         <p class="wz-title">{{ $proj->name }}</p>
                     </a>
@@ -21,7 +21,7 @@
             <div class="col-lg-3">
                 <a class="wz-box" href="#"
                    data-toggle="modal" data-target="#wz-new-project">
-                    <p class="wz-title"><span class="glyphicon glyphicon glyphicon-plus"></span> 新增项目</p>
+                    <p class="wz-title"><span class="glyphicon glyphicon glyphicon-plus"></span> @lang('project.new_project')</p>
                 </a>
             </div>
         </div>
@@ -32,39 +32,39 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">新增项目</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">@lang('project.new_project')</h4>
                 </div>
                 <div class="modal-body">
                     <form method="post" action="{{ wzRoute('project:new:handle') }}" id="wz-project-save-form">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="project-name" class="control-label">项目名称：</label>
-                            <input type="text" name="name" placeholder="项目名称" class="form-control" id="project-name">
+                            <label for="project-name" class="control-label">@lang('project.project_name')：</label>
+                            <input type="text" name="name" placeholder="@lang('project.project_name')" class="form-control" id="project-name">
                         </div>
                         <div class="form-group">
-                            <label for="project-description" class="control-label">项目描述：</label>
-                            <textarea class="form-control" name="description" placeholder="项目描述" id="project-description"></textarea>
+                            <label for="project-description" class="control-label">@lang('project.description')：</label>
+                            <textarea class="form-control" name="description" placeholder="@lang('project.description')" id="project-description"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="project-visibility" class="control-label">项目权限：</label>
+                            <label for="project-visibility" class="control-label">@lang('project.privilege')：</label>
                             <div class="radio-inline">
                                 <label>
                                     <input type="radio" name="visibility" id="project-visibility" value="{{ \App\Repositories\Project::VISIBILITY_PUBLIC }}" checked>
-                                    公开
+                                    @lang('project.privilege_public')
                                 </label>
                             </div>
                             <div class="radio-inline">
                                 <label>
                                     <input type="radio" name="visibility" value="{{ \App\Repositories\Project::VISIBILITY_PRIVATE }}">
-                                    私有
+                                    @lang('project.privilege_private')
                                 </label>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="wz-project-save">保存</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-success" id="wz-project-save">@lang('common.btn_save')</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('common.btn_close')</button>
                 </div>
             </div>
         </div>
