@@ -32,8 +32,13 @@
                     <td>{{ $history->created_at }}</td>
                     <td>{{ $history->operator->name }}</td>
                     <td>
-                        <a href="{{ wzRoute('project:doc:history:show', ['id' => $project->id, 'p' => $pageItem->id, 'history_id' => $history->id]) }}">查看</a>&nbsp;
-                        &nbsp;&nbsp;&nbsp;
+                        <a href="{{ wzRoute('project:doc:history:show', ['id' => $project->id, 'p' => $pageItem->id, 'history_id' => $history->id]) }}">查看</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="#" wz-doc-compare-submit
+                           data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
+                           data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}">比较</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
                         @can('page-edit', $pageItem)
                         <a href="#" wz-form-submit data-form="#form-recover-{{ $history->id }}"
                            data-confirm="恢复后将覆盖当前页面，确定要恢复该记录吗？">恢复</a>
@@ -49,3 +54,35 @@
     </div>
 
 @endsection
+
+@push('script')
+<script>
+    $(function () {
+        $('[wz-doc-compare-submit]').on('click', function (e) {
+            e.preventDefault();
+
+            var compareUrl = '{{ route('project:doc:compare') }}';
+
+            var doc1url = $(this).data('doc1');
+            var doc2url = $(this).data('doc2');
+
+            axios.all([
+                axios.get(doc1url),
+                axios.get(doc2url)
+            ]).then(axios.spread(function (resp1, resp2) {
+                $.wz.dynamicFormSubmit(
+                    'wz-compare-' + resp1.data.id + '-' + resp2.data.id,
+                    'post',
+                    compareUrl,
+                    {
+                        doc1: resp1.data.content,
+                        doc2: resp2.data.content,
+                        doc1title: '最新文档',
+                        doc2title: '历史版本'
+                    }
+                );
+            }));
+        });
+    });
+</script>
+@endpush

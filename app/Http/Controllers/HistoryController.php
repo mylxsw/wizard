@@ -86,4 +86,34 @@ class HistoryController extends Controller
     {
 
     }
+
+    /**
+     * 以JSON返回历史文档
+     *
+     * @param $id
+     * @param $page_id
+     * @param $history_id
+     *
+     * @return array
+     */
+    public function getPageJSON($id, $page_id, $history_id)
+    {
+        $history = DocumentHistory::where('page_id', $page_id)->where('id', $history_id)
+            ->firstOrFail();
+
+        return [
+            'id'                     => $history->id,
+            'page_id'                => $history->page_id,
+            'pid'                    => $history->pid,
+            'title'                  => $history->title,
+            'description'            => $history->description,
+            'content'                => $history->content,
+            'type'                   => $history->type,
+            'user_id'                => $history->user_id,
+            'username'               => $history->user->name,
+            'last_modified_user_id'  => $history->operator->id,
+            'last_modified_username' => $history->operator->name,
+            'created_at'             => $history->created_at->format('Y-m-d H:i:s'),
+        ];
+    }
 }

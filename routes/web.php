@@ -42,13 +42,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/{id}/doc/{page_id}', 'DocumentController@editPageHandle')->name('doc:edit:handle');
         Route::delete('/{id}/doc/{page_id}', 'DocumentController@deletePage')->name('doc:delete');
 
-        // ajax获取文档信息
+        // ajax获取文档是否过期
         Route::get('/{id}/doc/{page_id}/expired', 'DocumentController@checkPageExpired')->name('doc:expired');
+        Route::get('/{id}/doc/{page_id}.json', 'DocumentController@getPageJSON')->name('doc:json');
+        Route::get('/{id}/doc/{page_id}/histories/{history_id}.json', 'HistoryController@getPageJSON')->name('doc:history:json');
 
         // 文档历史记录
         Route::get('/{id}/doc/{page_id}/histories', 'HistoryController@pages')->name('doc:history');
         Route::get('/{id}/doc/{page_id}/histories/{history_id}', 'HistoryController@page')->name('doc:history:show');
         Route::put('/{id}/doc/{page_id}/histories/{history_id}', 'HistoryController@recover')->name('doc:history:recover');
+
+        // 文档比较
+        Route::post('/doc/compare', 'CompareController@compare')->name('doc:compare');
     });
 
 });

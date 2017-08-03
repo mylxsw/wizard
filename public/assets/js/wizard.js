@@ -88,5 +88,43 @@ $.wz = {
      */
     confirm: function (message, callback) {
         layer.confirm(message, {}, callback);
+    },
+
+    /**
+     * 动态表单提交
+     *
+     * @param id
+     * @param method
+     * @param action
+     * @param data
+     */
+    dynamicFormSubmit: function (id, method, action, data) {
+        var form = document.createElement('form');
+
+        form.id = id;
+        form.method = method;
+        form.action = action;
+        // 在新页面中打开会被浏览器拦截
+        // form.target = "_blank";
+        form.style.display = 'none';
+
+        for (var key in data) {
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = data[key];
+
+            form.appendChild(input);
+        }
+
+        var token = document.createElement('input');
+        token.type = 'hidden';
+        token.name = '_token';
+        token.value = $('meta[name="csrf-token"]').attr('content');
+        form.appendChild(token);
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
     }
 };

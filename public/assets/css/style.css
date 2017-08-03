@@ -190,3 +190,25 @@ a:hover {
     display: block;
     line-height: 1.6;
 }
+
+/* 解决markdown编辑器全屏时页面中的input框在编辑器之上的问题 */
+.editormd-fullscreen {
+    z-index: 10;
+}
+
+.CodeMirror {
+    height:100%!important;
+}
+.mergely-column {
+    height: auto!important;
+}
+
+.wz-full-box {
+    margin: 20px 5px;
+}
+
+.wz-compare-box .wz-compare-title {
+    width: 50%;
+    float: left;
+    margin-bottom: 10px;
+}

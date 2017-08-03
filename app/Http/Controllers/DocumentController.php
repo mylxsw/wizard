@@ -263,4 +263,32 @@ class DocumentController extends Controller
         $request->session()->flash('alert.message', '文档删除成功');
         return redirect(wzRoute('project:home', ['id' => $id]));
     }
+
+    /**
+     * 以JSON形式返回文档
+     *
+     * @param $id
+     * @param $page_id
+     *
+     * @return array
+     */
+    public function getPageJSON($id, $page_id)
+    {
+        $pageItem = Document::where('id', $page_id)->where('project_id', $id)->firstOrFail();
+
+        return [
+            'id'                     => $pageItem->id,
+            'pid'                    => $pageItem->pid,
+            'title'                  => $pageItem->title,
+            'description'            => $pageItem->description,
+            'content'                => $pageItem->content,
+            'type'                   => $pageItem->type,
+            'user_id'                => $pageItem->user_id,
+            'username'               => $pageItem->user->name,
+            'last_modified_user_id'  => $pageItem->lastModifiedUser->id,
+            'last_modified_username' => $pageItem->lastModifiedUser->name,
+            'created_at'             => $pageItem->created_at->format('Y-m-d H:i:s'),
+            'updated_at'             => $pageItem->updated_at->format('Y-m-d H:i:s'),
+        ];
+    }
 }
