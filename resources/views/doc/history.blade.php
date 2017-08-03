@@ -51,6 +51,10 @@
             @endforeach
             </tbody>
         </table>
+
+        <div class="wz-pagination">
+            {{ $histories->links() }}
+        </div>
     </div>
 
 @endsection

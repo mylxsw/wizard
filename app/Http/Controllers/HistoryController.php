@@ -39,7 +39,7 @@ class HistoryController extends Controller
         $histories = DocumentHistory::with('operator')
             ->where('page_id', $page_id)
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(20);
 
         return view('doc.history', [
             'histories'  => $histories,
@@ -82,9 +82,28 @@ class HistoryController extends Controller
         ]);
     }
 
+    /**
+     * 从历史页面恢复
+     *
+     * @param Request $request
+     * @param         $id
+     * @param         $page_id
+     * @param         $history_id
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function recover(Request $request, $id, $page_id, $history_id)
     {
+        $pageItem = Document::where('project_id', $id)->where('id', $page_id)->firstOrFail();
+        $this->authorize('page-edit', $pageItem);
 
+        $historyItem = DocumentHistory::where('project_id', $id)->where('id', $history_id)
+            ->where('page_id', $page_id)->firstOrFail();
+
+        Document::recover($pageItem, $historyItem);
+        $this->alert('文档恢复成功');
+
+        return redirect(wzRoute('project:home', ['id' => $id, 'p' => $page_id]));
     }
 
     /**

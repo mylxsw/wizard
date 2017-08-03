@@ -56,6 +56,29 @@ class Document extends Repository
     public $dates = ['deleted_at'];
 
     /**
+     * 文档恢复
+     *
+     * @param Document        $document
+     * @param DocumentHistory $history
+     *
+     * @return Document
+     */
+    public static function recover(Document $document, DocumentHistory $history): Document
+    {
+        $document->pid               = $history->pid;
+        $document->title             = $history->title;
+        $document->description       = $history->description;
+        $document->content           = $history->content;
+        $document->last_modified_uid = $history->operator_id;
+        $document->type              = $history->type;
+        $document->status            = $history->status;
+
+        $document->save();
+
+        return $document;
+    }
+
+    /**
      * 所属的项目
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

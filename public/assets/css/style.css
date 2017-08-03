@@ -213,3 +213,10 @@ a:hover {
     float: left;
     margin-bottom: 10px;
 }
+
+.wz-pagination {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+}

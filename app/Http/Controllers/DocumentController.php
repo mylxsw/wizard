@@ -261,8 +261,8 @@ class DocumentController extends Controller
 
         // 删除文档
         $pageItem->delete();
+        $this->alert('文档删除成功');
 
-        $request->session()->flash('alert.message', '文档删除成功');
         return redirect(wzRoute('project:home', ['id' => $id]));
     }
 
