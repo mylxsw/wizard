@@ -22,6 +22,7 @@ return [
     'btn_update' => 'Update',
     'btn_more'   => 'More',
     'btn_back'   => 'Back',
+    'btn_confirm' => 'OK',
 
     'login'            => 'Login',
     'register'         => 'Register',

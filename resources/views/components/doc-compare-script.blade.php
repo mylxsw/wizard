@@ -20,8 +20,8 @@
                     {
                         doc1: resp1.data.content,
                         doc2: resp2.data.content,
-                        doc1title: '最新文档',
-                        doc2title: '历史版本'
+                        doc1title: '@lang('document.latest_document')',
+                        doc2title: '@lang('document.history_document')'
                     }
                 );
             }));

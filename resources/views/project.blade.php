@@ -20,7 +20,7 @@
                     <td>{{ $pageItem->user->name or '' }}</td>
                 </tr>
                 <tr>
-                    <th>@lang('document.create_timet')</th>
+                    <th>@lang('document.create_time')</th>
                     <td>{{ $pageItem->created_at or '' }}</td>
                 </tr>
                 <tr>

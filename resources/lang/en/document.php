@@ -24,6 +24,15 @@ return [
     'force_save'       => 'Force save',
     'show_diff'        => 'Show diff',
 
-    'delete_confirm'  => 'Are you sure you want to delete document ":title" ?',
-    'recover_confirm' => 'Will cover the current page after reduction, sure you want to restore the record?',
+    'document_differ'  => 'Document Differ',
+    'latest_document'  => 'Latest',
+    'history_document' => 'History Archive',
+    'after_modified'   => 'After',
+
+    'select_template' => 'Choose Template',
+
+    'delete_confirm'        => 'Are you sure you want to delete document ":title" ?',
+    'recover_confirm'       => 'Will cover the current page after reduction, sure you want to restore the record?',
+    'force_save_confirm'    => 'Compulsory preservation will probably cover other users to submit changes, sure you want to save to impose?',
+    'differ_dialog_message' => 'If compare page can\\\'t pop-up differences, please in your browser Settings to enable retry after "allow pop-up window" option',
 ];

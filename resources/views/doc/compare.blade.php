@@ -5,11 +5,11 @@
     @include('layouts.navbar')
     <nav class="wz-page-control clearfix">
         <h1 class="wz-page-title">
-            文档差异对比
+            @lang('document.document_differ')
         </h1>
         <ul class="nav nav-pills pull-right">
             <li>
-                <a href="javascript: window.history.go(-1)" class="btn btn-link" style="margin-right: 30px;">返回</a>
+                <a href="javascript: window.history.go(-1)" class="btn btn-link" style="margin-right: 30px;">@lang('common.btn_back')</a>
             </li>
         </ul>
     </nav>

@@ -16,7 +16,7 @@
                 <a href="#" wz-doc-compare-submit
                    data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
                    data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}">
-                    差异
+                    @lang('common.btn_diff')
                 </a>
             </li>
             <li>
@@ -37,11 +37,11 @@
                 <td>{{ $pageItem->created_at }}</td>
             </tr>
             <tr>
-                <th>变更人</th>
+                <th>@lang('document.modified_user')</th>
                 <td>{{ $history->operator->name }}</td>
             </tr>
             <tr>
-                <th>变更时间</th>
+                <th>@lang('document.operation_time')</th>
                 <td>{{ $history->created_at }}</td>
             </tr>
         </table>

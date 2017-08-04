@@ -102,7 +102,7 @@ class HistoryController extends Controller
             ->where('page_id', $page_id)->firstOrFail();
 
         event(new DocumentRecovered(Document::recover($pageItem, $historyItem)));
-        $this->alert('文档恢复成功');
+        $this->alert(__('document.document_recover_success'));
 
         return redirect(wzRoute('project:home', ['id' => $id, 'p' => $page_id]));
     }

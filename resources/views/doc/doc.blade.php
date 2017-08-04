@@ -35,64 +35,23 @@
 <script src="/assets/vendor/editor-md/lib/flowchart.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/jquery.flowchart.min.js"></script>
 <script src="/assets/vendor/editor-md/editormd.min.js"></script>
+<script src="/assets/js/markdown-editor.js"></script>
 <script type="text/javascript">
     $(function () {
-        var editor = editormd("editormd", {
-            path: "/assets/vendor/editor-md/lib/",
-            height: 640,
-            taskList: true,
-            tex: true,
-            flowChart: true,
-            sequenceDiagram: true,
-            toolbarIcons: function () {
-                return ["undo", "redo", "|",
-                    "bold", "del", "italic", "quote", "|",
-                    "h1", "h2", "h3", "h4", "h5", "h6", "|",
-                    "list-ul", "list-ol", "hr", "|",
-                    "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "pagebreak", "|",
-                    "goto-line", "watch", "preview", "fullscreen", "clear", "search", "|",
-                    "template", "|",
-                    "help", "info"
-                ];
+        var editor = $.wz.mdEditor('editormd', {
+            template: function () {
+                return $('#editor-template-dialog').html();
             },
-            toolbarIconsClass: {
-                template: "fa-flask"
-            },
-            toolbarHandlers: {
-                template: function (cm, icon, cursor, selection) {
-                    dialog = this.createDialog({
-                        title: "选择模板",
-                        width: 380,
-                        height: 300,
-                        content: $('#editor-template-dialog').html(),
-                        mask: true,
-                        drag: true,
-                        lockScreen: true,
-                        buttons: {
-                            enter: ["确定", function () {
-                                var template = this.find("input[name=template]:checked");
-                                var content = Base64.decode(template.data('content'));
+            templateSelected: function (dialog) {
+                var template = dialog.find("input[name=template]:checked");
+                var content = Base64.decode(template.data('content'));
 
-                                cm.replaceSelection(content);
-
-                                this.hide().lockScreen(false).hideMask();
-
-                                return false;
-                            }],
-
-                            cancel: ["取消", function () {
-                                this.hide().lockScreen(false).hideMask();
-
-                                return false;
-                            }]
-                        }
-                    });
-                }
+                return content;
             },
             lang: {
-                toolbar: {
-                    template: "选择模板"
-                }
+                chooseTemplate: '@lang('document.select_template')',
+                confirmBtn: '@lang('common.btn_confirm')',
+                cancelBtn: '@lang('common.btn_cancel')'
             }
         });
 

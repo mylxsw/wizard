@@ -95,8 +95,8 @@ class DocumentController extends Controller
                 'pid'        => 'integer|min:0',
             ],
             [
-                'title.required' => '文档标题不能为空',
-                'title.between'  => '文档标题格式不合法',
+                'title.required' => __('document.validation.title_required'),
+                'title.between'  => __('document.validation.title_between'),
             ]
         );
 
@@ -130,7 +130,7 @@ class DocumentController extends Controller
                 'project:doc:edit:show',
                 ['id' => $projectID, 'page_id' => $pageItem->id]
             ),
-            'message'  => '新增成功',
+            'message'  => __('common.operation_success'),
         ];
     }
 
@@ -157,8 +157,8 @@ class DocumentController extends Controller
                 'history_id'       => 'required|integer',
             ],
             [
-                'title.required' => '文档标题不能为空',
-                'title.between'  => '文档标题格式不合法',
+                'title.required' => __('document.validation.title_required'),
+                'title.between'  => __('document.validation.title_between'),
             ]
         );
 
@@ -179,7 +179,7 @@ class DocumentController extends Controller
         if (!$forceSave && (!$pageItem->updated_at->equalTo($lastModifiedAt) || $history_id != $pageItem->history_id)) {
             return $this->buildFailedValidationResponse($request, [
                 'last_modified_at' => [
-                    "该页面已经被 {$pageItem->lastModifiedUser->name} 于 {$pageItem->updated_at} 修改过了",
+                    __('document.validation.doc_modified_by_user', ['username' => $pageItem->lastModifiedUser->name, 'time' => $pageItem->updated_at])
                 ]
             ]);
         }
@@ -201,7 +201,7 @@ class DocumentController extends Controller
         }
 
         return [
-            'message'  => '保存成功',
+            'message'  => __('common.operation_success'),
             'redirect' => wzRoute(
                 'project:doc:edit:show',
                 ['id' => $projectID, 'page_id' => $page_id]
@@ -235,13 +235,13 @@ class DocumentController extends Controller
         // 检查文档是否已经被别人修改过了，避免修改覆盖
         if (!$pageItem->updated_at->equalTo($lastModifiedAt)) {
             return [
-                'message' => "该页面已经被 {$pageItem->lastModifiedUser->name} 于 {$pageItem->updated_at} 修改过了",
+                'message' => __('document.validation.doc_modified_by_user', ['username' => $pageItem->lastModifiedUser->name, 'time' => $pageItem->updated_at]),
                 'expired' => true,
             ];
         }
 
         return [
-            'message' => '页面正常',
+            'message' => 'ok',
             'expired' => false,
         ];
     }
@@ -269,7 +269,7 @@ class DocumentController extends Controller
 
         // 删除文档
         $pageItem->delete();
-        $this->alert('文档删除成功');
+        $this->alert(__('document.document_delete_success'));
 
         event(new DocumentDeleted($pageItem));
 

@@ -49,9 +49,9 @@ class ProjectController extends Controller
                 'visibility'  => 'required|in:1,2'
             ],
             [
-                'name.required'   => '项目名称不能为空',
-                'name.between'    => '项目名称格式不合法',
-                'description.max' => '项目描述不能超过255个字符',
+                'name.required'   => __('project.validation.project_name_required'),
+                'name.between'    => __('project.validation.project_name_between'),
+                'description.max' => __('project.validation.project_description_max'),
             ]
         );
 
@@ -68,7 +68,7 @@ class ProjectController extends Controller
 
         event(new ProjectCreated($project));
 
-        $request->session()->flash('alert.message', '项目创建完成');
+        $request->session()->flash('alert.message', __('common.operation_success'));
         return [
             'id'          => $project->id,
             'name'        => $project->name,
@@ -145,9 +145,9 @@ class ProjectController extends Controller
                 'visibility'  => 'required|in:1,2',
             ],
             [
-                'name.required'   => '项目名称不能为空',
-                'name.between'    => '项目名称格式不合法',
-                'description.max' => '项目描述不能超过255个字符',
+                'name.required'   => __('project.validation.project_name_required'),
+                'name.between'    => __('project.validation.project_name_between'),
+                'description.max' => __('project.validation.project_description_max'),
             ]
         );
 
@@ -165,7 +165,7 @@ class ProjectController extends Controller
 
         event(new ProjectModified($project));
 
-        $request->session()->flash('alert.message', '项目信息更新成功');
+        $request->session()->flash('alert.message', __('project.project_update_success'));
         return redirect(wzRoute(
             'project:setting:show',
             ['id' => $id]
