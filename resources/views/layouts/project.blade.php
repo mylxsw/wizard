@@ -23,26 +23,28 @@
             <div class="col-lg-9">
 
                 <nav class="wz-page-control clearfix">
-                    @can('page-add', $project)
-                        <div class="btn-group wz-nav-control">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    @lang('common.btn_add') <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id]) }}">@lang('common.document')</a>
-                                    </li>
-                                    <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger']) }}">@lang('common.swagger')</a></li>
-                                </ul>
-                            </div>
-                            @can('project-setting', $project)
-                                <a class="btn btn-default"
-                                   href="{{ wzRoute('project:setting:show', ['id' => $project->id]) }}">@lang('project.setting')</a>
-                            @endcan
+
+                    <div class="btn-group wz-nav-control">
+                        @can('page-add', $project)
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                @lang('common.btn_add') <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id]) }}">@lang('common.document')</a>
+                                </li>
+                                <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger']) }}">@lang('common.swagger')</a></li>
+                            </ul>
                         </div>
-                    @endcan
+                        @endcan
+                        @can('project-edit', $project)
+                            <a class="btn btn-default"
+                               href="{{ wzRoute('project:setting:show', ['id' => $project->id]) }}">@lang('project.setting')</a>
+                        @endcan
+                    </div>
+
                     @yield('project-control')
                 </nav>
                 <div class="panel panel-default">

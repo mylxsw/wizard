@@ -29,14 +29,17 @@ class ProjectModifiedListener
     {
         $project = $event->getProject();
 
-        OperationLogs::logf(
+        OperationLogs::log(
             \Auth::user()->id,
-            [],
-            '用户 [%s](%d) 修改了项目 [%s](%d)',
-            \Auth::user()->name,
-            \Auth::user()->id,
-            $project->name,
-            $project->id
+            __(
+                'log.user_edit_project',
+                [
+                    'username'     => \Auth::user()->name,
+                    'user_id'      => \Auth::user()->id,
+                    'project_name' => $project->name,
+                    'project_id'   => $project->id
+                ]
+            )
         );
     }
 }

@@ -29,14 +29,17 @@ class ProjectDeletedListener
     {
         $project = $event->getProject();
 
-        OperationLogs::logf(
+        OperationLogs::log(
             \Auth::user()->id,
-            [],
-            '用户 [%s](%d) 删除了项目 [%s](%d)',
-            \Auth::user()->name,
-            \Auth::user()->id,
-            $project->name,
-            $project->id
+            __(
+                'log.user_delete_project',
+                [
+                    'username'     => \Auth::user()->name,
+                    'user_id'      => \Auth::user()->id,
+                    'project_name' => $project->name,
+                    'project_id'   => $project->id
+                ]
+            )
         );
     }
 }

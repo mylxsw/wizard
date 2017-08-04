@@ -30,15 +30,17 @@ class DocumentCreatedListener
     {
         $doc = $event->getDocument();
 
-        OperationLogs::log($doc->user_id,
-            sprintf(
-                '用户 [%s](%d) 创建了文档 [%s](%d)::[%s](%d)',
-                $doc->user->name,
-                $doc->user_id,
-                $doc->project->name,
-                $doc->project_id,
-                $doc->title,
-                $doc->id
+        OperationLogs::log(\Auth::user()->id,
+            __(
+                'log.user_create_document',
+                [
+                    'username'     => $doc->user->name,
+                    'user_id'      => $doc->user_id,
+                    'project_name' => $doc->project->name,
+                    'project_id'   => $doc->project_id,
+                    'doc_title'    => $doc->title,
+                    'doc_id'       => $doc->id
+                ]
             )
         );
     }

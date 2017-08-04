@@ -96,7 +96,7 @@ class HistoryController extends Controller
     public function recover(Request $request, $id, $page_id, $history_id)
     {
         $pageItem = Document::where('project_id', $id)->where('id', $page_id)->firstOrFail();
-        $this->authorize('page-edit', $pageItem);
+        $this->authorize('page-recover', $pageItem);
 
         $historyItem = DocumentHistory::where('project_id', $id)->where('id', $history_id)
             ->where('page_id', $page_id)->firstOrFail();

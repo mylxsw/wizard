@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use App\Repositories\Document;
-use App\Repositories\Project;
-use App\Repositories\User;
+use App\Policies\DocumentPolicy;
+use App\Policies\ProjectPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -27,42 +26,15 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // 检查用户是否有对项目的编辑权限
-        Gate::define('project-setting', function (User $user, $project) {
-            if (empty($user)) {
-                return false;
-            }
-
-            if (!$project instanceof Project) {
-                $project = Project::where('id', $project)->firstOrFail();
-            }
-
-            return (int)$user->id === (int)$project->user_id;
-        });
+        Gate::define('project-edit', ProjectPolicy::class . '@edit');
+        // 检查用户是否有删除项目的权限
+        Gate::define('project-delete', ProjectPolicy::class . '@delete');
 
         // 检查是否有新增页面的权限
-        Gate::define('page-add', function (User $user, $project) {
-            if (empty($user)) {
-                return false;
-            }
-
-            if (!$project instanceof Project) {
-                $project = Project::where('id', $project)->firstOrFail();
-            }
-
-            return (int)$user->id === (int)$project->user_id;
-        });
-
+        Gate::define('page-add', ProjectPolicy::class . '@addPage');
         // 检查是否有编辑页面的权限
-        Gate::define('page-edit', function (User $user, $page) {
-            if (empty($user)) {
-                return false;
-            }
-
-            if (!$page instanceof Document) {
-                $page = Document::where('id', $page)->firstOrFail();
-            }
-
-            return (int)$user->id === (int)$page->user_id;
-        });
+        Gate::define('page-edit', DocumentPolicy::class . '@edit');
+        // 检查是否有还原页面的权限
+        Gate::define('page-recover', DocumentPolicy::class . '@recover');
     }
 }

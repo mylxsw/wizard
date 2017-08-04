@@ -123,7 +123,10 @@ class ProjectController extends Controller
      */
     public function setting($id)
     {
-        return view('setting', ['project' => Project::findOrFail($id)]);
+        $project = Project::findOrFail($id);
+        $this->authorize('project-edit', $project);
+
+        return view('setting', ['project' => $project]);
     }
 
     /**
@@ -155,8 +158,9 @@ class ProjectController extends Controller
         $description = $request->input('description');
         $visibility  = $request->input('visibility');
 
+        $project = Project::where('id', $id)->firstOrFail();
+        $this->authorize('project-edit', $project);
 
-        $project              = Project::where('id', $id)->firstOrFail();
         $project->name        = $name;
         $project->description = $description;
         $project->visibility  = $visibility;

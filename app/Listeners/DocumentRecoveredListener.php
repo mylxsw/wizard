@@ -30,18 +30,22 @@ class DocumentRecoveredListener
     {
         $doc = $event->getDocument();
 
-        OperationLogs::logf(
-            \Auth::user()->id,
+
+        OperationLogs::log(\Auth::user()->id,
+            __(
+                'log.user_recover_document',
+                [
+                    'username'     => \Auth::user()->name,
+                    'user_id'      => \Auth::user()->id,
+                    'project_name' => $doc->project->name,
+                    'project_id'   => $doc->project_id,
+                    'doc_title'    => $doc->title,
+                    'doc_id'       => $doc->id
+                ]
+            ),
             [
                 'history_id' => $doc->history_id,
-            ],
-            '用户 [%s](%d) 还原了文档 [%s](%d)::[%s](%d)',
-            \Auth::user()->name,
-            \Auth::user()->id,
-            $doc->project->name,
-            $doc->project_id,
-            $doc->title,
-            $doc->id
+            ]
         );
     }
 }
