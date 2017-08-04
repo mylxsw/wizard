@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Repositories\Document;
 use App\Repositories\Project;
+use App\Repositories\Template;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->addProjectExistRules('project_exist');
         $this->addPageExistRules('page_exist');
+        $this->addTemplateUniqueRules('template_unique');
 
         // 在日志中输出sql历史
         \DB::listen(function (QueryExecuted $query) {
@@ -82,6 +84,22 @@ class AppServiceProvider extends ServiceProvider
             '参数 %s 对应的项目不存在',
             function ($attribute, $value, $parameters, $validator) {
                 return Project::where('id', $value)->exists();
+            }
+        );
+    }
+
+    /**
+     * 模板名称是否唯一
+     *
+     * @param string $ruleName
+     */
+    private function addTemplateUniqueRules(string $ruleName)
+    {
+        $this->registerValidationRule(
+            $ruleName,
+            '模板名称已经存在',
+            function ($attribute, $value, $parameters, $validator) {
+                return !Template::where('name', $value)->exists();
             }
         );
     }

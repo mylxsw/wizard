@@ -21,6 +21,11 @@ Route::get('/', 'HomeController@home')->name('home');
 // 项目公共页面
 Route::get('/project/{id}', 'ProjectController@project')->name('project:home');
 
+// 空白页，用于前端兼容
+Route::get('/blank', function () {
+    return '';
+})->name('blank');
+
 Route::group(['middleware' => 'auth'], function () {
     // 个人首页
     Route::get('/home', 'ProjectController@home')->name('user:home');
@@ -51,10 +56,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{id}/doc/{page_id}/histories', 'HistoryController@pages')->name('doc:history');
         Route::get('/{id}/doc/{page_id}/histories/{history_id}', 'HistoryController@page')->name('doc:history:show');
         Route::put('/{id}/doc/{page_id}/histories/{history_id}', 'HistoryController@recover')->name('doc:history:recover');
-
-        // 文档比较
-        Route::post('/doc/compare', 'CompareController@compare')->name('doc:compare');
     });
+
+    // 文档比较
+    Route::post('/doc/compare', 'CompareController@compare')->name('doc:compare');
+
+    // 创建模板
+    Route::post('/template', 'TemplateController@create')->name('template:create');
 
 });
 

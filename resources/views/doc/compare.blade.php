@@ -2,17 +2,20 @@
 
 @section('container-style', 'container-fluid')
 @section('content')
-    @include('layouts.navbar')
+    @if(!$noheader)
+        @include('layouts.navbar')
+    @endif
+    @if(!$noheader)
     <nav class="wz-page-control clearfix">
         <h1 class="wz-page-title">
             @lang('document.document_differ')
         </h1>
         <ul class="nav nav-pills pull-right">
-            <li>
-                <a href="javascript: window.history.go(-1)" class="btn btn-link" style="margin-right: 30px;">@lang('common.btn_back')</a>
-            </li>
+            <li><a href="javascript: window.history.go(-1)"
+                   class="btn btn-link" style="margin-right: 30px;">@lang('common.btn_back')</a></li>
         </ul>
     </nav>
+    @endif
 
     <div class="row wz-full-box" id="wz-main-box">
         <div id="wz-compared" class="wz-compare-container">

@@ -6,6 +6,9 @@
  * @copyright 管宜尧 <guanyiyao@yunsom.com>
  */
 
+use App\Repositories\Template;
+use App\Repositories\User;
+
 /**
  * 生成路由url
  *
@@ -70,93 +73,16 @@ function navigator(
 /**
  * 文档模板
  *
+ * @param int       $type
+ * @param User|null $user
+ *
  * @return array
  */
-function wzTemplates(): array
+function wzTemplates($type = Template::TYPE_DOC, User $user = null): array
 {
-    $template
-        = <<<TTT
-
-[TOC]
-
-## 接口描述
-
-- 请求方式：**PUT**
-- 端点地址：**/user/**
-
-### 请求参数
-
-| 参数名 | 类型 | 是否必选 | 说明 |
-| ------- | ------ | ------- | ------ |
-| username | string | 是 | 用户名 |
-| email | string | 是 | 邮箱地址 |
-
-### 返回值
-
-| 参数名 | 类型 | 说明 |
-| ------- | ------ | ------- | 
-| id | integer | 用户ID |
-| email | string | 邮箱地址 |
-
-返回值示例
-
-``` 
-{
-  "id": 5,
-  "email": "xxx@xx.com"
-}
-```
-
-### 错误代码
-
-| 代码 | 说明 |
-| ---- | ------ |
-| 404 | 资源不存在 |
-| 422 | 请求参数不合法 |
-
-### 范例
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/21728c33bdd4b4b703d0)
-
-TTT;
-
-    $template2
-        = <<<XXXXX
-#### Using FlowChart
-
-setting:
-
-    {
-        flowChart : true
+    if ($user == null && !Auth::guest()) {
+        $user = Auth::user();
     }
 
-#### Example
-
-```flow
-st=>start: User login
-op=>operation: Operation
-cond=>condition: Successful Yes or No?
-e=>end: Into admin
-
-st->op->cond
-cond(yes)->e
-cond(no)->op
-```
-XXXXX;
-
-
-    return [
-        [
-            'id'      => 1,
-            'name'    => '默认模板',
-            'content' => $template,
-            'default' => true
-        ],
-        [
-            'id'      => 2,
-            'name'    => '我的模板',
-            'content' => $template2,
-            'default' => false,
-        ]
-    ];
+    return Template::queryForShow($type, $user);
 }

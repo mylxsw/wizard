@@ -30,6 +30,7 @@ class CompareController extends Controller
                 'doc2'      => 'required',
                 'doc1title' => 'required',
                 'doc2title' => 'required',
+                'noheader'  => 'in:0,1'
             ]
         );
 
@@ -38,6 +39,7 @@ class CompareController extends Controller
             'doc2'      => $request->input('doc2'),
             'doc1title' => $request->input('doc1title'),
             'doc2title' => $request->input('doc2title'),
+            'noheader'  => !!$request->input('noheader', 0)
         ]);
     }
 }

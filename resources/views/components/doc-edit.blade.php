@@ -27,7 +27,7 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="#">@lang('document.save_as_template')</a></li>
+                <li><a href="#" wz-doc-save-template>@lang('document.save_as_template')</a></li>
                 <li><a href="#">@lang('document.save_as_draft')</a></li>
                 @if(!$newPage)
                     <li><a href="#" wz-doc-form-submit data-force="true">@lang('document.force_save')</a></li>
@@ -62,8 +62,17 @@ $(function() {
                 formSubmit(form, true);
             });
         } else {
-            formSubmit(form, false);
+            $.wz.confirm('@lang('document.save_confirm')', function () {
+                formSubmit(form, false);
+            });
         }
+    });
+
+    // 保存为模板
+    $('[wz-doc-save-template]').on('click', function (e) {
+        e.preventDefault();
+
+        alert("Hello");
     });
 
     @if(!$newPage)
@@ -72,11 +81,13 @@ $(function() {
         $('[wz-doc-compare-current]').on('click', function(e) {
             e.preventDefault();
 
-            var compareUrl = '{{ route('project:doc:compare') }}';
+            var compareUrl = '{{ wzRoute('doc:compare') }}';
             var docUrl = '{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}';
 
-            $.wz.alert('@lang('document.differ_dialog_message')', function () {
-                axios.get(docUrl).then(function (resp) {
+            axios.get(docUrl).then(function (resp) {
+                var layerId = 'wz-frame-' + (new Date()).getTime();
+
+                $.wz.dialogOpen(layerId, '@lang('document.document_differ')', function (iframeId) {
                     $.wz.dynamicFormSubmit(
                         'wz-compare-' + resp.data.id,
                         'post',
@@ -85,9 +96,10 @@ $(function() {
                             doc1: $.global.getEditorContent(),
                             doc2: resp.data.content,
                             doc1title: '@lang('document.after_modified')',
-                            doc2title: '@lang('document.latest_document')'
+                            doc2title: '@lang('document.latest_document')',
+                            noheader: 1
                         },
-                        "_blank"
+                        iframeId
                     );
                 });
             });

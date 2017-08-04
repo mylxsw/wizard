@@ -127,5 +127,34 @@ $.wz = {
         document.body.appendChild(form);
         form.submit();
         document.body.removeChild(form);
+    },
+    /**
+     * 对话框中打开窗口
+     *
+     * @param layerId
+     * @param title
+     * @param callback
+     */
+    dialogOpen: function (layerId, title, callback) {
+        var pageLoaded = false;
+
+        layer.open({
+            id: layerId,
+            type: 2,
+            title: title,
+            shadeClose: true,
+            shade: false,
+            maxmin: false,
+            area: ['100%', '100%'],
+            content: '/blank',
+            success: function(layero, index) {
+                if (pageLoaded) {
+                    return ;
+                }
+
+                callback($('#' + layerId + ' iframe').attr('id'));
+                pageLoaded = true;
+            }
+        });
     }
 };

@@ -20,13 +20,16 @@ namespace App\Repositories{
  * @property integer $project_id
  * @property integer $user_id
  * @property integer $last_modified_uid
+ * @property integer $history_id
  * @property integer $type
  * @property integer $status
- * @property string  $created_at
- * @property string  $updated_at
+ * @property Carbon  $created_at
+ * @property Carbon  $updated_at
  * @package App\Repositories
  * @property-read \App\Repositories\User $lastModifiedUser
+ * @property-read \App\Repositories\Document $parentPage
  * @property-read \App\Repositories\Project $project
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Document[] $subPages
  * @property-read \App\Repositories\User $user
  * @method static bool|null forceDelete()
  * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Document onlyTrashed()
@@ -55,8 +58,19 @@ namespace App\Repositories{
  * @property string  $created_at
  * @property string  $updated_at
  * @package App\Repositories
+ * @property-read \App\Repositories\User $operator
+ * @property-read \App\Repositories\User $user
  */
 	class DocumentHistory extends \Eloquent {}
+}
+
+namespace App\Repositories{
+/**
+ * App\Repositories\OperationLogs
+ *
+ * @property mixed $context
+ */
+	class OperationLogs extends \Eloquent {}
 }
 
 namespace App\Repositories{
@@ -72,6 +86,25 @@ namespace App\Repositories{
  * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Project withoutTrashed()
  */
 	class Project extends \Eloquent {}
+}
+
+namespace App\Repositories{
+/**
+ * Class Template
+ *
+ * @property integer $id
+ * @property string  $name
+ * @property string  $description
+ * @property string  $content
+ * @property string  $user_id
+ * @property string  $type
+ * @property string  $status
+ * @property string  $scope
+ * @property Carbon  $created_at
+ * @property Carbon  $updated_at
+ * @package App\Repositories
+ */
+	class Template extends \Eloquent {}
 }
 
 namespace App\Repositories{

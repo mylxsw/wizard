@@ -67,7 +67,10 @@
                 <label>
                     <input type="radio" name="template" value="{{ $temp['id'] }}"
                            data-content="{{ base64_encode($temp['content']) }}" {{ $temp['default'] ? 'checked' : '' }}>
-                    {{ $temp['name'] }}
+                    <span title="{{ $temp['description'] }}"> {{ $temp['name'] }}</span>
+                    @if($temp['scope'] == \App\Repositories\Template::SCOPE_PRIVATE)
+                        <span class="glyphicon glyphicon-eye-close" title="私有"></span>
+                    @endif
                 </label>
             </div>
         @endforeach
