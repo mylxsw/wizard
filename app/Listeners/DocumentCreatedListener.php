@@ -30,18 +30,17 @@ class DocumentCreatedListener
     {
         $doc = $event->getDocument();
 
-        OperationLogs::log(\Auth::user()->id,
-            __(
-                'log.user_create_document',
-                [
-                    'username'     => $doc->user->name,
-                    'user_id'      => $doc->user_id,
-                    'project_name' => $doc->project->name,
-                    'project_id'   => $doc->project_id,
-                    'doc_title'    => $doc->title,
-                    'doc_id'       => $doc->id
-                ]
-            )
+        OperationLogs::log(
+            \Auth::user()->id,
+            'document_created',
+            [
+                'username'     => $doc->user->name,
+                'user_id'      => $doc->user_id,
+                'project_name' => $doc->project->name,
+                'project_id'   => $doc->project_id,
+                'doc_title'    => $doc->title,
+                'doc_id'       => $doc->id
+            ]
         );
     }
 }

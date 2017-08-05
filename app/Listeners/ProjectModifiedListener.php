@@ -22,7 +22,8 @@ class ProjectModifiedListener
     /**
      * Handle the event.
      *
-     * @param  ProjectModified  $event
+     * @param  ProjectModified $event
+     *
      * @return void
      */
     public function handle(ProjectModified $event)
@@ -31,15 +32,13 @@ class ProjectModifiedListener
 
         OperationLogs::log(
             \Auth::user()->id,
-            __(
-                'log.user_edit_project',
-                [
-                    'username'     => \Auth::user()->name,
-                    'user_id'      => \Auth::user()->id,
-                    'project_name' => $project->name,
-                    'project_id'   => $project->id
-                ]
-            )
+            'project_updated',
+            [
+                'username'     => \Auth::user()->name,
+                'user_id'      => \Auth::user()->id,
+                'project_name' => $project->name,
+                'project_id'   => $project->id
+            ]
         );
     }
 }

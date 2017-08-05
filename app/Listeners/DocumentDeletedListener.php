@@ -30,18 +30,17 @@ class DocumentDeletedListener
     {
         $doc = $event->getDocument();
 
-        OperationLogs::log(\Auth::user()->id,
-            __(
-                'log.user_delete_document',
-                [
-                    'username'     => \Auth::user()->name,
-                    'user_id'      => \Auth::user()->id,
-                    'project_name' => $doc->project->name,
-                    'project_id'   => $doc->project_id,
-                    'doc_title'    => $doc->title,
-                    'doc_id'       => $doc->id
-                ]
-            )
+        OperationLogs::log(
+            \Auth::user()->id,
+            'document_deleted',
+            [
+                'username'     => \Auth::user()->name,
+                'user_id'      => \Auth::user()->id,
+                'project_name' => $doc->project->name,
+                'project_id'   => $doc->project_id,
+                'doc_title'    => $doc->title,
+                'doc_id'       => $doc->id
+            ]
         );
     }
 }

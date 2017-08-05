@@ -22,7 +22,8 @@ class ProjectDeletedListener
     /**
      * Handle the event.
      *
-     * @param  ProjectDeleted  $event
+     * @param  ProjectDeleted $event
+     *
      * @return void
      */
     public function handle(ProjectDeleted $event)
@@ -31,15 +32,13 @@ class ProjectDeletedListener
 
         OperationLogs::log(
             \Auth::user()->id,
-            __(
-                'log.user_delete_project',
-                [
-                    'username'     => \Auth::user()->name,
-                    'user_id'      => \Auth::user()->id,
-                    'project_name' => $project->name,
-                    'project_id'   => $project->id
-                ]
-            )
+            'project_deleted',
+            [
+                'username'     => \Auth::user()->name,
+                'user_id'      => \Auth::user()->id,
+                'project_name' => $project->name,
+                'project_id'   => $project->id
+            ]
         );
     }
 }

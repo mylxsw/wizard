@@ -22,25 +22,25 @@ class DocumentModifiedListener
     /**
      * Handle the event.
      *
-     * @param  DocumentModified  $event
+     * @param  DocumentModified $event
+     *
      * @return void
      */
     public function handle(DocumentModified $event)
     {
         $doc = $event->getDocument();
 
-        OperationLogs::log(\Auth::user()->id,
-            __(
-                'log.user_edit_document',
-                [
-                    'username'     => \Auth::user()->name,
-                    'user_id'      => \Auth::user()->id,
-                    'project_name' => $doc->project->name,
-                    'project_id'   => $doc->project_id,
-                    'doc_title'    => $doc->title,
-                    'doc_id'       => $doc->id
-                ]
-            )
+        OperationLogs::log(
+            \Auth::user()->id,
+            'document_updated',
+            [
+                'username'     => \Auth::user()->name,
+                'user_id'      => \Auth::user()->id,
+                'project_name' => $doc->project->name,
+                'project_id'   => $doc->project_id,
+                'doc_title'    => $doc->title,
+                'doc_id'       => $doc->id
+            ]
         );
     }
 }

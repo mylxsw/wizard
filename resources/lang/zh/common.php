@@ -39,4 +39,5 @@ return [
     'logout_confirm' => '确定要退出吗？',
 
     'operation_success' => '操作成功',
+    'lang_swatch_success' => '语言切换成功',
 ];

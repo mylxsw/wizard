@@ -32,19 +32,15 @@ class DocumentRecoveredListener
 
 
         OperationLogs::log(\Auth::user()->id,
-            __(
-                'log.user_recover_document',
-                [
-                    'username'     => \Auth::user()->name,
-                    'user_id'      => \Auth::user()->id,
-                    'project_name' => $doc->project->name,
-                    'project_id'   => $doc->project_id,
-                    'doc_title'    => $doc->title,
-                    'doc_id'       => $doc->id
-                ]
-            ),
+            'document_recovered',
             [
-                'history_id' => $doc->history_id,
+                'username'     => \Auth::user()->name,
+                'user_id'      => \Auth::user()->id,
+                'project_name' => $doc->project->name,
+                'project_id'   => $doc->project_id,
+                'doc_title'    => $doc->title,
+                'doc_id'       => $doc->id,
+                'history_id'   => $doc->history_id,
             ]
         );
     }

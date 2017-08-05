@@ -32,15 +32,13 @@ class ProjectCreatedListener
 
         OperationLogs::log(
             \Auth::user()->id,
-            __(
-                'log.user_create_project',
-                [
-                    'username'     => \Auth::user()->name,
-                    'user_id'      => \Auth::user()->id,
-                    'project_name' => $project->name,
-                    'project_id'   => $project->id
-                ]
-            )
+            'project_created',
+            [
+                'username'     => \Auth::user()->name,
+                'user_id'      => \Auth::user()->id,
+                'project_name' => $project->name,
+                'project_id'   => $project->id
+            ]
         );
     }
 }

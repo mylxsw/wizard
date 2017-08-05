@@ -34,4 +34,5 @@ return [
     'logout'           => 'Logout',
 
     'logout_confirm' => 'Are you sure you want to exit ?',
+    'lang_swatch_success' => 'Language swatch successful',
 ];
