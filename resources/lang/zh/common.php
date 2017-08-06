@@ -43,4 +43,10 @@ return [
 
     'operation_success'   => '操作成功',
     'lang_swatch_success' => '语言切换成功',
+
+    'upload' => [
+        'failed'       => '文件上传失败，:reason',
+        'invalid_type' => '文件类型不合法',
+        'success'      => '上传成功',
+    ]
 ];

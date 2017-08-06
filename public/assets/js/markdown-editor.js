@@ -34,6 +34,9 @@ $.wz.mdEditor = function (editor_id, params) {
         tex: true,
         flowChart: true,
         sequenceDiagram: true,
+        imageUpload    : true,
+        imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp"],
+        imageUploadURL : "/upload",
         toolbarIcons: function () {
             return ["undo", "redo", "|",
                 "bold", "del", "italic", "quote", "|",

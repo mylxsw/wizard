@@ -32,6 +32,8 @@ Route::group(['middleware' => 'locale'], function () {
     Route::group(['middleware' => 'auth'], function () {
         // 个人首页
         Route::get('/home', 'ProjectController@home')->name('user:home');
+        // 文件上传
+        Route::post('/upload', 'FileController@imageUpload')->name('upload');
 
         Route::group(['prefix' => 'project', 'as' => 'project:'], function () {
             // 创建新项目

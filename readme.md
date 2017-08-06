@@ -15,3 +15,9 @@ Wizard是基于Laravel开发框架开发的一款开源项目（API）文档管�
     
     php artisan migrate:install
     php artisan migrate
+    
+文件上传支持需要执行以下命令
+
+    php artisan storage:link
+    
+执行该命令后会在public目录下创建`storage/app/public`目录的符号链接。
