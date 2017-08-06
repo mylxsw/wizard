@@ -40,6 +40,8 @@
     </footer>
     @endif
 </div>
+
+@stack('bottom')
 <script src="//cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
@@ -58,6 +60,11 @@
         @if (session('alert.message'))
             layer.msg("{{ session('alert.message') }}");
         @endif
+
+        $('[wz-wait-develop]').on('click', function () {
+            $.wz.alert('@lang('common.not_ready_for_use')');
+            return false;
+        });
     });
 </script>
 

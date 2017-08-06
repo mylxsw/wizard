@@ -16,16 +16,6 @@ class ProjectPolicy
     use HandlesAuthorization;
 
     /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * 项目配置修改权限
      *
      * @param User $user

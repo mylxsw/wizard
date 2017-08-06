@@ -12,6 +12,10 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li role="presentation">
+                            <a href="#" wz-wait-develop>@lang('common.user_info')</a>
+                            <a href="#" wz-wait-develop>@lang('common.template_maintenance')</a>
+                        </li>
+                        <li role="presentation">
                             <form action="{{ wzRoute('logout') }}" method="post" id="form-logout">{{ csrf_field() }}</form>
                             <a href="#" wz-form-submit data-confirm="@lang('common.logout_confirm')" data-form="#form-logout">@lang('common.logout')</a>
                         </li>

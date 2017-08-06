@@ -27,8 +27,8 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="#" wz-doc-save-template>@lang('document.save_as_template')</a></li>
-                <li><a href="#">@lang('document.save_as_draft')</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#wz-new-template">@lang('document.save_as_template')</a></li>
+                <li><a href="#" wz-wait-develop>@lang('document.save_as_draft')</a></li>
                 @if(!$newPage)
                     <li><a href="#" wz-doc-form-submit data-force="true">@lang('document.force_save')</a></li>
                     <li><a href="#" wz-doc-compare-current>@lang('document.show_diff')</a></li>
@@ -38,6 +38,46 @@
         <a href="{{ wzRoute('project:home', ['id' => $project->id] + (empty($pageItem) ? [] : ['p' => $pageItem->id])) }}" class="btn btn-default">@lang('common.btn_back')</a>
     </div>
 </div>
+
+@push('bottom')
+<div class="modal fade" id="wz-new-template" tabindex="-1" role="dialog" aria-labelledby="wz-new-project">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">@lang('document.save_as_template')</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{{ wzRoute('template:create') }}" id="wz-template-save-form">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="template-name" class="control-label">@lang('document.template_name')</label>
+                        <input type="text" name="name" placeholder="@lang('document.template_name')" class="form-control" id="template-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="template-description" class="control-label">@lang('document.template_description')</label>
+                        <textarea class="form-control" name="description" placeholder="@lang('document.template_description')" id="template-description"></textarea>
+                    </div>
+                    @can('template-global-create')
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="scope" value="1"> @lang('document.template_global_access')
+                            </label>
+                        </div>
+                    </div>
+                    @endcan
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="wz-template-save">@lang('common.btn_save')</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">@lang('common.btn_close')</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endpush
 
 @push('script')
 <script>
@@ -68,11 +108,14 @@ $(function() {
         }
     });
 
-    // 保存为模板
-    $('[wz-doc-save-template]').on('click', function (e) {
-        e.preventDefault();
-
-        alert("Hello");
+    // 另存为模板
+    $('#wz-template-save').on('click', function () {
+        var form = $('#wz-template-save-form');
+        $.wz.asyncForm(form, {content: $.global.getEditorContent()}, function (data) {
+            $.wz.alert('保存成功', function () {
+                $('#wz-new-template').modal('hide');
+            });
+        });
     });
 
     @if(!$newPage)

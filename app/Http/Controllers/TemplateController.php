@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 
 class TemplateController extends Controller
 {
-
     /**
      * 创建模板
      *
@@ -32,6 +31,13 @@ class TemplateController extends Controller
                 'description' => 'max:255',
                 'scope'       => 'in:1,2',
                 'type'        => 'in:swagger,doc',
+            ],
+            [
+                'name.required'        => __('document.validation.template_name_required'),
+                'name.between'         => __('document.validation.template_name_between'),
+                'name.template_unique' => __('document.validation.template_name_template_unique'),
+                'content.required'     => __('document.validation.template_content_required'),
+                'description.max'      => __('document.validation.template_description_max'),
             ]
         );
 
@@ -40,6 +46,11 @@ class TemplateController extends Controller
         $description = $request->input('description', '');
         $scope       = $request->input('scope', Template::SCOPE_PRIVATE);
         $type        = $request->input('type', 'doc');
+
+        // 如果创建的是全局项目，则需要检查是否有权限进行创建
+        if ($scope == Template::SCOPE_GLOBAL) {
+            $this->authorize('template-global-create');
+        }
 
         $template              = new Template();
         $template->name        = $name;

@@ -31,6 +31,6 @@ class CreateOperationLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('OperationLogs');
+        Schema::dropIfExists('wz_operation_logs');
     }
 }

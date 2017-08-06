@@ -35,7 +35,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id]) }}">@lang('common.document')</a>
                                 </li>
-                                <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger']) }}">@lang('common.swagger')</a></li>
+                                <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger']) }}" wz-wait-develop>@lang('common.swagger')</a></li>
                             </ul>
                         </div>
                         @endcan

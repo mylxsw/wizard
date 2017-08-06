@@ -33,6 +33,6 @@ class CreateTemplateTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('CreateTemplateTable');
+        Schema::dropIfExists('wz_templates');
     }
 }

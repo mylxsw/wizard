@@ -20,18 +20,21 @@ return [
     'description' => '描述',
     'content'     => '内容',
 
-    'no_parent_page'   => '无上级页面',
-    'save_as_template' => '另存为模板',
-    'save_as_draft'    => '加入草稿箱',
-    'force_save'       => '强制保存文档',
-    'show_diff'        => '比较文档差异',
+    'no_parent_page' => '无上级页面',
+    'save_as_draft'  => '加入草稿箱',
+    'force_save'     => '强制保存文档',
+    'show_diff'      => '比较文档差异',
 
     'document_differ'  => '文档差异对比',
     'latest_document'  => '最新文档',
     'history_document' => '历史版本',
     'after_modified'   => '修改后',
 
-    'select_template' => '选择模板',
+    'select_template'        => '选择模板',
+    'save_as_template'       => '另存为模板',
+    'template_name'          => '模板名称',
+    'template_description'   => '模板描述',
+    'template_global_access' => '全局可用',
 
     'delete_confirm'           => '确定要删除文档“:title”？',
     'recover_confirm'          => '还原后将覆盖当前页面，确定要还原该记录吗？',
@@ -42,8 +45,14 @@ return [
     'document_recover_success' => '文档恢复成功',
 
     'validation' => [
-        'title_required'       => '文档标题不能为空',
-        'title_between'        => '文档标题格式不合法',
-        'doc_modified_by_user' => '该页面已经被 :username 于 :time 修改过了',
+        'title_required'                => '文档标题不能为空',
+        'title_between'                 => '文档标题格式不合法',
+        'doc_modified_by_user'          => '该页面已经被 :username 于 :time 修改过了',
+
+        'template_name_required'        => '模板名称不能为空',
+        'template_name_between'         => '模板名称格式不合法',
+        'template_name_template_unique' => '模板名称已经存在',
+        'template_content_required'     => '模板内容不能为空',
+        'template_description_max'      => '模板描述长度不合法',
     ]
 ];

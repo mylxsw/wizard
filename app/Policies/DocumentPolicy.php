@@ -16,16 +16,6 @@ class DocumentPolicy
     use HandlesAuthorization;
 
     /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * 文档编辑权限
      *
      * @param User $user

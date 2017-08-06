@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Policies\DocumentPolicy;
 use App\Policies\ProjectPolicy;
+use App\Policies\TemplatePolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -36,5 +37,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('page-edit', DocumentPolicy::class . '@edit');
         // 检查是否有还原页面的权限
         Gate::define('page-recover', DocumentPolicy::class . '@recover');
+
+        // 是否可以创建全局可用的模板
+        Gate::define('template-global-create', TemplatePolicy::class . '@globalCreate');
     }
 }

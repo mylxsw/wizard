@@ -55,4 +55,14 @@ class Project extends Repository
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    /**
+     * 项目所属的分组
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'wz_project_group_ref', 'project_id', 'group_id');
+    }
 }
