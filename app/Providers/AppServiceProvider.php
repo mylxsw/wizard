@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Repositories\Document;
+use App\Repositories\Group;
 use App\Repositories\Project;
 use App\Repositories\Template;
 use Illuminate\Database\Events\QueryExecuted;
@@ -20,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
         $this->addProjectExistRules('project_exist');
         $this->addPageExistRules('page_exist');
         $this->addTemplateUniqueRules('template_unique');
+        $this->addGroupExistRule('group_exist');
 
         // 在日志中输出sql历史
         \DB::listen(function (QueryExecuted $query) {
@@ -84,6 +86,22 @@ class AppServiceProvider extends ServiceProvider
             '参数 %s 对应的项目不存在',
             function ($attribute, $value, $parameters, $validator) {
                 return Project::where('id', $value)->exists();
+            }
+        );
+    }
+
+    /**
+     * 添加检查分组名称是否存在的规则
+     *
+     * @param string $ruleName
+     */
+    private function addGroupExistRule(string $ruleName)
+    {
+        $this->registerValidationRule(
+            $ruleName,
+            '参数 %s 对应的用户组不存在',
+            function ($attribute, $value, $parameters, $validator) {
+                return Group::where('id', $value)->exists();
             }
         );
     }

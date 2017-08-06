@@ -16,20 +16,38 @@ class ProjectModified
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     private $project;
+    private $op;
 
     /**
-     * Create a new event instance.
+     * ProjectModified constructor.
      *
-     * @return void
+     * @param Project $project
+     * @param string  $op 执行的操作类型
      */
-    public function __construct(Project $project)
+    public function __construct(Project $project, string $op)
     {
         $this->project = $project;
+        $this->op      = $op;
     }
 
     public function getProject()
     {
         return $this->project;
+    }
+
+    public function getOp()
+    {
+        return $this->op;
+    }
+
+    public function isBasicUpdate()
+    {
+        return $this->op == 'basic';
+    }
+
+    public function isPrivilegeUpdate()
+    {
+        return $this->op == 'privilege';
     }
 
     /**

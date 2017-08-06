@@ -66,6 +66,23 @@ namespace App\Repositories{
 
 namespace App\Repositories{
 /**
+ * Class Group
+ *
+ * @property integer $id
+ * @property string  $name
+ * @property integer $user_id
+ * @property Carbon  $created_at
+ * @property Carbon  $updated_at
+ * @package App\Repositories
+ * @property-read \App\Repositories\User $creator
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Project[] $projects
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\User[] $users
+ */
+	class Group extends \Eloquent {}
+}
+
+namespace App\Repositories{
+/**
  * App\Repositories\OperationLogs
  *
  * @property mixed $context
@@ -77,6 +94,7 @@ namespace App\Repositories{
 /**
  * App\Repositories\Project
  *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Group[] $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Document[] $pages
  * @property-read \App\Repositories\User $user
  * @method static bool|null forceDelete()
@@ -109,8 +127,16 @@ namespace App\Repositories{
 
 namespace App\Repositories{
 /**
- * App\Repositories\User
+ * Class User
  *
+ * @property integer $id
+ * @property string  $name
+ * @property string  $password
+ * @property integer $role
+ * @property Carbon  $created_at
+ * @property Carbon  $updated_at
+ * @package App\Repositories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Group[] $groups
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Document[] $pages
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Project[] $projects

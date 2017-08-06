@@ -57,6 +57,7 @@ class Group extends Repository
      */
     public function projects()
     {
-        return $this->belongsToMany(Project::class, 'wz_project_group_ref', 'group_id', 'project_id');
+        return $this->belongsToMany(Project::class, 'wz_project_group_ref', 'group_id', 'project_id')
+            ->withPivot('created_at', 'updated_at', 'privilege');
     }
 }

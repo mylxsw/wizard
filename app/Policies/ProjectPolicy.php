@@ -38,6 +38,9 @@ class ProjectPolicy
      */
     public function addPage(User $user, $project)
     {
+        $project = $this->getProject($project);
+
+        // TODO 检查用户分组所在的分组是否有该项目的权限
         return $this->isOwner($user, $project);
     }
 
@@ -68,10 +71,17 @@ class ProjectPolicy
             return false;
         }
 
+        $project = $this->getProject($project);
+
+        return (int)$user->id === (int)$project->user_id;
+    }
+
+    private function getProject($project) :Project
+    {
         if (!$project instanceof Project) {
             $project = Project::where('id', $project)->firstOrFail();
         }
 
-        return (int)$user->id === (int)$project->user_id;
+        return $project;
     }
 }

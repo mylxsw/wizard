@@ -37,7 +37,8 @@ class ProjectModifiedListener
                 'username'     => \Auth::user()->name,
                 'user_id'      => \Auth::user()->id,
                 'project_name' => $project->name,
-                'project_id'   => $project->id
+                'project_id'   => $project->id,
+                'type'         => $event->getOp(),
             ]
         );
     }

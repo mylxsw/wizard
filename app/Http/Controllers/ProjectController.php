@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\Events\ProjectCreated;
 use App\Events\ProjectModified;
 use App\Repositories\Document;
+use App\Repositories\Group;
 use App\Repositories\Project;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -106,7 +107,7 @@ class ProjectController extends Controller
             $page = Document::where('project_id', $id)->where('id', $pageID)->firstOrFail();
         }
 
-        return view('project', [
+        return view('project.project', [
             'project'    => $project,
             'pageID'     => $pageID,
             'pageItem'   => $page,
@@ -117,16 +118,51 @@ class ProjectController extends Controller
     /**
      * 项目配置页面
      *
-     * @param $id
+     * @param Request $request
+     * @param         $id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function setting($id)
+    public function setting(Request $request, $id)
     {
+        $this->validate(
+            $request,
+            [
+                'op' => 'in:basic,privilege'
+            ]
+        );
+
         $project = Project::findOrFail($id);
         $this->authorize('project-edit', $project);
 
-        return view('setting', ['project' => $project]);
+        $op       = $request->input('op', 'basic');
+        $viewData = ['project' => $project, 'op' => $op];
+
+        switch ($op) {
+            case 'basic':
+                break;
+            case 'privilege':
+                $groups = Group::with([
+                    'projects' => function ($query) use ($id) {
+                        $query->where('project_id', $id);
+                    }
+                ])->get();
+
+                // 对用户组进行分组，分为已经分配的组合剩余组，方面页面分开展示
+                $viewData['addedGroups'] = $viewData['restGroups'] = [];
+                /** @var Group $group */
+                foreach ($groups as $group) {
+                    if ($group->projects->count() === 0) {
+                        $viewData['restGroups'][] = $group;
+                    } else {
+                        $viewData['addedGroups'][] = $group;
+                    }
+                }
+                break;
+        }
+
+
+        return view("project.setting-{$op}", $viewData);
     }
 
     /**
@@ -139,12 +175,52 @@ class ProjectController extends Controller
      */
     public function settingHandle(Request $request, $id)
     {
+        $this->validate($request, ['op' => 'required|in:basic,privilege']);
+
+        $op = $request->input('op');
+
+        $project = Project::where('id', $id)->firstOrFail();
+        $this->authorize('project-edit', $project);
+
+        switch ($op) {
+            case 'basic':
+                $updated = $this->basicSettingHandle($request, $project);
+                break;
+            case 'privilege':
+                $updated = $this->privilegeSettingHandle($request, $project);
+                break;
+            default:
+                $updated = false;
+        }
+
+        if ($updated) {
+            event(new ProjectModified($project, $op));
+        }
+
+        $this->alert(__('project.project_update_success'));
+        return redirect(wzRoute(
+            'project:setting:show',
+            ['id' => $id, 'op' => $op]
+        ));
+    }
+
+
+    /**
+     * 项目基本信息更新
+     *
+     * @param Request $request
+     * @param Project $project
+     *
+     * @return bool 如果返回true，说明执行了更新操作，false说明没有更新
+     */
+    private function basicSettingHandle(Request $request, Project $project): bool
+    {
         $this->validate(
             $request,
             [
                 'name'        => 'required|between:1,100',
                 'description' => 'max:255',
-                'project_id'  => "required|in:{$id}|project_exist",
+                'project_id'  => "required|in:{$project->id}|project_exist",
                 'visibility'  => 'required|in:1,2',
             ],
             [
@@ -158,22 +234,62 @@ class ProjectController extends Controller
         $description = $request->input('description');
         $visibility  = $request->input('visibility');
 
-        $project = Project::where('id', $id)->firstOrFail();
-        $this->authorize('project-edit', $project);
-
         $project->name        = $name;
         $project->description = $description;
         $project->visibility  = $visibility;
 
-        $project->save();
+        if ($project->isDirty()) {
+            $project->save();
+            return true;
+        }
 
-        event(new ProjectModified($project));
-
-        $request->session()->flash('alert.message', __('project.project_update_success'));
-        return redirect(wzRoute(
-            'project:setting:show',
-            ['id' => $id]
-        ));
+        return false;
     }
 
+    /**
+     * 项目权限信息更新
+     *
+     * @param Request $request
+     * @param Project $project
+     *
+     * @return bool 如果返回true，说明执行了更新操作，false说明没有更新
+     */
+    private function privilegeSettingHandle(Request $request, Project $project): bool
+    {
+        $this->validate(
+            $request,
+            [
+                'group_id'  => 'required|integer|min:1|group_exist',
+                'privilege' => 'in:wr,r'
+            ]
+        );
+
+        $groupID   = $request->input('group_id');
+        $privilege = $request->input('privilege', 'r');
+
+        $project->groups()->detach($groupID);
+        $project->groups()->attach($groupID, ['privilege' => $privilege == 'r' ? 2 : 1]);
+
+        return true;
+    }
+
+    /**
+     * 项目权限回收
+     *
+     * @param Request $request
+     * @param         $id
+     * @param         $group_id
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function groupPrivilegeRevoke(Request $request, $id, $group_id)
+    {
+        $project = Project::where('id', $id)->firstOrFail();
+        $this->authorize('project-edit', $project);
+
+        $project->groups()->detach($group_id);
+
+        $this->alert(__('project.revoke_privilege_success'));
+        return redirect(route('project:setting:handle', ['id' => $id, 'op' => 'privilege']));
+    }
 }

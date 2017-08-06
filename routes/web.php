@@ -42,6 +42,7 @@ Route::group(['middleware' => 'locale'], function () {
             // 项目配置
             Route::get('/{id}/setting', 'ProjectController@setting')->name('setting:show');
             Route::post('/{id}/setting', 'ProjectController@settingHandle')->name('setting:handle');
+            Route::delete('/{id}/privilege/{group_id}', 'ProjectController@groupPrivilegeRevoke')->name('privilege:revoke');
 
             // 创建新的文档
             Route::get('/{id}/doc', 'DocumentController@newPage')->name('doc:new:show');

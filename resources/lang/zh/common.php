@@ -26,6 +26,9 @@ return [
     'btn_view'    => '查看',
     'btn_diff'    => '差异',
 
+    'yes' => '是',
+    'no'  => '否',
+
     'operation'            => '操作',
     'login'                => '登录',
     'register'             => '注册',

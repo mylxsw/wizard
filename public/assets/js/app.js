@@ -21,6 +21,7 @@ $(function() {
 
         if (confirm === undefined) {
             form.submit();
+            return false;
         }
 
         $.wz.confirm(confirm, function () {
