@@ -27,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -42,14 +42,15 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
+     *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:wz_users',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:wz_users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -57,15 +58,25 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
+     *
      * @return \App\Repositories\User
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+        $user = User::create([
+            'name'     => $data['name'],
+            'email'    => $data['email'],
             'password' => bcrypt($data['password']),
+            'role'     => User::ROLE_NORMAL,
         ]);
+
+        // 如果创建的用户是系统中第一个用户，则自动设置其为管理员
+        if ((int)$user->id === 1) {
+            $user->role = User::ROLE_ADMIN;
+            $user->save();
+        }
+
+        return $user;
     }
 }
