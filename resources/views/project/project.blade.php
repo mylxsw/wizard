@@ -37,6 +37,33 @@
         <div class="markdown-body" id="markdown-body">
             <textarea id="append-test" style="display:none;">{{ $pageItem->content }}</textarea>
         </div>
+    @else
+        <h1>{{ $project->name or '' }}</h1>
+        <hr/>
+        <p>{{ $project->description or '' }}</p>
+
+        <p>该项目由 {{ $project->user->name or '' }} 创建于 {{ $project->created_at }}。</p>
+        @if($project->groups->count() > 0)
+            <table class="table">
+                <caption>@lang('project.group_added')</caption>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>@lang('project.group_name')</th>
+                    <th>@lang('project.group_write_enabled')</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($project->groups as $group)
+                    <tr>
+                        <th scope="row">{{ $group->id }}</th>
+                        <td>{{ $group->name }}</td>
+                        <td>{{ $group->projects[0]->pivot->privilege == 1 ? __('common.yes') : __('common.no') }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        @endif
     @endif
 @endsection
 

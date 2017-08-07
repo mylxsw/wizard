@@ -12,9 +12,7 @@
                         <a href="{{ wzRoute('project:home', ['id' => $project->id]) }}" class="wz-nav-item">
                             <span class="glyphicon glyphicon-th-large"></span>
                             {{ $project->name }}
-                            @if($project->visibility == \App\Repositories\Project::VISIBILITY_PRIVATE)
-                                <span title="@lang('project.privilege_private')" class="pull-right wz-box-tag glyphicon glyphicon-eye-close"></span>
-                            @endif
+                            @include('components.project-tag', ['proj' => $project])
                         </a>
                     </li>
                     @include('components.navbar', ['navbars' => $navigators])

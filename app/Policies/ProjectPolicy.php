@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Repositories\Group;
 use App\Repositories\Project;
 use App\Repositories\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -13,7 +14,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
  */
 class ProjectPolicy
 {
-    use HandlesAuthorization;
+    use HandlesAuthorization, GroupHasProjectPrivilege;
 
     /**
      * 项目配置修改权限
@@ -25,7 +26,11 @@ class ProjectPolicy
      */
     public function setting(User $user, $project)
     {
-        return $this->isOwner($user, $project);
+        if (empty($user)) {
+            return false;
+        }
+
+        return $user->isAdmin() || $this->isOwner($user, $project);
     }
 
     /**
@@ -38,11 +43,24 @@ class ProjectPolicy
      */
     public function addPage(User $user, $project)
     {
-        $project = $this->getProject($project);
+        if (empty($user)) {
+            return false;
+        }
 
-        // TODO 检查用户分组所在的分组是否有该项目的权限
-        return $this->isOwner($user, $project);
+        // 管理员
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        // 项目创建者
+        if ($this->isOwner($user, $project)) {
+            return true;
+        }
+
+        $project = $this->getProject($project);
+        return $this->groupHasProjectPrivilege($project, $user);
     }
+
 
     /**
      * 编辑项目信息权限
@@ -54,7 +72,11 @@ class ProjectPolicy
      */
     public function edit(User $user, $project)
     {
-        return $this->isOwner($user, $project);
+        if (empty($user)) {
+            return false;
+        }
+
+        return $user->isAdmin() || $this->isOwner($user, $project);
     }
 
     /**
@@ -76,7 +98,7 @@ class ProjectPolicy
         return (int)$user->id === (int)$project->user_id;
     }
 
-    private function getProject($project) :Project
+    private function getProject($project): Project
     {
         if (!$project instanceof Project) {
             $project = Project::where('id', $project)->firstOrFail();

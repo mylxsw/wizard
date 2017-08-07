@@ -11,6 +11,7 @@
                 <div class="col-lg-3">
                     <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}"
                        title="{{ $proj->description }}">
+                        @include('components.project-tag', ['proj' => $proj])
                         <p class="wz-title">{{ $proj->name }}</p>
                     </a>
                 </div>

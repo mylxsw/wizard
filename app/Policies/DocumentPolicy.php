@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Repositories\Document;
+use App\Repositories\Project;
 use App\Repositories\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -13,19 +14,49 @@ use Illuminate\Auth\Access\HandlesAuthorization;
  */
 class DocumentPolicy
 {
-    use HandlesAuthorization;
+    use HandlesAuthorization, GroupHasProjectPrivilege;
 
     /**
      * 文档编辑权限
      *
-     * @param User $user
-     * @param      $page
+     * @param User         $user
+     * @param Document|int $page
      *
      * @return bool
      */
     public function edit(User $user, $page)
     {
-        return $this->isOwner($user, $page);
+        return $this->groupHasEditPrv($user, $page);
+    }
+
+    /**
+     * 分组是否有对页面的编辑权限
+     *
+     * @param User     $user
+     * @param Document $page
+     *
+     * @return bool
+     */
+    private function groupHasEditPrv($user, $page): bool
+    {
+        if (empty($user)) {
+            return false;
+        }
+
+        // 管理员
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        $page    = $this->getDocument($page);
+        $project = $this->getProject($page->project);
+        // 项目创建者拥有权限
+        if ((int)$project->user_id === (int)$user->id) {
+            return true;
+        }
+
+        // 分组用户有用写权限
+        return $this->groupHasProjectPrivilege($project, $user);
     }
 
     /**
@@ -38,7 +69,7 @@ class DocumentPolicy
      */
     public function recover(User $user, $page)
     {
-        return $this->isOwner($user, $page);
+        return $this->groupHasEditPrv($user, $page);
     }
 
     /**
@@ -55,10 +86,26 @@ class DocumentPolicy
             return false;
         }
 
+        $page = $this->getDocument($page);
+
+        return (int)$user->id === (int)$page->user_id;
+    }
+
+    private function getDocument($page): Document
+    {
         if (!$page instanceof Document) {
             $page = Document::where('id', $page)->firstOrFail();
         }
 
-        return (int)$user->id === (int)$page->user_id;
+        return $page;
+    }
+
+    private function getProject($project): Project
+    {
+        if (!$project instanceof Project) {
+            $project = Project::where('id', $project)->firstOrFail();
+        }
+
+        return $project;
     }
 }
