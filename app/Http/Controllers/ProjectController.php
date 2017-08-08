@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Events\ProjectCreated;
+use App\Events\ProjectDeleted;
 use App\Events\ProjectModified;
 use App\Repositories\Document;
 use App\Repositories\Group;
@@ -79,6 +80,25 @@ class ProjectController extends Controller
     }
 
     /**
+     * 删除项目
+     *
+     * @param Request $request
+     * @param         $id
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function delete(Request $request, $id)
+    {
+        $project = Project::where('id', $id)->firstOrFail();
+        $this->authorize('project-delete', $project);
+
+        $project->delete();
+        event(new ProjectDeleted($project));
+
+        return redirect(wzRoute('user:home'));
+    }
+
+    /**
      * 项目页面
      *
      * @param Request $request
@@ -102,15 +122,17 @@ class ProjectController extends Controller
             }
         ])->findOrFail($id);
 
-        $page = null;
+        $page = $type = null;
         if ($pageID !== 0) {
             $page = Document::where('project_id', $id)->where('id', $pageID)->firstOrFail();
+            $type = $page->type == Document::TYPE_DOC ? 'markdown' : 'swagger';
         }
 
         return view('project.project', [
             'project'    => $project,
             'pageID'     => $pageID,
             'pageItem'   => $page,
+            'type'       => $type,
             'navigators' => navigator($project->pages, $id, $pageID)
         ]);
     }
@@ -128,7 +150,7 @@ class ProjectController extends Controller
         $this->validate(
             $request,
             [
-                'op' => 'in:basic,privilege'
+                'op' => 'in:basic,privilege,advanced'
             ]
         );
 
@@ -159,6 +181,9 @@ class ProjectController extends Controller
                     }
                 }
                 break;
+            case 'advanced':
+
+                break;
         }
 
 
@@ -175,7 +200,7 @@ class ProjectController extends Controller
      */
     public function settingHandle(Request $request, $id)
     {
-        $this->validate($request, ['op' => 'required|in:basic,privilege']);
+        $this->validate($request, ['op' => 'required|in:basic,privilege,advanced']);
 
         $op = $request->input('op');
 
@@ -188,6 +213,9 @@ class ProjectController extends Controller
                 break;
             case 'privilege':
                 $updated = $this->privilegeSettingHandle($request, $project);
+                break;
+            case 'advanced':
+                $updated = false;
                 break;
             default:
                 $updated = false;

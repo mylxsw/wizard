@@ -73,12 +73,14 @@ class HistoryController extends Controller
 
         $history = DocumentHistory::where('page_id', $page_id)
             ->where('id', $history_id)->firstOrFail();
+        $type    = $page->type == Document::TYPE_DOC ? 'markdown' : 'swagger';
 
         return view('doc.history-doc', [
             'history'    => $history,
             'project'    => $project,
             'pageID'     => $page_id,
             'pageItem'   => $page,
+            'type'       => $type,
             'navigators' => navigator($project->pages, $id, $page_id)
         ]);
     }
@@ -110,16 +112,22 @@ class HistoryController extends Controller
     /**
      * 以JSON返回历史文档
      *
-     * @param $id
-     * @param $page_id
-     * @param $history_id
+     * @param Request $request
+     * @param         $id
+     * @param         $page_id
+     * @param         $history_id
      *
-     * @return array
+     * @return array|mixed|string
      */
-    public function getPageJSON($id, $page_id, $history_id)
+    public function getPageJSON(Request $request, $id, $page_id, $history_id)
     {
         $history = DocumentHistory::where('page_id', $page_id)->where('id', $history_id)
             ->firstOrFail();
+
+        $onlyBody = $request->input('only_body', 0);
+        if ($onlyBody) {
+            return $history->content;
+        }
 
         return [
             'id'                     => $history->id,

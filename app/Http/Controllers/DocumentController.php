@@ -176,10 +176,16 @@ class DocumentController extends Controller
         $this->authorize('page-edit', $pageItem);
 
         // 检查文档是否已经被别人修改过了，避免修改覆盖
-        if (!$forceSave && (!$pageItem->updated_at->equalTo($lastModifiedAt) || $history_id != $pageItem->history_id)) {
+        if (!$forceSave
+            && (!$pageItem->updated_at->equalTo($lastModifiedAt)
+                || $history_id != $pageItem->history_id)
+        ) {
             return $this->buildFailedValidationResponse($request, [
                 'last_modified_at' => [
-                    __('document.validation.doc_modified_by_user', ['username' => $pageItem->lastModifiedUser->name, 'time' => $pageItem->updated_at])
+                    __('document.validation.doc_modified_by_user', [
+                        'username' => $pageItem->lastModifiedUser->name,
+                        'time'     => $pageItem->updated_at
+                    ])
                 ]
             ]);
         }
@@ -235,7 +241,10 @@ class DocumentController extends Controller
         // 检查文档是否已经被别人修改过了，避免修改覆盖
         if (!$pageItem->updated_at->equalTo($lastModifiedAt)) {
             return [
-                'message' => __('document.validation.doc_modified_by_user', ['username' => $pageItem->lastModifiedUser->name, 'time' => $pageItem->updated_at]),
+                'message' => __('document.validation.doc_modified_by_user', [
+                    'username' => $pageItem->lastModifiedUser->name,
+                    'time'     => $pageItem->updated_at
+                ]),
                 'expired' => true,
             ];
         }
@@ -279,14 +288,20 @@ class DocumentController extends Controller
     /**
      * 以JSON形式返回文档
      *
-     * @param $id
-     * @param $page_id
+     * @param Request $request
+     * @param         $id
+     * @param         $page_id
      *
-     * @return array
+     * @return array|mixed|string
      */
-    public function getPageJSON($id, $page_id)
+    public function getPageJSON(Request $request, $id, $page_id)
     {
         $pageItem = Document::where('id', $page_id)->where('project_id', $id)->firstOrFail();
+
+        $onlyBody = $request->input('only_body', 0);
+        if ($onlyBody) {
+            return $pageItem->content;
+        }
 
         return [
             'id'                     => $pageItem->id,

@@ -47,9 +47,11 @@
         </table>
     </div>
     <div class="markdown-body" id="markdown-body">
+        @if($type == 'markdown')
         <textarea id="append-test" style="display:none;">{{ $history->content }}</textarea>
+        @endif
     </div>
 @endsection
 
-@include('components.markdown-show')
+@includeIf("components.{$type}-show", ['isHistoryPage' => true])
 @include('components.doc-compare-script')

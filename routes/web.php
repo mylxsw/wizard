@@ -38,10 +38,12 @@ Route::group(['middleware' => 'locale'], function () {
         Route::group(['prefix' => 'project', 'as' => 'project:'], function () {
             // 创建新项目
             Route::post('/', 'ProjectController@newProjectHandle')->name('new:handle');
+            Route::delete('/{id}', 'ProjectController@delete')->name('delete');
 
             // 项目配置
             Route::get('/{id}/setting', 'ProjectController@setting')->name('setting:show');
             Route::post('/{id}/setting', 'ProjectController@settingHandle')->name('setting:handle');
+            // 回收项目权限
             Route::delete('/{id}/privilege/{group_id}', 'ProjectController@groupPrivilegeRevoke')->name('privilege:revoke');
 
             // 创建新的文档

@@ -29,6 +29,7 @@ return [
     'yes' => '是',
     'no'  => '否',
 
+    'home'                 => '首页',
     'operation'            => '操作',
     'login'                => '登录',
     'register'             => '注册',

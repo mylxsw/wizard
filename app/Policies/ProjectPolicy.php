@@ -80,6 +80,23 @@ class ProjectPolicy
     }
 
     /**
+     * 项目删除权限检查
+     *
+     * @param User $user
+     * @param      $project
+     *
+     * @return bool
+     */
+    public function delete(User $user, $project)
+    {
+        if (empty($user)) {
+            return false;
+        }
+
+        return $user->isAdmin() || $this->isOwner($user, $project);
+    }
+
+    /**
      * 是否是项目的创建者
      *
      * @param User $user
