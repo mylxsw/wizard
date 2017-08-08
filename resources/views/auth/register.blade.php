@@ -8,7 +8,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">@lang('common.register')</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+                    <form class="form-horizontal" method="POST" action="{{ wzRoute('register') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">

@@ -5,7 +5,7 @@
                 <li role="presentation"><a href="{{ wzRoute('login') }}">@lang('common.login')</a></li>
                 <li role="presentation"><a href="{{ wzRoute('register') }}">@lang('common.register')</a></li>
             @else
-                <li role="presentation"><a href="{{ route('user:home') }}">@lang('common.user_home')</a></li>
+                <li role="presentation"><a href="{{ wzRoute('user:home') }}">@lang('common.user_home')</a></li>
                 <li role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         {{ Auth::user()->name ?? Auth::user()->email }} <span class="caret"></span>

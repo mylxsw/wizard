@@ -19,9 +19,9 @@
             validatorUrl: "",
             layout: "StandaloneLayout",
             @if(isset($isHistoryPage) && $isHistoryPage)
-            url: "{{ route('project:doc:history:json', ['id' => $project->id, 'page_id' => $pageItem->id, 'history_id' => $history->id, 'only_body' => 1]) }}"
+            url: "{!! wzRoute('project:doc:history:json', ['id' => $project->id, 'page_id' => $pageItem->id, 'history_id' => $history->id, 'only_body' => 1, 'ts' => microtime(true)]) !!}"
             @else
-            url: "{{ route('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id, 'only_body' => 1]) }}"
+            url: "{!! wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id, 'only_body' => 1, 'ts' => microtime(true)])  !!}"
             @endif
         });
     });

@@ -220,3 +220,7 @@ a:hover {
     display: block;
     text-align: center;
 }
+
+.swagger-ui .info {
+    margin: 20px 0!important;
+}

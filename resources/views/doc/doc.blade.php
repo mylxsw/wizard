@@ -44,9 +44,8 @@
             },
             templateSelected: function (dialog) {
                 var template = dialog.find("input[name=template]:checked");
-                var content = Base64.decode(template.data('content'));
 
-                return content;
+                return Base64.decode(template.data('content'));
             },
             lang: {
                 chooseTemplate: '@lang('document.select_template')',

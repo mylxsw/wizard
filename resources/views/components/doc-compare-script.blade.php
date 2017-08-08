@@ -4,7 +4,7 @@
         $('[wz-doc-compare-submit]').on('click', function (e) {
             e.preventDefault();
 
-            var compareUrl = '{{ route('doc:compare') }}';
+            var compareUrl = '{{ wzRoute('doc:compare') }}';
 
             var doc1url = $(this).data('doc1');
             var doc2url = $(this).data('doc2');

@@ -14,6 +14,7 @@ return [
     'last_modified_time' => '最后修改时间',
     'operation_time'     => '操作时间',
     'modified_user'      => '修改人',
+    'document_info'      => '文档信息',
 
     'btn_recover' => '还原',
     'title'       => '标题',
@@ -43,11 +44,12 @@ return [
     'differ_dialog_message'    => '如果无法弹出差异对比页面，请在浏览器设置中启用“允许弹出式窗口”选项后重试',
     'document_delete_success'  => '文档删除成功',
     'document_recover_success' => '文档恢复成功',
+    'document_create_info'     => '该项目由 :username 创建于 :time。',
 
     'validation' => [
-        'title_required'                => '文档标题不能为空',
-        'title_between'                 => '文档标题格式不合法',
-        'doc_modified_by_user'          => '该页面已经被 :username 于 :time 修改过了',
+        'title_required'       => '文档标题不能为空',
+        'title_between'        => '文档标题格式不合法',
+        'doc_modified_by_user' => '该页面已经被 :username 于 :time 修改过了',
 
         'template_name_required'        => '模板名称不能为空',
         'template_name_between'         => '模板名称格式不合法',

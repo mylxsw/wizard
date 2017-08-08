@@ -53,7 +53,7 @@ class DocumentHistory extends Repository
      */
     public static function write(Document $document) :DocumentHistory
     {
-        $history = static::create(array_only(
+        $history = self::create(array_only(
                 $document->toArray(),
                 (new static)->fillable) + [
                 'operator_id' => $document->last_modified_uid,

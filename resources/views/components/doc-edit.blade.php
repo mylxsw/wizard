@@ -89,7 +89,8 @@ $(function() {
 
         var formSubmit = function (form, force) {
             $.wz.asyncForm(form, {
-                force: force ? 1 : 0
+                force: force ? 1 : 0,
+                content: $.global.getEditorContent()
             }, function (data) {
                 $.wz.alert(data.message, function () {
                     window.location.href = data.redirect;
@@ -151,7 +152,7 @@ $(function() {
         // 自动检查文档是否过期
         (function() {
             var lastModifiedAt = $('input[name=last_modified_at]').val();
-            var checkExpiredURL = '{{ route('project:doc:expired', ['id' => $project->id, 'page_id' => $pageItem->id]) }}';
+            var checkExpiredURL = '{{ wzRoute('project:doc:expired', ['id' => $project->id, 'page_id' => $pageItem->id]) }}';
             var continueCheck = function () {
                 window.setTimeout(function () {
                     $.wz.request('get', checkExpiredURL, {l:lastModifiedAt}, function (data) {
