@@ -86,3 +86,75 @@ function wzTemplates($type = Template::TYPE_DOC, User $user = null): array
 
     return Template::queryForShow($type, $user);
 }
+
+/**
+ * 转换json为markdown table
+ *
+ * @param string $json
+ *
+ * @return string
+ */
+function convertJsonToMarkdownTable(string $json) :string
+{
+    $markdowns = [
+        ['KEY', 'TYPE', 'REQUIRED', 'DESCRIPTION'],
+        ['---', '---', '---', '---']
+    ];
+
+    foreach (jsonFlatten($json) as $key => $type) {
+        $markdowns[] = [$key, $type, '', ''];
+    }
+
+    $html = '';
+    foreach ($markdowns as $line) {
+        $html .= '| ' . implode(' | ', $line) . ' | ' . "\n";
+    }
+
+    return $html;
+}
+
+/**
+ * Json扁平化为一维数组
+ *
+ * @param string $json
+ *
+ * @return array
+ */
+function jsonFlatten(string $json): array
+{
+    $object = json_decode(trim($json));
+    $result = [];
+
+    $setCurrent = function ($prefix, $type) use (&$result) {
+        if (ends_with($prefix, '.[]')) {
+            $result[substr($prefix, 0, -3)] = "array({$type})";
+        } else {
+            $result[$prefix] = $type;
+        }
+    };
+
+    $flatten = function ($object, $prefix = '') use (&$flatten, &$result, $setCurrent) {
+        $setCurrent($prefix, gettype($object));
+        if (is_array($object)) {
+            foreach ($object as $o) {
+                $flatten($o, "{$prefix}.[]");
+            }
+        } else if (is_object($object)) {
+            foreach (get_object_vars($object) as $key => $obj) {
+                $flatten($obj, "{$prefix}.{$key}");
+            }
+        } else {
+            $setCurrent($prefix, gettype($object));
+        }
+    };
+
+    if (is_array($object)) {
+        $flatten($object, '');
+    } else if (is_object($object)) {
+        foreach (get_object_vars($object) as $key => $obj) {
+            $flatten($obj, $key);
+        }
+    }
+
+    return $result;
+}
