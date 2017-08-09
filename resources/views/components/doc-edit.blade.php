@@ -115,7 +115,7 @@ $(function() {
     $('#wz-template-save').on('click', function () {
         var form = $('#wz-template-save-form');
         $.wz.asyncForm(form, {content: $.global.getEditorContent()}, function (data) {
-            $.wz.alert('保存成功', function () {
+            $.wz.alert('@lang('common.operation_success')', function () {
                 $('#wz-new-template').modal('hide');
             });
         });

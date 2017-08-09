@@ -68,7 +68,7 @@
                            data-content="{{ base64_encode($temp['content']) }}" {{ $temp['default'] ? 'checked' : '' }}>
                     <span title="{{ $temp['description'] }}"> {{ $temp['name'] }}</span>
                     @if($temp['scope'] == \App\Repositories\Template::SCOPE_PRIVATE)
-                        <span class="glyphicon glyphicon-eye-close" title="私有"></span>
+                        <span class="glyphicon glyphicon-eye-close" title="@lang('project.privilege_private')"></span>
                     @endif
                 </label>
             </div>

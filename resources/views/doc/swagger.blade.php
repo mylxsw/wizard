@@ -42,7 +42,7 @@
                                        data-content="{{ base64_encode($temp['content']) }}" {{ $temp['default'] ? 'checked' : '' }}>
                                 <span title="{{ $temp['description'] }}"> {{ $temp['name'] }}</span>
                                 @if($temp['scope'] == \App\Repositories\Template::SCOPE_PRIVATE)
-                                    <span class="glyphicon glyphicon-eye-close" title="私有"></span>
+                                    <span class="glyphicon glyphicon-eye-close" title="@lang('project.privilege_private')"></span>
                                 @endif
                             </label>
                         </div>
@@ -103,7 +103,7 @@
             $.global.updateSwaggerFromDraft = function (original, updateSwaggerContent) {
                 window.setTimeout(function () {
                     if ($.global.getEditorContent() !== original) {
-                        $.wz.confirm('发现您有尚未保存的内容，是否继续编辑？', function () {
+                        $.wz.confirm('@lang('document.draft_continue_edit_confirm')', function () {
                             updateSwaggerContent(original);
                         });
                     }
