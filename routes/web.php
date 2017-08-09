@@ -29,6 +29,10 @@ Route::group(['middleware' => 'locale'], function () {
         return '';
     })->name('blank');
 
+    Route::group(['middleware' => 'auth', 'prefix' => 'tools', 'as' => 'tools:'], function () {
+        Route::post('json-to-markdown', 'ToolController@convertJsonToTable')->name('json-to-markdown');
+    });
+
     Route::group(['middleware' => 'auth'], function () {
         // 个人首页
         Route::get('/home', 'ProjectController@home')->name('user:home');

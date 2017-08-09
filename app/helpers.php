@@ -97,7 +97,7 @@ function wzTemplates($type = Template::TYPE_DOC, User $user = null): array
 function convertJsonToMarkdownTable(string $json) :string
 {
     $markdowns = [
-        ['KEY', 'TYPE', 'REQUIRED', 'DESCRIPTION'],
+        ['参数名', '类型', '是否必须', '说明'],
         ['---', '---', '---', '---']
     ];
 
