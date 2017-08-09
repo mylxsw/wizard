@@ -46,6 +46,7 @@ class DocumentController extends Controller
         return view("doc.{$type}", [
             'newPage'   => true,
             'project'   => $project,
+            'type'      => $type,
             'navigator' => navigator($project->pages, (int)$id),
         ]);
     }
@@ -65,11 +66,12 @@ class DocumentController extends Controller
 
         $this->authorize('page-edit', $pageItem);
 
-        $viewName = 'doc.' . ((int)$pageItem->type === Document::TYPE_DOC ? 'doc' : 'swagger');
-        return view($viewName, [
+        $type = ((int)$pageItem->type === Document::TYPE_DOC ? 'doc' : 'swagger');
+        return view("doc.{$type}", [
             'pageItem'  => $pageItem,
             'project'   => $pageItem->project,
             'newPage'   => false,
+            'type'      => $type,
             'navigator' => navigator(Document::where('project_id', $id)->get(), (int)$id,
                 (int)$pageItem->pid, [$pageItem->id]),
         ]);

@@ -28,7 +28,6 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a href="#" data-toggle="modal" data-target="#wz-new-template">@lang('document.save_as_template')</a></li>
-                <li><a href="#" wz-wait-develop>@lang('document.save_as_draft')</a></li>
                 @if(!$newPage)
                     <li><a href="#" wz-doc-form-submit data-force="true">@lang('document.force_save')</a></li>
                     <li><a href="#" wz-doc-compare-current>@lang('document.show_diff')</a></li>
@@ -40,7 +39,7 @@
 </div>
 
 @push('bottom')
-<div class="modal fade" id="wz-new-template" tabindex="-1" role="dialog" aria-labelledby="wz-new-project">
+<div class="modal fade" id="wz-new-template" tabindex="-1" role="dialog" aria-labelledby="wz-new-template">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -50,6 +49,7 @@
             <div class="modal-body">
                 <form method="post" action="{{ wzRoute('template:create') }}" id="wz-template-save-form">
                     {{ csrf_field() }}
+                    <input type="hidden" name="type" value="{{ $type or 'doc' }}"/>
                     <div class="form-group">
                         <label for="template-name" class="control-label">@lang('document.template_name')</label>
                         <input type="text" name="name" placeholder="@lang('document.template_name')" class="form-control" id="template-name">
@@ -92,6 +92,8 @@ $(function() {
                 force: force ? 1 : 0,
                 content: $.global.getEditorContent()
             }, function (data) {
+                $.global.clearDocumentDraft();
+
                 $.wz.alert(data.message, function () {
                     window.location.href = data.redirect;
                 });

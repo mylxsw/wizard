@@ -87,7 +87,10 @@ $.wz = {
      * @param callback
      */
     confirm: function (message, callback) {
-        layer.confirm(message, {}, callback);
+        var index = layer.confirm(message, {}, function () {
+            callback();
+            layer.close(index);
+        });
     },
 
     /**

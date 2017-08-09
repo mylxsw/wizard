@@ -224,3 +224,8 @@ a:hover {
 .swagger-ui .info {
     margin: 20px 0!important;
 }
+
+.swagger-editor-toolbar {
+    margin-bottom: 5px;
+    margin-left: -15px;
+}
