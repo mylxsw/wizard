@@ -158,6 +158,12 @@ a:hover {
     white-space: nowrap;
 }
 
+.wz-nav-item-badge {
+    position: absolute;
+    right: 5px;
+    top: 9px;
+}
+
 .wz-page-control {
 }
 

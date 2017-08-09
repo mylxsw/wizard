@@ -85,12 +85,14 @@ $.wz = {
      *
      * @param message
      * @param callback
+     * @param callback_cancel
      */
-    confirm: function (message, callback) {
+    confirm: function (message, callback, callback_cancel) {
+        callback_cancel = callback_cancel || function () {};
         var index = layer.confirm(message, {}, function () {
             callback();
             layer.close(index);
-        });
+        }, callback_cancel);
     },
 
     /**

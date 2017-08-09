@@ -52,6 +52,7 @@ function navigator(
             'pid'      => (int)$page->pid,
             'url'      => route('project:home', ['id' => $projectID, 'p' => $page->id]),
             'selected' => $pageID === (int)$page->id,
+            'type'     => $page->type == \App\Repositories\Document::TYPE_DOC ? 'doc' : 'sw',
         ];
     }
 
@@ -94,7 +95,7 @@ function wzTemplates($type = Template::TYPE_DOC, User $user = null): array
  *
  * @return string
  */
-function convertJsonToMarkdownTable(string $json) :string
+function convertJsonToMarkdownTable(string $json): string
 {
     $markdowns = [
         ['参数名', '类型', '是否必须', '说明'],

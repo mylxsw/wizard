@@ -105,6 +105,8 @@
                     if ($.global.getEditorContent() !== original) {
                         $.wz.confirm('@lang('document.draft_continue_edit_confirm')', function () {
                             updateSwaggerContent(original);
+                        }, function () {
+                            $.global.updateSwaggerDraft('');
                         });
                     }
                 }, 0);
