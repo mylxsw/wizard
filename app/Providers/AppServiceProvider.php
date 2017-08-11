@@ -7,6 +7,7 @@ use App\Repositories\Group;
 use App\Repositories\Project;
 use App\Repositories\Template;
 use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // 用于解决某些版本的mysql下，由于默认编码为utf8mb4而导致出现错误
+        // Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes
+        Schema::defaultStringLength(191);
+
         $this->addProjectExistRules('project_exist');
         $this->addPageExistRules('page_exist');
         $this->addTemplateUniqueRules('template_unique');
