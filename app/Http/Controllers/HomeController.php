@@ -30,12 +30,14 @@ class HomeController extends Controller
             $projectModel = Project::where('visibility', Project::VISIBILITY_PUBLIC);
             if (!empty($user)) {
                 $userGroups   = $user->groups->pluck('id')->toArray();
-                $projectModel = $projectModel->orWhere(function ($query) use ($userGroups) {
-                    $query->where('visibility', '!=', Project::VISIBILITY_PUBLIC)
-                        ->whereHas('groups', function ($query) use ($userGroups) {
-                            $query->where('wz_groups.id', $userGroups);
-                        });
-                })->orWhere('user_id', \Auth::user()->id);
+                if (!empty($userGroups)) {
+                    $projectModel = $projectModel->orWhere(function ($query) use ($userGroups) {
+                        $query->where('visibility', '!=', Project::VISIBILITY_PUBLIC)
+                            ->whereHas('groups', function ($query) use ($userGroups) {
+                                $query->where('wz_groups.id', $userGroups);
+                            });
+                    })->orWhere('user_id', \Auth::user()->id);
+                }
             }
 
             /** @var Collection $projects */
