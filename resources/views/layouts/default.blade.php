@@ -44,6 +44,8 @@
 @stack('bottom')
 <script src="/assets/vendor/jquery.min.js"></script>
 <script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/vendor/jquery.easing.js"></script>
+<script src="/assets/vendor/jquery.scrollUp.min.js"></script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="/assets/vendor/ie10-viewport-bug-workaround.js"></script>
@@ -62,6 +64,10 @@
         $('[wz-wait-develop]').on('click', function () {
             $.wz.alert('@lang('common.not_ready_for_use')');
             return false;
+        });
+
+        $.scrollUp({
+            scrollText: '<span class="glyphicon glyphicon-chevron-up"></span>'
         });
     });
 </script>

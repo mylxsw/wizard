@@ -25,7 +25,7 @@
         editormd.markdownToHTML('markdown-body', {
             htmlDecode: "style,script,iframe",
             tocm: true,
-            tocDropdown: true,
+            tocDropdown: false,
             markdownSourceCode: true,
             emoji: true,
             taskList: true,

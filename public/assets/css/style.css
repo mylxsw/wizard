@@ -235,3 +235,9 @@ a:hover {
     margin-bottom: 5px;
     margin-left: -15px;
 }
+
+#scrollUp {
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+}
