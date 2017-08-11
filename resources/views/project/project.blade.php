@@ -21,29 +21,26 @@
             </ul>
             <hr />
         </nav>
-        <div class="wz-page-content" style="max-width: 400px;">
-            <div class="collapse" id="wz-document-info" style="margin-top: 20px;">
-                <table class="table table-bordered">
-                    <tr>
-                        <th>@lang('document.creator')</th>
-                        <td>{{ $pageItem->user->name or '' }}</td>
-                    </tr>
-                    <tr>
-                        <th>@lang('document.create_time')</th>
-                        <td>{{ $pageItem->created_at or '' }}</td>
-                    </tr>
-                    <tr>
-                        <th>@lang('document.last_modified_user')</th>
-                        <td>{{ $pageItem->lastModifiedUser->name or '' }}</td>
-                    </tr>
-                    <tr>
-                        <th>@lang('document.last_modified_time')</th>
-                        <td>{{ $pageItem->updated_at or '' }}</td>
-                    </tr>
+        <div class="collapse" id="wz-document-info" style="margin-top: 20px;">
+            <table class="table table-bordered">
+                <tr>
+                    <th>@lang('document.creator')</th>
+                    <td>{{ $pageItem->user->name or '' }}</td>
+                </tr>
+                <tr>
+                    <th>@lang('document.create_time')</th>
+                    <td>{{ $pageItem->created_at or '' }}</td>
+                </tr>
+                <tr>
+                    <th>@lang('document.last_modified_user')</th>
+                    <td>{{ $pageItem->lastModifiedUser->name or '' }}</td>
+                </tr>
+                <tr>
+                    <th>@lang('document.last_modified_time')</th>
+                    <td>{{ $pageItem->updated_at or '' }}</td>
+                </tr>
 
-                </table>
-            </div>
-
+            </table>
         </div>
         <div class="markdown-body" id="markdown-body">
             @if($type == 'markdown')
