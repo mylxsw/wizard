@@ -40,6 +40,7 @@ return [
     'password_back'        => '找回密码',
     'logout'               => '退出',
     'user_info'            => '用户信息',
+    'change_password'      => '修改密码',
     'template_maintenance' => '模板维护',
 
     'logout_confirm'    => '确定要退出吗？',

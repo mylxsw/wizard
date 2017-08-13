@@ -32,10 +32,12 @@ Route::group(['middleware' => 'locale'], function () {
         return '';
     })->name('blank');
 
+    // 小工具
     Route::group(['middleware' => 'auth', 'prefix' => 'tools', 'as' => 'tools:'], function () {
         Route::post('json-to-markdown', 'ToolController@convertJsonToTable')->name('json-to-markdown');
     });
 
+    // 项目分享
     Route::group(['prefix' => 'project', 'middleware' => 'share', 'as' => 'project:'], function () {
         Route::get('/{id}/doc/{page_id}.json', 'DocumentController@getPageJSON')->name('doc:json');
         Route::get('/{id}/doc/{page_id}/histories/{history_id}.json', 'HistoryController@getPageJSON')->name('doc:history:json');
@@ -46,6 +48,17 @@ Route::group(['middleware' => 'locale'], function () {
         Route::get('/home', 'ProjectController@home')->name('user:home');
         // 文件上传
         Route::post('/upload', 'FileController@imageUpload')->name('upload');
+
+        // 用户信息
+        Route::group(['prefix' => 'user', 'as' => 'user:'], function () {
+            // 基本信息
+            Route::get('/', 'UserController@basic')->name('basic');
+            Route::post('/', 'UserController@basicHandle')->name('basic:handle');
+
+            // 修改密码
+            Route::get('/password', 'UserController@password')->name('password');
+            Route::post('/password', 'UserController@passwordHandle')->name('password:handle');
+        });
 
         Route::group(['prefix' => 'project', 'as' => 'project:'], function () {
             // 创建新项目

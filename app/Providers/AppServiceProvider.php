@@ -6,6 +6,7 @@ use App\Repositories\Document;
 use App\Repositories\Group;
 use App\Repositories\Project;
 use App\Repositories\Template;
+use App\Repositories\User;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         $this->addPageExistRules('page_exist');
         $this->addTemplateUniqueRules('template_unique');
         $this->addGroupExistRule('group_exist');
+        $this->addCheckUserPasswordRules('user_password');
 
         // 在日志中输出sql历史
         \DB::listen(function (QueryExecuted $query) {
@@ -91,6 +93,23 @@ class AppServiceProvider extends ServiceProvider
             '参数 %s 对应的项目不存在',
             function ($attribute, $value, $parameters, $validator) {
                 return Project::where('id', $value)->exists();
+            }
+        );
+    }
+
+    /**
+     * 添加检查用户密码是否合法的规则
+     *
+     * @param string $ruleName
+     */
+    private function addCheckUserPasswordRules(string $ruleName)
+    {
+        $this->registerValidationRule(
+            $ruleName,
+            '密码 % 不合法',
+            function ($attribute, $value, $parameters, $validator) {
+                $user = \Auth::user()->makeVisible('password');
+                return \Hash::check($value, $user->password);
             }
         );
     }

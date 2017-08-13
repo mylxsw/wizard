@@ -12,7 +12,8 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li role="presentation">
-                            <a href="#" wz-wait-develop>@lang('common.user_info')</a>
+                            <a href="{{ wzRoute('user:basic') }}">@lang('common.user_info')</a>
+                            <a href="{{ wzRoute('user:password') }}">@lang('common.change_password')</a>
                             <a href="#" wz-wait-develop>@lang('common.template_maintenance')</a>
                         </li>
                         <li role="presentation">
