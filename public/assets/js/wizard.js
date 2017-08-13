@@ -116,10 +116,15 @@ $.wz = {
      *
      * @param message
      * @param callback
+     * @param params
      */
-    alert: function (message, callback) {
+    alert: function (message, callback, params) {
         callback = callback || function() {};
-        var index = layer.alert(message, {closeBtn: 0, scrollbar: false}, function () {
+
+        var defaults = {closeBtn: 0, scrollbar: false};
+        $.extend(defaults, params);
+
+        var index = layer.alert(message, defaults, function () {
             callback();
             layer.close(index);
         })
@@ -205,5 +210,14 @@ $.wz = {
                 pageLoaded = true;
             }
         });
+    },
+    /**
+     * 返回当前域名下的url地址
+     *
+     * @param path
+     * @returns {string}
+     */
+    url: function (path) {
+        return window.location.protocol + "//" + window.location.host + path;
     }
 };

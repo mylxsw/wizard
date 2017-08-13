@@ -23,4 +23,22 @@ class Controller extends BaseController
     {
         Request::session()->flash('alert.message', $message);
     }
+
+    /**
+     * Validate the given parameters with the given rules.
+     *
+     * @param  array  $parameters
+     * @param  array  $rules
+     * @param  array  $messages
+     * @param  array  $customAttributes
+     * @return void
+     */
+    protected function validateParameters($parameters, array $rules, array $messages = [], array $customAttributes = [])
+    {
+        $validator = $this->getValidationFactory()->make($parameters, $rules, $messages, $customAttributes);
+
+        if ($validator->fails()) {
+            $this->throwValidationException(app('request'), $validator);
+        }
+    }
 }

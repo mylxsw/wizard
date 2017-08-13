@@ -139,6 +139,7 @@ class ProjectController extends Controller
             'pageID'     => $pageID,
             'pageItem'   => $page,
             'type'       => $type,
+            'code'       => '',
             'navigators' => navigator($project->pages, $id, $pageID)
         ]);
     }

@@ -47,6 +47,7 @@ class ShareController extends Controller
             'project'  => $project,
             'pageItem' => $page,
             'type'     => $type,
+            'code'     => $hash,
         ]);
     }
 
@@ -61,24 +62,30 @@ class ShareController extends Controller
      */
     public function create(Request $request, $project_id, $page_id)
     {
-        $this->validate(
-            $request,
-            [
-                'page_id' => "required|page_exist:{$project_id}",
-            ]
+        $this->validateParameters(
+            ['page_id' => $page_id,],
+            ['page_id' => "required|page_exist:{$project_id}",]
         );
 
         $this->authorize('page-share', $page_id);
 
-        $share = PageShare::create([
-            'code'       => sha1("{$project_id}-{$page_id}-" . microtime() . rand(0, 9999999999)),
-            'project_id' => $project_id,
-            'page_id'    => $page_id,
-            'user_id'    => \Auth::user()->id,
-        ]);
+        $share = PageShare::where('project_id', $project_id)
+            ->where('page_id', $page_id)
+            ->where('user_id', \Auth::user()->id)
+            ->first();
+        if (empty($share)) {
+            $code  = sha1("{$project_id}-{$page_id}-" . microtime() . rand(0, 9999999999));
+            $share = PageShare::create([
+                'code'       => $code,
+                'project_id' => $project_id,
+                'page_id'    => $page_id,
+                'user_id'    => \Auth::user()->id,
+            ]);
+        }
 
         return [
-            'code' => $share->code
+            'code' => $share->code,
+            'link' => wzRoute('share:show', ['hash' => $share->code]),
         ];
     }
 

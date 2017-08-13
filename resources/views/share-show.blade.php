@@ -1,4 +1,5 @@
 @extends("layouts.single")
+@section('title', $pageItem->title)
 @section('page-content')
 <nav class="wz-page-control clearfix">
     <h1 class="wz-page-title">

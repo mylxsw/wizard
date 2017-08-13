@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="/favicon.ico">
 
-    <title>{{ config('app.name', 'Wizard API') }}</title>
+    <title>@yield('title') - {{ config('app.name', 'Wizard API') }}</title>
 
     <link href="/assets/css/normalize.css" rel="stylesheet">
     <!-- Bootstrap core CSS -->

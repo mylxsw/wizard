@@ -36,6 +36,11 @@ Route::group(['middleware' => 'locale'], function () {
         Route::post('json-to-markdown', 'ToolController@convertJsonToTable')->name('json-to-markdown');
     });
 
+    Route::group(['prefix' => 'project', 'middleware' => 'share', 'as' => 'project:'], function () {
+        Route::get('/{id}/doc/{page_id}.json', 'DocumentController@getPageJSON')->name('doc:json');
+        Route::get('/{id}/doc/{page_id}/histories/{history_id}.json', 'HistoryController@getPageJSON')->name('doc:history:json');
+    });
+
     Route::group(['middleware' => 'auth'], function () {
         // 个人首页
         Route::get('/home', 'ProjectController@home')->name('user:home');
@@ -61,11 +66,11 @@ Route::group(['middleware' => 'locale'], function () {
             Route::get('/{id}/doc/{page_id}', 'DocumentController@editPage')->name('doc:edit:show');
             Route::post('/{id}/doc/{page_id}', 'DocumentController@editPageHandle')->name('doc:edit:handle');
             Route::delete('/{id}/doc/{page_id}', 'DocumentController@deletePage')->name('doc:delete');
+            // 文档分享
+            Route::post('/{id}/doc/{page_id}/share', 'ShareController@create')->name('doc:share');
 
             // ajax获取文档是否过期
             Route::get('/{id}/doc/{page_id}/expired', 'DocumentController@checkPageExpired')->name('doc:expired');
-            Route::get('/{id}/doc/{page_id}.json', 'DocumentController@getPageJSON')->name('doc:json');
-            Route::get('/{id}/doc/{page_id}/histories/{history_id}.json', 'HistoryController@getPageJSON')->name('doc:history:json');
 
             // 文档历史记录
             Route::get('/{id}/doc/{page_id}/histories', 'HistoryController@pages')->name('doc:history');

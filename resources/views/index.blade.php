@@ -1,5 +1,6 @@
 @extends('layouts.default')
 
+@section('title', '首页')
 @section('container-style', 'container container-small')
 @section('content')
 

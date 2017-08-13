@@ -1,5 +1,5 @@
 @extends('layouts.default')
-
+@section('title', $project->name)
 @section('container-style', 'container-fluid')
 @section('content')
     @include('layouts.navbar')

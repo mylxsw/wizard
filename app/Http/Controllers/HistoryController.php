@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Events\DocumentRecovered;
+use App\Policies\ProjectPolicy;
 use App\Repositories\Document;
 use App\Repositories\DocumentHistory;
 use App\Repositories\Project;

@@ -1,5 +1,6 @@
 @extends('layouts.default')
 @section('container-style', 'container')
+@section('title', $project->name)
 @section('content')
     @include('layouts.navbar')
 
@@ -19,9 +20,7 @@
                 </ul>
             </div>
             <div class="col-lg-9">
-
                 <nav class="wz-page-control clearfix">
-
                     <div class="btn-group wz-nav-control">
                         @can('page-add', $project)
                         <div class="btn-group" role="group">
