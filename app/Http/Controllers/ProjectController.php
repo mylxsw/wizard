@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\Events\ProjectCreated;
 use App\Events\ProjectDeleted;
 use App\Events\ProjectModified;
+use App\Policies\ProjectPolicy;
 use App\Repositories\Document;
 use App\Repositories\Group;
 use App\Repositories\Project;
@@ -121,6 +122,11 @@ class ProjectController extends Controller
                 $query->select('id', 'pid', 'title', 'description', 'project_id', 'type', 'status');
             }
         ])->findOrFail($id);
+
+        $policy = new ProjectPolicy();
+        if (!$policy->view(\Auth::user(), $project)) {
+            abort(404);
+        }
 
         $page = $type = null;
         if ($pageID !== 0) {

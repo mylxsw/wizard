@@ -37,6 +37,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('page-edit', DocumentPolicy::class . '@edit');
         // 检查是否有还原页面的权限
         Gate::define('page-recover', DocumentPolicy::class . '@recover');
+        // 检查是否有文档的分享权限
+        Gate::define('page-share', DocumentPolicy::class . '@share');
 
         // 是否可以创建全局可用的模板
         Gate::define('template-global-create', TemplatePolicy::class . '@globalCreate');

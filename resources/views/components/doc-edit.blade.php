@@ -94,7 +94,7 @@ $(function() {
             }, function (data) {
                 $.global.clearDocumentDraft();
 
-                $.wz.alert(data.message, function () {
+                $.wz.message_success(data.message, function () {
                     window.location.href = data.redirect;
                 });
             });
@@ -105,9 +105,7 @@ $(function() {
                 formSubmit(form, true);
             });
         } else {
-            $.wz.confirm('@lang('document.save_confirm')', function () {
-                formSubmit(form, false);
-            });
+            formSubmit(form, false);
         }
     });
 

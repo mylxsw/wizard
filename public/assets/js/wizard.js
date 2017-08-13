@@ -33,9 +33,9 @@ $.wz = {
                             messages.push(response.responseJSON[k][i]);
                         }
                     }
-                    layer.alert(messages.join('; '));
+                    layer.alert(messages.join('; '), {icon: 5});
                 } else {
-                    layer.alert('server error');
+                    layer.alert('server error', {icon: 5});
                 }
             }
         });
@@ -67,6 +67,50 @@ $.wz = {
             errorCallback
         );
     },
+
+    /**
+     * 消息提示
+     *
+     * @param message
+     * @param callback
+     * @param icon
+     */
+    message: function (message, callback, icon) {
+        // -1 - default
+        // 1 - success
+        // 2 - error
+        // 3 - question
+        // 4 - lock
+        // 5 - cry
+        // 6 - smile
+        // 7 - ！
+        icon = icon ||  -1;
+        callback = callback || function () {};
+        layer.msg(message, {
+            icon: icon
+        }, callback);
+    },
+
+    /**
+     * 操作成功提示
+     *
+     * @param message
+     * @param callback
+     */
+    message_success: function (message, callback) {
+        this.message(message, callback, 1);
+    },
+
+    /**
+     * 操作失败提示
+     *
+     * @param message
+     * @param callback
+     */
+    message_failed: function (message, callback) {
+        this.message(message, callback, 2)
+    },
+
     /**
      * 弹框提示
      *
@@ -89,7 +133,7 @@ $.wz = {
      */
     confirm: function (message, callback, callback_cancel) {
         callback_cancel = callback_cancel || function () {};
-        var index = layer.confirm(message, {}, function () {
+        var index = layer.confirm(message, {icon: 3}, function () {
             callback();
             layer.close(index);
         }, callback_cancel);

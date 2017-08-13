@@ -4,7 +4,7 @@
         @lang('common.btn_more') <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-        <li><a href="#" wz-wait-develop>@lang('common.btn_share')</a></li>
+        <li><a href="{{ wzRoute('share:show', ['hash' => 'xx', 'project_id' => $project->id, 'page_id' => $pageItem->id]) }}">@lang('common.btn_share')</a></li>
         <li><a href="#" wz-wait-develop>@lang('common.btn_export')</a></li>
         <li>
             <a href="{{ wzRoute('project:doc:history', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}">@lang('document.page_history')</a>

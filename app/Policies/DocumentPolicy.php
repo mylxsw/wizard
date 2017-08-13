@@ -24,7 +24,20 @@ class DocumentPolicy
      *
      * @return bool
      */
-    public function edit(User $user, $page)
+    public function edit(User $user = null, $page)
+    {
+        return $this->groupHasEditPrv($user, $page);
+    }
+
+    /**
+     * 文档分享权限
+     *
+     * @param User $user
+     * @param      $page
+     *
+     * @return bool
+     */
+    public function share(User $user = null, $page)
     {
         return $this->groupHasEditPrv($user, $page);
     }
@@ -37,7 +50,7 @@ class DocumentPolicy
      *
      * @return bool
      */
-    private function groupHasEditPrv($user, $page): bool
+    private function groupHasEditPrv($user = null, $page): bool
     {
         if (empty($user)) {
             return false;
@@ -67,7 +80,7 @@ class DocumentPolicy
      *
      * @return bool
      */
-    public function recover(User $user, $page)
+    public function recover(User $user = null, $page)
     {
         return $this->groupHasEditPrv($user, $page);
     }
@@ -80,7 +93,7 @@ class DocumentPolicy
      *
      * @return bool
      */
-    private function isOwner(User $user, $page)
+    private function isOwner(User $user = null, $page)
     {
         if (empty($user)) {
             return false;

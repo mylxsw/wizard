@@ -23,7 +23,7 @@ class TemplatePolicy
      *
      * @return bool
      */
-    public function globalCreate(User $user)
+    public function globalCreate(User $user = null)
     {
         if (empty($user)) {
             return false;
@@ -40,7 +40,7 @@ class TemplatePolicy
      *
      * @return bool
      */
-    private function isOwner(User $user, $template)
+    private function isOwner(User $user = null, $template)
     {
         if (empty($user)) {
             return false;

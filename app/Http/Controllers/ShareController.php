@@ -1,0 +1,85 @@
+<?php
+/**
+ * wizard
+ *
+ * @link      https://www.yunsom.com/
+ * @copyright 管宜尧 <guanyiyao@yunsom.com>
+ */
+
+namespace App\Http\Controllers;
+
+
+use App\Repositories\Document;
+use App\Repositories\PageShare;
+use App\Repositories\Project;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
+
+class ShareController extends Controller
+{
+    /**
+     * 分享链接访问
+     *
+     * @param Request $request
+     * @param         $hash
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function page(Request $request, $hash)
+    {
+        /** @var PageShare $share */
+        $share = PageShare::where('code', $hash)->firstOrFail();
+
+        $projectId = $share->project_id;
+        $pageId    = $share->page_id;
+
+        /** @var Project $project */
+        $project = Project::with([
+            'pages' => function (Relation $query) {
+                $query->select('id', 'pid', 'title', 'description', 'project_id', 'type', 'status');
+            }
+        ])->findOrFail($projectId);
+
+        $page = Document::where('project_id', $projectId)->where('id', $pageId)->firstOrFail();
+        $type = $page->type == Document::TYPE_DOC ? 'markdown' : 'swagger';
+
+        return view('share-show', [
+            'project'  => $project,
+            'pageItem' => $page,
+            'type'     => $type,
+        ]);
+    }
+
+    /**
+     * 创建分享链接
+     *
+     * @param Request $request
+     * @param         $project_id
+     * @param         $page_id
+     *
+     * @return array
+     */
+    public function create(Request $request, $project_id, $page_id)
+    {
+        $this->validate(
+            $request,
+            [
+                'page_id' => "required|page_exist:{$project_id}",
+            ]
+        );
+
+        $this->authorize('page-share', $page_id);
+
+        $share = PageShare::create([
+            'code'       => sha1("{$project_id}-{$page_id}-" . microtime() . rand(0, 9999999999)),
+            'project_id' => $project_id,
+            'page_id'    => $page_id,
+            'user_id'    => \Auth::user()->id,
+        ]);
+
+        return [
+            'code' => $share->code
+        ];
+    }
+
+}

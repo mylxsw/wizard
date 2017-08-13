@@ -15,6 +15,8 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('wz_categories', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name', 100)->comment('类别名称');
+            $table->integer('user_id', false, true)->nullable()->comment('创建人');
             $table->timestamps();
         });
     }

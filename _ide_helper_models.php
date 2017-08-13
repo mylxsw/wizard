@@ -92,6 +92,20 @@ namespace App\Repositories{
 
 namespace App\Repositories{
 /**
+ * Class PageShare
+ *
+ * @property string  $code
+ * @property integer $project_id
+ * @property integer $page_id
+ * @property integer $user_id
+ * @property Carbon  $expired_at
+ * @package App\Repositories
+ */
+	class PageShare extends \Eloquent {}
+}
+
+namespace App\Repositories{
+/**
  * App\Repositories\Project
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Group[] $groups

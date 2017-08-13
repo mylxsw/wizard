@@ -24,13 +24,37 @@ class ProjectPolicy
      *
      * @return bool
      */
-    public function setting(User $user, $project)
+    public function setting(User $user = null, $project)
     {
         if (empty($user)) {
             return false;
         }
 
         return $user->isAdmin() || $this->isOwner($user, $project);
+    }
+
+    /**
+     * 项目查看权限
+     *
+     * @param User $user
+     * @param      $project
+     *
+     * @return bool
+     */
+    public function view(User $user = null, $project)
+    {
+        $project = $this->getProject($project);
+        if ($project->visibility == Project::VISIBILITY_PUBLIC) {
+            return true;
+        }
+
+        if (empty($user)) {
+            return false;
+        }
+
+        return $user->isAdmin()
+            || $this->isOwner($user, $project)
+            || $this->groupHasProjectPrivilege($project, $user);
     }
 
     /**
@@ -41,7 +65,7 @@ class ProjectPolicy
      *
      * @return bool
      */
-    public function addPage(User $user, $project)
+    public function addPage(User $user = null, $project)
     {
         if (empty($user)) {
             return false;
@@ -70,7 +94,7 @@ class ProjectPolicy
      *
      * @return bool
      */
-    public function edit(User $user, $project)
+    public function edit(User $user = null, $project)
     {
         if (empty($user)) {
             return false;
@@ -87,7 +111,7 @@ class ProjectPolicy
      *
      * @return bool
      */
-    public function delete(User $user, $project)
+    public function delete(User $user = null, $project)
     {
         if (empty($user)) {
             return false;
@@ -104,7 +128,7 @@ class ProjectPolicy
      *
      * @return bool
      */
-    private function isOwner(User $user, $project)
+    private function isOwner(User $user = null, $project)
     {
         if (empty($user)) {
             return false;

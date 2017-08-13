@@ -24,6 +24,9 @@ Route::group(['middleware' => 'locale'], function () {
     // 设置语言
     Route::get('/locale', 'HomeController@lang')->name('locale');
 
+    // 分享页面
+    Route::get('/s/{hash}', 'ShareController@page')->name('share:show');
+
     // 空白页，用于前端兼容
     Route::get('/blank', function () {
         return '';

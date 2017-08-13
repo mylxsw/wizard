@@ -22,7 +22,7 @@ trait GroupHasProjectPrivilege
      *
      * @return bool
      */
-    protected function groupHasProjectPrivilege(Project $project, User $user): bool
+    protected function groupHasProjectPrivilege(Project $project, User $user = null): bool
     {
         $groupHasPrivilege = false;
         $userGroups        = $user->groups->pluck('id')->toArray();
