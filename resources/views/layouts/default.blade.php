@@ -57,8 +57,12 @@
 <script>
     $(function () {
         {{-- 页面提示消息（上一个页面操作的结果） --}}
-        @if (session('alert.message'))
-            layer.msg("{{ session('alert.message') }}");
+        @if (session('alert.message.info'))
+            $.wz.message("{{ session('alert.message') }}");
+        @elseif (session('alert.message.success'))
+            $.wz.message_success("{{ session('alert.message.success') }}");
+        @elseif (session('alert.message.error'))
+            $.wz.message_failed("{{ session('alert.message.error') }}");
         @endif
 
         $('[wz-wait-develop]').on('click', function () {

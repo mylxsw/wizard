@@ -235,7 +235,7 @@ class ProjectController extends Controller
             event(new ProjectModified($project, $op));
         }
 
-        $this->alert(__('project.project_update_success'));
+        $this->alertSuccess(__('project.project_update_success'));
         return redirect(wzRoute(
             'project:setting:show',
             ['id' => $id, 'op' => $op]
@@ -327,7 +327,7 @@ class ProjectController extends Controller
 
         $project->groups()->detach($group_id);
 
-        $this->alert(__('project.revoke_privilege_success'));
+        $this->alertSuccess(__('project.revoke_privilege_success'));
         return redirect(route('project:setting:handle', ['id' => $id, 'op' => 'privilege']));
     }
 }

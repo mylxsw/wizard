@@ -21,7 +21,27 @@ class Controller extends BaseController
      */
     protected function alert(string $message)
     {
-        Request::session()->flash('alert.message', $message);
+        Request::session()->flash('alert.message.info', $message);
+    }
+
+    /**
+     * 创建操作成功的页面提示消息
+     *
+     * @param string $message
+     */
+    protected function alertSuccess(string $message)
+    {
+        Request::session()->flash('alert.message.success', $message);
+    }
+
+    /**
+     * 创建操作失败的页面提示消息
+     *
+     * @param string $message
+     */
+    protected function alertError(string $message)
+    {
+        Request::session()->flash('alert.message.error', $message);
     }
 
     /**

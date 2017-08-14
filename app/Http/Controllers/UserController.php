@@ -38,10 +38,11 @@ class UserController extends Controller
      */
     public function basicHandle(Request $request)
     {
+        $uid = \Auth::user()->id;
         $this->validate(
             $request,
             [
-                'username' => 'required|string|max:255|username_unique',
+                'username' => "required|string|max:255|username_unique:{$uid}",
             ]
         );
 
@@ -51,7 +52,8 @@ class UserController extends Controller
             'name' => $username,
         ]);
 
-        $this->alert(__('common.operation_success'));
+        $this->alertSuccess(__('common.operation_success'));
+
         return redirect(wzRoute('user:basic'));
     }
 
@@ -98,7 +100,7 @@ class UserController extends Controller
             'password' => \Hash::make($request->input('password'))
         ]);
 
-        $this->alert(__('passwords.change_password_success'));
+        $this->alertSuccess(__('passwords.change_password_success'));
         return redirect(wzRoute('user:password'));
     }
 }

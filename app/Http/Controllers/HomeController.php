@@ -67,7 +67,7 @@ class HomeController extends Controller
         $request->session()->put('locale', $lang);
 
         \App::setLocale($lang);
-        $this->alert(__('common.lang_swatch_success'));
+        $this->alertSuccess(__('common.lang_swatch_success'));
 
         return redirect(wzRoute('home'));
     }

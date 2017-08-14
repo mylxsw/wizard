@@ -282,7 +282,7 @@ class DocumentController extends Controller
 
         // 删除文档
         $pageItem->delete();
-        $this->alert(__('document.document_delete_success'));
+        $this->alertSuccess(__('document.document_delete_success'));
 
         event(new DocumentDeleted($pageItem));
 

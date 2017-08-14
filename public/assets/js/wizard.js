@@ -87,7 +87,8 @@ $.wz = {
         icon = icon ||  -1;
         callback = callback || function () {};
         layer.msg(message, {
-            icon: icon
+            icon: icon,
+            offset: 't'
         }, callback);
     },
 

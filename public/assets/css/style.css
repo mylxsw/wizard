@@ -241,3 +241,7 @@ a:hover {
     right: 20px;
     padding: 10px 20px;
 }
+
+.layui-layer-msg {
+    margin-top: 10px!important;
+}
