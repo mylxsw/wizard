@@ -119,7 +119,10 @@ class ProjectController extends Controller
         /** @var Project $project */
         $project = Project::with([
             'pages' => function (Relation $query) {
-                $query->select('id', 'pid', 'title', 'description', 'project_id', 'type', 'status');
+                // TODO 这里按照pid排序的必要性：因为navigator函数的bug，导致不排序会有菜单项丢失
+                $query->select(
+                    'id', 'pid', 'title', 'description', 'project_id', 'type', 'status'
+                )->orderBy('pid');
             }
         ])->findOrFail($id);
 
