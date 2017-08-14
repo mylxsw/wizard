@@ -26,6 +26,8 @@ function wzRoute($name, $parameters = [], $absolute = false)
 /**
  * 将页面集合转换为层级结构的菜单
  *
+ * 必须保证pages是按照pid进行asc排序的，否则可能会出现菜单丢失
+ *
  * @param \Illuminate\Database\Eloquent\Collection $pages     每一页文档
  * @param int                                      $projectID 当前项目ID
  * @param int                                      $pageID    选中的文档ID
