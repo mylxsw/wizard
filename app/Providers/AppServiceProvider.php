@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         $this->addTemplateUniqueRules('template_unique');
         $this->addGroupExistRule('group_exist');
         $this->addCheckUserPasswordRules('user_password');
+        $this->addUsernameUniqueRules('username_unique');
 
         // 在日志中输出sql历史
         \DB::listen(function (QueryExecuted $query) {
@@ -93,6 +94,29 @@ class AppServiceProvider extends ServiceProvider
             '参数 %s 对应的项目不存在',
             function ($attribute, $value, $parameters, $validator) {
                 return Project::where('id', $value)->exists();
+            }
+        );
+    }
+
+    /**
+     * 新增用户名唯一校验规则
+     *
+     * @param string $ruleName
+     */
+    private function addUsernameUniqueRules(string $ruleName)
+    {
+        $this->registerValidationRule(
+            $ruleName,
+            '用户名已经存在',
+            function ($attribute, $value, $parameters, $validator) {
+                $excludeId         = $parameters[0] ?? 0;
+
+                $user = User::where('username', $value);
+                if (!empty($excludeId)) {
+                    $user = $user->where('id', '!=', $excludeId);
+                }
+
+                return !$user->exists();
             }
         );
     }

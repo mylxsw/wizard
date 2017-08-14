@@ -14,6 +14,13 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    /**
+     * 用户基本信息配置页面
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function basic(Request $request)
     {
         return view('user.basic', [
@@ -22,9 +29,30 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * 修改用户基本信息
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function basicHandle(Request $request)
     {
+        $this->validate(
+            $request,
+            [
+                'username' => 'required|string|max:255|username_unique',
+            ]
+        );
 
+        $username = $request->input('username');
+
+        \Auth::user()->update([
+            'username' => $username,
+        ]);
+
+        $this->alert(__('common.operation_success'));
+        return redirect(wzRoute('user:basic'));
     }
 
     /**
