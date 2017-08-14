@@ -36,7 +36,7 @@ return [
     'password'             => '密码',
     'password_confirm'     => '重复密码',
     'email'                => '邮箱地址',
-    'username'             => '用户名',
+    'username'             => '真实姓名',
     'password_back'        => '找回密码',
     'logout'               => '退出',
     'user_info'            => '用户信息',
