@@ -48,7 +48,7 @@ class UserController extends Controller
         $username = $request->input('username');
 
         \Auth::user()->update([
-            'username' => $username,
+            'name' => $username,
         ]);
 
         $this->alert(__('common.operation_success'));

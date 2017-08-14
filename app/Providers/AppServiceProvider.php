@@ -111,7 +111,7 @@ class AppServiceProvider extends ServiceProvider
             function ($attribute, $value, $parameters, $validator) {
                 $excludeId         = $parameters[0] ?? 0;
 
-                $user = User::where('username', $value);
+                $user = User::where('name', $value);
                 if (!empty($excludeId)) {
                     $user = $user->where('id', '!=', $excludeId);
                 }
