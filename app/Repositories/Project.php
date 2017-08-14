@@ -25,6 +25,15 @@ class Project extends Repository
      */
     const VISIBILITY_PRIVATE = '2';
 
+    /**
+     * 读写
+     */
+    const PRIVILEGE_WR = 1;
+    /**
+     * 只读
+     */
+    const PRIVILEGE_RO = 2;
+
     protected $table = 'wz_projects';
     protected $fillable
         = [

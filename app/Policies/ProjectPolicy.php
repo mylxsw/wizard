@@ -54,7 +54,7 @@ class ProjectPolicy
 
         return $user->isAdmin()
             || $this->isOwner($user, $project)
-            || $this->groupHasProjectPrivilege($project, $user);
+            || $this->groupHasProjectPrivilege($project, $user, Project::PRIVILEGE_RO);
     }
 
     /**

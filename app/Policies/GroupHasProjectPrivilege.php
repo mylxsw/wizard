@@ -19,17 +19,26 @@ trait GroupHasProjectPrivilege
      *
      * @param Project $project
      * @param User    $user
+     * @param integer $privilege 1-读写 2-只读
      *
      * @return bool
      */
-    protected function groupHasProjectPrivilege(Project $project, User $user = null): bool
-    {
+    protected function groupHasProjectPrivilege(
+        Project $project,
+        User $user = null,
+        $privilege = Project::PRIVILEGE_WR
+    ): bool {
         $groupHasPrivilege = false;
         $userGroups        = $user->groups->pluck('id')->toArray();
         if (!empty($userGroups)) {
-            $groupHasPrivilege = $project->groups()
-                ->wherePivotIn('group_id', $userGroups)
-                ->wherePivot('privilege', '=', 1)->exists();
+
+            $projectModel = $project->groups()->wherePivotIn('group_id', $userGroups);
+            // 如果不是读写权限，则不需要判断权限类别，默认为只读
+            if ($privilege == Project::PRIVILEGE_WR) {
+                $projectModel = $projectModel->wherePivot('privilege', '=', $privilege);
+            }
+
+            $groupHasPrivilege = $projectModel->exists();
         }
 
         return $groupHasPrivilege;
