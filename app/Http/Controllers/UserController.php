@@ -15,6 +15,20 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
+     * 用户列表
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function users(Request $request)
+    {
+        return view('user.users', [
+            'users' => User::paginate()
+        ]);
+    }
+
+    /**
      * 用户基本信息配置页面
      *
      * @param Request $request

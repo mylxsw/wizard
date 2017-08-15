@@ -12,6 +12,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li role="presentation">
+                            @if(Auth::user()->isAdmin())
+                            <a href="">系统管理</a>
+                            @endif
                             <a href="{{ wzRoute('user:basic') }}">@lang('common.user_info')</a>
                             <a href="{{ wzRoute('user:password') }}">@lang('common.change_password')</a>
                             <a href="#" wz-wait-develop>@lang('common.template_maintenance')</a>
