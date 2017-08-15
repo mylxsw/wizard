@@ -53,5 +53,5 @@
     </div>
 @endsection
 
-@includeIf("components.{$type}-show", ['isHistoryPage' => true])
+@includeIf("components.{$type}-show", ['isHistoryPage' => true, 'code' => ''])
 @include('components.doc-compare-script')

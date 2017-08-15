@@ -245,3 +245,52 @@ a:hover {
 .layui-layer-msg {
     margin-top: 10px!important;
 }
+
+.wz-differ-box {
+    padding: 20px 10px;
+    border: 1px solid #ccc;
+    -moz-box-shadow: 10px 10px 5px #888888;
+    box-shadow: -5px 5px 6px #e5e5e5;
+    width: 100%;
+}
+
+.wz-differ-box div {
+    line-height: 1.5;
+    font-size: 13px;
+    display: block;
+    margin: 0;
+    padding: 0 0.5em;
+    border: none;
+}
+
+.wz-differ-box tr:hover {
+    background: #fffaf1;
+}
+
+.wz-differ-box td pre {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    margin-left: 10px;
+    background: none;
+    color: inherit;
+    line-height: inherit;
+    border-radius: initial;
+    border: none;
+}
+
+.wz-differ-box .line-sign {
+    width: 25px;
+    display: inline-block;
+    cursor: pointer;
+    border-right: 1px solid #ccc;
+    text-align: center;
+}
+
+.wz-differ-box .differ-added {
+    background:rgb(224,255,224);
+}
+
+.wz-differ-box .differ-removed {
+    background:rgb(255,224,224);
+}
