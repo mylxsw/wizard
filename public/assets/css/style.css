@@ -271,7 +271,7 @@ a:hover {
     display: inline;
     padding: 0;
     margin: 0;
-    margin-left: 10px;
+    margin-left: -20px;
     background: none;
     color: inherit;
     line-height: inherit;
