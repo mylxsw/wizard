@@ -14,7 +14,7 @@ return [
     'last_modified_time' => '最后修改时间',
     'operation_time'     => '操作时间',
     'modified_user'      => '修改人',
-    'document_info'      => '文档信息',
+    'document_info'      => '信息',
 
     'btn_recover' => '还原',
     'title'       => '标题',

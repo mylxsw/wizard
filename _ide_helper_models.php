@@ -10,6 +10,21 @@
 
 namespace App\Repositories{
 /**
+ * App\Repositories\Comment
+ *
+ * @property-read \App\Repositories\Document $document
+ * @property-read \App\Repositories\User $user
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Comment onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Comment withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Comment withoutTrashed()
+ */
+	class Comment extends \Eloquent {}
+}
+
+namespace App\Repositories{
+/**
  * Class Page
  *
  * @property integer $id
@@ -26,6 +41,7 @@ namespace App\Repositories{
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
  * @package App\Repositories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Comment[] $comments
  * @property-read \App\Repositories\User $lastModifiedUser
  * @property-read \App\Repositories\Document $parentPage
  * @property-read \App\Repositories\Project $project

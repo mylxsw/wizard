@@ -220,5 +220,20 @@ $.wz = {
      */
     url: function (path) {
         return window.location.protocol + "//" + window.location.host + path;
+    },
+
+    /**
+     * 按钮自动锁定，解锁
+     *
+     * @param element
+     */
+    btnAutoLock: function (element) {
+        element.prop('disabled', true);
+        var originalText = element.text();
+        element.text('处理中...');
+        setTimeout(function () {
+            element.prop('disabled', false);
+            element.text(originalText);
+        }, 5000);
     }
 };

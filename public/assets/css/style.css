@@ -293,3 +293,22 @@ a:hover {
 .wz-differ-box .differ-removed {
     background:rgb(255,224,224);
 }
+
+.wz-comments-box {
+    clear: both;
+}
+
+.wz-comments-box ol {
+    padding-left: 8px;
+}
+
+.wz-comments-box .wz-comment-date {
+    color: #a2a2a2;
+    margin-left: 15px;
+}
+
+.wz-comments-box .wz-comment-body {
+    margin-bottom: 8px;
+    color: #777;
+    clear: both;
+}

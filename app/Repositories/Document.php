@@ -127,4 +127,14 @@ class Document extends Repository
     {
         return $this->hasMany(self::class, 'pid', 'id');
     }
+
+    /**
+     * 文档下的评论
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'page_id', 'id');
+    }
 }

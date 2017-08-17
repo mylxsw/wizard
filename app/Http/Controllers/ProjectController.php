@@ -133,7 +133,14 @@ class ProjectController extends Controller
 
         $page = $type = null;
         if ($pageID !== 0) {
-            $page = Document::where('project_id', $id)->where('id', $pageID)->firstOrFail();
+            $page = Document::with([
+                'comments' => function ($query) {
+                    $query->orderBy('created_at', 'desc');
+                }
+            ])
+                ->where('project_id', $id)
+                ->where('id', $pageID)
+                ->firstOrFail();
             $type = $page->type == Document::TYPE_DOC ? 'markdown' : 'swagger';
         }
 

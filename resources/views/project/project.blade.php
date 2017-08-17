@@ -7,11 +7,6 @@
                 <span class="label label-{{ $type == 'swagger' ? 'success' : 'default' }}">{{ $type == 'swagger' ? 'sw' : 'md' }}</span>
             </h1>
             <ul class="nav nav-pills pull-right">
-                <li role="presentation">
-                    <a data-toggle="collapse" href="#wz-document-info" aria-expanded="false" >
-                        @lang('document.document_info')
-                    </a>
-                </li>
                 @can('page-edit', $pageItem)
                     <li role="presentation">
                         <a href="{{ wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">@lang('common.btn_edit')</a>
@@ -21,16 +16,8 @@
             </ul>
             <hr />
         </nav>
-        <div class="collapse" id="wz-document-info" style="margin-top: 20px;">
+        <div id="wz-document-info" style="margin-top: 20px;">
             <table class="table table-bordered">
-                <tr>
-                    <th>@lang('document.creator')</th>
-                    <td>{{ $pageItem->user->name or '' }}</td>
-                </tr>
-                <tr>
-                    <th>@lang('document.create_time')</th>
-                    <td>{{ $pageItem->created_at or '' }}</td>
-                </tr>
                 <tr>
                     <th>@lang('document.last_modified_user')</th>
                     <td>{{ $pageItem->lastModifiedUser->name or '' }}</td>
@@ -39,7 +26,14 @@
                     <th>@lang('document.last_modified_time')</th>
                     <td>{{ $pageItem->updated_at or '' }}</td>
                 </tr>
-
+                <tr>
+                    <th>@lang('document.creator')</th>
+                    <td>{{ $pageItem->user->name or '' }}</td>
+                </tr>
+                <tr>
+                    <th>@lang('document.create_time')</th>
+                    <td>{{ $pageItem->created_at or '' }}</td>
+                </tr>
             </table>
         </div>
         <div class="markdown-body" id="markdown-body">

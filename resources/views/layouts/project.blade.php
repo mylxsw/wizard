@@ -49,6 +49,9 @@
                         @yield('page-content')
                     </div>
                 </div>
+                @if($pageID != 0 && !(Auth::guest() && count($pageItem->comments) === 0))
+                    @include('components.comment')
+                @endif
             </div>
         </div>
     </div>
