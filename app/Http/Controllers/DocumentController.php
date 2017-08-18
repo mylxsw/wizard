@@ -50,6 +50,7 @@ class DocumentController extends Controller
             'newPage'   => true,
             'project'   => $project,
             'type'      => $type,
+            'pid'       => $pid,
             'navigator' => navigator($project->pages, (int)$id, $pid),
         ]);
     }
@@ -75,6 +76,7 @@ class DocumentController extends Controller
             'project'   => $pageItem->project,
             'newPage'   => false,
             'type'      => $type,
+            'pid'       => $pageItem->pid,
             'navigator' => navigator(Document::where('project_id', $id)->get(), (int)$id,
                 (int)$pageItem->pid, [$pageItem->id]),
         ]);

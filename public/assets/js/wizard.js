@@ -234,6 +234,6 @@ $.wz = {
         setTimeout(function () {
             element.prop('disabled', false);
             element.text(originalText);
-        }, 5000);
+        }, 3000);
     }
 };

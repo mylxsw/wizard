@@ -112,7 +112,7 @@ $(function() {
                 }, function () {
                     window.location.href = data.redirect.edit;
                 }, function () {
-                    window.location.href = '{{ wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => $type]) }}';
+                    window.location.href = '{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => $type, 'pid' => $pid]) !!}';
                 });
             });
         };
