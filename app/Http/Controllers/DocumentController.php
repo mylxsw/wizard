@@ -36,7 +36,7 @@ class DocumentController extends Controller
     {
         $this->validate(
             $request,
-            ['type' => 'in:swagger,doc']
+            ['type' => 'in:swagger,doc', 'pid' => 'integer|min:0']
         );
 
         /** @var Project $project */
@@ -45,11 +45,12 @@ class DocumentController extends Controller
         $this->authorize('page-add', $project);
 
         $type = $request->input('type', 'doc');
+        $pid  = $request->input('pid', 0);
         return view("doc.{$type}", [
             'newPage'   => true,
             'project'   => $project,
             'type'      => $type,
-            'navigator' => navigator($project->pages, (int)$id),
+            'navigator' => navigator($project->pages, (int)$id, $pid),
         ]);
     }
 

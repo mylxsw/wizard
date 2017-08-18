@@ -30,9 +30,9 @@
                                 @lang('common.btn_add') <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id]) }}">@lang('common.document')</a>
+                                <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id, 'pid' => $pageID]) }}">@lang('common.document')</a>
                                 </li>
-                                <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger']) }}">@lang('common.swagger')</a></li>
+                                <li><a href="{{ wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger', 'pid' => $pageID]) }}">@lang('common.swagger')</a></li>
                             </ul>
                         </div>
                         @endcan
