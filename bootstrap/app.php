@@ -52,9 +52,4 @@ $app->singleton(
 |
 */
 
-$storagePath = env('STORAGE_PATH');
-if (!empty($storagePath)) {
-    $app->useStoragePath($storagePath);
-}
-
 return $app;
