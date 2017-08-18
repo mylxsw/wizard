@@ -130,10 +130,16 @@ class DocumentController extends Controller
         event(new DocumentCreated($pageItem));
 
         return [
-            'redirect' => wzRoute(
-                'project:doc:edit:show',
-                ['id' => $projectID, 'page_id' => $pageItem->id]
-            ),
+            'redirect' => [
+                'edit' => wzRoute(
+                    'project:doc:edit:show',
+                    ['id' => $projectID, 'page_id' => $pageItem->id]
+                ),
+                'show' => route(
+                    'project:home',
+                    ['id' => $projectID, 'p' => $pageItem->id]
+                )
+            ],
             'message'  => __('common.operation_success'),
         ];
     }
@@ -212,10 +218,16 @@ class DocumentController extends Controller
 
         return [
             'message'  => __('common.operation_success'),
-            'redirect' => wzRoute(
-                'project:doc:edit:show',
-                ['id' => $projectID, 'page_id' => $page_id]
-            )
+            'redirect' => [
+                'edit' => wzRoute(
+                    'project:doc:edit:show',
+                    ['id' => $projectID, 'page_id' => $pageItem->id]
+                ),
+                'show' => route(
+                    'project:home',
+                    ['id' => $projectID, 'p' => $pageItem->id]
+                )
+            ]
         ];
     }
 

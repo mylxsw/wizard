@@ -34,7 +34,7 @@
                 @endif
             </ul>
         </div>
-        <a href="{{ wzRoute('project:home', ['id' => $project->id] + (empty($pageItem) ? [] : ['p' => $pageItem->id])) }}" class="btn btn-default">@lang('common.btn_back')</a>
+        <a href="{{ wzRoute('project:home', ['id' => $project->id] + (empty($pageItem) ? [] : ['p' => $pageItem->id])) }}" class="btn btn-default" id="wz-document-goback">@lang('common.btn_back')</a>
     </div>
 </div>
 
@@ -94,10 +94,25 @@ $(function() {
                 force: force ? 1 : 0,
                 content: $.global.getEditorContent()
             }, function (data) {
+
+                // 清除文档过期检查任务
+                if (typeof window.document_check_task !== 'undefined') {
+                    window.clearTimeout(window.document_check_task);
+                }
+
                 $.global.clearDocumentDraft();
 
-                $.wz.message_success(data.message, function () {
-                    window.location.href = data.redirect;
+                layer.confirm('保存成功，是否继续编辑本文档？', {
+                    icon: 1,
+                    closeBtn: 0,
+                    btn: ['继续编辑', '新文档', '查看'],
+                    btn3: function () {
+                        window.location.href = data.redirect.show;
+                    }
+                }, function () {
+                    window.location.href = data.redirect.edit;
+                }, function () {
+                    window.location.href = '{{ wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => $type]) }}';
                 });
             });
         };
@@ -157,7 +172,7 @@ $(function() {
             var lastModifiedAt = $('input[name=last_modified_at]').val();
             var checkExpiredURL = '{{ wzRoute('project:doc:expired', ['id' => $project->id, 'page_id' => $pageItem->id]) }}';
             var continueCheck = function () {
-                window.setTimeout(function () {
+                window.document_check_task = window.setTimeout(function () {
                     $.wz.request('get', checkExpiredURL, {l:lastModifiedAt}, function (data) {
                         // 没有过期则继续检查
                         if (!data.expired) {
