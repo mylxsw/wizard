@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\DocumentDeleted;
 use App\Repositories\OperationLogs;
+use App\Repositories\User;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -42,5 +43,12 @@ class DocumentDeletedListener
                 'doc_id'       => $doc->id
             ]
         );
+
+        // 发送消息通知相关用户
+        $users = User::whereHas('histories', function ($query) use ($doc) {
+            $query->where('page_id', $doc->id);
+        })->get();
+
+        \Notification::send($users, new \App\Notifications\DocumentDeleted($doc));
     }
 }

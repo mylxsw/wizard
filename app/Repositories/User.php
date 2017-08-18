@@ -88,6 +88,16 @@ class User extends Authenticatable
     }
 
     /**
+     * 用户编辑过的历史页面
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function histories()
+    {
+        return $this->hasMany(DocumentHistory::class, 'operator_id', 'id');
+    }
+
+    /**
      * 判断当前用户是否为管理员
      *
      * @return bool

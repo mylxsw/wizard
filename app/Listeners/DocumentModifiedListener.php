@@ -3,7 +3,10 @@
 namespace App\Listeners;
 
 use App\Events\DocumentModified;
+use App\Notifications\DocumentUpdated;
+use App\Repositories\DocumentHistory;
 use App\Repositories\OperationLogs;
+use App\Repositories\User;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -30,6 +33,7 @@ class DocumentModifiedListener
     {
         $doc = $event->getDocument();
 
+        // 记录操作日志
         OperationLogs::log(
             \Auth::user()->id,
             'document_updated',
@@ -42,5 +46,12 @@ class DocumentModifiedListener
                 'doc_id'       => $doc->id
             ]
         );
+
+        // 发送消息通知相关用户
+        $users = User::whereHas('histories', function ($query) use ($doc) {
+            $query->where('page_id', $doc->id);
+        })->get();
+
+        \Notification::send($users, new DocumentUpdated($doc));
     }
 }

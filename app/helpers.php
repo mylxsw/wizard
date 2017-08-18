@@ -161,3 +161,31 @@ function jsonFlatten(string $json): array
 
     return $result;
 }
+
+/**
+ * 判断用户是否有通知
+ *
+ * @return bool
+ */
+function userHasNotifications()
+{
+    if (Auth::guest()) {
+        return false;
+    }
+
+    return userNotificationCount() > 0;
+}
+
+/**
+ * 用户通知消息数
+ *
+ * @return int
+ */
+function userNotificationCount()
+{
+    if (Auth::guest()) {
+        return 0;
+    }
+
+    return count(Auth::user()->notifications);
+}
