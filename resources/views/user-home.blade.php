@@ -79,6 +79,8 @@
         $('#wz-project-save').on('click', function () {
             var form = $('#wz-project-save-form');
 
+            $.wz.btnAutoLock($(this));
+
             $.wz.asyncForm(form, {}, function (data) {
                 window.location.reload(true);
             });

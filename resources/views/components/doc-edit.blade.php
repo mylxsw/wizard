@@ -87,6 +87,8 @@ $(function() {
         var force = $(this).data('force');
         var form = $(this).parents('form');
 
+        $.wz.btnAutoLock($(this));
+
         var formSubmit = function (form, force) {
             $.wz.asyncForm(form, {
                 force: force ? 1 : 0,
@@ -111,6 +113,7 @@ $(function() {
 
     // 另存为模板
     $('#wz-template-save').on('click', function () {
+        $.wz.btnAutoLock($(this));
         var form = $('#wz-template-save-form');
         $.wz.asyncForm(form, {content: $.global.getEditorContent()}, function (data) {
             $.wz.alert('@lang('common.operation_success')', function () {
