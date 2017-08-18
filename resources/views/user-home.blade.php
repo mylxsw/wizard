@@ -26,6 +26,9 @@
                 </a>
             </div>
         </div>
+        <div class="wz-pagination">
+            {{ $projects->links() }}
+        </div>
     </div>
 
     <div class="modal fade" id="wz-new-project" tabindex="-1" role="dialog" aria-labelledby="wz-new-project">

@@ -16,9 +16,9 @@ use App\Policies\ProjectPolicy;
 use App\Repositories\Document;
 use App\Repositories\Group;
 use App\Repositories\Project;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProjectController extends Controller
 {
@@ -27,10 +27,16 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function home()
+    public function home(Request $request)
     {
-        /** @var Project $projects */
-        $projects = Project::where('user_id', \Auth::user()->id)->get();
+        $perPage = $request->input('per_page', 19);
+
+        /** @var LengthAwarePaginator $projects */
+        $projects = Project::where('user_id', \Auth::user()->id)
+            ->paginate($perPage)
+            ->appends([
+                'per_page' => $perPage,
+            ]);
 
         return view('user-home', ['projects' => $projects]);
     }

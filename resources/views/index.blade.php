@@ -18,6 +18,9 @@
                 </div>
             @endforeach
         </div>
+        <div class="wz-pagination">
+            {{ $projects->links() }}
+        </div>
     </div>
 
 @endsection

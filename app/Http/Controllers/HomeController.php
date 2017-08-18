@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Project;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class HomeController extends Controller
 {
@@ -19,12 +18,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function home()
+    public function home(Request $request)
     {
+        $perPage = $request->input('per_page', 20);
+
         $user = \Auth::user();
         if (!empty($user) && $user->isAdmin()) {
-            /** @var Collection $projects */
-            $projects = Project::get();
+            /** @var LengthAwarePaginator $projects */
+            $projects = Project::paginate($perPage);
         } else {
             /** @var Project $projectModel */
             $projectModel = Project::where('visibility', Project::VISIBILITY_PUBLIC);
@@ -40,11 +41,11 @@ class HomeController extends Controller
                 }
             }
 
-            /** @var Collection $projects */
-            $projects = $projectModel->get();
+            /** @var LengthAwarePaginator $projects */
+            $projects = $projectModel->paginate($perPage);
         }
 
-        return view('index', ['projects' => $projects]);
+        return view('index', ['projects' => $projects->appends(['per_page' => $perPage])]);
     }
 
     /**
