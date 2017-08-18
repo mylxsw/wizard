@@ -137,4 +137,14 @@ class Document extends Repository
     {
         return $this->hasMany(Comment::class, 'page_id', 'id');
     }
+
+    /**
+     * 页面下所有的附件
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class, 'page_id', 'id');
+    }
 }

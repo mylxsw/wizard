@@ -5,7 +5,7 @@
     <div class="panel-body">
         @if(!Auth::guest())
             <form method="post"
-                  action="{{ route('project:doc:comment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
+                  action="{{ wzRoute('project:doc:comment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
                   id="wz-new-comment-form">
                 {{ csrf_field() }}
 

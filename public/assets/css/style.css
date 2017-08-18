@@ -312,3 +312,12 @@ a:hover {
     color: #777;
     clear: both;
 }
+
+.wz-attachments ol li {
+    line-height: 2;
+}
+
+.wz-upload-box {
+    width: 500px;
+    padding: 0 20px;
+}

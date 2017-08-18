@@ -41,6 +41,26 @@
             <textarea id="append-test" style="display:none;">{{ $pageItem->content }}</textarea>
             @endif
         </div>
+        @if(count($pageItem->attachments) > 0)
+        <div class="wz-attachments">
+            <hr />
+            <h4>附件</h4>
+            <ol>
+                @foreach($pageItem->attachments as $attachment)
+                    <li>
+                        <a href="{{ $attachment->path }}">
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                            {{ $attachment->name }}
+                            <span class="wz-attachment-info">
+                                【{{ $attachment->user->name }}，
+                                {{ $attachment->created_at }}】
+                            </span>
+                        </a>
+                    </li>
+                @endforeach
+            </ol>
+        </div>
+        @endif
     @else
         <h1>{{ $project->name or '' }}</h1>
         <hr/>
@@ -72,3 +92,9 @@
 @endsection
 
 @includeIf("components.{$type}-show")
+
+@push('page-panel')
+    @if($pageID != 0 && !(Auth::guest() && count($pageItem->comments) === 0))
+        @include('components.comment')
+    @endif
+@endpush

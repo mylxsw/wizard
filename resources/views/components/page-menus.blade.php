@@ -5,6 +5,7 @@
         @lang('common.btn_more') <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
+        <li><a href="{{ wzRoute('project:doc:attachment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">附件管理</a></li>
         <li><a href="#" wz-share data-url="{{ wzRoute('project:doc:share', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">@lang('common.btn_share')</a></li>
         <li><a href="#" wz-wait-develop>@lang('common.btn_export')</a></li>
         <li>

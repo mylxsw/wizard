@@ -2,7 +2,7 @@
 
 @section('title', __('common.change_password'))
 @section('user-content')
-    <form class="form-horizontal" method="post" action="{{ route('user:password:handle') }}">
+    <form class="form-horizontal" method="post" action="{{ wzRoute('user:password:handle') }}">
         {{ csrf_field() }}
         <div class="form-group">
             <label for="editor-original_password" class="col-sm-2 control-label">@lang('passwords.original_password')</label>

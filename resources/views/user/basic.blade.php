@@ -2,7 +2,7 @@
 
 @section('title', __('common.user_info'))
 @section('user-content')
-    <form class="form-horizontal" method="post" action="{{ route('user:basic:handle') }}">
+    <form class="form-horizontal" method="post" action="{{ wzRoute('user:basic:handle') }}">
         {{ csrf_field() }}
         <div class="form-group">
             <label for="editor-email" class="col-sm-2 control-label">@lang('common.email')</label>

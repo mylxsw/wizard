@@ -75,4 +75,14 @@ class Project extends Repository
         return $this->belongsToMany(Group::class, 'wz_project_group_ref', 'project_id', 'group_id')
             ->withPivot('created_at', 'updated_at', 'privilege');
     }
+
+    /**
+     * 项目下所有的附件
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class, 'project_id', 'id');
+    }
 }

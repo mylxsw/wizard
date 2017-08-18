@@ -79,10 +79,17 @@ Route::group(['middleware' => 'locale'], function () {
             Route::get('/{id}/doc/{page_id}', 'DocumentController@editPage')->name('doc:edit:show');
             Route::post('/{id}/doc/{page_id}', 'DocumentController@editPageHandle')->name('doc:edit:handle');
             Route::delete('/{id}/doc/{page_id}', 'DocumentController@deletePage')->name('doc:delete');
+
             // 文档分享
             Route::post('/{id}/doc/{page_id}/share', 'ShareController@create')->name('doc:share');
+
             // 文档评论
             Route::post('/{id}/doc/{page_id}/comments', 'CommentController@publish')->name('doc:comment');
+
+            // 文档附件
+            Route::get('/{id}/doc/{page_id}/attachments', 'AttachmentController@page')->name('doc:attachment');
+            Route::delete('/{id}/doc/{page_id}/attachments/{attachment_id}', 'AttachmentController@delete')->name('doc:attachment:delete');
+            Route::post('/{id}/doc/{page_id}/attachments', 'AttachmentController@upload')->name('doc:attachment:upload');
 
             // ajax获取文档是否过期
             Route::get('/{id}/doc/{page_id}/expired', 'DocumentController@checkPageExpired')->name('doc:expired');

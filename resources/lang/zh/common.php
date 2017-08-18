@@ -47,6 +47,7 @@ return [
     'not_ready_for_use' => '该功能尚未开发完毕，将请期待',
 
     'operation_success'   => '操作成功',
+    'delete_success'      => '删除成功',
     'lang_swatch_success' => '语言切换成功',
 
     'upload' => [

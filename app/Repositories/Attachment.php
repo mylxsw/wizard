@@ -13,36 +13,48 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Comment
+ * Class Attachment
  *
  * @property integer $id
+ * @property string  $name
+ * @property string  $path
  * @property integer $page_id
+ * @property integer $project_id
  * @property integer $user_id
- * @property string  $content
- * @property integer $reply_to_id
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
  * @property Carbon  $deleted_at
  *
  * @package App\Repositories
  */
-class Comment extends Repository
+class Attachment extends Repository
 {
     use SoftDeletes;
 
-    protected $table = 'wz_comments';
+    protected $table = 'wz_attachments';
     protected $fillable
         = [
+            'name',
+            'path',
             'page_id',
-            'user_id',
-            'content',
-            'reply_to_id',
+            'project_id',
+            'user_id'
         ];
 
     public $dates = ['deleted_at'];
 
     /**
-     * 发表评论的用户
+     * 附件所属的文档
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function page()
+    {
+        return $this->belongsTo(Document::class, 'page_id', 'id');
+    }
+
+    /**
+     * 附件所属的用户
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -52,12 +64,12 @@ class Comment extends Repository
     }
 
     /**
-     * 所属文档ID
+     * 附件所属的项目
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function document()
+    public function project()
     {
-        return $this->belongsTo(Document::class, 'page_id', 'id');
+        return $this->belongsTo(Project::class, 'project_id', 'id');
     }
 }

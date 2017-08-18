@@ -10,8 +10,43 @@
 
 namespace App\Repositories{
 /**
- * App\Repositories\Comment
+ * Class Attachment
  *
+ * @property integer $id
+ * @property string  $name
+ * @property string  $path
+ * @property integer $page_id
+ * @property integer $project_id
+ * @property integer $user_id
+ * @property Carbon  $created_at
+ * @property Carbon  $updated_at
+ * @property Carbon  $deleted_at
+ * @package App\Repositories
+ * @property-read \App\Repositories\Document $page
+ * @property-read \App\Repositories\Project $project
+ * @property-read \App\Repositories\User $user
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Attachment onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Attachment withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Attachment withoutTrashed()
+ */
+	class Attachment extends \Eloquent {}
+}
+
+namespace App\Repositories{
+/**
+ * Class Comment
+ *
+ * @property integer $id
+ * @property integer $page_id
+ * @property integer $user_id
+ * @property string  $content
+ * @property integer $reply_to_id
+ * @property Carbon  $created_at
+ * @property Carbon  $updated_at
+ * @property Carbon  $deleted_at
+ * @package App\Repositories
  * @property-read \App\Repositories\Document $document
  * @property-read \App\Repositories\User $user
  * @method static bool|null forceDelete()
@@ -41,6 +76,7 @@ namespace App\Repositories{
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
  * @package App\Repositories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Attachment[] $attachments
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Comment[] $comments
  * @property-read \App\Repositories\User $lastModifiedUser
  * @property-read \App\Repositories\Document $parentPage
@@ -124,6 +160,7 @@ namespace App\Repositories{
 /**
  * App\Repositories\Project
  *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Attachment[] $attachments
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Group[] $groups
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Document[] $pages
  * @property-read \App\Repositories\User $user
