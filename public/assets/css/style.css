@@ -94,7 +94,7 @@ a:hover {
     padding: 4px;
     margin-bottom: 20px;
     line-height: 1.42857143;
-    background-color: #fff;
+    background-color: #fbfbfb;
     border: 1px solid #ddd;
     border-radius: 4px;
     -webkit-transition: border .2s ease-in-out;
@@ -320,4 +320,8 @@ a:hover {
 .wz-upload-box {
     width: 500px;
     padding: 0 20px;
+}
+
+.SplitPane.vertical {
+    box-shadow: 3px 0px 11px rgba(0,0,0,.2);
 }
