@@ -45,10 +45,17 @@ class DocumentDeleted extends Notification
     public function toArray($notifiable)
     {
         return [
-            'id'                 => $this->document->id,
-            'title'              => $this->document->title,
-            'last_modified_user' => $this->document->lastModifiedUser->name,
-            'deleted_at'         => $this->document->deleted_at,
+            'document' => [
+                'id'                 => $this->document->id,
+                'title'              => $this->document->title,
+                'last_modified_user' => $this->document->lastModifiedUser->name,
+                'deleted_at'         => $this->document->deleted_at,
+            ],
+            'message'  => sprintf(
+                '%s 删除了文档 %s',
+                $this->document->lastModifiedUser->name,
+                $this->document->title
+            )
         ];
     }
 }

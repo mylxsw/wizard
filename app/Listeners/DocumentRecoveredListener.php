@@ -3,7 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\DocumentRecovered;
+use App\Notifications\DocumentRecoverd;
 use App\Repositories\OperationLogs;
+use App\Repositories\User;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -30,7 +32,6 @@ class DocumentRecoveredListener
     {
         $doc = $event->getDocument();
 
-
         OperationLogs::log(\Auth::user()->id,
             'document_recovered',
             [
@@ -43,5 +44,17 @@ class DocumentRecoveredListener
                 'history_id'   => $doc->history_id,
             ]
         );
+
+        // 发送消息通知相关用户
+        $users = User::whereHas('histories', function ($query) use ($doc) {
+            $query->where('page_id', $doc->id);
+        })->get()->filter(function ($user) use ($doc) {
+            // 不通知当前操作用户
+            return $user->id != $doc->last_modified_uid;
+        });
+
+        if (count($users) > 0) {
+            \Notification::send($users, new DocumentRecoverd($doc));
+        }
     }
 }

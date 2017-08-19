@@ -40,5 +40,6 @@ class ProjectDeletedListener
                 'project_id'   => $project->id
             ]
         );
+
     }
 }

@@ -9,8 +9,12 @@
 namespace App\Http\Controllers;
 
 
+use App\Events\CommentCreated;
+use App\Notifications\CommentReplied;
+use App\Notifications\DocumentCommented;
 use App\Policies\ProjectPolicy;
 use App\Repositories\Comment;
+use App\Repositories\Document;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -55,6 +59,8 @@ class CommentController extends Controller
             'reply_to_id' => 0,
             'page_id'     => $page_id,
         ]);
+
+        event(new CommentCreated($comment));
 
         return [
             'id' => $comment->id

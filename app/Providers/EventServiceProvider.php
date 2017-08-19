@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\CommentCreated;
+use App\Listeners\CommentCreatedListener;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -34,6 +36,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ProjectDeleted' => [
             'App\Listeners\ProjectDeletedListener'
         ],
+        CommentCreated::class => [
+            CommentCreatedListener::class,
+        ]
     ];
 
     /**

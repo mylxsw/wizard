@@ -47,8 +47,13 @@ class DocumentDeletedListener
         // 发送消息通知相关用户
         $users = User::whereHas('histories', function ($query) use ($doc) {
             $query->where('page_id', $doc->id);
-        })->get();
+        })->get()->filter(function ($user) use ($doc) {
+            // 不通知当前操作用户
+            return $user->id != $doc->last_modified_uid;
+        });
 
-        \Notification::send($users, new \App\Notifications\DocumentDeleted($doc));
+        if (count($users) > 0) {
+            \Notification::send($users, new \App\Notifications\DocumentDeleted($doc));
+        }
     }
 }

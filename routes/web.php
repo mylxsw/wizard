@@ -58,6 +58,11 @@ Route::group(['middleware' => 'locale'], function () {
             // 修改密码
             Route::get('/password', 'UserController@password')->name('password');
             Route::post('/password', 'UserController@passwordHandle')->name('password:handle');
+
+            // 通知消息
+            Route::get('/notifications', 'NotificationController@lists')->name('notifications');
+            Route::put('/notifications/all', 'NotificationController@readAll')->name('notifications:read-all');
+            Route::put('/notifications/{notification_id}', 'NotificationController@read')->name('notifications:read');
         });
 
         Route::group(['prefix' => 'project', 'as' => 'project:'], function () {

@@ -10,6 +10,14 @@
                 <ul class="nav nav-pills nav-stacked">
                     <li class="{{ $op == 'basic' ? 'active':'' }}"><a href="{{ wzRoute('user:basic') }}">@lang('common.user_info')</a></li>
                     <li class="{{ $op == 'password' ? 'active':'' }}"><a href="{{ wzRoute('user:password') }}">@lang('common.change_password')</a></li>
+                    <li class="{{ $op == 'notification' ? 'active':'' }}">
+                        <a href="{{ wzRoute('user:notifications') }}">
+                            通知
+                            @if(userHasNotifications())
+                                <span class="badge">{{ userNotificationCount() }}</span>
+                            @endif
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="col-lg-9">

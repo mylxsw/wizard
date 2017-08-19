@@ -325,3 +325,30 @@ a:hover {
 .SplitPane.vertical {
     box-shadow: 3px 0px 11px rgba(0,0,0,.2);
 }
+
+.wz-message-table td {
+    position: relative;
+}
+
+.wz-message-table td:hover .wz-message-read {
+    display: block!important;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
+
+.wz-comment-highlight {
+    -webkit-animation:twinkling 0.6s 3 ease-in-out;
+    animation:twinkling 0.6s 3 ease-in-out;
+}
+
+@-webkit-keyframes twinkling{
+    0%{
+    }
+    100%{
+        background: #f0ad4e;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+}

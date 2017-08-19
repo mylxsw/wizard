@@ -187,5 +187,5 @@ function userNotificationCount()
         return 0;
     }
 
-    return count(Auth::user()->notifications);
+    return count(Auth::user()->unreadNotifications);
 }

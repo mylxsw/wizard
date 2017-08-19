@@ -60,4 +60,15 @@ class Comment extends Repository
     {
         return $this->belongsTo(Document::class, 'page_id', 'id');
     }
+
+    /**
+     * 当前评论回复的评论
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function replyComment()
+    {
+        return $this->belongsTo(Comment::class, 'id', 'reply_to_id');
+    }
+
 }

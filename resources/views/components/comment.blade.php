@@ -20,7 +20,8 @@
         <div class="wz-comments-box">
             <ol>
                 @foreach($pageItem->comments as $comment)
-                    <li class="media">
+                    <li class="media {{ (isset($comment_highlight) && $comment_highlight == $comment->id) ? 'wz-comment-highlight':'' }}"
+                        id="cm-{{ $comment->id }}">
                         <div class="media-body">
                             <h5 class="media-heading">
                                 {{ $comment->user->name }}

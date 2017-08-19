@@ -108,6 +108,9 @@ class ProjectController extends Controller
     /**
      * 项目页面
      *
+     * p - 文档ID
+     * cm - 高亮显示的评论ID
+     *
      * @param Request $request
      * @param         $id
      *
@@ -151,12 +154,13 @@ class ProjectController extends Controller
         }
 
         return view('project.project', [
-            'project'    => $project,
-            'pageID'     => $pageID,
-            'pageItem'   => $page,
-            'type'       => $type,
-            'code'       => '',
-            'navigators' => navigator($project->pages, $id, $pageID)
+            'project'           => $project,
+            'pageID'            => $pageID,
+            'pageItem'          => $page,
+            'type'              => $type,
+            'code'              => '',
+            'comment_highlight' => $request->input('cm', ''),
+            'navigators'        => navigator($project->pages, $id, $pageID)
         ]);
     }
 

@@ -1,29 +1,36 @@
 <?php
+/**
+ * wizard
+ *
+ * @link      https://www.yunsom.com/
+ * @copyright 管宜尧 <guanyiyao@yunsom.com>
+ */
 
 namespace App\Notifications;
 
+use App\Repositories\Comment;
 use App\Repositories\Document;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class DocumentUpdated extends Notification
+class DocumentCommented extends Notification
 {
     use Queueable;
 
-    /**
-     * @var Document
-     */
     private $document;
+    private $comment;
 
     /**
      * Create a new notification instance.
      *
      * @param Document $document
+     * @param Comment  $comment
      */
-    public function __construct(Document $document)
+    public function __construct(Document $document, Comment $comment)
     {
         $this->document = $document;
+        $this->comment  = $comment;
     }
 
     /**
@@ -63,21 +70,25 @@ class DocumentUpdated extends Notification
     public function toArray($notifiable)
     {
         return [
-            'document' => [
-                'id'                 => $this->document->id,
-                'title'              => $this->document->title,
-                'last_modified_user' => $this->document->lastModifiedUser->name,
-                'updated_at'         => $this->document->updated_at,
-            ],
             'message'  => sprintf(
-                '%s 修改了文档 <a target="_blank" href="%s">%s</a>',
-                $this->document->lastModifiedUser->name,
+                '您创建的文档 <a href="%s#cm-%d">%s</a> 有新评论',
                 wzRoute('project:home', [
                     'id' => $this->document->project_id,
-                    'p'  => $this->document->id
+                    'p'  => $this->document->id,
+                    'cm' => $this->comment->id,
                 ]),
+                $this->comment->id,
                 $this->document->title
-            )
+            ),
+            'document' => [
+                'title' => $this->document->title,
+                'id'    => $this->document->id,
+            ],
+            'comment'  => [
+                'id'      => $this->comment->id,
+                'user'    => $this->comment->user->name,
+                'content' => $this->comment->content,
+            ]
         ];
     }
 }

@@ -5,21 +5,19 @@ namespace App\Notifications;
 use App\Repositories\Document;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class DocumentUpdated extends Notification
+class DocumentRecoverd extends Notification
 {
     use Queueable;
 
-    /**
-     * @var Document
-     */
     private $document;
 
     /**
      * Create a new notification instance.
      *
-     * @param Document $document
+     * @return void
      */
     public function __construct(Document $document)
     {
@@ -64,19 +62,18 @@ class DocumentUpdated extends Notification
     {
         return [
             'document' => [
-                'id'                 => $this->document->id,
-                'title'              => $this->document->title,
-                'last_modified_user' => $this->document->lastModifiedUser->name,
-                'updated_at'         => $this->document->updated_at,
+                'id'    => $this->document->id,
+                'title' => $this->document->title,
             ],
             'message'  => sprintf(
-                '%s 修改了文档 <a target="_blank" href="%s">%s</a>',
+                '%s 恢复了文档 <a target="_blank" href="%s">%s</a>，历史版本为 %d',
                 $this->document->lastModifiedUser->name,
                 wzRoute('project:home', [
                     'id' => $this->document->project_id,
                     'p'  => $this->document->id
                 ]),
-                $this->document->title
+                $this->document->title,
+                $this->document->history_id
             )
         ];
     }

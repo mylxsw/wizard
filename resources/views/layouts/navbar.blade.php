@@ -16,7 +16,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li role="presentation">
-                            <a href="">
+                            <a href="{{ wzRoute('user:notifications') }}">
                                 通知
                                 @if(userHasNotifications())
                                     <span class="badge">{{ userNotificationCount() }}</span>
