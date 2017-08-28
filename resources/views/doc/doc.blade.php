@@ -12,7 +12,7 @@
             @include('components.doc-edit', ['project' => $project, 'pageItem' => $pageItem ?? null, 'navigator' => $navigator])
             <input type="hidden" name="type" value="doc" />
             <div class="col-lg-12">
-                <div id="editormd">
+                <div id="editormd" class="wz-markdown-style-fix">
                     <textarea style="display:none;" name="content">{{ $pageItem->content or '' }}</textarea>
                 </div>
             </div>

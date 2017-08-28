@@ -342,7 +342,7 @@ a:hover {
     animation:twinkling 0.6s 3 ease-in-out;
 }
 
-.markdown-body table th {
+.wz-markdown-style-fix table th {
     background: rgb(51, 122, 183);
     color: #fff;
 }

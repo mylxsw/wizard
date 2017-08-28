@@ -36,7 +36,7 @@
                 </tr>
             </table>
         </div>
-        <div class="markdown-body" id="markdown-body">
+        <div class="markdown-body {{ $type == 'markdown' ? 'wz-markdown-style-fix' : '' }}" id="markdown-body">
             @if($type == 'markdown')
             <textarea id="append-test" style="display:none;">{{ $pageItem->content }}</textarea>
             @endif
