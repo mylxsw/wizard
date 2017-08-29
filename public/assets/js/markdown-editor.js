@@ -1,5 +1,8 @@
 /**
- * Created by mylxsw on 2017/8/4.
+ * Wizard
+ *
+ * @link      https://aicode.cc/
+ * @copyright 管宜尧 <mylxsw@aicode.cc>
  */
 
 /**

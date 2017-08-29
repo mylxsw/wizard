@@ -1,6 +1,10 @@
 /**
- * Created by mylxsw on 2017/8/3.
+ * Wizard
+ *
+ * @link      https://aicode.cc/
+ * @copyright 管宜尧 <mylxsw@aicode.cc>
  */
+
 $.wz = {
     /**
      * 发起异步请求

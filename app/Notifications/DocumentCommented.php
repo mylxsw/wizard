@@ -1,9 +1,9 @@
 <?php
 /**
- * wizard
+ * Wizard
  *
- * @link      https://www.yunsom.com/
- * @copyright 管宜尧 <guanyiyao@yunsom.com>
+ * @link      https://aicode.cc/
+ * @copyright 管宜尧 <mylxsw@aicode.cc>
  */
 
 namespace App\Notifications;
