@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\Locale;
 use App\Http\Middleware\SharePermission;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -55,6 +56,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware
         = [
+            'auth.admin' => AdminAuth::class,
             'auth'       => \Illuminate\Auth\Middleware\Authenticate::class,
             'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
             'bindings'   => \Illuminate\Routing\Middleware\SubstituteBindings::class,

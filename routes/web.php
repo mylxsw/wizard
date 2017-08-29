@@ -44,7 +44,7 @@ Route::group(['middleware' => 'locale'], function () {
     });
 
     // 系统管理
-    Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin:'], function () {
+    Route::group(['middleware' => ['auth', 'auth.admin'], 'prefix' => 'admin', 'as' => 'admin:'], function () {
         // 用户组管理
         Route::get('/groups', 'GroupController@groups')->name('groups');
         Route::post('/groups', 'GroupController@add')->name('groups:add');
