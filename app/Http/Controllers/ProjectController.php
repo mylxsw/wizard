@@ -345,6 +345,12 @@ class ProjectController extends Controller
         $project->groups()->detach($group_id);
 
         $this->alertSuccess(__('project.revoke_privilege_success'));
+
+        $redirectURL = $request->input('redirect');
+        if (!empty($redirectURL)) {
+            return redirect($redirectURL);
+        }
+
         return redirect(route('project:setting:handle', ['id' => $id, 'op' => 'privilege']));
     }
 }

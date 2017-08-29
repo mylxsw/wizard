@@ -23,7 +23,7 @@
                                 @endif
                             </a>
                             @if(Auth::user()->isAdmin())
-                            <a href="">系统管理</a>
+                            <a href="{!! wzRoute('admin:groups') !!}">系统管理</a>
                             @endif
                             <a href="{{ wzRoute('user:basic') }}">@lang('common.user_info')</a>
                             <a href="{{ wzRoute('user:password') }}">@lang('common.change_password')</a>

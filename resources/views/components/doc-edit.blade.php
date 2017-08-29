@@ -21,8 +21,8 @@
 
     <div class="form-group pull-right">
         <div class="btn-group">
-            <button type="button" class="btn btn-success" wz-doc-form-submit id="wz-doc-form-submit">@lang('common.btn_save')</button>
-            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+            <button type="button" class="btn btn-primary" wz-doc-form-submit id="wz-doc-form-submit">发布</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                 <span class="caret"></span>
             </button>

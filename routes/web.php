@@ -43,6 +43,20 @@ Route::group(['middleware' => 'locale'], function () {
         Route::get('/{id}/doc/{page_id}/histories/{history_id}.json', 'HistoryController@getPageJSON')->name('doc:history:json');
     });
 
+    // 系统管理
+    Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin:'], function () {
+        // 用户组管理
+        Route::get('/groups', 'GroupController@groups')->name('groups');
+        Route::post('/groups', 'GroupController@add')->name('groups:add');
+        Route::delete('/groups/{id}', 'GroupController@delete')->name('groups:del');
+        Route::get('/groups/{id}', 'GroupController@info')->name('groups:view');
+        Route::post('/groups/{id}', 'GroupController@addUser')->name('groups:users:add');
+        Route::delete('/groups/{id}/users/{user_id}', 'GroupController@removeUser')->name('groups:users:del');
+
+        // 用户管理
+        Route::get('/users', 'UserController@users')->name('users');
+    });
+
     Route::group(['middleware' => 'auth'], function () {
         // 个人首页
         Route::get('/home', 'ProjectController@home')->name('user:home');

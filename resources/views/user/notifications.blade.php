@@ -9,7 +9,7 @@
     </div>
 
     <table class="table table-hover wz-message-table">
-        @foreach($notifications as $notification)
+        @forelse($notifications as $notification)
             <tr class="{{ is_null($notification->read_at) ? 'warning' : '' }}">
                 <td>{{ $notification->created_at->format('Y-m-d H:i') }}</td>
                 <td>
@@ -22,7 +22,11 @@
                     @endif
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td class="text-center">没有符合条件的信息！</td>
+            </tr>
+        @endforelse
     </table>
 
     <div class="wz-pagination">

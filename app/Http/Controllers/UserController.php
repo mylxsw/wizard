@@ -24,7 +24,8 @@ class UserController extends Controller
     public function users(Request $request)
     {
         return view('user.users', [
-            'users' => User::paginate()
+            'users' => User::orderBy('created_at', 'desc')->paginate(),
+            'op'    => 'users',
         ]);
     }
 
