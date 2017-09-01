@@ -132,24 +132,42 @@ a:hover {
 
 .wz-left-nav li {
     list-style: none;
+    clear: both;
 }
 
-.wz-left-nav li>a {
+.wz-left-nav a.wz-nav-fold {
+    background: #fff !important;
+    color: #ccc !important;
+    margin-right: 0;
+    padding-right: 4px !important;
+    border: none!important;
+}
+
+.wz-left-nav li > a {
     border-radius: 4px;
     position: relative;
     display: block;
-    padding: 10px 15px;
+    padding: 10px 5px;
     font-size: 13px;
-    line-height: 1;
+    line-height: 1.2;
+    float: left;
 }
 
-.wz-left-nav li.active>a {
-    color: #fff;
-    background-color: #337ab7;
+.wz-left-nav li.active > a {
+    color: #a94442;
+    border-bottom: 2px solid #a94442;
+    background: none;
+    border-radius: 0;
+    font-weight: bold;
+    padding-bottom: 4px;
 }
 
 .wz-left-nav ul {
     padding-left: 25px;
+}
+
+.wz-left-nav .wz-has-child > ul {
+    clear: both;
 }
 
 .wz-nav-item {
@@ -203,11 +221,11 @@ a:hover {
 }
 
 .wz-compare-container .CodeMirror {
-    height:100%!important;
+    height: 100% !important;
 }
 
 .wz-compare-container .mergely-column {
-    height: auto!important;
+    height: auto !important;
 }
 
 .wz-full-box {
@@ -228,7 +246,7 @@ a:hover {
 }
 
 .swagger-ui .info {
-    margin: 20px 0!important;
+    margin: 20px 0 !important;
 }
 
 .swagger-editor-toolbar {
@@ -243,7 +261,7 @@ a:hover {
 }
 
 .layui-layer-msg {
-    margin-top: 10px!important;
+    margin-top: 10px !important;
 }
 
 .wz-differ-box {
@@ -287,11 +305,11 @@ a:hover {
 }
 
 .wz-differ-box .differ-added {
-    background:rgb(224,255,224);
+    background: rgb(224, 255, 224);
 }
 
 .wz-differ-box .differ-removed {
-    background:rgb(255,224,224);
+    background: rgb(255, 224, 224);
 }
 
 .wz-comments-box {
@@ -323,7 +341,7 @@ a:hover {
 }
 
 .SplitPane.vertical {
-    box-shadow: 3px 0px 11px rgba(0,0,0,.2);
+    box-shadow: 3px 0px 11px rgba(0, 0, 0, .2);
 }
 
 .wz-message-table td {
@@ -331,15 +349,15 @@ a:hover {
 }
 
 .wz-message-table td:hover .wz-message-read {
-    display: block!important;
+    display: block !important;
     position: absolute;
     right: 8px;
     top: 8px;
 }
 
 .wz-comment-highlight {
-    -webkit-animation:twinkling 0.6s 3 ease-in-out;
-    animation:twinkling 0.6s 3 ease-in-out;
+    -webkit-animation: twinkling 0.6s 3 ease-in-out;
+    animation: twinkling 0.6s 3 ease-in-out;
 }
 
 .wz-markdown-style-fix table th {
@@ -347,10 +365,10 @@ a:hover {
     color: #fff;
 }
 
-@-webkit-keyframes twinkling{
-    0%{
+@-webkit-keyframes twinkling {
+    0% {
     }
-    100%{
+    100% {
         background: #f0ad4e;
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;

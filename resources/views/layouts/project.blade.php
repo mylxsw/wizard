@@ -23,18 +23,21 @@
                 <nav class="wz-page-control clearfix">
                     <div class="btn-group wz-nav-control">
                         @can('page-add', $project)
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                @lang('common.btn_add') <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'pid' => $pageID]) !!}">@lang('common.document')</a>
-                                </li>
-                                <li><a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger', 'pid' => $pageID]) !!}">@lang('common.swagger')</a></li>
-                            </ul>
-                        </div>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    @lang('common.btn_add') <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'pid' => $pageID]) !!}">@lang('common.document')</a>
+                                    </li>
+                                    <li>
+                                        <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger', 'pid' => $pageID]) !!}">@lang('common.swagger')</a>
+                                    </li>
+                                </ul>
+                            </div>
                         @endcan
                         @can('project-edit', $project)
                             <a class="btn btn-default"
@@ -55,3 +58,26 @@
     </div>
 
 @endsection
+
+@push('script')
+    <script>
+        $(function () {
+            //glyphicon glyphicon-minus
+            var left_nav = $('.wz-left-nav');
+            left_nav.find('li.wz-has-child').children('ul').hide();
+            left_nav.find('li.wz-has-child').prepend('<a href="javascript:;" class="wz-nav-fold glyphicon glyphicon-plus"></a>');
+            left_nav.find('li.wz-has-child').find('.wz-nav-fold')
+                .on('click', function () {
+                    if ($(this).hasClass('glyphicon-plus')) {
+                        $(this).removeClass('glyphicon-plus').addClass('glyphicon-minus');
+                    } else {
+                        $(this).removeClass('glyphicon-minus').addClass('glyphicon-plus');
+                    }
+
+                    $(this).parent().children('ul').toggle();
+                });
+            left_nav.find('li.active').parents('ul').show();
+            left_nav.find('li.active').parents('li.wz-has-child').find('.wz-nav-fold').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        });
+    </script>
+@endpush
