@@ -61,8 +61,8 @@
 
 @push('script')
     <script>
+        // 侧边导航自动折叠
         $(function () {
-            //glyphicon glyphicon-minus
             var left_nav = $('.wz-left-nav');
             left_nav.find('li.wz-has-child').children('ul').hide();
             left_nav.find('li.wz-has-child').prepend('<a href="javascript:;" class="wz-nav-fold glyphicon glyphicon-plus"></a>');
@@ -74,7 +74,7 @@
                         $(this).removeClass('glyphicon-minus').addClass('glyphicon-plus');
                     }
 
-                    $(this).parent().children('ul').toggle();
+                    $(this).parent().children('ul').slideToggle('fast');
                 });
             left_nav.find('li.active').parents('ul').show();
             left_nav.find('li.active').parents('li.wz-has-child').find('.wz-nav-fold').removeClass('glyphicon-plus').addClass('glyphicon-minus');

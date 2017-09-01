@@ -155,11 +155,24 @@ a:hover {
 
 .wz-left-nav li.active > a {
     color: #a94442;
-    border-bottom: 2px solid #a94442;
+    /*border-bottom: 2px solid #a94442;*/
     background: none;
     border-radius: 0;
     font-weight: bold;
     padding-bottom: 4px;
+}
+
+.wz-left-nav li.active > a:hover {
+    background: none!important;
+    color: #a94442;
+}
+
+.wz-left-nav li>a:focus, .wz-left-nav li>a:hover {
+    text-decoration: none;
+    border-radius: 0;
+    /*border-bottom: 2px solid #337ab7;*/
+    background: none;
+    color: #a94442;
 }
 
 .wz-left-nav ul {
