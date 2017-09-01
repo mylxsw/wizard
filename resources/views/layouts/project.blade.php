@@ -77,7 +77,10 @@
                     $(this).parent().children('ul').slideToggle('fast');
                 });
             left_nav.find('li.active').parents('ul').show();
-            left_nav.find('li.active').parents('li.wz-has-child').find('.wz-nav-fold').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+            left_nav.find('li.active')
+                .parents('.nav')
+                .find('li:has(.active) >.wz-nav-fold')
+                .removeClass('glyphicon-plus').addClass('glyphicon-minus');
         });
     </script>
 @endpush

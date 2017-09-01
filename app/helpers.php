@@ -64,7 +64,7 @@ function navigator(
         }
 
         if (isset($navigators[$nav['pid']])) {
-            $navigators[$nav['pid']]['nodes'][] = $nav;
+            $navigators[$nav['pid']]['nodes'][] = &$nav;
         }
     }
 
