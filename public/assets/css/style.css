@@ -378,6 +378,11 @@ a:hover {
     color: #fff;
 }
 
+.wz-text-dashed {
+    border-bottom: 1px dashed;
+    padding-bottom: 3px;
+}
+
 @-webkit-keyframes twinkling {
     0% {
     }

@@ -4,7 +4,7 @@
         <nav class="wz-page-control clearfix">
             <h1 class="wz-page-title">
                 {{ $pageItem->title }}
-                <span class="label label-{{ $type == 'swagger' ? 'success' : 'default' }}">{{ $type == 'swagger' ? 'sw' : 'md' }}</span>
+                <span class="hide label label-{{ $type == 'swagger' ? 'success' : 'default' }}">{{ $type == 'swagger' ? 'sw' : 'md' }}</span>
             </h1>
             <ul class="nav nav-pills pull-right">
                 @can('page-edit', $pageItem)
@@ -16,31 +16,15 @@
             </ul>
             <hr />
         </nav>
-        <div id="wz-document-info" style="margin-top: 20px;">
-            <table class="table table-bordered">
-                <tr>
-                    <th>@lang('document.last_modified_user')</th>
-                    <td>{{ $pageItem->lastModifiedUser->name or '' }}</td>
-                </tr>
-                <tr>
-                    <th>@lang('document.last_modified_time')</th>
-                    <td>{{ $pageItem->updated_at or '' }}</td>
-                </tr>
-                <tr>
-                    <th>@lang('document.creator')</th>
-                    <td>{{ $pageItem->user->name or '' }}</td>
-                </tr>
-                <tr>
-                    <th>@lang('document.create_time')</th>
-                    <td>{{ $pageItem->created_at or '' }}</td>
-                </tr>
-            </table>
-        </div>
+
+        @include('components.document-info')
+
         <div class="markdown-body {{ $type == 'markdown' ? 'wz-markdown-style-fix' : '' }}" id="markdown-body">
             @if($type == 'markdown')
             <textarea id="append-test" style="display:none;">{{ $pageItem->content }}</textarea>
             @endif
         </div>
+
         @if(count($pageItem->attachments) > 0)
         <div class="wz-attachments">
             <hr />

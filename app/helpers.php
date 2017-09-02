@@ -189,3 +189,8 @@ function userNotificationCount()
 
     return count(Auth::user()->unreadNotifications);
 }
+
+function subDocuments($pid)
+{
+    return \App\Repositories\Document::where('pid', $pid)->select('id', 'title')->get();
+}
