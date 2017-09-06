@@ -1,12 +1,12 @@
 @extends('layouts.default')
-@section('container-style', 'container')
+@section('container-style', 'container-fluid')
 @section('title', $project->name)
 @section('content')
     @include('layouts.navbar')
 
     <div class="row marketing">
-        <div class="col-lg-12">
-            <div class="col-lg-3">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-3 col-md-3 col-sm-3">
 
                 <ul class="nav nav-pills nav-stacked wz-left-nav">
                     <li class="{{ $pageID === 0 ? 'active' : '' }} wz-has-child">
@@ -21,7 +21,7 @@
 
                 </ul>
             </div>
-            <div class="col-lg-9">
+            <div class="col-lg-8 col-md-9 col-sm-9">
                 <nav class="wz-page-control clearfix">
                     <div class="btn-group wz-nav-control">
                         @can('page-add', $project)
