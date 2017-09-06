@@ -141,15 +141,22 @@ a:hover {
     margin-right: 0;
     padding-right: 4px !important;
     border: none!important;
+    line-height: 0.9;
+}
+
+
+.wz-left-nav .wz-left-nav-home a>span {
+    color: #ccc;
+    padding-right: 4px;
 }
 
 .wz-left-nav li > a {
     border-radius: 4px;
     position: relative;
     display: block;
-    padding: 10px 5px;
+    padding: 6px;
     font-size: 13px;
-    line-height: 1.2;
+    line-height: 1.3;
     float: left;
 }
 
@@ -159,7 +166,6 @@ a:hover {
     background: none;
     border-radius: 0;
     font-weight: bold;
-    padding-bottom: 4px;
 }
 
 .wz-left-nav li.active > a:hover {
@@ -176,7 +182,7 @@ a:hover {
 }
 
 .wz-left-nav ul {
-    padding-left: 25px;
+    padding-left: 15px;
 }
 
 .wz-left-nav .wz-has-child > ul {
@@ -187,6 +193,7 @@ a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    width: 88%;
 }
 
 .wz-nav-item-badge {

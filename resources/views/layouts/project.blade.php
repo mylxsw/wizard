@@ -9,14 +9,16 @@
             <div class="col-lg-3">
 
                 <ul class="nav nav-pills nav-stacked wz-left-nav">
-                    <li class="{{ $pageID === 0 ? 'active' : '' }}">
+                    <li class="{{ $pageID === 0 ? 'active' : '' }} wz-has-child">
                         <a href="{{ wzRoute('project:home', ['id' => $project->id]) }}" class="wz-nav-item">
-                            <span class="glyphicon glyphicon-th-large"></span>
                             {{ $project->name }}
                             @include('components.project-tag', ['proj' => $project])
                         </a>
+                        <ul class="wz-auto-open">
+                            @include('components.navbar', ['navbars' => $navigators])
+                        </ul>
                     </li>
-                    @include('components.navbar', ['navbars' => $navigators])
+
                 </ul>
             </div>
             <div class="col-lg-9">

@@ -30,7 +30,7 @@ $.wz.navigator_tree = function (left_nav) {
             $(this).parent().children('ul').slideToggle('fast');
         });
 
-    left_nav.children('li.wz-has-child').each(function () {
+    left_nav.find('.wz-auto-open').children('li.wz-has-child').each(function () {
         var childrenCount = $(this).children('ul').children('li').length;
         // 如果一级菜单的子元素小于7个，则自动展开
         if (childrenCount < 7) {
@@ -44,4 +44,7 @@ $.wz.navigator_tree = function (left_nav) {
         .parents('.nav')
         .find('li:has(.active) >.wz-nav-fold')
         .removeClass(icon_close).addClass(icon_open);
+
+    left_nav.children('li').children('ul').show();
+    left_nav.children('li').children('.wz-nav-fold').removeClass(icon_close).addClass(icon_open);
 };
