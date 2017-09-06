@@ -23,7 +23,6 @@
 
         // 内容区域解析markdown
         editormd.markdownToHTML('markdown-body', {
-            htmlDecode: "style,script,iframe",
             tocm: true,
             tocDropdown: false,
             markdownSourceCode: true,
