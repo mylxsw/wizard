@@ -64,8 +64,11 @@
         // 侧边导航自动折叠
         $(function () {
             var left_nav = $('.wz-left-nav');
+            // 先隐藏所有的li下的子元素
             left_nav.find('li.wz-has-child').children('ul').hide();
+            // 在包含子元素的li中添加展开图标和链接
             left_nav.find('li.wz-has-child').prepend('<a href="javascript:;" class="wz-nav-fold glyphicon glyphicon-plus"></a>');
+            // 菜单折叠事件处理
             left_nav.find('li.wz-has-child').find('.wz-nav-fold')
                 .on('click', function () {
                     if ($(this).hasClass('glyphicon-plus')) {
@@ -76,11 +79,18 @@
 
                     $(this).parent().children('ul').slideToggle('fast');
                 });
+
+            // 一级菜单默认全部展开
+            left_nav.children('li.wz-has-child').children('a.wz-nav-fold').trigger('click');
+
+            // 当前选中元素的所有父级元素全部自动展开
             left_nav.find('li.active').parents('ul').show();
             left_nav.find('li.active')
                 .parents('.nav')
                 .find('li:has(.active) >.wz-nav-fold')
                 .removeClass('glyphicon-plus').addClass('glyphicon-minus');
+
+
         });
     </script>
 @endpush
