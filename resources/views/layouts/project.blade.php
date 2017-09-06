@@ -80,8 +80,13 @@
                     $(this).parent().children('ul').slideToggle('fast');
                 });
 
-            // 一级菜单默认全部展开
-            left_nav.children('li.wz-has-child').children('a.wz-nav-fold').trigger('click');
+            left_nav.children('li.wz-has-child').each(function () {
+                var childrenCount = $(this).children('ul').children('li').length;
+                // 如果一级菜单的子元素小于7个，则自动展开
+                if (childrenCount < 7) {
+                    $(this).children('a.wz-nav-fold').trigger('click');
+                }
+            });
 
             // 当前选中元素的所有父级元素全部自动展开
             left_nav.find('li.active').parents('ul').show();
