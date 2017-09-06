@@ -103,7 +103,7 @@ a:hover {
     position: relative;
 }
 
-.wz-box .wz-box-tag {
+.wz-box-tag {
     position: absolute;
     top: 8px;
     right: 8px;
