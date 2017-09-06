@@ -2,6 +2,7 @@
 
 Wizard是基于Laravel开发框架开发的一款开源项目（API）文档管理工具。
 
+![preview](https://oayrssjpa.qnssl.com/15047168609077.gif)
 
 ## 安装
 
