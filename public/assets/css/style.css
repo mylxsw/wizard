@@ -385,10 +385,17 @@ a:hover {
     color: #fff;
 }
 
+.wz-markdown-style-fix img{
+    max-width: 800px!important;
+    box-shadow: 3px 3px 7px #ccc;
+}
+
 .wz-text-dashed {
     border-bottom: 1px dashed;
     padding-bottom: 3px;
 }
+
+
 
 @-webkit-keyframes twinkling {
     0% {
