@@ -14,6 +14,13 @@ $.wz.navigator_tree = function (left_nav) {
     var icon_close = 'glyphicon-folder-close';
     var icon_open = 'glyphicon-folder-open';
 
+    var childrenShow = function (elementLi) {
+        elementLi.children('ul').show();
+        elementLi.children('.wz-nav-fold').removeClass(icon_close).addClass(icon_open);
+
+        return elementLi;
+    };
+
     // 先隐藏所有的li下的子元素
     left_nav.find('li.wz-has-child').children('ul').hide();
     // 在包含子元素的li中添加展开图标和链接
@@ -45,6 +52,9 @@ $.wz.navigator_tree = function (left_nav) {
         .find('li:has(.active) >.wz-nav-fold')
         .removeClass(icon_close).addClass(icon_open);
 
-    left_nav.children('li').children('ul').show();
-    left_nav.children('li').children('.wz-nav-fold').removeClass(icon_close).addClass(icon_open);
+    // 当前选中元素的下级元素自动展开
+    childrenShow(left_nav.find('li.active'));
+
+    // 一级元素的子元素自动展示
+    childrenShow(left_nav.children('li'));
 };

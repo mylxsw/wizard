@@ -20,7 +20,7 @@
     <link href="/assets/vendor/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/style.css?{{ resourceVersion() }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -51,8 +51,8 @@
 <script src="/assets/vendor/ie10-viewport-bug-workaround.js"></script>
 <script src="/assets/vendor/layer/layer.js"></script>
 <script src="/assets/vendor/axios.min.js"></script>
-<script src="/assets/js/wizard.js"></script>
-<script src="/assets/js/app.js"></script>
+<script src="/assets/js/wizard.js?{{ resourceVersion() }}"></script>
+<script src="/assets/js/app.js?{{ resourceVersion() }}"></script>
 
 <script>
     $(function () {

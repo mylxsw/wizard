@@ -62,7 +62,7 @@
 @endsection
 
 @push('script')
-    <script src="/assets/js/navigator-tree.js"></script>
+    <script src="/assets/js/navigator-tree.js?{{ resourceVersion() }}"></script>
     <script>
         // 侧边导航自动折叠
         $(function () {

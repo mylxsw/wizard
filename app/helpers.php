@@ -190,7 +190,29 @@ function userNotificationCount()
     return count(Auth::user()->unreadNotifications);
 }
 
+/**
+ * 子文档列表
+ *
+ * @param $pid
+ *
+ * @return \Illuminate\Database\Eloquent\Collection
+ */
 function subDocuments($pid)
 {
     return \App\Repositories\Document::where('pid', $pid)->select('id', 'title')->get();
+}
+
+/**
+ * 静态资源版本
+ *
+ * @return string
+ */
+function resourceVersion()
+{
+    static $version = null;
+    if (is_null($version)) {
+        $version = 'v=' . config('wizard.resource_version');
+    }
+    
+    return $version;
 }

@@ -35,7 +35,7 @@
 <script src="/assets/vendor/editor-md/lib/flowchart.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/jquery.flowchart.min.js"></script>
 <script src="/assets/vendor/editor-md/editormd.min.js"></script>
-<script src="/assets/js/markdown-editor.js"></script>
+<script src="/assets/js/markdown-editor.js?{{ resourceVersion() }}"></script>
 <script type="text/javascript">
     $(function () {
         var editor = $.wz.mdEditor('editormd', {
