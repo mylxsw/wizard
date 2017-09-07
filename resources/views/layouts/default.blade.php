@@ -19,7 +19,7 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="/assets/vendor/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <link href="/assets/vendor/animate.css" rel="stylesheet">
+    {{--<link href="/assets/vendor/animate.css" rel="stylesheet">--}}
 
     <!-- Custom styles for this template -->
     <link href="/assets/css/style.css?{{ resourceVersion() }}" rel="stylesheet">
