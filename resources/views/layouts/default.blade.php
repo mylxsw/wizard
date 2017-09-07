@@ -8,7 +8,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="/favicon.ico">
+
+    <!-- 网站icon，来自于Google开源图标 -->
+    <link rel="icon" type="image/png" href="/favorite.png">
 
     <title>@yield('title') - {{ config('app.name', 'Wizard API') }}</title>
 
