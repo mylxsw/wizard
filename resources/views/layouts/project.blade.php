@@ -8,7 +8,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="col-lg-3 col-md-3 col-sm-3">
 
-                <ul class="nav nav-pills nav-stacked wz-left-nav hide">
+                <ul class="nav nav-pills nav-stacked wz-left-nav">
                     <li class="{{ $pageID === 0 ? 'active' : '' }} wz-has-child">
                         <a href="{{ wzRoute('project:home', ['id' => $project->id]) }}" class="wz-nav-item">
                             {{ $project->name }}
