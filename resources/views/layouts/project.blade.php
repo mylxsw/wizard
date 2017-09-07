@@ -8,7 +8,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="col-lg-3 col-md-3 col-sm-3">
 
-                <ul class="nav nav-pills nav-stacked wz-left-nav">
+                <ul class="nav nav-pills nav-stacked wz-left-nav hide">
                     <li class="{{ $pageID === 0 ? 'active' : '' }} wz-has-child">
                         <a href="{{ wzRoute('project:home', ['id' => $project->id]) }}" class="wz-nav-item">
                             {{ $project->name }}
@@ -67,6 +67,9 @@
         // 侧边导航自动折叠
         $(function () {
             $.wz.navigator_tree($('.wz-left-nav'));
+//            window.setTimeout(function () {
+//                $('.wz-left-nav').removeClass('hide').addClass('animated fadeIn');
+//            }, 20);
         });
     </script>
 @endpush
