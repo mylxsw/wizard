@@ -12,4 +12,8 @@ return [
      * 静态资源版本
      */
     'resource_version' => env('WIZARD_RESOURCE_VERSION', '201709071013'),
+    /**
+     * 版权地址
+     */
+    'copyright'        => env('WIZARD_COPYRIGHT', 'AICODE.CC'),
 ];

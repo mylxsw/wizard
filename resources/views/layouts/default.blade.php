@@ -40,7 +40,7 @@
     @yield('content')
     @if(!isset($noheader) || !$noheader)
     <footer class="footer">
-        <p>&copy; {{ date('Y') }} AICODE.CC</p>
+        <p>&copy; {{ date('Y') }} {{ config('wizard.copyright', 'AICODE.CC') }}</p>
     </footer>
     @endif
 </div>
