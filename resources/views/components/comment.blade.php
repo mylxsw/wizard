@@ -6,11 +6,14 @@
         @if(!Auth::guest())
             <form method="post"
                   action="{{ wzRoute('project:doc:comment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
-                  id="wz-new-comment-form">
+                  id="wz-new-comment-form" style="position: relative;">
                 {{ csrf_field() }}
-
+                <div class="alert alert-info wz-comment-tip" style="display: none; position: absolute; bottom: -80px;">
+                    <strong>提示</strong>
+                    你可以在评论中 <b>@某人</b>，当前支持语法为 <b>@用户名 </b>，需要注意的是，用户名后面必须要有至少一个空格。
+                </div>
                 <div class="form-group">
-                    <textarea class="form-control" rows="3" name="content" placeholder="评论内容"></textarea>
+                    <textarea class="form-control wz-form-comment-content" rows="3" name="content" placeholder="评论内容"></textarea>
                 </div>
                 <div class="form-group">
                     <button type="button" id="wz-comment-submit" class="btn btn-success pull-right">评论</button>
@@ -52,6 +55,16 @@
                         window.location.reload(true);
                     });
                 });
+            });
+
+            $('.wz-comment-body').map(function () {
+                $(this).html($(this).html().replace(/@(.*?)(?:\s|$)/g, ' @<span class="wz-text-dashed" style="font-weight: bold;">$1</span> '));
+            });
+
+            $('.wz-form-comment-content').on('focusin', function () {
+                $('.wz-comment-tip').fadeIn('fast');
+            }).on('focusout', function () {
+                $('.wz-comment-tip').fadeOut('fast');
             });
         });
     </script>

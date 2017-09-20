@@ -216,3 +216,21 @@ function resourceVersion()
     
     return $version;
 }
+
+/**
+ * 从内容中解析出用户
+ *
+ * @param string $content
+ *
+ * @return \Illuminate\Database\Eloquent\Collection|null|static[]
+ */
+function parseUsersFromContent($content)
+{
+    preg_match_all('/@(.*?)(?:\s|$)/', $content, $matches);
+    if (!empty($matches[1])) {
+        $users = User::whereIn('name', $matches[1])->select('id', 'name', 'email')->get();
+        return $users;
+    }
+
+    return null;
+}

@@ -9,9 +9,11 @@
 namespace App\Listeners;
 
 use App\Events\CommentCreated;
+use App\Notifications\CommentMentioned;
 use App\Notifications\CommentReplied;
 use App\Notifications\DocumentCommented;
 use App\Repositories\Comment;
+use App\Repositories\User;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -20,7 +22,8 @@ class CommentCreatedListener
     /**
      * Handle the event.
      *
-     * @param  CommentCreated  $event
+     * @param  CommentCreated $event
+     *
      * @return void
      */
     public function handle(CommentCreated $event)
@@ -38,6 +41,14 @@ class CommentCreatedListener
             if ($replyComment->user_id != $comment->document->user_id) {
                 $replyComment->user->notify(new CommentReplied($comment->document, $comment));
             }
+        }
+
+        // 解析文本内容，如果包含@user，则通知该用户
+        $users = parseUsersFromContent($comment->content);
+        if (!empty($users)) {
+            $users->map(function (User $user) use ($comment) {
+                $user->notify(new CommentMentioned($comment->document, $comment));
+            });
         }
     }
 }
