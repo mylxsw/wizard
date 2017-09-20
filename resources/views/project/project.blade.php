@@ -51,26 +51,49 @@
         <p>{{ $project->description or '' }}</p>
 
         <p>@lang('document.document_create_info', ['username' => $project->user->name, 'time' => $project->created_at])</p>
-        @if($project->groups->count() > 0)
-            <table class="table">
-                <caption>@lang('project.group_added')</caption>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>@lang('project.group_name')</th>
-                    <th>@lang('project.group_write_enabled')</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($project->groups as $group)
-                    <tr>
-                        <th scope="row">{{ $group->id }}</th>
-                        <td>{{ $group->name }}</td>
-                        <td>{{ $group->projects[0]->pivot->privilege == 1 ? __('common.yes') : __('common.no') }}</td>
-                    </tr>
+        <div class="wz-recently-log">
+            <h4>最近修改</h4>
+            <ul>
+                @foreach($operationLogs as $log)
+                <li>
+                    <span class="wz-date">{{ $log->created_at }}</span>
+                    @if ($log->message == 'document_updated')
+                        <span class="wz-text-dashed">{{ $log->context->username }}</span> 修改了文档
+                        <span class="wz-text-dashed"><a href="{{ route('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
+                    @elseif ($log->message == 'document_created')
+                        <span class="wz-text-dashed">{{ $log->context->username }}</span> 创建了文档
+                        <span class="wz-text-dashed"><a href="{{ route('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
+                    @elseif ($log->message == 'document_deleted')
+                        <span class="wz-text-dashed">{{ $log->context->username }}</span> 删除了文档
+                        <span class="wz-text-dashed"><a href="{{ route('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
+                    @endif
+                </li>
                 @endforeach
-                </tbody>
-            </table>
+            </ul>
+        </div>
+        @if($project->groups->count() > 0)
+            <div class="wz-group-allowed-list">
+                <h4>@lang('project.group_added')</h4>
+                <table class="table">
+                    <caption></caption>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>@lang('project.group_name')</th>
+                        <th>@lang('project.group_write_enabled')</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($project->groups as $group)
+                        <tr>
+                            <th scope="row">{{ $group->id }}</th>
+                            <td>{{ $group->name }}</td>
+                            <td>{{ $group->projects[0]->pivot->privilege == 1 ? __('common.yes') : __('common.no') }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         @endif
     @endif
 @endsection

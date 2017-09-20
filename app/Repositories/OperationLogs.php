@@ -17,6 +17,8 @@ class OperationLogs extends Repository
             'user_id',
             'message',
             'context',
+            'project_id',
+            'page_id',
             'created_at',
         ];
 
@@ -41,11 +43,23 @@ class OperationLogs extends Repository
      */
     public static function log($user_id, string $message, array $context = [])
     {
-        return self::create([
+        $data = [
             'user_id' => $user_id,
             'message' => $message,
             'context' => $context,
-        ]);
+        ];
+
+        if (isset($context['project_id'])) {
+            $data['project_id'] = $context['project_id'];
+        }
+
+        if (isset($context['page_id'])) {
+            $data['page_id'] = $context['page_id'];
+        } else if (isset($context['doc_id'])) {
+            $data['page_id'] = $context['doc_id'];
+        }
+
+        return self::create($data);
     }
 
     /**
@@ -74,6 +88,6 @@ class OperationLogs extends Repository
         if (!is_string($value)) {
             return $value;
         }
-        return json_decode($value, true);
+        return json_decode($value);
     }
 }

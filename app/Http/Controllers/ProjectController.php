@@ -15,6 +15,7 @@ use App\Events\ProjectModified;
 use App\Policies\ProjectPolicy;
 use App\Repositories\Document;
 use App\Repositories\Group;
+use App\Repositories\OperationLogs;
 use App\Repositories\Project;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
@@ -151,6 +152,12 @@ class ProjectController extends Controller
                 ->where('id', $pageID)
                 ->firstOrFail();
             $type = $page->type == Document::TYPE_DOC ? 'markdown' : 'swagger';
+        } else {
+            // 查询操作历史
+            $operationLogs = OperationLogs::where('project_id', $id)
+                ->whereNotNull('page_id')
+                ->orderBy('created_at', 'desc')
+                ->limit(10)->get();
         }
 
         return view('project.project', [
@@ -159,6 +166,7 @@ class ProjectController extends Controller
             'pageItem'          => $page,
             'type'              => $type,
             'code'              => '',
+            'operationLogs'     => isset($operationLogs) ? $operationLogs : [],
             'comment_highlight' => $request->input('cm', ''),
             'navigators'        => navigator($project->pages, $id, $pageID)
         ]);
@@ -171,6 +179,7 @@ class ProjectController extends Controller
      * @param         $id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function setting(Request $request, $id)
     {
@@ -224,6 +233,7 @@ class ProjectController extends Controller
      * @param         $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function settingHandle(Request $request, $id)
     {

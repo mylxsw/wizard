@@ -6,6 +6,8 @@ github预览gif图片有bug，请打开下面链接查看演示
 
 - [演示gif图片](https://oayrssjpa.qnssl.com/2017-09-07%2000_59_55.gif)
 
+在线预览体验地址：http://wizard.aicode.cc/
+
 ## 安装
 
 安装依赖

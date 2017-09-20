@@ -395,6 +395,18 @@ a:hover {
     padding-bottom: 3px;
 }
 
+.wz-group-allowed-list, .wz-recently-log {
+    margin-top: 20px;
+}
+
+.wz-recently-log li {
+    line-height: 1.6;
+    list-style: none;
+}
+
+.wz-recently-log .wz-date {
+    font-weight: bold;
+}
 
 
 @-webkit-keyframes twinkling {
