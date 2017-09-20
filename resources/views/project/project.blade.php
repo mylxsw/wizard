@@ -51,8 +51,9 @@
         <p>{{ $project->description or '' }}</p>
 
         <p>@lang('document.document_create_info', ['username' => $project->user->name, 'time' => $project->created_at])</p>
+        @if(!empty($operationLogs) && $operationLogs->count() > 0)
         <div class="wz-recently-log">
-            <h4>最近修改</h4>
+            <h4>最近活动</h4>
             <ul>
                 @foreach($operationLogs as $log)
                 <li>
@@ -71,6 +72,7 @@
                 @endforeach
             </ul>
         </div>
+        @endif
         @if($project->groups->count() > 0)
             <div class="wz-group-allowed-list">
                 <h4>@lang('project.group_added')</h4>

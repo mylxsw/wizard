@@ -408,6 +408,9 @@ a:hover {
     font-weight: bold;
 }
 
+.wz-message-tip {
+    font-weight: bold;
+}
 
 @-webkit-keyframes twinkling {
     0% {
