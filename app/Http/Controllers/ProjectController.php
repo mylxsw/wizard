@@ -127,14 +127,7 @@ class ProjectController extends Controller
         $pageID = (int)$request->input('p', 0);
 
         /** @var Project $project */
-        $project = Project::with([
-            'pages' => function (Relation $query) {
-                // TODO 这里按照pid排序的必要性：因为navigator函数的bug，导致不排序会有菜单项丢失
-                $query->select(
-                    'id', 'pid', 'title', 'description', 'project_id', 'type', 'status'
-                )->orderBy('pid');
-            }
-        ])->findOrFail($id);
+        $project = Project::findOrFail($id);
 
         $policy = new ProjectPolicy();
         if (!$policy->view(\Auth::user(), $project)) {
@@ -168,7 +161,7 @@ class ProjectController extends Controller
             'code'              => '',
             'operationLogs'     => isset($operationLogs) ? $operationLogs : [],
             'comment_highlight' => $request->input('cm', ''),
-            'navigators'        => navigator($project->pages, $id, $pageID)
+            'navigators'        => navigator($id, $pageID)
         ]);
     }
 

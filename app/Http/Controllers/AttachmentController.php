@@ -112,11 +112,7 @@ class AttachmentController extends Controller
     {
         $page = Document::where('project_id', $id)->where('id', $page_id)->firstOrFail();
         /** @var Project $project */
-        $project = Project::with([
-            'pages' => function (Relation $query) {
-                $query->select('id', 'pid', 'title', 'description', 'project_id', 'type', 'status');
-            }
-        ])->findOrFail($id);
+        $project = Project::findOrFail($id);
 
         $attachments = Attachment::with('user')
             ->where('page_id', $page_id)
@@ -130,7 +126,7 @@ class AttachmentController extends Controller
             'pageID'      => $page_id,
             'pageItem'    => $page,
             'extensions'  => $this->extensions,
-            'navigators'  => navigator($project->pages, $id, $page_id)
+            'navigators'  => navigator($id, $page_id)
         ]);
     }
 

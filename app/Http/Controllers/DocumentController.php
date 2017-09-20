@@ -19,6 +19,7 @@ use App\Repositories\OperationLogs;
 use App\Repositories\PageShare;
 use App\Repositories\Project;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
@@ -51,7 +52,7 @@ class DocumentController extends Controller
             'project'   => $project,
             'type'      => $type,
             'pid'       => $pid,
-            'navigator' => navigator($project->pages, (int)$id, $pid),
+            'navigator' => navigator((int)$id, $pid),
         ]);
     }
 
@@ -77,8 +78,7 @@ class DocumentController extends Controller
             'newPage'   => false,
             'type'      => $type,
             'pid'       => $pageItem->pid,
-            'navigator' => navigator(Document::where('project_id', $id)->get(), (int)$id,
-                (int)$pageItem->pid, [$pageItem->id]),
+            'navigator' => navigator((int)$id, (int)$pageItem->pid, [$pageItem->id]),
         ]);
     }
 

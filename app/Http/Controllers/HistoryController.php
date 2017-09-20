@@ -32,11 +32,7 @@ class HistoryController extends Controller
     {
         $page = Document::where('project_id', $id)->where('id', $page_id)->firstOrFail();
         /** @var Project $project */
-        $project = Project::with([
-            'pages' => function (Relation $query) {
-                $query->select('id', 'pid', 'title', 'description', 'project_id', 'type', 'status');
-            }
-        ])->findOrFail($id);
+        $project = Project::findOrFail($id);
 
         $histories = DocumentHistory::with('operator')
             ->where('page_id', $page_id)
@@ -48,7 +44,7 @@ class HistoryController extends Controller
             'project'    => $project,
             'pageID'     => $page_id,
             'pageItem'   => $page,
-            'navigators' => navigator($project->pages, $id, $page_id)
+            'navigators' => navigator($id, $page_id)
         ]);
     }
 
@@ -66,11 +62,7 @@ class HistoryController extends Controller
     {
         $page = Document::where('project_id', $id)->where('id', $page_id)->firstOrFail();
         /** @var Project $project */
-        $project = Project::with([
-            'pages' => function (Relation $query) {
-                $query->select('id', 'pid', 'title', 'description', 'project_id', 'type', 'status');
-            }
-        ])->findOrFail($id);
+        $project = Project::findOrFail($id);
 
         $history = DocumentHistory::where('page_id', $page_id)
             ->where('id', $history_id)->firstOrFail();
@@ -82,7 +74,7 @@ class HistoryController extends Controller
             'pageID'     => $page_id,
             'pageItem'   => $page,
             'type'       => $type,
-            'navigators' => navigator($project->pages, $id, $page_id)
+            'navigators' => navigator($id, $page_id)
         ]);
     }
 
@@ -95,6 +87,7 @@ class HistoryController extends Controller
      * @param         $history_id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function recover(Request $request, $id, $page_id, $history_id)
     {

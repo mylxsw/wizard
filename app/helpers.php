@@ -28,7 +28,6 @@ function wzRoute($name, $parameters = [], $absolute = false)
  *
  * 必须保证pages是按照pid进行asc排序的，否则可能会出现菜单丢失
  *
- * @param \Illuminate\Database\Eloquent\Collection $pages     每一页文档
  * @param int                                      $projectID 当前项目ID
  * @param int                                      $pageID    选中的文档ID
  * @param array                                    $exclude   排除的文档ID列表
@@ -36,11 +35,14 @@ function wzRoute($name, $parameters = [], $absolute = false)
  * @return array
  */
 function navigator(
-    \Illuminate\Database\Eloquent\Collection $pages,
     int $projectID,
     int $pageID = 0,
     $exclude = []
 ) {
+    $pages = \App\Repositories\Document::where('project_id', $projectID)->select(
+        'id', 'pid', 'title', 'project_id', 'type', 'status', 'created_at'
+    )->orderBy('pid')->get();
+
     $navigators = [];
     /** @var \App\Repositories\Document $page */
     foreach ($pages as $page) {
@@ -49,12 +51,13 @@ function navigator(
         }
 
         $navigators[$page->id] = [
-            'id'       => (int)$page->id,
-            'name'     => $page->title,
-            'pid'      => (int)$page->pid,
-            'url'      => route('project:home', ['id' => $projectID, 'p' => $page->id]),
-            'selected' => $pageID === (int)$page->id,
-            'type'     => $page->type == \App\Repositories\Document::TYPE_DOC ? 'doc' : 'sw',
+            'id'         => (int)$page->id,
+            'name'       => $page->title,
+            'pid'        => (int)$page->pid,
+            'url'        => route('project:home', ['id' => $projectID, 'p' => $page->id]),
+            'selected'   => $pageID === (int)$page->id,
+            'type'       => $page->type == \App\Repositories\Document::TYPE_DOC ? 'doc' : 'sw',
+            'created_at' => $page->created_at,
         ];
     }
 
@@ -71,6 +74,34 @@ function navigator(
     return array_filter($navigators, function ($nav) {
         return $nav['pid'] === 0;
     });
+}
+
+/**
+ * 导航排序，排序后，文件夹靠前，普通文件靠后
+ *
+ * @param array $navbars
+ *
+ * @return array
+ */
+function navigatorSort($navbars)
+{
+    usort($navbars, function ($a, $b) {
+        if (!empty($a['nodes'])) {
+            return -1;
+        }
+
+        if (!empty($b['nodes'])) {
+            return 1;
+        }
+
+        try {
+            return $a['created_at']->greaterThan($b['created_at']);
+        } catch (Exception $e) {
+            return 0;
+        }
+    });
+
+    return $navbars;
 }
 
 /**
@@ -213,7 +244,7 @@ function resourceVersion()
     if (is_null($version)) {
         $version = 'v=' . config('wizard.resource_version');
     }
-    
+
     return $version;
 }
 
