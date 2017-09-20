@@ -83,6 +83,9 @@ Route::group(['middleware' => 'locale'], function () {
             Route::get('/notifications', 'NotificationController@lists')->name('notifications');
             Route::put('/notifications/all', 'NotificationController@readAll')->name('notifications:read-all');
             Route::put('/notifications/{notification_id}', 'NotificationController@read')->name('notifications:read');
+
+            // 个人模板管理
+            Route::get('/templates', 'TemplateController@all')->name('templates');
         });
 
         Route::group(['prefix' => 'project', 'as' => 'project:'], function () {

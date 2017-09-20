@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Template;
 use Illuminate\Http\Request;
+use Auth;
 
 class TemplateController extends Controller
 {
@@ -20,6 +21,7 @@ class TemplateController extends Controller
      * @param Request $request
      *
      * @return array
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create(Request $request)
     {
@@ -66,4 +68,19 @@ class TemplateController extends Controller
             'id' => $template->id
         ];
     }
+
+    /**
+     * 用户模板管理
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function all()
+    {
+        $templates = Template::where('user_id', Auth::user()->id)
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        return view('user.templates', ['templates' => $templates, 'op' => 'templates']);
+    }
+
 }

@@ -18,6 +18,11 @@
                             @endif
                         </a>
                     </li>
+                    <li class="{{ $op == 'templates' ? 'active':'' }}">
+                        <a href="{{ wzRoute('user:templates') }}">
+                            模板管理
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="col-lg-9">

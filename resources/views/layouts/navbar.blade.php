@@ -24,7 +24,7 @@
                             </a>
                             <a href="{{ wzRoute('user:basic') }}">@lang('common.user_info')</a>
                             <a href="{{ wzRoute('user:password') }}">@lang('common.change_password')</a>
-                            <a href="#" wz-wait-develop>@lang('common.template_maintenance')</a>
+                            <a href="{{ wzRoute('user:templates') }}">@lang('common.template_maintenance')</a>
                             @if(Auth::user()->isAdmin())
                                 <a href="{!! wzRoute('admin:groups') !!}">系统管理</a>
                             @endif

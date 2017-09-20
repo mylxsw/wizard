@@ -60,13 +60,13 @@
                     <span class="wz-date">{{ $log->created_at }}</span>
                     @if ($log->message == 'document_updated')
                         <span class="wz-text-dashed">{{ $log->context->username }}</span> 修改了文档
-                        <span class="wz-text-dashed"><a href="{{ route('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
+                        <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
                     @elseif ($log->message == 'document_created')
                         <span class="wz-text-dashed">{{ $log->context->username }}</span> 创建了文档
-                        <span class="wz-text-dashed"><a href="{{ route('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
+                        <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
                     @elseif ($log->message == 'document_deleted')
                         <span class="wz-text-dashed">{{ $log->context->username }}</span> 删除了文档
-                        <span class="wz-text-dashed"><a href="{{ route('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
+                        <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
                     @endif
                 </li>
                 @endforeach
