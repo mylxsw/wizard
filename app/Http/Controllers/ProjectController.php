@@ -17,6 +17,7 @@ use App\Repositories\Document;
 use App\Repositories\Group;
 use App\Repositories\OperationLogs;
 use App\Repositories\Project;
+use App\Repositories\DocumentHistory;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -145,6 +146,11 @@ class ProjectController extends Controller
                 ->where('id', $pageID)
                 ->firstOrFail();
             $type = $page->type == Document::TYPE_DOC ? 'markdown' : 'swagger';
+
+            $history = DocumentHistory::where('page_id', $page->id)
+                ->where('id', '!=', $page->history_id)
+                ->orderBy('id', 'desc')
+                ->first();
         } else {
             // 查询操作历史
             $operationLogs = OperationLogs::where('project_id', $id)
@@ -161,7 +167,8 @@ class ProjectController extends Controller
             'code'              => '',
             'operationLogs'     => isset($operationLogs) ? $operationLogs : [],
             'comment_highlight' => $request->input('cm', ''),
-            'navigators'        => navigator($id, $pageID)
+            'navigators'        => navigator($id, $pageID),
+            'history'           => $history ?? false,
         ]);
     }
 

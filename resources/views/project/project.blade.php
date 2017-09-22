@@ -11,6 +11,13 @@
                     <li role="presentation">
                         <a href="{{ wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">@lang('common.btn_edit')</a>
                     </li>
+                    @if(!empty($history)) 
+                    <li role="presentation">
+                        <a href="#" wz-doc-compare-submit
+                                data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
+                                data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}">@lang('common.btn_diff')</a>
+                    </li>
+                    @endif
                 @endcan
                 @include('components.page-menus', ['project' => $project, 'pageItem' => $pageItem])
             </ul>
@@ -64,7 +71,7 @@
                         @if(!Auth::guest())
                         【<a href="#" wz-doc-compare-submit
                             data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $log->context->doc_id]) }}"
-                            data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $log->context->history_id ?? 0, 'id' => $project->id, 'page_id' => $log->context->doc_id]) }}">差异对比</a>】
+                            data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $log->context->history_id ?? 0, 'id' => $project->id, 'page_id' => $log->context->doc_id]) }}">@lang('common.btn_diff')</a>】
                         @endif
                     @elseif ($log->message == 'document_created')
                         <span class="wz-text-dashed">{{ $log->context->username }}</span> 创建了文档
@@ -112,7 +119,7 @@
         @include('components.comment')
     @endif
 
-    @if($pageID == 0 && !Auth::guest())
+    @if(!Auth::guest())
         @include('components.doc-compare-script')
     @endif
 @endpush
