@@ -61,6 +61,9 @@
                     @if ($log->message == 'document_updated')
                         <span class="wz-text-dashed">{{ $log->context->username }}</span> 修改了文档
                         <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
+                        【<a href="#" wz-doc-compare-submit
+                            data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $log->context->doc_id]) }}"
+                            data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $log->context->history_id ?? 0, 'id' => $project->id, 'page_id' => $log->context->doc_id]) }}">差异对比</a>】
                     @elseif ($log->message == 'document_created')
                         <span class="wz-text-dashed">{{ $log->context->username }}</span> 创建了文档
                         <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
@@ -105,5 +108,9 @@
 @push('page-panel')
     @if($pageID != 0 && !(Auth::guest() && count($pageItem->comments) === 0))
         @include('components.comment')
+    @endif
+
+    @if($pageID == 0 && !Auth::guest())
+        @include('components.doc-compare-script')
     @endif
 @endpush
