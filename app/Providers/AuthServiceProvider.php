@@ -32,10 +32,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        // 检查用户是否具有创建项目权限
+        Gate::define('project-create', ProjectPolicy::class . '@create');
         // 检查用户是否有对项目的编辑权限
         Gate::define('project-edit', ProjectPolicy::class . '@edit');
         // 检查用户是否有删除项目的权限
         Gate::define('project-delete', ProjectPolicy::class . '@delete');
+        // 检查是否可以评论
+        Gate::define('project-comment', ProjectPolicy::class . '@comment');
 
         // 检查是否有新增页面的权限
         Gate::define('page-add', ProjectPolicy::class . '@addPage');

@@ -20,7 +20,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers, UserActivateChannel;
 
     /**
      * Where to redirect users after registration.
@@ -64,11 +64,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
+        $needActivate = config('wizard.need_activate');
+        $user         = User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),
             'role'     => User::ROLE_NORMAL,
+            'status'   => $needActivate ? User::STATUS_NONE : User::STATUS_ACTIVATED,
         ]);
 
         // 如果创建的用户是系统中第一个用户，则自动设置其为管理员
@@ -77,6 +79,12 @@ class RegisterController extends Controller
             $user->save();
         }
 
+        // 注册后发送激活邮件
+        if ($needActivate) {
+            $this->sendUserActivateEmail($user);
+        }
+
         return $user;
     }
+
 }

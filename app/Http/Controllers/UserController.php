@@ -9,11 +9,15 @@
 namespace App\Http\Controllers;
 
 
+use App\Exceptions\ValidationException;
+use App\Http\Controllers\Auth\UserActivateChannel;
 use App\Repositories\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    use UserActivateChannel;
+
     /**
      * 用户列表
      *
@@ -117,5 +121,74 @@ class UserController extends Controller
 
         $this->alertSuccess(__('passwords.change_password_success'));
         return redirect(wzRoute('user:password'));
+    }
+
+    /**
+     * 用户账户激活
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function activate(Request $request)
+    {
+        try {
+            $token   = jwt_parse_token($request->input('token'));
+            $user_id = $token->getClaim('uid');
+            $email   = $token->getClaim('email');
+
+            /** @var User $user */
+            $user = User::findOrFail($user_id);
+            if (!empty($user->email) && $user->email != $email) {
+                abort(422, '激活链接中的邮箱地址与用户邮箱地址不匹配');
+            }
+
+            if ($user->isDisabled()) {
+                abort(403, '用户账号已禁用，无法激活');
+            }
+
+            $user->status = User::STATUS_ACTIVATED;
+            $user->save();
+
+            $this->alertSuccess('账号激活成功');
+
+        } catch (ValidationException $e) {
+            abort(422, '很抱歉！此激活链接已失效');
+        }
+        return redirect('/');
+    }
+
+    /**
+     * 发送激活邮件
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function sendActivateEmail(Request $request)
+    {
+        $user = \Auth::user();
+        if ($user->isActivated() || $user->isDisabled()) {
+            abort(422, '不符合发送激活邮件的条件');
+        }
+
+        $session                   = $request->session();
+        $lastSendActivateEmailTime = $session->get('send_activate_email');
+        // 15分钟内只允许发送一次激活邮件
+//        $retryDelay = 15 * 60;
+        $retryDelay = 0;
+        if ($lastSendActivateEmailTime && time() - $lastSendActivateEmailTime <= $retryDelay) {
+            $this->alertError(sprintf(
+                '请的操作太过频繁，请 %d 分钟后再试',
+                (int)(($lastSendActivateEmailTime + $retryDelay - time()) / 60)
+            ));
+        } else {
+            $session->put('send_activate_email', time());
+
+            $this->sendUserActivateEmail($user);
+            $this->alertSuccess('激活邮件发送成功');
+        }
+
+        return redirect()->back();
     }
 }

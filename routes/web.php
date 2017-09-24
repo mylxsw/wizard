@@ -32,6 +32,8 @@ Route::group(['middleware' => 'locale'], function () {
 
     // 分享页面
     Route::get('/s/{hash}', 'ShareController@page')->name('share:show');
+    // 用户账号激活
+    Route::get('/user/activate', 'UserController@activate')->name('user:activate');
 
     // 空白页，用于前端兼容
     Route::get('/blank', function () {
@@ -71,6 +73,8 @@ Route::group(['middleware' => 'locale'], function () {
 
         // 用户信息
         Route::group(['prefix' => 'user', 'as' => 'user:'], function () {
+            // 重新发送账号激活邮件
+            Route::post('/activate/email', 'UserController@sendActivateEmail')->name('activate:send');
             // 基本信息
             Route::get('/', 'UserController@basic')->name('basic');
             Route::post('/', 'UserController@basicHandle')->name('basic:handle');

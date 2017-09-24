@@ -88,7 +88,7 @@ a:hover {
     cursor: pointer;
 }
 
-.wz-box {
+.wz-box, .wz-box-disabled {
     height: 100px;
     display: block;
     padding: 4px;
@@ -101,6 +101,10 @@ a:hover {
     -o-transition: border .2s ease-in-out;
     transition: border .2s ease-in-out;
     position: relative;
+}
+
+.wz-box-disabled {
+    background: #fff;
 }
 
 .wz-box-tag {
@@ -119,7 +123,7 @@ a:hover {
     background-color: #dff0d8;
 }
 
-.wz-box .wz-title {
+.wz-box .wz-title, .wz-box-disabled .wz-title {
     margin: 36px auto;
     text-align: center;
     color: #777;

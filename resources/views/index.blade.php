@@ -4,7 +4,7 @@
 @section('container-style', 'container container-small')
 @section('content')
 
-    @include('layouts.navbar')
+    @include('layouts.navbar', ['hideGlobalAlert' => true])
 
     <div class="row marketing">
         <div class="col-lg-12">

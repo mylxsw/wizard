@@ -5,6 +5,7 @@
                 <li role="presentation"><a href="{{ wzRoute('login') }}">@lang('common.login')</a></li>
                 <li role="presentation"><a href="{{ wzRoute('register') }}">@lang('common.register')</a></li>
             @else
+                <li role="presentation"><a href="/">主页</a></li>
                 <li role="presentation"><a href="{{ wzRoute('user:home') }}">@lang('common.user_home')</a></li>
                 <li role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -41,3 +42,12 @@
     </nav>
     <h3 class="text-muted"><a href="/">{{ config('app.name', 'Wizard API') }}</a></h3>
 </div>
+
+@unless($hideGlobalAlert ?? false)
+    @if(Auth::user() && !Auth::user()->isActivated())
+        <div class="alert alert-warning">
+            <form action="{{ wzRoute('user:activate:send') }}" method="post" id="form-send-activate-email">{{ csrf_field() }}</form>
+            您尚未激活帐号，请先激活帐号后再进行操作<a href="#" data-form="#form-send-activate-email" wz-form-submit>【重新发送激活邮件】</a> 。
+        </div>
+    @endif
+@endunless

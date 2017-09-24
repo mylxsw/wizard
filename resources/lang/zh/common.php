@@ -11,7 +11,7 @@ return [
     'markdown'    => 'Markdown',
     'swagger'     => 'Swagger API',
     'project'     => '项目',
-    'user_home'   => '个人主页',
+    'user_home'   => '我的项目',
     'btn_add'     => '新增',
     'btn_save'    => '保存',
     'btn_close'   => '关闭',

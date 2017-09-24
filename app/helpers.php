@@ -265,3 +265,47 @@ function parseUsersFromContent($content)
 
     return null;
 }
+
+/**
+ * 创建一个JWT Token
+ *
+ * @param array $payloads
+ * @param int   $expire
+ *
+ * @return \Lcobucci\JWT\Token
+ */
+function jwt_create_token(array $payloads, $expire = 3600 * 2)
+{
+    $builder = new \Lcobucci\JWT\Builder();
+    foreach ($payloads as $key => $payload) {
+        $builder->set($key, $payload);
+    }
+
+    return $builder->setIssuedAt(time())
+        ->setExpiration(time() + $expire)
+        ->sign(new \Lcobucci\JWT\Signer\Hmac\Sha256(), config('wizard.jwt_secret'))
+        ->getToken();
+}
+
+/**
+ * 解析Jwt Token
+ *
+ * @param string $token
+ *
+ * @return \Lcobucci\JWT\Token
+ */
+function jwt_parse_token(string $token)
+{
+    $token = (new \Lcobucci\JWT\Parser())->parse($token);
+
+    if (!$token->verify(new \Lcobucci\JWT\Signer\Hmac\Sha256(), config('wizard.jwt_secret'))) {
+        throw new \App\Exceptions\ValidationException('页面Token无效，请刷新后重试');
+    }
+
+    $validation = new \Lcobucci\JWT\ValidationData();
+    if (!$token->validate($validation)) {
+        throw new \App\Exceptions\ValidationException('页面已过期，请刷新页面后重新提交');
+    }
+
+    return $token;
+}

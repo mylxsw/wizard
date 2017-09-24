@@ -52,6 +52,8 @@ class ProjectController extends Controller
      */
     public function newProjectHandle(Request $request)
     {
+        $this->authorize('project-create');
+
         $this->validate(
             $request,
             [

@@ -3,7 +3,7 @@
         <h3 class="panel-title">评论</h3>
     </div>
     <div class="panel-body">
-        @if(!Auth::guest())
+        @can('project-comment', $project)
             <form method="post"
                   action="{{ wzRoute('project:doc:comment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
                   id="wz-new-comment-form" style="position: relative;">
@@ -19,10 +19,10 @@
                     <button type="button" id="wz-comment-submit" class="btn btn-success pull-right">评论</button>
                 </div>
             </form>
-        @endif
+        @endcan
         <div class="wz-comments-box">
             <ol>
-                @foreach($pageItem->comments as $comment)
+                @forelse($pageItem->comments as $comment)
                     <li class="media {{ (isset($comment_highlight) && $comment_highlight == $comment->id) ? 'wz-comment-highlight':'' }}"
                         id="cm-{{ $comment->id }}">
                         <div class="media-body">
@@ -35,7 +35,9 @@
                             </div>
                         </div>
                     </li>
-                @endforeach
+                @empty
+                    该文档还没有评论~
+                @endforelse
             </ol>
         </div>
     </div>

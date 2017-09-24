@@ -32,7 +32,7 @@ class ProjectPolicy
      */
     public function setting(User $user = null, $project)
     {
-        if (empty($user)) {
+        if (empty($user) || !$user->isActivated()) {
             return false;
         }
 
@@ -64,6 +64,29 @@ class ProjectPolicy
     }
 
     /**
+     *
+     *  用户是否可以评论项目下的文档
+     *
+     * @param User|null $user
+     * @param           $project
+     *
+     * @return bool
+     */
+    public function comment(User $user = null, $project)
+    {
+        $canView = $this->view($user, $project);
+        if (!$canView) {
+            return false;
+        }
+
+        if (empty($user)) {
+            return false;
+        }
+
+        return $user->isActivated();
+    }
+
+    /**
      * 新增页面权限
      *
      * @param User $user
@@ -73,7 +96,7 @@ class ProjectPolicy
      */
     public function addPage(User $user = null, $project)
     {
-        if (empty($user)) {
+        if (empty($user) || !$user->isActivated()) {
             return false;
         }
 
@@ -102,7 +125,7 @@ class ProjectPolicy
      */
     public function edit(User $user = null, $project)
     {
-        if (empty($user)) {
+        if (empty($user) || !$user->isActivated()) {
             return false;
         }
 
@@ -119,11 +142,27 @@ class ProjectPolicy
      */
     public function delete(User $user = null, $project)
     {
-        if (empty($user)) {
+        if (empty($user) || !$user->isActivated()) {
             return false;
         }
 
         return $user->isAdmin() || $this->isOwner($user, $project);
+    }
+
+    /**
+     * 检查用户是否有创建项目权限
+     *
+     * @param User|null $user
+     *
+     * @return bool
+     */
+    public function create(User $user = null)
+    {
+        if (empty($user)) {
+            return false;
+        }
+
+        return $user->isActivated();
     }
 
     /**
@@ -136,7 +175,7 @@ class ProjectPolicy
      */
     private function isOwner(User $user = null, $project)
     {
-        if (empty($user)) {
+        if (empty($user) || !$user->isActivated()) {
             return false;
         }
 

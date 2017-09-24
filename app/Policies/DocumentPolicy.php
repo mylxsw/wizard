@@ -58,7 +58,7 @@ class DocumentPolicy
      */
     private function groupHasEditPrv($user = null, $page): bool
     {
-        if (empty($user)) {
+        if (empty($user) || !$user->isActivated()) {
             return false;
         }
 
@@ -101,7 +101,7 @@ class DocumentPolicy
      */
     private function isOwner(User $user = null, $page)
     {
-        if (empty($user)) {
+        if (empty($user) || !$user->isActivated()) {
             return false;
         }
 

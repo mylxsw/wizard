@@ -7,6 +7,14 @@
  */
 
 return [
+    /**
+     * 新注册账号是否需要邮箱激活
+     */
+    'need_activate' => env('WIZARD_NEED_ACTIVATE', false),
+    /**
+     * JWT 加密密码
+     */
+    'jwt_secret'       => env('WIZARD_JWT_SECRET'),
 
     /**
      * 静态资源版本

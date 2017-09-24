@@ -19,6 +19,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string  $name
  * @property string  $password
  * @property integer $role
+ * @property integer $status
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
  *
@@ -37,6 +38,10 @@ class User extends Authenticatable
      */
     const ROLE_ADMIN = 2;
 
+    const STATUS_NONE      = 0;
+    const STATUS_ACTIVATED = 1;
+    const STATUS_DISABLED  = 2;
+
     protected $table = 'wz_users';
 
     /**
@@ -50,6 +55,7 @@ class User extends Authenticatable
             'email',
             'password',
             'role',
+            'status',
         ];
 
     /**
@@ -111,5 +117,25 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return (int)$this->role === self::ROLE_ADMIN;
+    }
+
+    /**
+     * 是否用户已激活
+     *
+     * @return bool
+     */
+    public function isActivated()
+    {
+        return (int)$this->status === self::STATUS_ACTIVATED;
+    }
+
+    /**
+     * 是否用户已经禁用
+     *
+     * @return bool
+     */
+    public function isDisabled()
+    {
+        return (int)$this->status === self::STATUS_DISABLED;
     }
 }

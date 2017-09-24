@@ -31,7 +31,7 @@ class TemplatePolicy
      */
     public function globalCreate(User $user = null)
     {
-        if (empty($user)) {
+        if (empty($user) || !$user->isActivated()) {
             return false;
         }
 
@@ -48,7 +48,7 @@ class TemplatePolicy
      */
     private function isOwner(User $user = null, $template)
     {
-        if (empty($user)) {
+        if (empty($user) || !$user->isActivated()) {
             return false;
         }
 
