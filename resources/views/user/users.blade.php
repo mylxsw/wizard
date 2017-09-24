@@ -17,6 +17,7 @@
             <th>真实姓名</th>
             <th>账号</th>
             <th>角色</th>
+            <th>状态</th>
             <th>注册时间</th>
             <th>操作</th>
         </tr>
@@ -28,6 +29,15 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->isAdmin() ? '管理员':'普通' }}</td>
+                <td>
+                    @if($user->status == 0)
+                        <span style="color: orangered;">未激活</span>
+                    @elseif($user->status == 1)
+                        <span style="color: green;">已激活</span>
+                    @elseif($user->status == 2)
+                        <span style="color: red;">已禁用</span>
+                    @endif
+                </td>
                 <td>{{ $user->created_at->format('Y-m-d H:i') }}</td>
                 <td>
                     <a href="#" wz-wait-develop>
@@ -37,7 +47,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="5" class="text-center">没有符合条件的信息！</td>
+                <td colspan="6" class="text-center">没有符合条件的信息！</td>
             </tr>
         @endforelse
         </tbody>
