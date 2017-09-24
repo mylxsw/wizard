@@ -55,6 +55,7 @@
 <script src="/assets/vendor/ie10-viewport-bug-workaround.js"></script>
 <script src="/assets/vendor/layer/layer.js"></script>
 <script src="/assets/vendor/axios.min.js"></script>
+<script src="/assets/vendor/store.everything.min.js"></script>
 <script src="/assets/js/wizard.js?{{ resourceVersion() }}"></script>
 <script src="/assets/js/app.js?{{ resourceVersion() }}"></script>
 
@@ -76,6 +77,16 @@
 
         $.scrollUp({
             scrollText: '<span class="glyphicon glyphicon-chevron-up"></span>'
+        });
+
+        // 可关闭对话框关闭事件
+        $('.alert-dismissible[data-alert-id]').on('closed.bs.alert', function () {
+            store.set("alert-" + $(this).data('alert-id') + "-closed", (new Date()).getTime());
+        }).each(function () {
+            var lastClosedTime = store.get("alert-" + $(this).data('alert-id') + "-closed");
+            if (lastClosedTime) {
+                $(this).hide();
+            }
         });
     });
 </script>
