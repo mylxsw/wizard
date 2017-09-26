@@ -86,6 +86,11 @@ body {
 a:hover {
     text-decoration: none;
     cursor: pointer;
+    -webkit-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
+    -ms-transition: all 300ms ease-out;
+    -o-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
 }
 
 .wz-box, .wz-box-disabled {
@@ -97,10 +102,12 @@ a:hover {
     background-color: #fbfbfb;
     border: 1px solid #ddd;
     border-radius: 4px;
-    -webkit-transition: border .2s ease-in-out;
-    -o-transition: border .2s ease-in-out;
-    transition: border .2s ease-in-out;
     position: relative;
+    -webkit-transition: all 300ms ease-out;
+    -moz-transition: all 300ms ease-out;
+    -ms-transition: all 300ms ease-out;
+    -o-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
 }
 
 .wz-box-disabled {
