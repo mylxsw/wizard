@@ -17,6 +17,7 @@
     <link href="/assets/css/normalize.css" rel="stylesheet">
     <!-- Bootstrap core CSS -->
     <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="/assets/vendor/ie10-viewport-bug-workaround.css" rel="stylesheet">
