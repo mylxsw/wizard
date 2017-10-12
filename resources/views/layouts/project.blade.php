@@ -75,7 +75,10 @@
 
             // 重置窗口大小，避免内容过少无法撑开页面
             var resize_window = function () {
-                $('.wz-panel-right').css('min-height', $(window).height() - $('.wz-top-navbar').height() - $('.footer').height() - 28+ "px");
+                var window_height = $(window).height() - $('.wz-top-navbar').height() - $('.footer').height() - 28;
+                var frame_height = $('.wz-main-container').height();
+
+                $('.wz-panel-right').css('min-height', window_height > frame_height ? window_height : frame_height + "px");
             };
 
             resize_window();
