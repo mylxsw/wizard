@@ -2,14 +2,26 @@
 <li role="presentation" class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
        aria-haspopup="true" aria-expanded="false">
-        @lang('common.btn_more') <span class="caret"></span>
+        <span class="glyphicon glyphicon-option-horizontal" title="@lang('common.btn_more')"></span>
     </a>
-    <ul class="dropdown-menu">
-        <li><a href="{{ wzRoute('project:doc:attachment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">附件管理</a></li>
-        <li><a href="#" wz-share data-url="{{ wzRoute('project:doc:share', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">@lang('common.btn_share')</a></li>
-        <li><a href="#" wz-wait-develop>@lang('common.btn_export')</a></li>
+    <ul class="dropdown-menu wz-dropdown-menu-left">
+        <li><a href="{{ wzRoute('project:doc:attachment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
+                <span class="glyphicon glyphicon-paperclip"></span>
+                附件
+            </a></li>
+        <li><a href="#" wz-share data-url="{{ wzRoute('project:doc:share', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
+                <span class="glyphicon glyphicon-share"></span>
+                @lang('common.btn_share')
+            </a></li>
+        <li><a href="#" wz-wait-develop>
+                <span class="glyphicon glyphicon-export"></span>
+                @lang('common.btn_export')
+            </a></li>
         <li>
-            <a href="{{ wzRoute('project:doc:history', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}">@lang('document.page_history')</a>
+            <a href="{{ wzRoute('project:doc:history', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}">
+                <span class="glyphicon glyphicon-compressed"></span>
+                @lang('document.page_history')
+            </a>
         </li>
         <li>
             <form id="form-{{ $pageItem->id }}" method="post"
@@ -17,7 +29,10 @@
                 {{ method_field('DELETE') }}{{ csrf_field() }}
             </form>
             <a href="#" wz-form-submit data-form="#form-{{ $pageItem->id }}"
-               data-confirm="@lang('document.delete_confirm', ['title' => $pageItem->title])">@lang('common.btn_delete')</a>
+               data-confirm="@lang('document.delete_confirm', ['title' => $pageItem->title])">
+                <span class="glyphicon glyphicon-trash"></span>
+                @lang('common.btn_delete')
+            </a>
         </li>
     </ul>
 </li>

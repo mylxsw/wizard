@@ -1,7 +1,7 @@
 @extends('layouts.default')
 @section('container-style', 'container container-small')
 @section('content')
-    <div class="row marketing">
+    <div class="row marketing wz-main-container-full">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">

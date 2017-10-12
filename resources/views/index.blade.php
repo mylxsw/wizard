@@ -4,9 +4,7 @@
 @section('container-style', 'container container-small')
 @section('content')
 
-    @include('layouts.navbar', ['hideGlobalAlert' => true])
-
-    <div class="row marketing">
+    <div class="row marketing wz-main-container-full">
         <div class="col-lg-12">
             @unless(Auth::guest())
                 <div class="alert alert-info alert-dismissible" data-alert-id="public-home-tip">

@@ -48,6 +48,7 @@ class ShareController extends Controller
             'pageItem' => $page,
             'type'     => $type,
             'code'     => $hash,
+            'noheader' => true,
         ]);
     }
 

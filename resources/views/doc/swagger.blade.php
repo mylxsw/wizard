@@ -2,9 +2,8 @@
 @section('title', $project->name)
 @section('container-style', 'container-fluid')
 @section('content')
-    @include('layouts.navbar')
 
-    <div class="row marketing">
+    <div class="row marketing wz-main-container-full">
         @include('components.error', ['error' => $errors ?? null])
         <form class="form-inline" method="POST" id="wz-doc-edit-form"
               action="{{ $newPage ? wzRoute('project:doc:new:show', ['id' => $project->id]) : wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
@@ -12,7 +11,7 @@
             @include('components.doc-edit', ['project' => $project, 'pageItem' => $pageItem ?? null, 'navigator' => $navigator])
             <input type="hidden" name="type" value="swagger" />
 
-            <div class="col-lg-12">
+            <div class="col-lg-12" style="margin-bottom: 50px;">
                 <div class="swagger-editor-toolbar">
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group" role="group" aria-label="First group">

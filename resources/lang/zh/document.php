@@ -43,7 +43,7 @@ return [
     'differ_dialog_message'       => '如果无法弹出差异对比页面，请在浏览器设置中启用“允许弹出式窗口”选项后重试',
     'document_delete_success'     => '文档删除成功',
     'document_recover_success'    => '文档恢复成功',
-    'document_create_info'        => '该项目由 :username 创建于 :time。',
+    'document_create_info'        => '该项目由 <span class="wz-text-dashed">:username</span> 创建于 <span style="font-weight: bold;">:time</span>。',
     'draft_continue_edit_confirm' => '发现您有尚未保存的内容，是否继续编辑？',
 
     'validation' => [

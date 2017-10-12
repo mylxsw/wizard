@@ -19,7 +19,7 @@
     </table>
 </div>
 
-<p style="padding-left: 17px;">
+<p class="wz-document-header">
     该文档由 <span class="wz-text-dashed">{{ $pageItem->user->name or '' }}</span>
     创建于 <span style="font-weight: bold;">{{ $pageItem->created_at or '' }} </span>，
     <span class="wz-text-dashed">{{ $pageItem->lastModifiedUser->name or '' }}</span>

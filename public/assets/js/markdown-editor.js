@@ -70,8 +70,8 @@ $.wz.mdEditor = function (editor_id, params) {
             ];
         },
         toolbarIconsClass: {
-            template: "fa-flask",
-            jsonToTable: "fa-exchange"
+            template: "fa-files-o",
+            jsonToTable: "fa-cubes"
         },
         toolbarHandlers: {
             template: function (cm, icon, cursor, selection) {

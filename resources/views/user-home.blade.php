@@ -4,9 +4,7 @@
 @section('container-style', 'container container-small')
 @section('content')
 
-    @include('layouts.navbar')
-
-    <div class="row marketing">
+    <div class="row marketing wz-main-container-full">
         <div class="col-lg-12">
             @foreach($projects ?? [] as $proj)
                 <div class="col-lg-3">

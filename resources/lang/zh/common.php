@@ -9,7 +9,7 @@
 return [
     'document'    => '文档',
     'markdown'    => 'Markdown',
-    'swagger'     => 'Swagger API',
+    'swagger'     => 'Swagger',
     'project'     => '项目',
     'user_home'   => '我的项目',
     'btn_add'     => '新增',

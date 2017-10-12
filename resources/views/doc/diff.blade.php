@@ -3,9 +3,6 @@
 @section('container-style', 'container-fluid')
 @section('content')
     @if(!$noheader)
-        @include('layouts.navbar')
-    @endif
-    @if(!$noheader)
         <nav class="wz-page-control clearfix">
             <h1 class="wz-page-title">
                 @lang('document.document_differ')

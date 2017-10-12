@@ -1,8 +1,3 @@
-/* Space out content a bit */
-body {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
@@ -14,7 +9,6 @@ body {
 
 /* Custom page header */
 .header {
-    padding-bottom: 20px;
     border-bottom: 1px solid #e5e5e5;
 }
 
@@ -28,8 +22,10 @@ body {
 /* Custom page footer */
 .footer {
     padding-top: 19px;
+    padding-left: 20px!important;
     color: #777;
     border-top: 1px solid #e5e5e5;
+    padding-bottom: 5px;
 }
 
 /* Customize container */
@@ -56,11 +52,16 @@ body {
 
 /* Supporting marketing content */
 .marketing {
-    margin: 40px 0;
+    margin: 0;
 }
 
 .marketing p + h4 {
     margin-top: 28px;
+}
+
+.container-fluid, .container {
+    padding-left: 0;
+    padding-right: 0;
 }
 
 @media screen and (min-width: 768px) {
@@ -70,11 +71,6 @@ body {
     .footer {
         padding-right: 0;
         padding-left: 0;
-    }
-
-    /* Space out the masthead */
-    .header {
-        margin-bottom: 30px;
     }
 
     /* Remove the bottom border on the jumbotron for visual effect */
@@ -91,6 +87,45 @@ a:hover {
     -ms-transition: all 300ms ease-out;
     -o-transition: all 300ms ease-out;
     transition: all 300ms ease-out;
+}
+
+.wz-top-navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.wz-top-navbar .container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.wz-main-container {
+    background: #f7f7f7;
+}
+
+.wz-main-container, .wz-main-container > div {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.wz-main-container-full {
+    margin-top: 20px;
+    padding: 15px;
+}
+.wz-project-title {
+    width: 100%;
+    height: 55px;
+    padding-top: 20px;
+    padding-left: 30px;
+    font-size: 18px;
+}
+
+.wz-project-title .btn-group.open .dropdown-toggle {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
 
 .wz-box, .wz-box-disabled {
@@ -141,22 +176,25 @@ a:hover {
     margin: 0 0 20px;
 }
 
+.wz-left-nav {
+    padding-left: 20px;
+}
+
 .wz-left-nav li {
     list-style: none;
     clear: both;
 }
 
 .wz-left-nav a.wz-nav-fold {
-    background: #fff !important;
+    /*background: #fff !important;*/
     color: #ccc !important;
     margin-right: 0;
     padding-right: 4px !important;
-    border: none!important;
+    border: none !important;
     line-height: 0.9;
 }
 
-
-.wz-left-nav .wz-left-nav-home a>span {
+.wz-left-nav .wz-left-nav-home a > span {
     color: #ccc;
     padding-right: 4px;
 }
@@ -180,11 +218,11 @@ a:hover {
 }
 
 .wz-left-nav li.active > a:hover {
-    background: none!important;
+    background: none !important;
     color: #a94442;
 }
 
-.wz-left-nav li>a:focus, .wz-left-nav li>a:hover {
+.wz-left-nav li > a:focus, .wz-left-nav li > a:hover {
     text-decoration: none;
     border-radius: 0;
     /*border-bottom: 2px solid #337ab7;*/
@@ -200,11 +238,27 @@ a:hover {
     clear: both;
 }
 
+.wz-panel-right {
+    background: #fff;
+}
+
+.wz-panel-right > .panel {
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.wz-panel-right > .panel > .panel-heading {
+    border-radius: 0;
+}
+
 .wz-nav-item {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 88%;
+    width: 85%;
+    display: inline-block;
 }
 
 .wz-nav-item-badge {
@@ -214,17 +268,43 @@ a:hover {
 }
 
 .wz-page-control {
+    margin-bottom: 10px;
 }
 
 .wz-edit-control {
     margin-bottom: 15px;
+    padding-left: 0;
 }
 
 .wz-page-title {
-    font-size: 18px;
+    font-size: 26px;
     display: inline-block;
     padding: 0;
     margin: 10px 0 0 10px;
+}
+
+.markdown-body h1 {
+    font-size: 24px!important;
+}
+
+.markdown-body h2 {
+    font-size: 10px!important;;
+}
+
+.markdown-body h3 {
+    font-size: 16px!important;;
+}
+
+.markdown-body h4 {
+    font-size: 14px!important;;
+}
+
+.markdown-body h5 {
+    font-size: 12px!important;;
+}
+
+.markdown-body h6 {
+    font-size: 11px!important;;
 }
 
 .wz-page-content {
@@ -396,8 +476,8 @@ a:hover {
     color: #fff;
 }
 
-.wz-markdown-style-fix img{
-    max-width: 800px!important;
+.wz-markdown-style-fix img {
+    max-width: 800px !important;
     box-shadow: 3px 3px 7px #ccc;
 }
 
@@ -432,4 +512,19 @@ a:hover {
         -moz-border-radius: 4px;
         border-radius: 4px;
     }
+}
+
+.wz-document-header {
+    padding-left: 10px;
+    color: #888;
+}
+
+.wz-dropdown-menu-left {
+    right: 0;
+    left: auto;
+}
+
+.wz-panel-breadcrumb .breadcrumb {
+    margin-bottom: 0;
+    background: none;
 }

@@ -37,6 +37,18 @@
 </head>
 
 <body>
+@unless($hideGlobalAlert ?? false)
+    @if(Auth::user() && !Auth::user()->isActivated())
+        <div class="alert alert-danger" style="border-radius: 0; margin-bottom: 0;">
+            <form action="{{ wzRoute('user:activate:send') }}" method="post" id="form-send-activate-email">{{ csrf_field() }}</form>
+            您尚未激活帐号，请先激活帐号后再进行操作<a href="#" data-form="#form-send-activate-email" wz-form-submit>【重新发送激活邮件】</a> 。
+        </div>
+    @endif
+@endunless
+
+@if(!isset($noheader) || !$noheader)
+    @include('layouts.navbar')
+@endif
 <div class="@yield('container-style')">
     @yield('content')
     @if(!isset($noheader) || !$noheader)

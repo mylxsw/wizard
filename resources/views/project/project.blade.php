@@ -1,27 +1,39 @@
 @extends('layouts.project')
 @section('page-content')
     @if($pageID !== 0)
+        <div class="wz-panel-breadcrumb">
+            <ol class="breadcrumb pull-left">
+                <li><a href="/home">首页</a></li>
+                <li><a href="{{ wzRoute('project:home', ['id' => $project->id]) }}">{{ $project->name }}</a></li>
+                <li class="active">{{ $pageItem->title }}</li>
+            </ol>
+            <ul class="nav nav-pills pull-right">
+                @can('page-edit', $pageItem)
+                    <li role="presentation">
+                        <a href="{{ wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" title="@lang('common.btn_edit')">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </li>
+                    @if(!empty($history))
+                        <li role="presentation">
+                            <a href="#" wz-doc-compare-submit
+                               data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
+                               data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}"
+                               title="@lang('common.btn_diff')">
+                                <span class="glyphicon glyphicon-cutlery"></span>
+                            </a>
+                        </li>
+                    @endif
+                @endcan
+                @include('components.page-menus', ['project' => $project, 'pageItem' => $pageItem])
+            </ul>
+            <div class="clearfix"></div>
+        </div>
         <nav class="wz-page-control clearfix">
             <h1 class="wz-page-title">
                 {{ $pageItem->title }}
                 <span class="hide label label-{{ $type == 'swagger' ? 'success' : 'default' }}">{{ $type == 'swagger' ? 'sw' : 'md' }}</span>
             </h1>
-            <ul class="nav nav-pills pull-right">
-                @can('page-edit', $pageItem)
-                    <li role="presentation">
-                        <a href="{{ wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">@lang('common.btn_edit')</a>
-                    </li>
-                    @if(!empty($history)) 
-                    <li role="presentation">
-                        <a href="#" wz-doc-compare-submit
-                                data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
-                                data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}">@lang('common.btn_diff')</a>
-                    </li>
-                    @endif
-                @endcan
-                @include('components.page-menus', ['project' => $project, 'pageItem' => $pageItem])
-            </ul>
-            <hr />
         </nav>
 
         @include('components.document-info')
@@ -54,10 +66,11 @@
         @endif
     @else
         <h1>{{ $project->name or '' }}</h1>
-        <hr/>
+
+        <p class="wz-document-header">@lang('document.document_create_info', ['username' => $project->user->name, 'time' => $project->created_at])</p>
+
         <p>{{ $project->description or '' }}</p>
 
-        <p>@lang('document.document_create_info', ['username' => $project->user->name, 'time' => $project->created_at])</p>
         @if(!empty($operationLogs) && $operationLogs->count() > 0)
         <div class="wz-recently-log">
             <h4>最近活动</h4>

@@ -2,8 +2,7 @@
 
 @section('container-style', 'container container-small')
 @section('content')
-    @include('layouts.navbar')
-    <div class="row">
+    <div class="row wz-main-container-full">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">重置密码</div>
