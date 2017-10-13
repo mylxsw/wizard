@@ -23,6 +23,7 @@
 .footer {
     padding-top: 19px;
     padding-left: 20px!important;
+    text-align: center;
     color: #777;
     border-top: 1px solid #e5e5e5;
     padding-bottom: 5px;
@@ -170,6 +171,10 @@ a:hover {
     text-align: center;
     color: #777;
     font-weight: bold;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .wz-nav-control {

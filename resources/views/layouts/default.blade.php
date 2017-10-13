@@ -49,14 +49,17 @@
 @if(!isset($noheader) || !$noheader)
     @include('layouts.navbar')
 @endif
-<div class="@yield('container-style')">
+<div class="wz-body @yield('container-style')">
     @yield('content')
-    @if(!isset($noheader) || !$noheader)
-    <footer class="footer">
-        <p>&copy; {{ date('Y') }} {{ config('wizard.copyright', 'AICODE.CC') }}</p>
-    </footer>
-    @endif
 </div>
+
+@if(!isset($noheader) || !$noheader)
+    <footer class="footer">
+        <div class="@yield('container-style')">
+            <p>&copy; {{ date('Y') }} {{ config('wizard.copyright', 'AICODE.CC') }}</p>
+        </div>
+    </footer>
+@endif
 
 @stack('bottom')
 <script src="/assets/vendor/jquery.min.js"></script>
@@ -101,6 +104,34 @@
                 $(this).hide();
             }
         });
+
+        // 所有js执行完后再执行
+        window.setTimeout(function () {
+            // 重置窗口大小，避免内容过少无法撑开页面
+            var resize_window = function () {
+                var window_height = $(window).height() - $('.wz-top-navbar').height() - $('.footer').height() - 28;
+                var frame_height = $('.wz-main-container').height();
+                if (frame_height === null) {
+                    frame_height = $('.wz-main-container-full').height();
+                }
+
+                console.log(window_height);
+                console.log(frame_height);
+
+                var minHeight = (window_height > frame_height ? window_height : frame_height) + "px";
+                $($('.wz-panel-right').length ? '.wz-panel-right' : '.wz-body').css('min-height', minHeight);
+            };
+
+            resize_window();
+            $(window).on('resize', function () {
+                resize_window();
+            });
+
+            // 鼠标经过提示
+            $('[data-toggle="tooltip"]').tooltip({
+                delay: { "show": 500, "hide": 100 }
+            });
+        }, 0);
     });
 </script>
 

@@ -8,12 +8,11 @@
         <div class="col-lg-12">
             @foreach($projects ?? [] as $proj)
                 <div class="col-lg-3">
-                    <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}"
-                       title="{{ $proj->description }}">
+                    <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}" >
                         @if($proj->visibility == \App\Repositories\Project::VISIBILITY_PRIVATE)
                             <span title="@lang('project.privilege_private')" class="wz-box-tag glyphicon glyphicon-eye-close"></span>
                         @endif
-                        <p class="wz-title">{{ $proj->name }}</p>
+                        <p class="wz-title" title="{{ $proj->name }}" data-toggle="tooltip" data-placement="top">{{ $proj->name }}</p>
                     </a>
                 </div>
             @endforeach

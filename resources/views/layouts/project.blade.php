@@ -72,19 +72,6 @@
 //            window.setTimeout(function () {
 //                $('.wz-left-nav').removeClass('hide').addClass('animated fadeIn');
 //            }, 20);
-
-            // 重置窗口大小，避免内容过少无法撑开页面
-            var resize_window = function () {
-                var window_height = $(window).height() - $('.wz-top-navbar').height() - $('.footer').height() - 28;
-                var frame_height = $('.wz-main-container').height();
-
-                $('.wz-panel-right').css('min-height', window_height > frame_height ? window_height : frame_height + "px");
-            };
-
-            resize_window();
-            $(window).on('resize', function () {
-                resize_window();
-            });
         });
     </script>
 @endpush

@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default wz-top-navbar">
-    <div class="container-fluid">
+    <div class="@yield('container-style')">
         <div class="navbar-header">
             <a class="navbar-brand" href="/">{{ config('app.name', 'Wizard API') }}</a>
         </div>
