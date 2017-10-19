@@ -12,7 +12,7 @@
                         @if($proj->visibility == \App\Repositories\Project::VISIBILITY_PRIVATE)
                             <span title="@lang('project.privilege_private')" class="wz-box-tag glyphicon glyphicon-eye-close"></span>
                         @endif
-                        <p class="wz-title" title="{{ $proj->name }}" data-toggle="tooltip" data-placement="top">{{ $proj->name }}</p>
+                        <p class="wz-title" title="{{ $proj->name }}">{{ $proj->name }}</p>
                     </a>
                 </div>
             @endforeach

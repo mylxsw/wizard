@@ -16,7 +16,7 @@
                 <div class="col-lg-3">
                     <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
                         @include('components.project-tag', ['proj' => $proj])
-                        <p class="wz-title" title="{{ $proj->name }}" data-toggle="tooltip" data-placement="top" >{{ $proj->name }}</p>
+                        <p class="wz-title" title="{{ $proj->name }}">{{ $proj->name }}</p>
                     </a>
                 </div>
             @endforeach
