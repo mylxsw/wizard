@@ -18,6 +18,7 @@
     <!-- Bootstrap core CSS -->
     <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/assets/vendor/wave/waves.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="/assets/vendor/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -72,6 +73,7 @@
 <script src="/assets/vendor/layer/layer.js"></script>
 <script src="/assets/vendor/axios.min.js"></script>
 <script src="/assets/vendor/store.everything.min.js"></script>
+<script src="/assets/vendor/wave/waves.min.js"></script>
 <script src="/assets/js/wizard.js?{{ resourceVersion() }}"></script>
 <script src="/assets/js/app.js?{{ resourceVersion() }}"></script>
 
@@ -86,11 +88,13 @@
             $.wz.message_failed("{{ session('alert.message.error') }}");
         @endif
 
+        // 功能开发中提示消息
         $('[wz-wait-develop]').on('click', function () {
             $.wz.alert('@lang('common.not_ready_for_use')');
             return false;
         });
 
+        // 滚动到顶部事件
         $.scrollUp({
             scrollText: '<span class="glyphicon glyphicon-chevron-up"></span>'
         });
@@ -104,6 +108,11 @@
                 $(this).hide();
             }
         });
+
+        // 按钮wave效果
+        Waves.attach('.wz-box');
+        Waves.attach('.btn');
+        Waves.init();
 
         // 所有js执行完后再执行
         window.setTimeout(function () {
