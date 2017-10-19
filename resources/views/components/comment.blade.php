@@ -60,7 +60,10 @@
             });
 
             $('.wz-comment-body').map(function () {
-                $(this).html($(this).html().replace(/@(.*?)(?:\s|$)/g, ' @<span class="wz-text-dashed" style="font-weight: bold;">$1</span> '));
+                var html = $(this).html()
+                    .replace(/(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g, ' <a target="_blank" href="$1$2"><span class="glyphicon glyphicon-link"></span> $1$2</a> ')
+                    .replace(/@(.*?)(?:\s|$)/g, ' @<span class="wz-text-dashed" style="font-weight: bold;">$1</span> ');
+                $(this).html(html);
             });
 
             $('.wz-form-comment-content').on('focusin', function () {
