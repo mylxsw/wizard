@@ -111,7 +111,6 @@
 
         // 按钮wave效果
         Waves.attach('.wz-box');
-        Waves.attach('.btn');
         Waves.init();
 
         // 所有js执行完后再执行
