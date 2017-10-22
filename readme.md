@@ -8,8 +8,6 @@ Wizard是基于Laravel开发框架开发的一款开源项目（API）文档管�
 
 ![s-2](https://oayrssjpa.qnssl.com/s-2.jpg)
 
-![s-3](https://oayrssjpa.qnssl.com/s-3.jpg)
-
 ![s-4](https://oayrssjpa.qnssl.com/s-4.jpg)
 
 ![s-5](https://oayrssjpa.qnssl.com/s-5.jpg)
