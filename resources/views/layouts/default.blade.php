@@ -123,9 +123,6 @@
                     frame_height = $('.wz-main-container-full').height();
                 }
 
-                console.log(window_height);
-                console.log(frame_height);
-
                 var minHeight = (window_height > frame_height ? window_height : frame_height) + "px";
                 $($('.wz-panel-right').length ? '.wz-panel-right' : '.wz-body').css('min-height', minHeight);
             };

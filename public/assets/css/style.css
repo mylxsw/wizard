@@ -532,3 +532,44 @@ a:hover {
     margin-bottom: 0;
     background: none;
 }
+
+#wz-toc-container {
+    position: fixed;
+    right: 40px;
+    top: 20px;
+    z-index: 9999;
+}
+
+#wz-toc-container ul {
+    padding-left: 20px;
+}
+
+#wz-toc-container li {
+    list-style: none;
+}
+
+#wz-toc-container > span {
+    display: block;
+    opacity: 0.5;
+}
+
+#wz-toc-container > ul {
+    display: none;
+}
+
+
+#wz-toc-container:hover {
+    background: rgba(255,255,255, 0.9);
+    padding: 15px;
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+}
+
+#wz-toc-container:hover > span {
+    display: none;
+}
+
+#wz-toc-container:hover > ul {
+    margin-left: -10px;
+    display: block;
+}

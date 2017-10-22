@@ -32,6 +32,26 @@
             flowChart: true,
             sequenceDiagram: true
         });
+
+        // TOC导航插入到侧边随滚动展示
+        window.setTimeout(function () {
+            var tocElement = $('.markdown-body > .markdown-toc');
+            if (tocElement.length < 1) {
+                return ;
+            }
+
+            $('body').append('<div id="wz-toc-container" class="hide"><span class="glyphicon glyphicon-th-list"></span>' + tocElement.html() + '</div>');
+
+            $(window).scroll(function () {
+                var tocContainer = $('#wz-toc-container');
+
+                if ($(window).scrollTop() > 200) {
+                    tocContainer.removeClass('hide');
+                } else {
+                    tocContainer.addClass('hide');
+                }
+            });
+        }, 0);
     });
 </script>
 @endpush
