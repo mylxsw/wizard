@@ -2,11 +2,24 @@
 
 Wizard是基于Laravel开发框架开发的一款开源项目（API）文档管理工具。
 
-github预览gif图片有bug，请打开下面链接查看演示
-
-- [演示gif图片](https://oayrssjpa.qnssl.com/2017-09-07%2000_59_55.gif)
-
 在线预览体验地址：http://wizard.aicode.cc/
+
+![s-1](https://oayrssjpa.qnssl.com/s-1.jpg)
+
+![s-2](https://oayrssjpa.qnssl.com/s-2.jpg)
+
+![s-3](https://oayrssjpa.qnssl.com/s-3.jpg)
+
+![s-4](https://oayrssjpa.qnssl.com/s-4.jpg)
+
+![s-5](https://oayrssjpa.qnssl.com/s-5.jpg)
+
+![s-6](https://oayrssjpa.qnssl.com/s-6.jpg)
+
+![s-70](https://oayrssjpa.qnssl.com/s-70.jpg)
+
+![s-8](https://oayrssjpa.qnssl.com/s-8.jpg)
+
 
 ## 安装
 
