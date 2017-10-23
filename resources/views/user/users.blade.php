@@ -40,8 +40,8 @@
                 </td>
                 <td>{{ $user->created_at->format('Y-m-d H:i') }}</td>
                 <td>
-                    <a href="#" wz-wait-develop>
-                        设置
+                    <a href="{{ wzRoute('admin:user', ['id' => $user->id]) }}">
+                        管理
                     </a>
                 </td>
             </tr>

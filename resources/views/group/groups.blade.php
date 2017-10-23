@@ -50,7 +50,7 @@
                               action="{{ wzRoute('admin:groups:del', ['id' => $group->id]) }}">
                             {{ method_field('DELETE') }}{{ csrf_field() }}
                         </form>
-                        <a href="{!! wzRoute('admin:groups:view', ['id' => $group->id]) !!}">设置</a>
+                        <a href="{!! wzRoute('admin:groups:view', ['id' => $group->id]) !!}">管理</a>
                         &nbsp;&nbsp;&nbsp;
                         <a href="#" wz-form-submit data-form="#form-group-{{ $group->id }}"
                            data-confirm="确定要删除该分组？将会同步删除该分组分配的项目权限和用户关系">

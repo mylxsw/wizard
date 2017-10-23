@@ -102,7 +102,7 @@ class GroupController extends Controller
 
         $this->alertSuccess(__('common.operation_success'));
 
-        return redirect(wzRoute('admin:groups:view', ['id' => $id]));
+        return redirect()->back();
     }
 
     /**

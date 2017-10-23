@@ -55,7 +55,6 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->created_at->format('Y-m-d H:i') }}</td>
                     <td>
-
                         <form id="form-user-{{ $user->id }}" method="post"
                               action="{!! wzRoute('admin:groups:users:del', ['id' => $group->id, 'user_id' => $user->id]) !!}">
                             {{ method_field('DELETE') }}{{ csrf_field() }}

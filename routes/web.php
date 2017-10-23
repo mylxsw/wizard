@@ -63,6 +63,8 @@ Route::group(['middleware' => 'locale'], function () {
 
         // 用户管理
         Route::get('/users', 'UserController@users')->name('users');
+        Route::get('/users/{id}', 'UserController@user')->name('user');
+        Route::post('/users/{id}', 'UserController@updateUser')->name('user:update');
     });
 
     Route::group(['middleware' => 'auth'], function () {

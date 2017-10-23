@@ -34,6 +34,21 @@ class UserController extends Controller
     }
 
     /**
+     * 用户信息查看
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function user($id)
+    {
+        return view('user.user', [
+            'user' => User::where('id', $id)->firstOrFail(),
+            'op'   => 'users',
+        ]);
+    }
+
+    /**
      * 用户基本信息配置页面
      *
      * @param Request $request
@@ -74,6 +89,46 @@ class UserController extends Controller
         $this->alertSuccess(__('common.operation_success'));
 
         return redirect(wzRoute('user:basic'));
+    }
+
+    /**
+     * 管理员更新用户信息
+     *
+     * @param Request $request
+     * @param         $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateUser(Request $request, $id)
+    {
+        // 禁止在"用户管理"下更新自己的信息
+        if ($id == \Auth::user()->id) {
+            return redirect()->back();
+        }
+
+        $this->validate(
+            $request,
+            [
+                'username' => "required|string|max:255|username_unique:{$id}",
+                'role'     => 'required|in:1,2',
+                'status'   => 'required|in:0,1,2',
+            ]
+        );
+
+        $username = $request->input('username');
+        $role     = $request->input('role');
+        $status   = $request->input('status');
+
+        $user         = User::where('id', $id)->firstOrFail();
+        $user->name   = $username;
+        $user->role   = $role;
+        $user->status = $status;
+
+        $user->save();
+
+        $this->alertSuccess(__('common.operation_success'));
+
+        return redirect()->back();
     }
 
     /**
