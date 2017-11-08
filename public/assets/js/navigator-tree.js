@@ -57,4 +57,7 @@ $.wz.navigator_tree = function (left_nav) {
 
     // 一级元素的子元素自动展示
     childrenShow(left_nav.children('li'));
+
+    left_nav.find('li:not(.wz-has-child)')
+        .prepend('<a class="icon-file-alt wz-nav-fold" href="javascript:;"></a>');
 };

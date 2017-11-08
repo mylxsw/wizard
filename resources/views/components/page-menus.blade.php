@@ -13,10 +13,18 @@
                 <span class="glyphicon glyphicon-share"></span>
                 @lang('common.btn_share')
             </a></li>
-        <li><a href="#" wz-wait-develop>
+        @if($pageItem->type == \App\Repositories\Document::TYPE_DOC)
+
+            <li>
+                <form id="form-{{ $pageItem->id }}-export-pdf" method="post"
+                      action="{{ route('project:doc:pdf', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
+                    {{ csrf_field() }}
+                </form>
+                <a wz-form-submit href="#" data-form="#form-{{ $pageItem->id }}-export-pdf">
                 <span class="glyphicon glyphicon-export"></span>
-                @lang('common.btn_export')
+                导出PDF
             </a></li>
+        @endif
         <li>
             <a href="{{ wzRoute('project:doc:history', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}">
                 <span class="glyphicon glyphicon-compressed"></span>

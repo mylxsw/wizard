@@ -7,10 +7,12 @@
     "require": {
         "php": ">=5.6.4",
         "barryvdh/laravel-ide-helper": "^2.3",
+        "erusev/parsedown": "^1.6",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "lcobucci/jwt": "^3.2",
+        "mpdf/mpdf": "^7.0",
         "sebastian/diff": "1.4.3"
     },
     "require-dev": {

@@ -45,10 +45,14 @@ Route::group(['middleware' => 'locale'], function () {
         Route::post('json-to-markdown', 'ToolController@convertJsonToTable')->name('json-to-markdown');
     });
 
-    // 项目分享
+
     Route::group(['prefix' => 'project', 'middleware' => 'share', 'as' => 'project:'], function () {
+        // 项目分享
         Route::get('/{id}/doc/{page_id}.json', 'DocumentController@getPageJSON')->name('doc:json');
         Route::get('/{id}/doc/{page_id}/histories/{history_id}.json', 'HistoryController@getPageJSON')->name('doc:history:json');
+
+        // 导出
+        Route::post('/{id}/doc/{page_id}.pdf', 'ExportController@pdf')->name('doc:pdf');
     });
 
     // 系统管理
