@@ -3,13 +3,14 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="/">{{ config('app.name', 'Wizard API') }}</a>
         </div>
-        <div class="collapse navbar-collapse">
 
+        <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 @if(Auth::guest())
                     <li role="presentation"><a href="{{ wzRoute('login') }}">@lang('common.login')</a></li>
                     <li role="presentation"><a href="{{ wzRoute('register') }}">@lang('common.register')</a></li>
                 @else
+                    {{--<li role="presentation"><a href="#" class="wz-top-search-btn glyphicon glyphicon-search"></a></li>--}}
                     <li role="presentation"><a href="/">主页</a></li>
                     <li role="presentation"><a href="{{ wzRoute('user:home') }}">@lang('common.user_home')</a></li>
                     <li role="presentation" class="dropdown">
@@ -57,7 +58,6 @@
                             </li>
                         </ul>
                     </li>
-
                 @endif
             </ul>
         </div>

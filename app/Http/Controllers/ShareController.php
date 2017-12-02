@@ -60,6 +60,7 @@ class ShareController extends Controller
      * @param         $page_id
      *
      * @return array
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create(Request $request, $project_id, $page_id)
     {

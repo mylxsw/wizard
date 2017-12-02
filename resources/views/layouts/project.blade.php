@@ -13,6 +13,7 @@
                     </a>
                     @if(!Auth::guest() && (Auth::user()->can('page-add', $project) || Auth::user()->can('project-edit', $project)))
                         <div class="btn-group pull-right" style="margin-right: 20px;" role="group">
+
                             <a class="dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
