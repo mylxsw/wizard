@@ -1,8 +1,5 @@
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">评论</h3>
-    </div>
-    <div class="panel-body">
+    <div class="panel-body m-4">
         @can('project-comment', $project)
             <form method="post"
                   action="{{ wzRoute('project:doc:comment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
@@ -13,10 +10,11 @@
                     你可以在评论中 <b>@某人</b>，当前支持语法为 <b>@用户名 </b>，需要注意的是，用户名后面必须要有至少一个空格。
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control wz-form-comment-content" rows="3" name="content" placeholder="评论内容"></textarea>
+                    <label for="wz-comment-textarea" class="bmd-label-floating">评论内容</label>
+                    <textarea class="form-control wz-form-comment-content" rows="3" name="content" id="wz-comment-textarea"></textarea>
                 </div>
                 <div class="form-group">
-                    <button type="button" id="wz-comment-submit" class="btn btn-success pull-right">评论</button>
+                    <button type="button" id="wz-comment-submit" class="btn btn-raised btn-success pull-right">评论</button>
                 </div>
             </form>
         @endcan

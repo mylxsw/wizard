@@ -3,30 +3,24 @@
 @section('container-style', 'container container-small')
 @section('content')
     <div class="row marketing wz-main-container-full">
-        <div class="col-lg-12">
-            <div class="col-lg-3">
-                <ul class="nav nav-pills nav-stacked">
-                    <li class="{{ $op == 'basic' ? 'active':'' }}"><a href="{{ wzRoute('user:basic') }}">@lang('common.user_info')</a></li>
-                    <li class="{{ $op == 'password' ? 'active':'' }}"><a href="{{ wzRoute('user:password') }}">@lang('common.change_password')</a></li>
-                    <li class="{{ $op == 'notification' ? 'active':'' }}">
-                        <a href="{{ wzRoute('user:notifications') }}">
-                            通知
-                            @if(userHasNotifications())
-                                <span class="badge">{{ userNotificationCount() }}</span>
-                            @endif
-                        </a>
-                    </li>
-                    <li class="{{ $op == 'templates' ? 'active':'' }}">
-                        <a href="{{ wzRoute('user:templates') }}">
-                            模板管理
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-9">
-                @include('components.error', ['error' => $errors ?? null])
-                @yield('user-content')
-            </div>
+        <div class="col-3">
+            <nav class="nav flex-column">
+                <a class="nav-link {{ $op == 'basic' ? 'active':'' }}" href="{{ wzRoute('user:basic') }}">@lang('common.user_info')</a>
+                <a class="nav-link {{ $op == 'password' ? 'active':'' }}" href="{{ wzRoute('user:password') }}">@lang('common.change_password')</a>
+                <a class="nav-link {{ $op == 'notification' ? 'active':'' }}" href="{{ wzRoute('user:notifications') }}">
+                    通知
+                    @if(userHasNotifications())
+                        <span class="badge">{{ userNotificationCount() }}</span>
+                    @endif
+                </a>
+                <a class="nav-link {{ $op == 'templates' ? 'active':'' }}" href="{{ wzRoute('user:templates') }}">
+                    模板管理
+                </a>
+            </nav>
+        </div>
+        <div class="col-9">
+            @include('components.error', ['error' => $errors ?? null])
+            @yield('user-content')
         </div>
     </div>
 

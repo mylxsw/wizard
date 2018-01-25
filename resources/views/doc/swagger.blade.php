@@ -5,17 +5,17 @@
 
     <div class="row marketing wz-main-container-full">
         @include('components.error', ['error' => $errors ?? null])
-        <form class="form-inline" method="POST" id="wz-doc-edit-form"
+        <form style="width: 100%;" method="POST" id="wz-doc-edit-form"
               action="{{ $newPage ? wzRoute('project:doc:new:show', ['id' => $project->id]) : wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
 
             @include('components.doc-edit', ['project' => $project, 'pageItem' => $pageItem ?? null, 'navigator' => $navigator])
             <input type="hidden" name="type" value="swagger" />
 
-            <div class="col-lg-12" style="margin-bottom: 50px;">
+            <div class="col-row mb-5">
                 <div class="swagger-editor-toolbar">
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group" role="group" aria-label="First group">
-                            <button type="button" data-toggle="modal" data-target="#wz-select-template" class="btn btn-default">@lang('document.select_template')</button>
+                            <button type="button" data-toggle="modal" data-target="#wz-select-template" class="btn btn-info btn-raised">@lang('document.select_template')</button>
                         </div>
                     </div>
                 </div>
@@ -30,8 +30,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h5 class="modal-title">@lang('document.select_template')</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">@lang('document.select_template')</h4>
                 </div>
                 <div class="modal-body">
                     @foreach(wzTemplates(\App\Repositories\Template::TYPE_SWAGGER) as $temp)
@@ -48,7 +48,7 @@
                     @endforeach
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="wz-select-template-confirm">@lang('common.btn_confirm')</button>
+                    <button type="button" class="btn btn-success btn-raised" id="wz-select-template-confirm">@lang('common.btn_confirm')</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">@lang('common.btn_close')</button>
                 </div>
             </div>

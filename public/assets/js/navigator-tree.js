@@ -11,8 +11,8 @@
  * @param left_nav
  */
 $.wz.navigator_tree = function (left_nav) {
-    var icon_close = 'glyphicon-folder-close';
-    var icon_open = 'glyphicon-folder-open';
+    var icon_close = 'icon-folder-close';
+    var icon_open = 'icon-folder-open';
 
     var childrenShow = function (elementLi) {
         elementLi.children('ul').show();
@@ -24,7 +24,7 @@ $.wz.navigator_tree = function (left_nav) {
     // 先隐藏所有的li下的子元素
     left_nav.find('li.wz-has-child').children('ul').hide();
     // 在包含子元素的li中添加展开图标和链接
-    left_nav.find('li.wz-has-child').prepend('<a href="javascript:;" class="wz-nav-fold glyphicon ' + icon_close + '"></a>');
+    left_nav.find('li.wz-has-child').prepend('<a href="javascript:;" class="wz-nav-fold ' + icon_close + '"></a>');
     // 菜单折叠事件处理
     left_nav.find('li.wz-has-child').find('.wz-nav-fold')
         .on('click', function () {

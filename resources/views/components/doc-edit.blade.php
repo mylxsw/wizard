@@ -1,40 +1,47 @@
-{{ csrf_field() }}
-<input type="hidden" name="project_id" id="editor-project_id" value="{{ $project->id or '' }}"/>
-<input type="hidden" name="page_id" id="editor-page_id" value="{{ $pageItem->id or '' }}">
-<input type="hidden" name="pid" id="editor-pid" value="{{ $pageItem->pid or '' }}">
-<input type="hidden" name="last_modified_at" value="{{ $pageItem->updated_at or '' }}">
-<input type="hidden" name="history_id" value="{{ $pageItem->history_id or '' }}">
-<div class="col-lg-12 wz-edit-control">
 
-    <div class="form-group input-group">
-        <span class="input-group-addon" title="@lang('project.project_name')">{{ $project->name }}</span>
-        <input type="text" class="form-control wz-input-long" name="title" id="editor-title"
-               value="{{ $pageItem->title or '' }}" placeholder="@lang('document.title')">
-    </div>
-
-    <div class="form-group">
-        <select class="form-control" name="pid">
-            <option value="0">@lang('document.no_parent_page')</option>
-            @include('components.doc-options', ['navbars' => $navigator, 'level' => 0])
-        </select>
-    </div>
-
-    <div class="form-group pull-right">
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary" wz-doc-form-submit id="wz-doc-form-submit">发布</button>
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                <span class="caret"></span>
+<div class="row">
+    {{ csrf_field() }}
+    <input type="hidden" name="project_id" id="editor-project_id" value="{{ $project->id or '' }}"/>
+    <input type="hidden" name="page_id" id="editor-page_id" value="{{ $pageItem->id or '' }}">
+    <input type="hidden" name="pid" id="editor-pid" value="{{ $pageItem->pid or '' }}">
+    <input type="hidden" name="last_modified_at" value="{{ $pageItem->updated_at or '' }}">
+    <input type="hidden" name="history_id" value="{{ $pageItem->history_id or '' }}">
+    <div class="col wz-edit-control">
+        <h3 title="@lang('project.project_name')">
+            <button type="button" data-href="{{ wzRoute('project:home', ['id' => $project->id] + (empty($pageItem) ? [] : ['p' => $pageItem->id])) }}" class="btn btn-default bmd-btn-icon" id="wz-document-goback">
+                <i class="material-icons">arrow_back</i>
             </button>
-            <ul class="dropdown-menu">
-                <li><a href="#" data-toggle="modal" data-target="#wz-new-template">@lang('document.save_as_template')</a></li>
+            {{ $project->name }}
+        </h3>
+        <div class="form-group pull-right">
+            <button type="button" class="btn btn-raised btn-primary mr-3" wz-doc-form-submit id="wz-doc-form-submit">发布</button>
+            <button class="btn  dropdown-toggle" type="button" id="form-save-extra-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                更多
+            </button>
+            <div class="dropdown-menu" aria-labelledby="form-save-extra-menu">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#wz-new-template">@lang('document.save_as_template')</a>
                 @if(!$newPage)
-                    <li><a href="#" wz-doc-form-submit data-force="true">@lang('document.force_save')</a></li>
-                    <li><a href="#" wz-doc-compare-current>@lang('document.show_diff')</a></li>
+                    <a class="dropdown-item" href="#" wz-doc-form-submit data-force="true">@lang('document.force_save')</a>
+                    <a class="dropdown-item" href="#" wz-doc-compare-current>@lang('document.show_diff')</a>
                 @endif
-            </ul>
+            </div>
         </div>
-        <a href="{{ wzRoute('project:home', ['id' => $project->id] + (empty($pageItem) ? [] : ['p' => $pageItem->id])) }}" class="btn btn-default" id="wz-document-goback">@lang('common.btn_back')</a>
+        <div class="pull-left">
+            <div class="form-group" style="max-width: 400px;">
+                <label for="editor-title" class="bmd-label-static">@lang('document.title')</label>
+                <input type="text" class="form-control wz-input-long" name="title" id="editor-title"
+                       value="{{ $pageItem->title or '' }}">
+            </div>
+
+            <div class="form-group" style="max-width: 400px;">
+                <label for="form-pid" class="bmd-label-static">上级页面</label>
+                <select class="form-control" name="pid" id="form-pid">
+                    <option value="0">@lang('document.no_parent_page')</option>
+                    @include('components.doc-options', ['navbars' => $navigator, 'level' => 0])
+                </select>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -43,8 +50,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <h5 class="modal-title">@lang('document.save_as_template')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">@lang('document.save_as_template')</h4>
             </div>
             <div class="modal-body">
                 <form method="post" action="{{ wzRoute('template:create') }}" id="wz-template-save-form">
@@ -71,7 +78,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="wz-template-save">@lang('common.btn_save')</button>
+                <button type="button" class="btn btn-success btn-raised mr-3" id="wz-template-save">@lang('common.btn_save')</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">@lang('common.btn_close')</button>
             </div>
         </div>

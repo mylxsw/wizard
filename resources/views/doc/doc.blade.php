@@ -5,14 +5,16 @@
 
     <div class="row marketing wz-main-container-full">
         @include('components.error', ['error' => $errors ?? null])
-        <form class="form-inline" method="POST" id="wz-doc-edit-form"
+        <form style="width: 100%;" method="POST" id="wz-doc-edit-form"
               action="{{ $newPage ? wzRoute('project:doc:new:show', ['id' => $project->id]) : wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
 
             @include('components.doc-edit', ['project' => $project, 'pageItem' => $pageItem ?? null, 'navigator' => $navigator])
-            <input type="hidden" name="type" value="doc" />
-            <div class="col-lg-12" style="padding-left: 0;">
-                <div id="editormd" class="wz-markdown-style-fix">
-                    <textarea style="display:none;" name="content">{{ $pageItem->content or '' }}</textarea>
+            <div class="row">
+                <input type="hidden" name="type" value="doc" />
+                <div class="col" style="padding-left: 0;">
+                    <div id="editormd" class="wz-markdown-style-fix">
+                        <textarea style="display:none;" name="content">{{ $pageItem->content or '' }}</textarea>
+                    </div>
                 </div>
             </div>
         </form>

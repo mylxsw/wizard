@@ -3,16 +3,16 @@
 @section('title', '用户管理')
 @section('breadcrumb')
     <ol class="breadcrumb">
-        <li><a href="{{ wzRoute('user:home') }}">@lang('common.home')</a></li>
-        <li>系统管理</li>
-        <li><a href="{{ wzRoute('admin:users') }}">用户管理</a></li>
-        <li class="active">{{ $user->name }}</li>
+        <li class="breadcrumb-item"><a href="{{ wzRoute('user:home') }}">@lang('common.home')</a></li>
+        <li class="breadcrumb-item">系统管理</li>
+        <li class="breadcrumb-item"><a href="{{ wzRoute('admin:users') }}">用户管理</a></li>
+        <li class="breadcrumb-item active">{{ $user->name }}</li>
     </ol>
 @endsection
 @section('admin-content')
-    <div class="panel panel-primary">
-        <div class="panel-heading">编辑用户信息</div>
-        <div class="panel-body">
+    <div class="card">
+        <div class="card-header">编辑用户信息</div>
+        <div class="card-body">
             @if($user->id == Auth::user()->id)
                 <div class="alert alert-warning" role="alert">
                     目前系统不支持在 “用户管理” 功能下修改当前登录用户的信息。
@@ -65,15 +65,15 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success"  {{ $user->id == Auth::user()->id ? 'disabled':'' }}>保存</button>
+                        <button type="submit" class="btn btn-success btn-raised"  {{ $user->id == Auth::user()->id ? 'disabled':'' }}>保存</button>
                         <a class="btn btn-default" href="{{ wzRoute('admin:users') }}">返回</a>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">已加入的用户组</div>
+    <div class="card mt-3">
+        <div class="card-header">已加入的用户组</div>
         <table class="table">
             <thead>
                 <tr>

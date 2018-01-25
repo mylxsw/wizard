@@ -1,48 +1,43 @@
 @can('page-edit', $pageItem)
 <li role="presentation" class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-       aria-haspopup="true" aria-expanded="false">
-        <span class="glyphicon glyphicon-option-horizontal" title="@lang('common.btn_more')"></span>
-    </a>
-    <ul class="dropdown-menu wz-dropdown-menu-left">
-        <li><a href="{{ wzRoute('project:doc:attachment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
+    <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="wz-doc-more-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="material-icons" title="@lang('common.btn_more')">tune</i>
+    </button>
+
+    <div class="dropdown-menu wz-dropdown-menu-left" aria-labelledby="wz-doc-more-btn">
+        <a href="{{ wzRoute('project:doc:attachment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="dropdown-item">
                 <span class="glyphicon glyphicon-paperclip"></span>
                 附件
-            </a></li>
-        <li><a href="#" wz-share data-url="{{ wzRoute('project:doc:share', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
+        </a>
+        <a href="#" wz-share data-url="{{ wzRoute('project:doc:share', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="dropdown-item">
                 <span class="glyphicon glyphicon-share"></span>
                 @lang('common.btn_share')
-            </a></li>
+        </a>
         @if($pageItem->type == \App\Repositories\Document::TYPE_DOC)
-
-            <li>
+            <a wz-form-submit href="#" data-form="#form-{{ $pageItem->id }}-export-pdf" class="dropdown-item">
+                <span class="glyphicon glyphicon-export"></span>
+                导出PDF
                 <form id="form-{{ $pageItem->id }}-export-pdf" method="post"
                       action="{{ route('project:doc:pdf', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
                     {{ csrf_field() }}
                 </form>
-                <a wz-form-submit href="#" data-form="#form-{{ $pageItem->id }}-export-pdf">
-                <span class="glyphicon glyphicon-export"></span>
-                导出PDF
-            </a></li>
-        @endif
-        <li>
-            <a href="{{ wzRoute('project:doc:history', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}">
-                <span class="glyphicon glyphicon-compressed"></span>
-                @lang('document.page_history')
             </a>
-        </li>
-        <li>
+        @endif
+        <a href="{{ wzRoute('project:doc:history', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}" class="dropdown-item">
+            <span class="glyphicon glyphicon-compressed"></span>
+            @lang('document.page_history')
+        </a>
+
+        <a href="#" wz-form-submit data-form="#form-{{ $pageItem->id }}"
+           data-confirm="@lang('document.delete_confirm', ['title' => $pageItem->title])" class="dropdown-item">
+            <span class="glyphicon glyphicon-trash"></span>
+            @lang('common.btn_delete')
             <form id="form-{{ $pageItem->id }}" method="post"
                   action="{{ wzRoute('project:doc:delete', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
                 {{ method_field('DELETE') }}{{ csrf_field() }}
             </form>
-            <a href="#" wz-form-submit data-form="#form-{{ $pageItem->id }}"
-               data-confirm="@lang('document.delete_confirm', ['title' => $pageItem->title])">
-                <span class="glyphicon glyphicon-trash"></span>
-                @lang('common.btn_delete')
-            </a>
-        </li>
-    </ul>
+        </a>
+    </div>
 </li>
 @endcan
 @push('script')

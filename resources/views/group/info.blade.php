@@ -3,10 +3,10 @@
 @section('title', '用户组')
 @section('breadcrumb')
     <ol class="breadcrumb">
-        <li><a href="{{ wzRoute('user:home') }}">@lang('common.home')</a></li>
-        <li>系统管理</li>
-        <li><a href="{{ wzRoute('admin:groups') }}">用户组管理</a></li>
-        <li class="active">{{ $group->name }}</li>
+        <li class="breadcrumb-item"><a href="{{ wzRoute('user:home') }}">@lang('common.home')</a></li>
+        <li class="breadcrumb-item">系统管理</li>
+        <li class="breadcrumb-item"><a href="{{ wzRoute('admin:groups') }}">用户组管理</a></li>
+        <li class="breadcrumb-item active">{{ $group->name }}</li>
     </ol>
 @endsection
 @section('admin-content')
@@ -55,13 +55,13 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->created_at->format('Y-m-d H:i') }}</td>
                     <td>
-                        <form id="form-user-{{ $user->id }}" method="post"
-                              action="{!! wzRoute('admin:groups:users:del', ['id' => $group->id, 'user_id' => $user->id]) !!}">
-                            {{ method_field('DELETE') }}{{ csrf_field() }}
-                        </form>
                         <a href="#" wz-form-submit data-form="#form-user-{{ $user->id }}"
                            data-confirm="确定要将用户从该用户组移除？">
                             @lang('common.btn_delete')
+                            <form id="form-user-{{ $user->id }}" method="post"
+                                  action="{!! wzRoute('admin:groups:users:del', ['id' => $group->id, 'user_id' => $user->id]) !!}">
+                                {{ method_field('DELETE') }}{{ csrf_field() }}
+                            </form>
                         </a>
                     </td>
                 </tr>
@@ -92,14 +92,13 @@
                     <td><a href="{!! route('project:home', ['id' => $project->id]) !!}">{{ $project->name }}</a> </td>
                     <td>{{ $project->pivot->privilege == 1 ? __('common.yes') : __('common.no') }}</td>
                     <td>
-
-                        <form id="form-project-{{ $project->id }}" method="post"
-                              action="{!! wzRoute('project:privilege:revoke', ['id' => $project->id, 'group_id' => $group->id, 'redirect' => wzRoute('admin:groups:view', ['id' => $group->id])]) !!}">
-                            {{ method_field('DELETE') }}{{ csrf_field() }}
-                        </form>
                         <a href="#" wz-form-submit data-form="#form-project-{{ $project->id }}"
                            data-confirm="确定要移除对该用户组对项目的访问权限吗？">
                             @lang('common.btn_delete')
+                            <form id="form-project-{{ $project->id }}" method="post"
+                                  action="{!! wzRoute('project:privilege:revoke', ['id' => $project->id, 'group_id' => $group->id, 'redirect' => wzRoute('admin:groups:view', ['id' => $group->id])]) !!}">
+                                {{ method_field('DELETE') }}{{ csrf_field() }}
+                            </form>
                         </a>
                     </td>
                 </tr>

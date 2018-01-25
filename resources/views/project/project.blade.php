@@ -3,25 +3,25 @@
     @if($pageID !== 0)
         <div class="wz-panel-breadcrumb">
             <ol class="breadcrumb pull-left">
-                <li><a href="/home">首页</a></li>
-                <li><a href="{{ wzRoute('project:home', ['id' => $project->id]) }}">{{ $project->name }}</a></li>
-                <li class="active">{{ $pageItem->title }}</li>
+                <li class="breadcrumb-item"><a href="/home">首页</a></li>
+                <li class="breadcrumb-item"><a href="{{ wzRoute('project:home', ['id' => $project->id]) }}">{{ $project->name }}</a></li>
+                <li class="breadcrumb-item active">{{ $pageItem->title }}</li>
             </ol>
             <ul class="nav nav-pills pull-right">
                 @can('page-edit', $pageItem)
-                    <li role="presentation">
-                        <a href="{{ wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" title="@lang('common.btn_edit')">
-                            <span class="glyphicon glyphicon-edit"></span>
-                        </a>
+                    <li role="presentation" class="mr-2">
+                        <button type="button" data-href="{{ wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" title="@lang('common.btn_edit')" class="btn btn-primary bmd-btn-icon">
+                            <i class="material-icons">mode_edit</i>
+                        </button>
                     </li>
                     @if(!empty($history))
-                        <li role="presentation">
-                            <a href="#" wz-doc-compare-submit
+                        <li role="presentation" class="mr-2">
+                            <button type="button" wz-doc-compare-submit
                                data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
                                data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}"
-                               title="@lang('common.btn_diff')">
-                                <span class="glyphicon glyphicon-cutlery"></span>
-                            </a>
+                               title="@lang('common.btn_diff')" class="btn btn-primary  bmd-btn-icon">
+                                <i class="material-icons">history</i>
+                            </button>
                         </li>
                     @endif
                 @endcan

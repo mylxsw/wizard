@@ -1,16 +1,12 @@
 @extends('layouts.project')
 @section('page-content')
     <nav class="wz-page-control clearfix">
+        <a href="{{ wzRoute('project:home', ['id' => $project->id, 'p' => $pageItem->id]) }}"
+           class="btn btn-link" title="@lang('common.btn_back')"><i class="material-icons">arrow_back</i></a>
         <h1 class="wz-page-title">
             {{ $pageItem->title }}
             <span class="label label-default">文档附件</span>
         </h1>
-        <ul class="nav nav-pills pull-right">
-            <li>
-                <a href="{{ wzRoute('project:home', ['id' => $project->id, 'p' => $pageItem->id]) }}"
-                   class="btn btn-link">@lang('common.btn_back')</a>
-            </li>
-        </ul>
         <hr />
     </nav>
 

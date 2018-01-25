@@ -32,10 +32,8 @@ $.wz = {
 
                 if (response.status === 422) {
                     var messages = [];
-                    for (var k in response.responseJSON) {
-                        for (var i in response.responseJSON[k]) {
-                            messages.push(response.responseJSON[k][i]);
-                        }
+                    for (var i in response.responseJSON['errors']) {
+                        messages.push(response.responseJSON['errors'][i]);
                     }
                     layer.alert(messages.join('; '), {icon: 5});
                 } else {

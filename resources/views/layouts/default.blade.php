@@ -16,7 +16,9 @@
 
     <link href="/assets/css/normalize.css" rel="stylesheet">
     <!-- Bootstrap core CSS -->
-    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    {{--<link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">--}}
+    <link rel="stylesheet" href="/assets/vendor/material-design-icons/material-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" crossorigin="anonymous">
     <link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/assets/vendor/wave/waves.min.css" rel="stylesheet">
 
@@ -64,7 +66,9 @@
 
 @stack('bottom')
 <script src="/assets/vendor/jquery.min.js"></script>
-<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+{{--<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>--}}
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" crossorigin="anonymous"></script>
 <script src="/assets/vendor/jquery.easing.js"></script>
 <script src="/assets/vendor/jquery.scrollUp.min.js"></script>
 
@@ -117,7 +121,7 @@
         window.setTimeout(function () {
             // 重置窗口大小，避免内容过少无法撑开页面
             var resize_window = function () {
-                var window_height = $(window).height() - $('.wz-top-navbar').height() - $('.footer').height() - 28;
+                var window_height = $(window).height() - $('.wz-top-navbar').height() - $('.footer').height() - 58;
                 var frame_height = $('.wz-main-container').height();
                 if (frame_height === null) {
                     frame_height = $('.wz-main-container-full').height();
@@ -141,5 +145,12 @@
 </script>
 
 @stack('script')
+
+<script>
+    $(function () {
+        $('body').bootstrapMaterialDesign();
+    });
+</script>
+
 </body>
 </html>
