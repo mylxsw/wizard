@@ -7,7 +7,7 @@
     <div class="card mt-4">
         <div class="card-header">我的项目</div>
         <div class="card-body">
-            <div class="row marketing wz-main-container-full">
+            <div class="row marketing wz-main-container-full col-12">
                 @foreach($projects ?? [] as $proj)
                     <div class="col-3">
                         <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}" >

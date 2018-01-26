@@ -32,6 +32,7 @@ class DocumentController extends Controller
      * @param         $id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function newPage(Request $request, $id)
     {
@@ -63,6 +64,7 @@ class DocumentController extends Controller
      * @param $page_id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function editPage($id, $page_id)
     {
@@ -90,6 +92,7 @@ class DocumentController extends Controller
      * @param         $id
      *
      * @return array
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function newPageHandle(Request $request, $id)
     {
@@ -154,7 +157,8 @@ class DocumentController extends Controller
      * @param         $id
      * @param         $page_id
      *
-     * @return array|\Symfony\Component\HttpFoundation\Response
+     * @return array
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function editPageHandle(Request $request, $id, $page_id)
     {
@@ -282,6 +286,8 @@ class DocumentController extends Controller
      * @param         $page_id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function deletePage(Request $request, $id, $page_id)
     {

@@ -15,7 +15,7 @@
                         提示： 该页面为公共主页，如果要创建项目，请到 <a href="{{ wzRoute('user:home') }}">@lang('common.user_home')</a>。
                     </div>
                 @endunless
-                <div class="row">
+                <div class="row col-12">
                     @foreach($projects ?? [] as $proj)
                         <div class="col-3">
                             <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
