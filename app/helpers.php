@@ -28,9 +28,9 @@ function wzRoute($name, $parameters = [], $absolute = false)
  *
  * 必须保证pages是按照pid进行asc排序的，否则可能会出现菜单丢失
  *
- * @param int                                      $projectID 当前项目ID
- * @param int                                      $pageID    选中的文档ID
- * @param array                                    $exclude   排除的文档ID列表
+ * @param int   $projectID 当前项目ID
+ * @param int   $pageID    选中的文档ID
+ * @param array $exclude   排除的文档ID列表
  *
  * @return array
  */
@@ -308,4 +308,17 @@ function jwt_parse_token(string $token)
     }
 
     return $token;
+}
+
+/**
+ * 生成用户头像
+ *
+ * @param string $id
+ *
+ * @return string
+ */
+function user_face($id)
+{
+    $identicon = new Identicon\Identicon();
+    return $identicon->getImageDataUri($id);
 }

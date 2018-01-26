@@ -13,7 +13,8 @@
         "laravel/tinker": "~1.0",
         "lcobucci/jwt": "^3.2",
         "mpdf/mpdf": "^7.0",
-        "sebastian/diff": "1.4.3"
+        "sebastian/diff": "1.4.3",
+        "yzalis/identicon": "^1.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",

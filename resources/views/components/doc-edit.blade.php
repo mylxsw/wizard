@@ -59,15 +59,15 @@
                     <input type="hidden" name="type" value="{{ $type or 'doc' }}"/>
                     <div class="form-group">
                         <label for="template-name" class="control-label">@lang('document.template_name')</label>
-                        <input type="text" name="name" placeholder="@lang('document.template_name')" class="form-control" id="template-name">
+                        <input type="text" name="name"  class="form-control" id="template-name">
                     </div>
                     <div class="form-group">
                         <label for="template-description" class="control-label">@lang('document.template_description')</label>
-                        <textarea class="form-control" name="description" placeholder="@lang('document.template_description')" id="template-description"></textarea>
+                        <textarea class="form-control" name="description"  id="template-description"></textarea>
                     </div>
                     @can('template-global-create')
                     <div class="form-group">
-                        <div class="checkbox">
+                        <div class="">
                             <label>
                                 <input type="checkbox" name="scope" value="1"> @lang('document.template_global_access')
                             </label>

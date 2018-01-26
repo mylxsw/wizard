@@ -5,7 +5,9 @@
 @section('content')
 
     <div class="card mt-4">
+        <div class="card-header">公共主页</div>
         <div class="card-body">
+
             <div class="row marketing wz-main-container-full">
                 @unless(Auth::guest())
                     <div class="col alert alert-info alert-dismissible" data-alert-id="public-home-tip">

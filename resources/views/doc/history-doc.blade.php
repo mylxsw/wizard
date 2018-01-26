@@ -44,7 +44,7 @@
             </tr>
         </table>
     </div>
-    <div class="markdown-body" id="markdown-body">
+    <div class="markdown-body wz-panel-limit" id="markdown-body">
         @if($type == 'markdown')
         <textarea id="append-test" style="display:none;">{{ $history->content }}</textarea>
         @endif

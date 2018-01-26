@@ -1,6 +1,13 @@
 @extends('layouts.user')
 
 @section('title', __('common.change_password'))
+@section('breadcrumb')
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ wzRoute('user:home') }}">@lang('common.home')</a></li>
+        <li class="breadcrumb-item">个人中心</li>
+        <li class="breadcrumb-item active">@lang('common.change_password')</li>
+    </ol>
+@endsection
 @section('user-content')
     <div class="card">
         <div class="card-body">

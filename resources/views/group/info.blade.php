@@ -11,10 +11,10 @@
 @endsection
 @section('admin-content')
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">新增成员</div>
-        <div class="panel-body">
-            <form class="form-inline" method="post"
+    <div class="card">
+        <div class="card-header">新增成员</div>
+        <div class="card-body">
+            <form method="post"
                   action="{!! wzRoute('admin:groups:users:add', ['id' => $group->id]) !!}">
                 {{ csrf_field() }}
                 <div class="form-group">
@@ -27,16 +27,16 @@
                     </select>
                 </div>
 
-                <div class="form-group pull-right">
-                    <button type="submit" class="btn btn-primary">添加</button>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-raised">添加</button>
                     <a href="{!! route('admin:groups') !!}" class="btn btn-default">@lang('common.btn_back')</a>
                 </div>
             </form>
         </div>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">成员</div>
+    <div class="card mt-3">
+        <div class="card-header">成员</div>
         <table class="table">
             <thead>
             <tr>
@@ -74,8 +74,8 @@
         </table>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">@lang('common.project')</div>
+    <div class="card mt-3">
+        <div class="card-header">@lang('common.project')</div>
         <table class="table">
             <thead>
             <tr>

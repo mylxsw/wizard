@@ -13,6 +13,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
@@ -53,18 +54,21 @@ class Controller extends BaseController
     /**
      * Validate the given parameters with the given rules.
      *
-     * @param  array  $parameters
-     * @param  array  $rules
-     * @param  array  $messages
-     * @param  array  $customAttributes
-     * @return void
+     * @param       $parameters
+     * @param array $rules
+     * @param array $messages
+     * @param array $customAttributes
+     *
+     * @return static
      */
     protected function validateParameters($parameters, array $rules, array $messages = [], array $customAttributes = [])
     {
-        $validator = $this->getValidationFactory()->make($parameters, $rules, $messages, $customAttributes);
+        $this->getValidationFactory()
+            ->make($parameters, $rules, $messages, $customAttributes)
+            ->validate();
 
-        if ($validator->fails()) {
-            $this->throwValidationException(app('request'), $validator);
-        }
+        return collect($parameters)->only(collect($rules)->keys()->map(function ($rule) {
+            return Str::contains($rule, '.') ? explode('.', $rule)[0] : $rule;
+        })->unique()->toArray());
     }
 }

@@ -33,7 +33,7 @@ return [
     'home'                 => '首页',
     'operation'            => '操作',
     'login'                => '登录',
-    'register'             => '注册',
+    'register'             => '注册账号',
     'password'             => '密码',
     'password_confirm'     => '重复密码',
     'email'                => '邮箱地址',

@@ -5,8 +5,8 @@
            class="btn btn-link" title="@lang('common.btn_back')"><i class="material-icons">arrow_back</i></a>
         <h1 class="wz-page-title">
             {{ $pageItem->title }}
-            <span class="label label-default">文档附件</span>
         </h1>
+        <span class="label label-default">文档附件</span>
         <hr />
     </nav>
 
@@ -53,11 +53,11 @@
 @endsection
 
 @push('page-panel')
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">附件上传</h3>
+<div class="card m-3" style="width: 48rem;">
+    <div class="card-header">
+        附件上传
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <div class="wz-upload-box">
             @include('components.error', ['error' => $errors ?? null])
             <form class="form-horizontal" method="post"
@@ -65,19 +65,17 @@
                   enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="form-group">
-                    <input type="file" name="attachment">
-                    <p class="help-block">支持文件格式：{{ implode('，', $extensions) }}</p>
+                    <label for="form-attachment-upload" class="bmd-label-floating">文件上传</label>
+                    <input type="file" name="attachment" class="form-control-file" id="form-attachment-upload">
+                    <small class="text-muted">支持文件格式：{{ implode('，', $extensions) }}</small>
                 </div>
 
-                <div class="form-group">
-                    <div class="input-group" style="width: 400px;">
-                        <input type="text" class="form-control" name="name"
-                               value="{{ old('name') }}" placeholder="附件名称，为空则使用附件文件名">
-                        <span class="input-group-btn">
-                        <button type="submit" class="btn btn-primary pull-right">确认上传</button>
-                    </span>
-                    </div>
+                <div class="form-group" style="width: 40rem;">
+                    <label for="form-attachment-name" class="bmd-label-floating">附件名称，为空则使用附件文件名</label>
+                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" id="form-attachment-name">
+
                 </div>
+                <button type="submit" class="btn btn-primary btn-raised">确认上传</button>
             </form>
         </div>
     </div>

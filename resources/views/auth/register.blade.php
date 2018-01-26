@@ -1,83 +1,60 @@
-@extends('layouts.default')
+@extends('layouts.login')
 
-@section('container-style', 'container container-small')
 @section('content')
-    <div class="row wz-main-container-full">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">@lang('common.register')</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ wzRoute('register') }}">
-                        {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">@lang('common.username')</label>
+    <form class="form-signin" method="POST" action="{{ wzRoute('register') }}">
+        {{--<img class="mb-4" src="/assets/wizard.svg" alt="" height="100">--}}
+        <h1 class="h3 mb-3 font-weight-normal">@lang('common.register')</h1>
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control"
-                                       placeholder="真实姓名，用于成员之间协作"
-                                       name="name" value="{{ old('name') }}" required autofocus>
+        {{ csrf_field() }}
 
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+        <div class="text-left form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+            <label for="name" class="bmd-label-floating">@lang('common.username')</label>
+            <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">@lang('common.email')</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email"
-                                       placeholder="注册后验证邮箱地址是否真实"
-                                       class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">@lang('common.password')</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password"
-                                       placeholder="密码应该具有一定的复杂性"
-                                       class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">@lang('common.password_confirm')</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password"
-                                       placeholder="重复输入密码"
-                                       class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    @lang('common.register')
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+            @if ($errors->has('name'))
+                <div class="invalid-feedback d-block">
+                    {{ $errors->first('name') }}
                 </div>
-            </div>
+            @endif
         </div>
-    </div>
+
+        <div class="text-left form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+            <label for="email" class="bmd-label-floating">@lang('common.email')</label>
+            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+
+            @if ($errors->has('email'))
+                <div class="invalid-feedback d-block">
+                    {{ $errors->first('email') }}
+                </div>
+            @endif
+        </div>
+
+        <div class="text-left form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+            <label for="password" class="bmd-label-floating">@lang('common.password')</label>
+            <input id="password" type="password" class="form-control" name="password" required>
+
+            @if ($errors->has('password'))
+                <div class="invalid-feedback d-block">
+                    {{ $errors->first('password') }}
+                </div>
+            @endif
+        </div>
+
+        <div class="text-left form-group">
+            <label for="password-confirm" class="bmd-label-floating">@lang('common.password_confirm')</label>
+            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+        </div>
+
+        <button type="submit" class="btn btn-lg btn-primary btn-block btn-raised">
+           @lang('common.register')
+        </button>
+
+        <a class="btn btn-link" href="{{ wzRoute('login') }}">
+            已有账号，登录
+        </a>
+
+        <p class="mt-5 mb-3 text-muted">&copy; {{ date('Y') }} {{ config('wizard.copyright', 'AICODE.CC') }}</p>
+    </form>
+
 @endsection

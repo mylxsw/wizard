@@ -15,7 +15,7 @@
     @endif
 
     <div class="row wz-full-box" id="wz-main-box">
-        <div id="wz-compared" class="wz-compare-container">
+        <div id="wz-compared" class="wz-compare-container w-100">
 
             <table class="wz-differ-box">
                 <tbody>

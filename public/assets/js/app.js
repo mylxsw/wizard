@@ -52,7 +52,7 @@ $(function() {
     });
 
     // 超链接触发表单提交事件
-    $('a[wz-form-submit]').on('click', function (e) {
+    $('[wz-form-submit]').on('click', function (e) {
         e.preventDefault();
 
         var form = $($(this).data('form'));

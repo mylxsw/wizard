@@ -1,6 +1,13 @@
 @extends('layouts.user')
 
 @section('title', '通知')
+@section('breadcrumb')
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ wzRoute('user:home') }}">@lang('common.home')</a></li>
+        <li class="breadcrumb-item">个人中心</li>
+        <li class="breadcrumb-item active">通知</li>
+    </ol>
+@endsection
 @section('user-content')
 
     <div class="card">

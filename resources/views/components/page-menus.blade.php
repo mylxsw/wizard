@@ -6,16 +6,16 @@
 
     <div class="dropdown-menu wz-dropdown-menu-left" aria-labelledby="wz-doc-more-btn">
         <a href="{{ wzRoute('project:doc:attachment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="dropdown-item">
-                <span class="glyphicon glyphicon-paperclip"></span>
+                <span class="icon-paper-clip mr-2"></span>
                 附件
         </a>
         <a href="#" wz-share data-url="{{ wzRoute('project:doc:share', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="dropdown-item">
-                <span class="glyphicon glyphicon-share"></span>
+                <span class="icon-share-alt mr-2"></span>
                 @lang('common.btn_share')
         </a>
         @if($pageItem->type == \App\Repositories\Document::TYPE_DOC)
             <a wz-form-submit href="#" data-form="#form-{{ $pageItem->id }}-export-pdf" class="dropdown-item">
-                <span class="glyphicon glyphicon-export"></span>
+                <span class="icon-download-alt mr-2"></span>
                 导出PDF
                 <form id="form-{{ $pageItem->id }}-export-pdf" method="post"
                       action="{{ route('project:doc:pdf', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
@@ -24,13 +24,13 @@
             </a>
         @endif
         <a href="{{ wzRoute('project:doc:history', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}" class="dropdown-item">
-            <span class="glyphicon glyphicon-compressed"></span>
+            <span class="icon-time mr-2"></span>
             @lang('document.page_history')
         </a>
 
         <a href="#" wz-form-submit data-form="#form-{{ $pageItem->id }}"
            data-confirm="@lang('document.delete_confirm', ['title' => $pageItem->title])" class="dropdown-item">
-            <span class="glyphicon glyphicon-trash"></span>
+            <span class="icon-trash mr-2"></span>
             @lang('common.btn_delete')
             <form id="form-{{ $pageItem->id }}" method="post"
                   action="{{ wzRoute('project:doc:delete', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">

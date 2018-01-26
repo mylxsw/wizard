@@ -48,7 +48,7 @@
                     @endforeach
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success btn-raised" id="wz-select-template-confirm">@lang('common.btn_confirm')</button>
+                    <button type="button" class="btn btn-success btn-raised mr-2" id="wz-select-template-confirm">@lang('common.btn_confirm')</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">@lang('common.btn_close')</button>
                 </div>
             </div>
@@ -64,7 +64,8 @@
             border:none;
         }
         #editor-content {
-            height: 640px;
+            height: 800px;
+            position: relative;
         }
         .Pane2 {
             overflow-y: scroll;

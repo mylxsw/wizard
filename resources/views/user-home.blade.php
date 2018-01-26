@@ -5,6 +5,7 @@
 @section('content')
 
     <div class="card mt-4">
+        <div class="card-header">我的项目</div>
         <div class="card-body">
             <div class="row marketing wz-main-container-full">
                 @foreach($projects ?? [] as $proj)
@@ -19,7 +20,7 @@
                 @endforeach
                 @can('project-create')
                     <div class="col-3">
-                        <a class="wz-box" href="#"
+                        <a class="wz-box wz-box-new" href="#"
                            data-toggle="modal" data-target="#wz-new-project">
                             <p class="wz-title"><span class="icon-plus"></span> @lang('project.new_project')</p>
                         </a>

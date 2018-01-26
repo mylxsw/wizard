@@ -25,7 +25,7 @@ $.wz.mdEditor = function (editor_id, params) {
 
         jsonToTableTemplate: function () {
             editor_table_id = (new Date()).getTime();
-            return "<textarea class='form-control json-to-table-editor' style='width: 100%; height: 277px;' id='json-to-table-editor-" + editor_table_id + "'></textarea>";
+            return "<textarea class='form-control json-to-table-editor border' style='width: 100%; height: 277px;' id='json-to-table-editor-" + editor_table_id + "'></textarea>";
         },
         jsonToTableConvert: function (dialog, cm) {
             var jsonContent = $('#json-to-table-editor-' + editor_table_id).val();
@@ -50,7 +50,7 @@ $.wz.mdEditor = function (editor_id, params) {
 
     return editormd(editor_id, {
         path: "/assets/vendor/editor-md/lib/",
-        height: 640,
+        height: 800,
         taskList: true,
         tex: true,
         flowChart: true,

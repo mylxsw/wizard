@@ -1,5 +1,5 @@
-<div class="panel panel-default">
-    <div class="panel-body m-4">
+<div class="card wz-panel-limit" style="box-shadow: none">
+    <div class="card-body">
         @can('project-comment', $project)
             <form method="post"
                   action="{{ wzRoute('project:doc:comment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
@@ -19,24 +19,18 @@
             </form>
         @endcan
         <div class="wz-comments-box">
-            <ol>
-                @forelse($pageItem->comments as $comment)
-                    <li class="media {{ (isset($comment_highlight) && $comment_highlight == $comment->id) ? 'wz-comment-highlight':'' }}"
-                        id="cm-{{ $comment->id }}">
-                        <div class="media-body">
-                            <h5 class="media-heading">
-                                {{ $comment->user->name }}
-                                <span class="wz-comment-date glyphicon glyphicon-time">{{ $comment->created_at }}</span>
-                            </h5>
-                            <div class="wz-comment-body">
-                                {{ $comment->content }}
-                            </div>
-                        </div>
-                    </li>
-                @empty
-                    该文档还没有评论~
-                @endforelse
-            </ol>
+            @forelse($pageItem->comments as $comment)
+                <div class="media text-muted pt-3 {{ (isset($comment_highlight) && $comment_highlight == $comment->id) ? 'wz-comment-highlight':'' }}"
+                     id="cm-{{ $comment->id }}">
+                    <img src="{{ user_face($comment->user->name) }}" class="wz-userface-small">
+                    <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+                        <strong class="d-block text-gray-dark">{{ $comment->user->name }} {{ $comment->created_at }}</strong>
+                        {{ $comment->content }}
+                    </p>
+                </div>
+            @empty
+                该文档还没有评论~
+            @endforelse
         </div>
     </div>
 </div>

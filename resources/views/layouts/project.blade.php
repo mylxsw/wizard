@@ -12,6 +12,9 @@
                 </a>
                 @if(!Auth::guest() && (Auth::user()->can('page-add', $project) || Auth::user()->can('project-edit', $project)))
                     <div class="dropdown pull-right" style="margin-right: 20px;" role="group">
+                        <button type="button" class="btn bmd-btn-icon " data-href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'pid' => $pageID]) !!}" title="创建Markdown文档">
+                            <i class="material-icons">add_to_photos</i>
+                        </button>
 
                         <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="project-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>

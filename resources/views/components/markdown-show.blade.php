@@ -40,15 +40,15 @@
                 return ;
             }
 
-            $('body').append('<div id="wz-toc-container" class="hide"><span class="glyphicon glyphicon-th-list"></span>' + tocElement.html() + '</div>');
+            $('body').append('<div id="wz-toc-container" class="d-none"><span class="icon-th-list"></span>' + tocElement.html() + '</div>');
 
             $(window).scroll(function () {
                 var tocContainer = $('#wz-toc-container');
 
-                if ($(window).scrollTop() > 200) {
-                    tocContainer.removeClass('hide');
+                if ($(window).scrollTop() > 300) {
+                    tocContainer.removeClass('d-none');
                 } else {
-                    tocContainer.addClass('hide');
+                    tocContainer.addClass('d-none');
                 }
             });
         }, 0);

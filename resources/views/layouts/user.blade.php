@@ -19,6 +19,7 @@
             </nav>
         </div>
         <div class="col-9">
+            @yield('breadcrumb')
             @include('components.error', ['error' => $errors ?? null])
             @yield('user-content')
         </div>

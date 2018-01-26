@@ -15,7 +15,7 @@
     @endif
 
     <div class="row wz-full-box" id="wz-main-box">
-        <div id="wz-compared" class="wz-compare-container">
+        <div id="wz-compared" class="wz-compare-container w-100">
             <div class="wz-compare-box">
                 <div class="wz-compare-title">
                     <span class="label label-default">{{ $doc2title }}</span>

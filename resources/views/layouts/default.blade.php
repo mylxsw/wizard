@@ -18,7 +18,7 @@
     <!-- Bootstrap core CSS -->
     {{--<link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">--}}
     <link rel="stylesheet" href="/assets/vendor/material-design-icons/material-icons.css">
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/vendor/bootstrap-material-design/css/bootstrap-material-design.min.css">
     <link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/assets/vendor/wave/waves.min.css" rel="stylesheet">
 
@@ -67,8 +67,8 @@
 @stack('bottom')
 <script src="/assets/vendor/jquery.min.js"></script>
 {{--<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>--}}
-<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" crossorigin="anonymous"></script>
+<script src="/assets/vendor/popper.js"></script>
+<script src="/assets/vendor/bootstrap-material-design/js/bootstrap-material-design.min.js"></script>
 <script src="/assets/vendor/jquery.easing.js"></script>
 <script src="/assets/vendor/jquery.scrollUp.min.js"></script>
 
@@ -100,7 +100,7 @@
 
         // 滚动到顶部事件
         $.scrollUp({
-            scrollText: '<span class="glyphicon glyphicon-chevron-up"></span>'
+            scrollText: '<span class="icon-arrow-up"></span>'
         });
 
         // 可关闭对话框关闭事件
@@ -146,11 +146,14 @@
 
 @stack('script')
 
-<script>
-    $(function () {
-        $('body').bootstrapMaterialDesign();
-    });
-</script>
+
+@section('bootstrap-material-init')
+    <script>
+        $(function () {
+            $('body').bootstrapMaterialDesign();
+        });
+    </script>
+@show
 
 </body>
 </html>
