@@ -25,10 +25,8 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="row">
-                    <div class="col wz-pagination">
-                        {{ $projects->links() }}
-                    </div>
+                <div class="wz-pagination">
+                    {{ $projects->links() }}
                 </div>
             </div>
         </div>

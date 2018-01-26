@@ -36,8 +36,10 @@
                     </div>
                 @endcan
             </div>
-            <div class="wz-pagination">
-                {{ $projects->links() }}
+            <div class="row">
+                <div class="wz-pagination">
+                    {{ $projects->links() }}
+                </div>
             </div>
         </div>
     </div>
