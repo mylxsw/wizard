@@ -11,11 +11,11 @@
                     <label for="editor-project-name" class="bmd-label-floating">@lang('project.project_name')</label>
                     <input type="text" class="form-control"
                            name="name" id="editor-project-name"
-                           value="{{ $project->name or '' }}" >
+                           value="{{ old('name', $project->name) }}" >
                 </div>
                 <div class="form-group">
                     <label for="editor-description" class="bmd-label-floating">@lang('project.description')</label>
-                    <textarea class="form-control" name="description" id="editor-description" rows="3">{{ $project->description or '' }}</textarea>
+                    <textarea class="form-control" name="description" id="editor-description" rows="3">{{ old('description', $project->description) }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="project-visibility" class="bmd-label-floating">@lang('project.privilege')</label>
@@ -31,7 +31,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success btn-raised">@lang('common.btn_save')</button>
+                    <label for="project-sort" class="bmd-label-floating">排序（值越大越靠后）</label>
+                    <input type="number" name="sort_level" class="form-control float-left w-75" id="project-sort" value="{{ old('sort_level', $project->sort_level) }}" {{ Auth::user()->can('project-sort') ? '' : 'disabled' }}/>
+                    <i class="icon-question-sign ml-2" data-toggle="tooltip" title="" data-original-title="只有管理员可以修改"></i>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-raised mr-2">@lang('common.btn_save')</button>
                     <a href="{{ wzRoute('project:home', ['id' => $project->id]) }}" class="btn btn-default">@lang('common.btn_back')</a>
                 </div>
             </form>

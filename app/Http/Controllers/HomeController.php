@@ -31,7 +31,7 @@ class HomeController extends Controller
         $user = \Auth::user();
         if (!empty($user) && $user->isAdmin()) {
             /** @var LengthAwarePaginator $projects */
-            $projects = Project::paginate($perPage);
+            $projects = Project::orderBy('sort_level', 'ASC')->paginate($perPage);
         } else {
             /** @var Project $projectModel */
             $projectModel = Project::where('visibility', Project::VISIBILITY_PUBLIC);
@@ -48,7 +48,7 @@ class HomeController extends Controller
             }
 
             /** @var LengthAwarePaginator $projects */
-            $projects = $projectModel->paginate($perPage);
+            $projects = $projectModel->orderBy('sort_level', 'ASC')->paginate($perPage);
         }
 
         return view('index', ['projects' => $projects->appends(['per_page' => $perPage])]);

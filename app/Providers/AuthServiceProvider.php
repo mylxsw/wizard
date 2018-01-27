@@ -40,6 +40,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('project-delete', ProjectPolicy::class . '@delete');
         // 检查是否可以评论
         Gate::define('project-comment', ProjectPolicy::class . '@comment');
+        // 检查是否具有项目排序权限
+        Gate::define('project-sort', ProjectPolicy::class . '@sortLevel');
 
         // 检查是否有新增页面的权限
         Gate::define('page-add', ProjectPolicy::class . '@addPage');

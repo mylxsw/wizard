@@ -121,7 +121,7 @@
         window.setTimeout(function () {
             // 重置窗口大小，避免内容过少无法撑开页面
             var resize_window = function () {
-                var window_height = $(window).height() - $('.wz-top-navbar').height() - $('.footer').height() - 58;
+                var window_height = $(window).height() - $('.wz-top-navbar').height() - $('.footer').height() - 82;
                 var frame_height = $('.wz-main-container').height();
                 if (frame_height === null) {
                     frame_height = $('.wz-main-container-full').height();

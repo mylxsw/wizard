@@ -23,8 +23,8 @@ return [
 
     'no_parent_page' => '无上级页面',
     'save_as_draft'  => '加入草稿箱',
-    'force_save'     => '强制保存文档',
-    'show_diff'      => '比较文档差异',
+    'force_save'     => '强制保存',
+    'show_diff'      => '比较差异',
 
     'document_differ'  => '文档差异对比',
     'latest_document'  => '最新文档',

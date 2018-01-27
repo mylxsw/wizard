@@ -14,15 +14,24 @@
             {{ $project->name }}
         </h3>
         <div class="form-group pull-right">
-            <button type="button" class="btn btn-raised btn-primary mr-3" wz-doc-form-submit id="wz-doc-form-submit">发布</button>
+            <button type="button" class="btn btn-raised btn-primary mr-3" wz-doc-form-submit id="wz-doc-form-submit">
+                <i class="icon-save mr-1"></i> 保存
+            </button>
             <button class="btn  dropdown-toggle" type="button" id="form-save-extra-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 更多
             </button>
-            <div class="dropdown-menu" aria-labelledby="form-save-extra-menu">
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#wz-new-template">@lang('document.save_as_template')</a>
+            <div class="dropdown-menu" aria-labelledby="form-save-extra-menu" style="min-width: 12rem;">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#wz-new-template">
+                    <i class="icon-th mr-2"></i>
+                    @lang('document.save_as_template')
+                </a>
                 @if(!$newPage)
-                    <a class="dropdown-item" href="#" wz-doc-form-submit data-force="true">@lang('document.force_save')</a>
-                    <a class="dropdown-item" href="#" wz-doc-compare-current>@lang('document.show_diff')</a>
+                    <a class="dropdown-item" href="#" wz-doc-form-submit data-force="true">
+                        <i class="icon-save mr-2"></i> @lang('document.force_save')
+                    </a>
+                    <a class="dropdown-item" href="#" wz-doc-compare-current>
+                        <i class="icon-beaker mr-2"></i> @lang('document.show_diff')
+                    </a>
                 @endif
             </div>
         </div>
@@ -78,7 +87,9 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-success btn-raised mr-3" id="wz-template-save">@lang('common.btn_save')</button>
+                <button type="button" class="btn btn-success btn-raised mr-3" id="wz-template-save">
+                    @lang('common.btn_save')
+                </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">@lang('common.btn_close')</button>
             </div>
         </div>

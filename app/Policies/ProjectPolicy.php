@@ -25,8 +25,8 @@ class ProjectPolicy
     /**
      * 项目配置修改权限
      *
-     * @param User $user
-     * @param      $project
+     * @param User    $user
+     * @param Project $project
      *
      * @return bool
      */
@@ -42,8 +42,8 @@ class ProjectPolicy
     /**
      * 项目查看权限
      *
-     * @param User $user
-     * @param      $project
+     * @param User    $user
+     * @param Project $project
      *
      * @return bool
      */
@@ -68,7 +68,7 @@ class ProjectPolicy
      *  用户是否可以评论项目下的文档
      *
      * @param User|null $user
-     * @param           $project
+     * @param Project   $project
      *
      * @return bool
      */
@@ -89,8 +89,8 @@ class ProjectPolicy
     /**
      * 新增页面权限
      *
-     * @param User $user
-     * @param      $project
+     * @param User    $user
+     * @param Project $project
      *
      * @return bool
      */
@@ -118,8 +118,8 @@ class ProjectPolicy
     /**
      * 编辑项目信息权限
      *
-     * @param User $user
-     * @param      $project
+     * @param User    $user
+     * @param Project $project
      *
      * @return bool
      */
@@ -135,8 +135,8 @@ class ProjectPolicy
     /**
      * 项目删除权限检查
      *
-     * @param User $user
-     * @param      $project
+     * @param User    $user
+     * @param Project $project
      *
      * @return bool
      */
@@ -166,10 +166,27 @@ class ProjectPolicy
     }
 
     /**
+     * 项目排序权限
+     *
+     * @param User|null $user
+     * @param Project   $project
+     *
+     * @return bool
+     */
+    public function sortLevel(User $user = null, $project = null)
+    {
+        if (empty($user) || !$user->isActivated()) {
+            return false;
+        }
+
+        return $user->isAdmin();
+    }
+
+    /**
      * 是否是项目的创建者
      *
-     * @param User $user
-     * @param      $project
+     * @param User    $user
+     * @param Project $project
      *
      * @return bool
      */

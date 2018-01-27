@@ -261,7 +261,7 @@ a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    /*width: 85%;*/
+    width: 75%;
     display: inline-block;
 }
 
@@ -577,7 +577,7 @@ a:hover {
     max-width: 960px;
 }
 
-.layui-layer-btn .layui-layer-btn0, .layui-layer-btn .layui-layer-btn1 {
+.layui-layer-btn .layui-layer-btn0, .layui-layer-btn .layui-layer-btn1, .layui-layer-btn .layui-layer-btn2 {
     color: #fff !important;
     background-color: #009688;
     border-color: #009688;
@@ -610,9 +610,18 @@ a:hover {
     border-color: #ccc;
 }
 
+.layui-layer-btn .layui-layer-btn2 {
+    background: #4caf50;
+    border-color: #ccc;
+}
+
 .wz-userface-small {
     width: 32px;
     height: 32px;
     margin-right: 10px;
     margin-top: 10px;
+}
+
+.card {
+    font-size: .93rem;
 }

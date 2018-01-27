@@ -14,16 +14,18 @@ $.wz = {
      * @param params
      * @param successCallback
      * @param errorCallback 返回true则跳过默认逻辑，返回false则继续执行默认逻辑
+     * @param dataType
      */
-    request: function (method, url, params, successCallback, errorCallback) {
+    request: function (method, url, params, successCallback, errorCallback, dataType) {
         successCallback = successCallback || function (data) {};
         errorCallback = errorCallback || function (response) { return false; };
+        dataType = dataType || 'json';
 
         $.ajax({
             url: url,
             type: method,
             data: params,
-            dataType: 'json',
+            dataType: dataType,
             success: successCallback,
             error: function (response) {
                 if (errorCallback(response)) {

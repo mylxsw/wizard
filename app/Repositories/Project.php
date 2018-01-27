@@ -41,6 +41,7 @@ class Project extends Repository
             'description',
             'visibility',
             'user_id',
+            'sort_level',
         ];
 
     public $dates = ['deleted_at'];

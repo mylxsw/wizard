@@ -35,6 +35,7 @@ class ProjectController extends Controller
 
         /** @var LengthAwarePaginator $projects */
         $projects = Project::where('user_id', \Auth::user()->id)
+            ->orderBy('sort_level', 'ASC')
             ->paginate($perPage)
             ->appends([
                 'per_page' => $perPage,
@@ -49,6 +50,7 @@ class ProjectController extends Controller
      * @param Request $request
      *
      * @return array
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function newProjectHandle(Request $request)
     {
@@ -59,7 +61,8 @@ class ProjectController extends Controller
             [
                 'name'        => 'required|between:1,100',
                 'description' => 'max:255',
-                'visibility'  => 'required|in:1,2'
+                'visibility'  => 'required|in:1,2',
+                'sort_level'  => 'integer|between:-9999999999,999999999',
             ],
             [
                 'name.required'   => __('project.validation.project_name_required'),
@@ -71,12 +74,18 @@ class ProjectController extends Controller
         $name        = $request->input('name');
         $description = $request->input('description');
         $visibility  = $request->input('visibility');
+        if (\Auth::user()->can('project-sort')) {
+            $sortLevel = $request->input('sort_level', 1000);
+        } else {
+            $sortLevel = 1000;
+        }
 
         $project = Project::create([
             'name'        => $name,
             'description' => $description,
             'user_id'     => \Auth::user()->id,
             'visibility'  => $visibility,
+            'sort_level'  => (int)$sortLevel,
         ]);
 
         event(new ProjectCreated($project));
@@ -97,6 +106,8 @@ class ProjectController extends Controller
      * @param         $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function delete(Request $request, $id)
     {
@@ -134,7 +145,7 @@ class ProjectController extends Controller
 
         $policy = new ProjectPolicy();
         if (!$policy->view(\Auth::user(), $project)) {
-            abort(404);
+            abort(403, '您没有访问该项目的权限');
         }
 
         $page = $type = null;
@@ -289,6 +300,7 @@ class ProjectController extends Controller
                 'description' => 'max:255',
                 'project_id'  => "required|in:{$project->id}|project_exist",
                 'visibility'  => 'required|in:1,2',
+                'sort_level'  => 'integer|between:-999999999,999999999'
             ],
             [
                 'name.required'   => __('project.validation.project_name_required'),
@@ -300,10 +312,14 @@ class ProjectController extends Controller
         $name        = $request->input('name');
         $description = $request->input('description');
         $visibility  = $request->input('visibility');
+        $sortLevel   = $request->input('sort_level');
 
         $project->name        = $name;
         $project->description = $description;
         $project->visibility  = $visibility;
+        if (\Auth::user()->can('project-sort') && $sortLevel != null) {
+            $project->sort_level = (int)$sortLevel;
+        }
 
         if ($project->isDirty()) {
             $project->save();
@@ -348,6 +364,7 @@ class ProjectController extends Controller
      * @param         $group_id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function groupPrivilegeRevoke(Request $request, $id, $group_id)
     {

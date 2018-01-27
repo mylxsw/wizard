@@ -19,19 +19,19 @@
                         <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="project-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="project-menu">
+                        <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="project-menu" style="min-width: 13rem;">
                             @can('page-add', $project)
                                 <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'pid' => $pageID]) !!}" class="dropdown-item">
-                                    创建 @lang('common.markdown')
+                                    <i class="icon-book mr-2"></i> 创建 @lang('common.markdown')
                                 </a>
                                 <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger', 'pid' => $pageID]) !!}" class="dropdown-item">
-                                    创建 @lang('common.swagger')
+                                    <i class="icon-align-justify mr-2"></i> 创建 @lang('common.swagger')
                                 </a>
                             @endcan
 
                             @can('project-edit', $project)
                                 <a href="{{ wzRoute('project:setting:show', ['id' => $project->id]) }}" class="dropdown-item">
-                                    项目设置
+                                    <i class="icon-cog mr-2"></i> 项目设置
                                 </a>
                             @endcan
                         </ul>

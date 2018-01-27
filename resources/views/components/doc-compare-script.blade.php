@@ -1,7 +1,7 @@
 @push('script')
 <script>
     $(function () {
-        $('[wz-doc-compare-submit]').on('click', function (e) {
+        $('.wz-body').on('click', '[wz-doc-compare-submit]', function (e) {
             e.preventDefault();
 
             var compareUrl = '{{ wzRoute('doc:compare') }}';

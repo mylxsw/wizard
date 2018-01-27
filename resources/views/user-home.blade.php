@@ -12,9 +12,9 @@
                     <div class="col-3">
                         <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}" >
                             @if($proj->visibility == \App\Repositories\Project::VISIBILITY_PRIVATE)
-                                <span title="@lang('project.privilege_private')" class="wz-box-tag glyphicon glyphicon-eye-close"></span>
+                                <span title="@lang('project.privilege_private')" class="wz-box-tag icon-eye-close"></span>
                             @endif
-                            <p class="wz-title" title="{{ $proj->name }}">{{ $proj->name }}</p>
+                            <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
                         </a>
                     </div>
                 @endforeach
@@ -44,6 +44,12 @@
         </div>
     </div>
 
+    <div class="card mt-4 mb-4">
+        <div class="card-header">最近活动</div>
+        <div class="card-body" id="operation-log-recently"></div>
+        @include('components.doc-compare-script')
+    </div>
+
     @can('project-create')
         <div class="modal fade" id="wz-new-project" tabindex="-1" role="dialog" aria-labelledby="wz-new-project">
             <div class="modal-dialog" role="document">
@@ -66,7 +72,7 @@
                                 <textarea class="form-control" name="description" placeholder="@lang('project.description')" id="project-description"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="project-visibility" class="control-label">@lang('project.privilege')：</label>
+                                <label for="project-visibility" class="bmd-label-floating">@lang('project.privilege')：</label>
                                 <div class="radio mt-2">
                                     <label class="radio-inline">
                                         <input type="radio" name="visibility" id="project-visibility" value="{{ \App\Repositories\Project::VISIBILITY_PUBLIC }}" checked>
@@ -77,6 +83,11 @@
                                         @lang('project.privilege_private')
                                     </label>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="project-sort" class="bmd-label-floating">排序（值越大越靠后）</label>
+                                <input type="number" name="sort_level" class="form-control float-left w-75" id="project-sort" value="1000" {{ Auth::user()->can('project-sort') ? '' : 'disabled' }}/>
+                                <i class="icon-question-sign ml-2" data-toggle="tooltip" title="" data-original-title="只有管理员可以修改"></i>
                             </div>
                         </form>
                     </div>
@@ -103,6 +114,10 @@
                 window.location.reload(true);
             });
         });
+
+        $.wz.request('get', '{{ wzRoute('operation-log:recently', ['limit' => 'my']) }}', {}, function (data) {
+            $('#operation-log-recently').html(data);
+        }, null, 'html');
     });
 </script>
 @endpush

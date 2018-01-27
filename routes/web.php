@@ -144,5 +144,8 @@ Route::group(['middleware' => 'locale'], function () {
         // 创建模板
         Route::post('/template', 'TemplateController@create')->name('template:create');
 
+        // ajax获取操作历史
+        Route::get('/operations/recently', 'OperationLogController@recently')->name('operation-log:recently');
+
     });
 });

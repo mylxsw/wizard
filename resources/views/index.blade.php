@@ -4,7 +4,7 @@
 @section('container-style', 'container container-small')
 @section('content')
 
-    <div class="card mt-4">
+    <div class="card mt-4 mb-4">
         <div class="card-header">公共主页</div>
         <div class="card-body">
 
@@ -20,7 +20,7 @@
                         <div class="col-3">
                             <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
                                 @include('components.project-tag', ['proj' => $proj])
-                                <p class="wz-title" title="{{ $proj->name }}">{{ $proj->name }}</p>
+                                <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
                             </a>
                         </div>
                     @endforeach
@@ -32,4 +32,24 @@
         </div>
     </div>
 
+    @if(!Auth::guest())
+        <div class="card mb-4">
+            <div class="card-header">最近活动</div>
+            <div class="card-body" id="operation-log-recently"></div>
+        </div>
+        @include('components.doc-compare-script')
+    @endif
+
 @endsection
+
+@push('script')
+    @if(!Auth::guest())
+    <script>
+        $(function () {
+            $.wz.request('get', '{{ wzRoute('operation-log:recently') }}', {}, function (data) {
+                $('#operation-log-recently').html(data);
+            }, null, 'html');
+        });
+    </script>
+    @endif
+@endpush

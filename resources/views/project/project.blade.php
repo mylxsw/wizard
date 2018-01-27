@@ -75,37 +75,15 @@
         <h1>{{ $project->name or '' }}</h1>
 
         <p class="wz-document-header wz-panel-limit">@lang('document.document_create_info', ['username' => $project->user->name, 'time' => $project->created_at])</p>
-
         <p class="wz-panel-limit">{{ $project->description or '' }}</p>
 
-        @if(!empty($operationLogs) && $operationLogs->count() > 0)
-        <div class="wz-recently-log wz-panel-limit">
-            <h4>最近活动</h4>
-            @foreach($operationLogs as $log)
-                <div class="media text-muted pt-3">
-                    <img src="{{ user_face($log->context->username) }}" class="wz-userface-small">
-                    <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
-                        <strong class="d-block text-gray-dark">{{ $log->created_at }}</strong>
-                        @if ($log->message == 'document_updated')
-                            <span class="wz-text-dashed">{{ $log->context->username }}</span> 修改了文档
-                            <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
-                            @if(!Auth::guest())
-                                【<a href="#" wz-doc-compare-submit
-                                    data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $log->context->doc_id]) }}"
-                                    data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $log->context->history_id ?? 0, 'id' => $project->id, 'page_id' => $log->context->doc_id]) }}">@lang('common.btn_diff')</a>】
-                            @endif
-                        @elseif ($log->message == 'document_created')
-                            <span class="wz-text-dashed">{{ $log->context->username }}</span> 创建了文档
-                            <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
-                        @elseif ($log->message == 'document_deleted')
-                            <span class="wz-text-dashed">{{ $log->context->username }}</span> 删除了文档
-                            <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $project->id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
-                        @endif
-                    </p>
-                </div>
-            @endforeach
-        </div>
+        @if (!Auth::guest())
+            <div class="wz-recently-log wz-panel-limit">
+                <h4>最近活动</h4>
+                <div id="operation-log-recently"></div>
+            </div>
         @endif
+
         @if($project->groups->count() > 0)
             <div class="wz-group-allowed-list wz-panel-limit">
                 <h4>@lang('project.group_added')</h4>
@@ -142,5 +120,21 @@
 
     @if(!Auth::guest())
         @include('components.doc-compare-script')
+    @endif
+@endpush
+
+@push('script')
+    @if(!Auth::guest())
+        <script>
+            $(function () {
+                $.wz.request('get', '{!! wzRoute('operation-log:recently', ['limit' => 'project', 'project_id' => $project->id]) !!}', {}, function (data) {
+                    if (data.trim() === '') {
+                        $('.wz-recently-log').addClass('d-none');
+                    } else {
+                        $('#operation-log-recently').html(data);
+                    }
+                }, null, 'html');
+            });
+        </script>
     @endif
 @endpush
