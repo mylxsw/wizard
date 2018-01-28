@@ -625,3 +625,7 @@ a:hover {
 .card {
     font-size: .93rem;
 }
+
+.swagger-ui .col {
+    width: auto;
+}
