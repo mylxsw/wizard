@@ -32,7 +32,7 @@
                             <img src="{{ user_face($doc->user->name) }}" class="wz-userface-small">
                             <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
                                 <strong class="d-block text-gray-dark">
-                                    <a href="{{ route('project:home', ['id' => $doc->project_id, 'page_id' => $doc->id]) }}" style="font-size: 1.1rem;">{{ $doc->title }}</a>
+                                    <a href="{{ route('project:home', ['id' => $doc->project_id, 'p' => $doc->id]) }}" style="font-size: 1.1rem;">{{ $doc->title }}</a>
                                     <span style="color: #a4a4a4;">{{ $doc->project->name ?? '' }}</span>
                                 </strong>
                                 由
