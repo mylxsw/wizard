@@ -32,16 +32,24 @@ class ProjectController extends Controller
     public function home(Request $request)
     {
         $perPage = $request->input('per_page', 19);
+        $name    = $request->input('name');
+
+        /** @var Project $projectModel */
+        $projectModel = Project::query();
+        if (!empty($name)) {
+            $projectModel->where('name', 'like', "%{$name}%");
+        }
 
         /** @var LengthAwarePaginator $projects */
-        $projects = Project::where('user_id', \Auth::user()->id)
+        $projects = $projectModel->where('user_id', \Auth::user()->id)
             ->orderBy('sort_level', 'ASC')
             ->paginate($perPage)
             ->appends([
                 'per_page' => $perPage,
+                'name'     => $name,
             ]);
 
-        return view('user-home', ['projects' => $projects]);
+        return view('user-home', ['projects' => $projects, 'name' => $name,]);
     }
 
     /**

@@ -27,16 +27,22 @@ class HomeController extends Controller
     public function home(Request $request)
     {
         $perPage = $request->input('per_page', 20);
+        $name    = $request->input('name');
+
+        /** @var Project $projectModel */
+        $projectModel= Project::query();
+        if (!empty($name)) {
+            $projectModel->where('name', 'like', "%{$name}%");
+        }
 
         $user = \Auth::user();
         if (!empty($user) && $user->isAdmin()) {
             /** @var LengthAwarePaginator $projects */
-            $projects = Project::orderBy('sort_level', 'ASC')->paginate($perPage);
+            $projects = $projectModel->orderBy('sort_level', 'ASC')->paginate($perPage);
         } else {
-            /** @var Project $projectModel */
-            $projectModel = Project::where('visibility', Project::VISIBILITY_PUBLIC);
+            $projectModel->where('visibility', Project::VISIBILITY_PUBLIC);
             if (!empty($user)) {
-                $userGroups   = $user->groups->pluck('id')->toArray();
+                $userGroups = $user->groups->pluck('id')->toArray();
                 if (!empty($userGroups)) {
                     $projectModel = $projectModel->orWhere(function ($query) use ($userGroups) {
                         $query->where('visibility', '!=', Project::VISIBILITY_PUBLIC)
@@ -51,7 +57,7 @@ class HomeController extends Controller
             $projects = $projectModel->orderBy('sort_level', 'ASC')->paginate($perPage);
         }
 
-        return view('index', ['projects' => $projects->appends(['per_page' => $perPage])]);
+        return view('index', ['projects' => $projects->appends(['per_page' => $perPage, 'name' => $name]), 'name' => $name,]);
     }
 
     /**

@@ -629,3 +629,19 @@ a:hover {
 .swagger-ui .col {
     width: auto;
 }
+
+.card .card-header .card-header-title {
+    float: left;
+}
+
+.card .card-header .card-header-operation .bmd-form-group.bmd-collapse-inline,
+.card .card-header .card-header-operation .btn.bmd-btn-icon,
+.card .card-header .card-header-operation .custom-file-control, .form-control {
+    min-height: auto;
+    height: auto;
+    padding: auto;
+}
+
+.search-btn {
+    cursor: pointer;
+}

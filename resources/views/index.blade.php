@@ -5,7 +5,17 @@
 @section('content')
 
     <div class="card mt-4 mb-4">
-        <div class="card-header">公共主页</div>
+        <div class="card-header">
+            <div class="card-header-title">公共主页</div>
+            <div class="card-header-operation">
+                <div class="bmd-form-group bmd-collapse-inline pull-right">
+                    <i class="material-icons search-btn" data-input="#search-input">search</i>
+                    <span id="search-input" style="display: none;">
+                        <input class="form-control" type="text" id="search" name="search_name" placeholder="搜索项目" value="{{ $name ?? '' }}">
+                    </span>
+                </div>
+            </div>
+        </div>
         <div class="card-body">
 
             <div class="row marketing wz-main-container-full">
@@ -52,4 +62,23 @@
         });
     </script>
     @endif
+
+    <script>
+        $(function () {
+            $('.search-btn').on('click', function () {
+                $($(this).data('input')).fadeToggle();
+            });
+
+            $('#search-input').find('input').keydown(function (event) {
+                if (event.keyCode === 13) {
+                    window.location = "{{ route('home') }}?name=" + encodeURIComponent($(this).val().trim());
+                }
+            }).blur(function () {
+                var value = $(this).val().trim();
+                if (value === '') {
+                    $(this).parent('#search-input').fadeToggle();
+                }
+            });
+        });
+    </script>
 @endpush
