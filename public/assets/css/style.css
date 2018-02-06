@@ -651,3 +651,7 @@ a:hover {
     margin: auto;
     margin-top: -30px;
 }
+
+tr.warning {
+    background: #e9efec;
+}
