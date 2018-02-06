@@ -28,11 +28,16 @@ class SearchController extends Controller
      */
     public function search(Request $request)
     {
-        $keyword = $request->input('keyword');
-        $perPage = (int)$request->input('per_page', 20);
+        $keyword   = $request->input('keyword');
+        $projectId = (int)$request->input('project_id');
+        $perPage   = (int)$request->input('per_page', 20);
 
         /** @var Document $documentModel */
         $documentModel = Document::query()->with('project', 'user')->has('project');
+        if (!empty($projectId)) {
+            $documentModel->where('project_id', $projectId);
+        }
+
         if (empty($keyword)) {
             $documentModel->orderBy('updated_at', 'DESC');
         } else {
@@ -40,11 +45,13 @@ class SearchController extends Controller
         }
 
         return view('search', [
-            'documents' => $documentModel->paginate($perPage)->appends([
-                'keyword'  => $keyword,
-                'per_page' => $perPage
+            'documents'  => $documentModel->paginate($perPage)->appends([
+                'keyword'    => $keyword,
+                'per_page'   => $perPage,
+                'project_id' => $projectId,
             ]),
-            'keyword'   => $keyword,
+            'keyword'    => $keyword,
+            'project_id' => $projectId,
         ]);
     }
 }

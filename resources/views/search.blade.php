@@ -6,6 +6,11 @@
 
     <div class="card mt-4 mb-4">
         <div class="card-header">
+            @if (!empty($project_id))
+                <button type="button" data-href="{{ route('project:home', ['id' => $project_id]) }}" class="btn btn-default bmd-btn-icon" id="wz-document-goback">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+            @endif
             文档搜索
         </div>
         <div class="card-body">
