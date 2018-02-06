@@ -8,8 +8,9 @@
         {{--<a class="btn btn-outline-primary" href="{{ wzRoute('register') }}">@lang('common.register')</a>--}}
     @else
         <nav class="my-2 my-md-0">
-            <a class="p-2 text-dark" href="/">公共主页</a>
+            <a class="p-2 text-dark" href="/">主页</a>
             <a class="p-2 text-dark" href="{{ wzRoute('user:home') }}">@lang('common.user_home')</a>
+            <a class="p-2 text-dark" href="{{ wzRoute('search:search') }}">搜索</a>
             <a class="p-2 text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ Auth::user()->name ?? Auth::user()->email }}
                 @if(userHasNotifications())

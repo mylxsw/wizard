@@ -645,3 +645,9 @@ a:hover {
 .search-btn {
     cursor: pointer;
 }
+
+.search-panel .bmd-form-group {
+    width: 70%;
+    margin: auto;
+    margin-top: -30px;
+}

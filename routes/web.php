@@ -138,6 +138,11 @@ Route::group(['middleware' => 'locale'], function () {
             Route::put('/{id}/doc/{page_id}/histories/{history_id}', 'HistoryController@recover')->name('doc:history:recover');
         });
 
+        // 文档搜索
+        Route::group(['prefix' => 'search', 'as' => 'search:'], function () {
+            Route::get('/', 'SearchController@search')->name('search');
+        });
+
         // 文档比较
         Route::post('/doc/compare', 'CompareController@compare')->name('doc:compare');
 
