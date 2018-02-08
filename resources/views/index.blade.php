@@ -10,7 +10,7 @@
             <div class="card-header-operation">
                 <div class="bmd-form-group bmd-collapse-inline pull-right">
                     <i class="material-icons search-btn" data-input="#search-input">search</i>
-                    <span id="search-input" style="display: none;">
+                    <span id="search-input" style="{{ empty($name) ? 'display: none;' : '' }}">
                         <input class="form-control" type="text" id="search" name="search_name" placeholder="搜索项目" value="{{ $name ?? '' }}">
                     </span>
                 </div>
@@ -66,7 +66,9 @@
     <script>
         $(function () {
             $('.search-btn').on('click', function () {
-                $($(this).data('input')).fadeToggle();
+                var inputItem = $($(this).data('input'));
+                inputItem.fadeToggle();
+                inputItem.find('input').focus();
             });
 
             $('#search-input').find('input').keydown(function (event) {
