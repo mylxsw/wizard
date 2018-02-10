@@ -261,7 +261,7 @@ a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 75%;
+    max-width: 70%;
     display: inline-block;
 }
 
