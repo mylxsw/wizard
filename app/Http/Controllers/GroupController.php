@@ -142,6 +142,8 @@ class GroupController extends Controller
      * @param         $id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
+     * @throws \Throwable
      */
     public function delete(Request $request, $id)
     {

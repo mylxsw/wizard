@@ -10,6 +10,8 @@ namespace App\Listeners;
 
 use App\Events\ProjectCreated;
 use App\Repositories\OperationLogs;
+use App\Repositories\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -46,5 +48,12 @@ class ProjectCreatedListener
                 'project_id'   => $project->id
             ]
         );
+
+        // 通知管理员有新项目创建
+        /** @var Collection $users */
+        $users = User::where('role', User::ROLE_ADMIN)->get();
+        $users->map(function (User $user) use ($event) {
+            $user->notify(new \App\Notifications\ProjectCreated($event->getProject()));
+        });
     }
 }

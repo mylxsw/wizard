@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserCreated;
 use App\Repositories\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -83,6 +84,8 @@ class RegisterController extends Controller
         if ($needActivate) {
             $this->sendUserActivateEmail($user);
         }
+
+        event(new UserCreated($user));
 
         return $user;
     }
