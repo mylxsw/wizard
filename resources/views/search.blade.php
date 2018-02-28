@@ -12,6 +12,9 @@
                 </button>
             @endif
             文档搜索
+            @if (!empty($project_id))
+                （共 <b>{{ $documents->total() }}</b> 个文档）
+            @endif
         </div>
         <div class="card-body">
             <form action="{{ wzRoute('search:search') }}" method="get">
