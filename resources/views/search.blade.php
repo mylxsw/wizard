@@ -21,6 +21,7 @@
                 <div class="row marketing wz-main-container-full search-panel">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control mr-3" placeholder="输入要搜索的文档标题" name="keyword" value="{{ $keyword ?? '' }}">
+                        <input type="hidden" name="project_id" value="{{ $project_id ?? '' }}">
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" type="submit">搜索</button>
                         </div>
