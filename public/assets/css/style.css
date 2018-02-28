@@ -103,11 +103,17 @@ a:hover {
 }
 
 .wz-project-title {
-    width: 100%;
-    height: 55px;
     padding-top: 20px;
-    padding-left: 30px;
+    padding-left: 20px;
     font-size: 18px;
+    position: relative;
+}
+
+.wz-project-title > .dropdown {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    width: 120px;
 }
 
 .wz-project-title .btn-group.open .dropdown-toggle {
@@ -182,6 +188,7 @@ a:hover {
 
 .wz-left-nav {
     padding-left: 20px;
+    display: block;
 }
 
 .wz-left-nav li {
@@ -261,7 +268,7 @@ a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 70%;
+    max-width: 85%;
     display: inline-block;
 }
 
@@ -655,3 +662,8 @@ a:hover {
 tr.warning {
     background: #e9efec;
 }
+
+.wz-left-main * {
+    box-sizing: initial;
+}
+

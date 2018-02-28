@@ -4,7 +4,7 @@
 @section('content')
 
     <div class="row wz-main-container">
-        <div class="col-3">
+        <div class="col-3 wz-left-main">
             <div class="wz-project-title">
                 <a href="{{ wzRoute('project:home', ['id' => $project->id]) }}" class="wz-nav-item"
                     title="{{ $project->name }}">
@@ -40,7 +40,7 @@
                     </div>
                 @endif
             </div>
-            <ul class="nav nav-pills nav-stacked wz-left-nav list-group {{-- hide --}}">
+            <ul class="nav nav-pills nav-stacked wz-left-nav {{-- hide --}}">
                 @include('components.navbar', ['navbars' => $navigators])
             </ul>
         </div>
