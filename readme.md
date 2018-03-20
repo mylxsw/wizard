@@ -4,19 +4,30 @@ Wizard是基于Laravel开发框架开发的一款开源项目（API）文档管�
 
 在线预览体验地址：http://wizard.aicode.cc/
 
-![s-1](https://oayrssjpa.qnssl.com/s-1.jpg)
+![2018-03-20_17-34-16-w603](https://oayrssjpa.qnssl.com/2018-03-20_17-34-16.png)
 
-![s-2](https://oayrssjpa.qnssl.com/s-2.jpg)
+![2018-03-20_17-34-45-w602](https://oayrssjpa.qnssl.com/2018-03-20_17-34-45.png)
 
-![s-4](https://oayrssjpa.qnssl.com/s-4.jpg)
+![2018-03-20_17-35-24-w460](https://oayrssjpa.qnssl.com/2018-03-20_17-35-24.png)
 
-![s-5](https://oayrssjpa.qnssl.com/s-5.jpg)
+![2018-03-20_17-36-01-w607](https://oayrssjpa.qnssl.com/2018-03-20_17-36-01.png)
 
-![s-6](https://oayrssjpa.qnssl.com/s-6.jpg)
+![2018-03-20_17-36-41-w608](https://oayrssjpa.qnssl.com/2018-03-20_17-36-41.png)
 
-![s-70](https://oayrssjpa.qnssl.com/s-70.jpg)
+![2018-03-20_17-36-58-w606](https://oayrssjpa.qnssl.com/2018-03-20_17-36-58.png)
 
-![s-8](https://oayrssjpa.qnssl.com/s-8.jpg)
+![2018-03-20_17-37-17-w601](https://oayrssjpa.qnssl.com/2018-03-20_17-37-17.png)
+
+![2018-03-20_17-37-35-w601](https://oayrssjpa.qnssl.com/2018-03-20_17-37-35.png)
+
+![2018-03-20_17-38-01-w599](https://oayrssjpa.qnssl.com/2018-03-20_17-38-01.png)
+
+![2018-03-20_17-38-42-w303](https://oayrssjpa.qnssl.com/2018-03-20_17-38-42.png)
+
+![2018-03-20_17-39-22-w601](https://oayrssjpa.qnssl.com/2018-03-20_17-39-22.png)
+
+![2018-03-20_17-39-44-w606](https://oayrssjpa.qnssl.com/2018-03-20_17-39-44.png)
+
 
 
 ## 安装
@@ -125,3 +136,4 @@ Wizard是基于Laravel开发框架开发的一款开源项目（API）文档管�
     * [ ] 文档数量统计
     * [ ] 评论数量统计
     * [ ] 用户活跃度统计
+
