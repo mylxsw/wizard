@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function home(Request $request)
     {
-        $perPage = $request->input('per_page', 20);
+        $perPage = $request->input('per_page', 28);
         $name    = $request->input('name');
 
         /** @var Project $projectModel */
