@@ -58,6 +58,7 @@ $.wz.mdEditor = function (editor_id, params) {
         imageUpload    : true,
         imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp"],
         imageUploadURL : "/upload",
+        htmlDecode : 'style,script,iframe,sub,sup|on*',
         toolbarIcons: function () {
             return ["undo", "redo", "|",
                 "bold", "del", "italic", "quote", "|",

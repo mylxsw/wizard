@@ -29,6 +29,7 @@
             emoji: true,
             taskList: true,
             tex: true,
+            htmlDecode : 'style,script,iframe,sub,sup|on*',
             flowChart: true,
             sequenceDiagram: true
         });
