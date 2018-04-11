@@ -14,6 +14,15 @@
                            value="{{ old('name', $project->name) }}" >
                 </div>
                 <div class="form-group">
+                    <label for="catalog-status" class="bmd-label-floating">目录</label>
+                    <select id="catalog-status" name="catalog" class="form-control">
+                        <option value="0" {{ empty($project->catalog) ? 'selected' : '' }}>无</option>
+                        @foreach($catalogs as $cat)
+                            <option value="{{ $cat->id }}" {{ $cat->id == $project->catalog_id ? 'selected':'' }}>{{ $cat->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="editor-description" class="bmd-label-floating">@lang('project.description')</label>
                     <textarea class="form-control" name="description" id="editor-description" rows="3">{{ old('description', $project->description) }}</textarea>
                 </div>

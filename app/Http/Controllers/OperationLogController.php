@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Repositories\Catalog;
 use App\Repositories\OperationLogs;
 use Illuminate\Http\Request;
 
@@ -20,14 +21,23 @@ class OperationLogController extends Controller
             'limit'      => 'in:my,global,project',
             'per_page'   => 'between:1,100',
             'project_id' => 'integer',
+            'catalog'    => 'integer',
         ]);
 
         $perPage   = (int)$request->input('per_page', 10);
         $limit     = $request->input('limit', 'global');
         $projectId = (int)$request->input('project_id');
+        $catalogId = (int)$request->input('catalog');
 
         /** @var OperationLogs $operationLogModel */
         $operationLogModel = OperationLogs::query();
+
+        // 值查询目录下的项目日志
+        if (empty($projectId) && !empty($catalogId)) {
+            $projectIds = Catalog::where('id', $catalogId)->select(['id'])->pluck('id')->toArray();
+            $operationLogModel->whereIn('project_id', $projectIds);
+        }
+
         if ($limit == 'my') {
             $operationLogModel->where('user_id', \Auth::user()->id);
         } else if ($limit == 'project') {

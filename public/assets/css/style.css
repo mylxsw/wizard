@@ -152,6 +152,19 @@ a:hover {
     background-color: #03a9f4ab!important;
 }
 
+.wz-box-catalog {
+    background: #4caf50;
+    border: 1px solid #fff;
+}
+
+.wz-box-catalog p {
+    color: #fff!important;
+}
+
+.wz-box-catalog:hover {
+    background-color: #46a149!important;
+}
+
 .wz-box-disabled {
     background: #fff;
 }

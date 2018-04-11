@@ -12,6 +12,9 @@
                 <a class="nav-link {{ $op == 'users' ? 'active':'' }}" href="{!! wzRoute('admin:users') !!}">
                     <i class="icon-user mr-2"></i> 用户管理
                 </a>
+                <a class="nav-link {{ $op == 'catalogs' ? 'active':'' }}" href="{!! wzRoute('admin:catalogs') !!}">
+                    <i class="icon-folder-open"></i> 项目目录管理
+                </a>
             </nav>
         </div>
         <div class="col-9">

@@ -13,6 +13,7 @@ use App\Events\ProjectCreated;
 use App\Events\ProjectDeleted;
 use App\Events\ProjectModified;
 use App\Policies\ProjectPolicy;
+use App\Repositories\Catalog;
 use App\Repositories\Document;
 use App\Repositories\Group;
 use App\Repositories\OperationLogs;
@@ -49,7 +50,8 @@ class ProjectController extends Controller
                 'name'     => $name,
             ]);
 
-        return view('user-home', ['projects' => $projects, 'name' => $name,]);
+        return view('user-home',
+            ['projects' => $projects, 'name' => $name, 'catalogs' => Catalog::all(),]);
     }
 
     /**
@@ -71,6 +73,7 @@ class ProjectController extends Controller
                 'description' => 'max:255',
                 'visibility'  => 'required|in:1,2',
                 'sort_level'  => 'integer|between:-9999999999,999999999',
+                'catalog'     => 'required|integer',
             ],
             [
                 'name.required'   => __('project.validation.project_name_required'),
@@ -82,6 +85,8 @@ class ProjectController extends Controller
         $name        = $request->input('name');
         $description = $request->input('description');
         $visibility  = $request->input('visibility');
+        $catalog     = $request->input('catalog');
+
         if (\Auth::user()->can('project-sort')) {
             $sortLevel = $request->input('sort_level', 1000);
         } else {
@@ -94,6 +99,7 @@ class ProjectController extends Controller
             'user_id'     => \Auth::user()->id,
             'visibility'  => $visibility,
             'sort_level'  => (int)$sortLevel,
+            'catalog_id'  => $catalog,
         ]);
 
         event(new ProjectCreated($project));
@@ -149,7 +155,7 @@ class ProjectController extends Controller
         $pageID = (int)$request->input('p', 0);
 
         /** @var Project $project */
-        $project = Project::findOrFail($id);
+        $project = Project::with('catalog')->findOrFail($id);
 
         $policy = new ProjectPolicy();
         if (!$policy->view(\Auth::user(), $project)) {
@@ -219,6 +225,7 @@ class ProjectController extends Controller
 
         switch ($op) {
             case 'basic':
+                $viewData['catalogs'] = Catalog::all();
                 break;
             case 'privilege':
                 $groups = Group::with([
@@ -308,7 +315,8 @@ class ProjectController extends Controller
                 'description' => 'max:255',
                 'project_id'  => "required|in:{$project->id}|project_exist",
                 'visibility'  => 'required|in:1,2',
-                'sort_level'  => 'integer|between:-999999999,999999999'
+                'sort_level'  => 'integer|between:-999999999,999999999',
+                'catalog'     => 'required|integer',
             ],
             [
                 'name.required'   => __('project.validation.project_name_required'),
@@ -321,10 +329,12 @@ class ProjectController extends Controller
         $description = $request->input('description');
         $visibility  = $request->input('visibility');
         $sortLevel   = $request->input('sort_level');
+        $catalog     = $request->input('catalog');
 
         $project->name        = $name;
         $project->description = $description;
         $project->visibility  = $visibility;
+        $project->catalog_id  = empty($catalog) ? null : $catalog;
         if (\Auth::user()->can('project-sort') && $sortLevel != null) {
             $project->sort_level = (int)$sortLevel;
         }

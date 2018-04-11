@@ -13,7 +13,7 @@
         <div class="card-header">创建用户组</div>
         <div class="card-body">
             <form method="post"
-                  action="{!! route('admin:groups:add') !!}">
+                  action="{!! wzRoute('admin:groups:add') !!}">
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label for="form-name" class="bmd-label-floating">用户组名称</label>

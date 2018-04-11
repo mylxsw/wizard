@@ -69,6 +69,14 @@ Route::group(['middleware' => 'locale'], function () {
         Route::get('/users', 'UserController@users')->name('users');
         Route::get('/users/{id}', 'UserController@user')->name('user');
         Route::post('/users/{id}', 'UserController@updateUser')->name('user:update');
+
+        // 项目目录管理
+        Route::get('/catalogs', 'CatalogController@catalogs')->name('catalogs');
+        Route::post('/catalogs', 'CatalogController@add')->name('catalogs:add');
+        Route::get('/catalogs/{id}', 'CatalogController@info')->name('catalogs:view');
+        Route::post('/catalogs/{id}', 'CatalogController@edit')->name('catalogs:edit');
+        Route::delete('/catalogs/{id}', 'CatalogController@delete')->name('catalogs:delete');
+        Route::delete('/catalogs/{id}/project/{project_id}', 'CatalogController@removeProject')->name('catalogs:project:del');
     });
 
     Route::group(['middleware' => 'auth'], function () {

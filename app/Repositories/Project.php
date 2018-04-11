@@ -19,7 +19,7 @@ class Project extends Repository
     /**
      * 公开项目
      */
-    const VISIBILITY_PUBLIC  = '1';
+    const VISIBILITY_PUBLIC = '1';
     /**
      * 私有项目
      */
@@ -42,6 +42,7 @@ class Project extends Repository
             'visibility',
             'user_id',
             'sort_level',
+            'catalog_id',
         ];
 
     public $dates = ['deleted_at'];
@@ -85,5 +86,15 @@ class Project extends Repository
     public function attachments()
     {
         return $this->hasMany(Attachment::class, 'project_id', 'id');
+    }
+
+    /**
+     * 项目所属的目录
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function catalog()
+    {
+        return $this->belongsTo(Catalog::class, 'catalog_id', 'id');
     }
 }

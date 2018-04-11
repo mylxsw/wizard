@@ -8,7 +8,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Catalog;
 use App\Repositories\Project;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -26,11 +28,24 @@ class HomeController extends Controller
      */
     public function home(Request $request)
     {
-        $perPage = $request->input('per_page', 28);
-        $name    = $request->input('name');
+        $perPage   = $request->input('per_page', 28);
+        $name      = $request->input('name');
+        $catalogId = $request->input('catalog', 0);
 
         /** @var Project $projectModel */
-        $projectModel= Project::query();
+        $projectModel = Project::query();
+        if (empty($catalogId)) {
+            // 首页默认只查询不属于任何目录的项目
+            $projectModel->whereNull('catalog_id');
+
+            // 查询项目目录
+            /** @var Collection $catalogs */
+            $catalogs = Catalog::orderBy('sort_level', 'ASC')->get();
+        } else {
+            $catalog = Catalog::where('id', $catalogId)->firstOrFail();
+            $projectModel->where('catalog_id', intval($catalogId));
+        }
+
         if (!empty($name)) {
             $projectModel->where('name', 'like', "%{$name}%");
         }
@@ -57,7 +72,17 @@ class HomeController extends Controller
             $projects = $projectModel->orderBy('sort_level', 'ASC')->paginate($perPage);
         }
 
-        return view('index', ['projects' => $projects->appends(['per_page' => $perPage, 'name' => $name]), 'name' => $name,]);
+        return view('index', [
+            'projects'   => $projects->appends([
+                'per_page' => $perPage,
+                'name'     => $name,
+                'catalog'  => $catalogId ?? null,
+            ]),
+            'name'       => $name,
+            'catalogs'   => $catalogs ?? [],
+            'catalog_id' => $catalogId ?? 0,
+            'catalog'    => $catalog ?? null,
+        ]);
     }
 
     /**

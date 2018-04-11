@@ -21,6 +21,9 @@
         <div class="col-9">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ wzRoute('user:home') }}">@lang('common.home')</a></li>
+                @if(!empty($project->catalog))
+                    <li class="breadcrumb-item"><a href="{{ wzRoute('home', ['catalog' => $project->catalog->id]) }}">{{ $project->catalog->name }}</a></li>
+                @endif
                 <li class="breadcrumb-item"><a href="{{ wzRoute('project:home', ['id' => $project->id]) }}">{{ $project->name }}</a></li>
                 <li class="breadcrumb-item active">@lang("project.{$op}")</li>
             </ol>
