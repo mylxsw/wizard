@@ -39,7 +39,7 @@ $.wz = {
                     }
                     layer.alert(messages.join('; '), {icon: 5});
                 } else {
-                    layer.alert('server error', {icon: 5});
+                    layer.alert('数据加载错误，请稍后重试', {icon: 5});
                 }
             }
         });

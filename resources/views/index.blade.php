@@ -7,8 +7,11 @@
     <div class="card mt-4 mb-4">
         <div class="card-header">
             <div class="card-header-title">
-                <a href="{{ wzRoute('home') }}"><i class="icon-home"></i> 公共主页</a>
-                @if (!empty($catalog)) / <a href="{{ wzRoute('home', ['catalog' => $catalog->id]) }}">{{ $catalog->name }}</a> @endif
+                @if (!empty($catalog))
+                    <a class="badge badge-info badge-pill" href="{{ wzRoute('home') }}">
+                        #{{ $catalog->name }}
+                    </a>
+                @endif
             </div>
             <div class="card-header-operation">
                 <div class="bmd-form-group bmd-collapse-inline pull-right">
@@ -32,10 +35,14 @@
                     @foreach($catalogs ?? [] as $cat)
                         <div class="col-3">
                             <a class="wz-box wz-box-catalog" href="{{ wzRoute('home', ['catalog' => $cat->id]) }}">
+                                <span title="项目数" class="wz-box-tag pull-right wz-project-count">{{ $cat->projects_count }} 个项目</span>
                                 <p class="wz-title" title="{{ $cat->name }}【排序：{{ $cat->sort_level }}】">{{ $cat->name }}</p>
                             </a>
                         </div>
                     @endforeach
+                </div>
+
+                <div class="row col-12">
                     @foreach($projects ?? [] as $proj)
                         <div class="col-3">
                             <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">

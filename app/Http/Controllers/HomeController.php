@@ -28,19 +28,24 @@ class HomeController extends Controller
      */
     public function home(Request $request)
     {
-        $perPage   = $request->input('per_page', 28);
+        $perPage   = (int)$request->input('per_page', 20);
         $name      = $request->input('name');
-        $catalogId = $request->input('catalog', 0);
+        $catalogId = (int)$request->input('catalog', 0);
+        $page      = (int)$request->input('page', 1);
 
         /** @var Project $projectModel */
         $projectModel = Project::query();
-        if (empty($catalogId)) {
+        if (empty($catalogId) || !empty($name)) {
             // 首页默认只查询不属于任何目录的项目
             $projectModel->whereNull('catalog_id');
 
             // 查询项目目录
-            /** @var Collection $catalogs */
-            $catalogs = Catalog::orderBy('sort_level', 'ASC')->get();
+            // 在搜索模式下，不展示目录
+            // 在分页查询的第一页之外，不展示目录
+            if (empty($name) && $page === 1) {
+                /** @var Collection $catalogs */
+                $catalogs = Catalog::withCount('projects')->orderBy('sort_level', 'ASC')->get();
+            }
         } else {
             $catalog = Catalog::where('id', $catalogId)->firstOrFail();
             $projectModel->where('catalog_id', intval($catalogId));

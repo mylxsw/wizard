@@ -3,7 +3,7 @@
     @if($pageID !== 0)
         <div class="wz-panel-breadcrumb">
             <ol class="breadcrumb pull-left">
-                <li class="breadcrumb-item"><a href="/home">首页</a></li>
+                <li class="breadcrumb-item"><a href="{{ wzRoute('home') }}">首页</a></li>
                 @if(!empty($project->catalog))
                     <li class="breadcrumb-item"><a href="{{ wzRoute('home', ['catalog' => $project->catalog->id]) }}">{{ $project->catalog->name }}</a></li>
                 @endif
@@ -76,7 +76,7 @@
     @else
         <div class="wz-panel-breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/home">首页</a></li>
+                <li class="breadcrumb-item"><a href="{{ wzRoute('home') }}">首页</a></li>
                 @if(!empty($project->catalog))
                     <li class="breadcrumb-item"><a href="{{ wzRoute('home', ['catalog' => $project->catalog->id]) }}">{{ $project->catalog->name }}</a></li>
                 @endif
