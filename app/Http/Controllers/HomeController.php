@@ -24,14 +24,18 @@ class HomeController extends Controller
      * - 普通用户：显示属性为public，同时用户含有分组权限的项目以及当前用户的项目
      * - 管理员：显示所有项目
      *
+     * @param Request $request
+     * @param int     $catalog
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function home(Request $request)
+    public function home(Request $request, $catalog = 0)
     {
         $perPage   = (int)$request->input('per_page', 20);
         $name      = $request->input('name');
-        $catalogId = (int)$request->input('catalog', 0);
         $page      = (int)$request->input('page', 1);
+        $catalogId = (int)$catalog;
+        unset($catalog);
 
         /** @var Project $projectModel */
         $projectModel = Project::query();

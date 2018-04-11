@@ -38,6 +38,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('user_id', $digest);
         Route::pattern('history_id', $digest);
         Route::pattern('attachment_id', $digest);
+        Route::pattern('catalog', $digest);
 
         parent::boot();
     }

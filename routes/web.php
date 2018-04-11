@@ -24,7 +24,7 @@ Route::group(['middleware' => 'locale'], function () {
     Auth::routes();
 
     // 公共首页
-    Route::get('/', 'HomeController@home')->name('home');
+    Route::get('/{catalog?}', 'HomeController@home')->name('home');
     // 项目公共页面
     Route::get('/project/{id}', 'ProjectController@project')->name('project:home');
     // 设置语言
