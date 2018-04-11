@@ -24,6 +24,11 @@
                             </button>
                         </li>
                     @endif
+                    <li role="presentation" class="mr-2">
+                        <button type="button" data-href="{{ wzRoute('project:doc:attachment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" title="附件" class="btn btn-primary bmd-btn-icon">
+                            <span class="icon-paper-clip"></span>
+                        </button>
+                    </li>
                 @endcan
                 @include('components.page-menus', ['project' => $project, 'pageItem' => $pageItem])
             </ul>

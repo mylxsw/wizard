@@ -66,10 +66,12 @@ class AttachmentController extends Controller
             ]
         );
 
-        $file = $request->file('attachment');
+        $file      = $request->file('attachment');
+        $extension = $this->getFileExtension($file);
+
         $this->validateParameters(
             [
-                'extension'  => $file->extension(),
+                'extension'  => $extension,
                 'project_id' => $id,
                 'page_id'    => $page_id,
             ],
@@ -97,6 +99,19 @@ class AttachmentController extends Controller
         ]);
 
         return redirect(wzRoute('project:doc:attachment', ['id' => $id, 'page_id' => $page_id]));
+    }
+
+
+    /**
+     * 获取文件扩展名
+     *
+     * 有些文件，通过mime类型无法获取类型，所以直接读取文件扩展名
+     *
+     * @param \Illuminate\Http\UploadedFile $file
+     */
+    private function getFileExtension($file)
+    {
+        return $file->extension() ?? $file->getClientOriginalExtension();
     }
 
     /**

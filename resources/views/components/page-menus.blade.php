@@ -5,10 +5,6 @@
     </button>
 
     <div class="dropdown-menu wz-dropdown-menu-left" aria-labelledby="wz-doc-more-btn">
-        <a href="{{ wzRoute('project:doc:attachment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="dropdown-item">
-                <span class="icon-paper-clip mr-2"></span>
-                附件
-        </a>
         <a href="#" wz-share data-url="{{ wzRoute('project:doc:share', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="dropdown-item">
                 <span class="icon-share-alt mr-2"></span>
                 @lang('common.btn_share')
