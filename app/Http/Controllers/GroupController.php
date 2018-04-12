@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Repositories\Group;
+use App\Repositories\Project;
 use App\Repositories\User;
 use Illuminate\Http\Request;
 
@@ -45,14 +46,16 @@ class GroupController extends Controller
         $usersForSelect = User::whereDoesntHave('groups', $subQuery)->get();
         $users          = User::whereHas('groups', $subQuery)->get();
 
-        $projects = $group->projects()->with('catalog')->get();
+        $projects          = $group->projects()->with('catalog')->get();
+        $projectsForSelect = Project::whereDoesntHave('groups', $subQuery)->with('catalog')->get();
 
         return view('group.info', [
-            'op'               => 'groups',
-            'group'            => $group,
-            'users_for_select' => $usersForSelect,
-            'users'            => $users,
-            'projects'         => $projects,
+            'op'                  => 'groups',
+            'group'               => $group,
+            'users_for_select'    => $usersForSelect,
+            'users'               => $users,
+            'projects'            => $projects,
+            'projects_for_select' => $projectsForSelect,
         ]);
     }
 
@@ -160,5 +163,37 @@ class GroupController extends Controller
         $this->alertSuccess(__('common.delete_success'));
 
         return redirect(wzRoute('admin:groups'));
+    }
+
+    /**
+     * 批量为用户组赋予项目权限
+     *
+     * @param Request $request
+     * @param         $id
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function grantProjects(Request $request, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'projects'  => 'required|array',
+                'privilege' => 'in:wr,r'
+            ],
+            [
+                'projects.required' => '您没有选择要添加的项目',
+            ]
+        );
+
+        $projectIds = $request->input('projects');
+        $privilege  = $request->input('privilege', 'r');
+
+        $group = Group::where('id', $id)->firstOrFail();
+        $group->projects()->attach($projectIds, ['privilege' => $privilege == 'r' ? 2 : 1]);
+
+        $this->alertSuccess(__('common.operation_success'));
+
+        return redirect(wzRoute('admin:groups:view', ['id' => $id]));
     }
 }

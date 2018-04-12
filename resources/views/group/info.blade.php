@@ -12,7 +12,7 @@
 @section('admin-content')
 
     <div class="card">
-        <div class="card-header">新增成员</div>
+        <div class="card-header">添加成员</div>
         <div class="card-body">
             <form method="post"
                   action="{!! wzRoute('admin:groups:users:add', ['id' => $group->id]) !!}">
@@ -75,6 +75,40 @@
     </div>
 
     <div class="card mt-3">
+        <div class="card-header">添加项目</div>
+        <div class="card-body">
+            <form method="post"
+                  action="{!! wzRoute('admin:groups:projects:add', ['id' => $group->id]) !!}">
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <select name="projects[]" style="width: 440px;" class="form-control select2-multiple" id="wz-project-select" multiple>
+                        @foreach($projects_for_select as $proj)
+                            <option value="{{ $proj->id }}" data-name="{{ $proj->name }}">
+                                {{ $proj->name }}
+                                @if(!empty($proj->catalog_id))
+                                    （#{{ $proj->catalog->name ?? '-' }}）
+                                @endif
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="privilege" value="wr"> @lang('project.group_write_enabled')
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-raised">添加</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mt-3">
         <div class="card-header">@lang('common.project')</div>
         <table class="table">
             <thead>
@@ -132,6 +166,13 @@
 
         $('#wz-user-select').select2({
             placeholder: '选择用户',
+            templateSelection: function (data, container) {
+                return $(data.element).data('name');
+            }
+        });
+
+        $('#wz-project-select').select2({
+            placeholder: '选择项目',
             templateSelection: function (data, container) {
                 return $(data.element).data('name');
             }

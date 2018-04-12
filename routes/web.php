@@ -64,6 +64,7 @@ Route::group(['middleware' => 'locale'], function () {
         Route::get('/groups/{id}', 'GroupController@info')->name('groups:view');
         Route::post('/groups/{id}', 'GroupController@addUser')->name('groups:users:add');
         Route::delete('/groups/{id}/users/{user_id}', 'GroupController@removeUser')->name('groups:users:del');
+        Route::post('/groups/{id}/projects', 'GroupController@grantProjects')->name('groups:projects:add');
 
         // 用户管理
         Route::get('/users', 'UserController@users')->name('users');
