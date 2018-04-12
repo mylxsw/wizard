@@ -25,6 +25,7 @@
                                 <span title="@lang('project.privilege_private')" class="wz-box-tag icon-eye-close"></span>
                             @endif
                             <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
+                            <span title="所属目录" class="wz-box-tag pull-right wz-project-count">{{ $proj->catalog->name ?? '' }}</span>
                         </a>
                     </div>
                 @endforeach
