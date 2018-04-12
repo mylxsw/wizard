@@ -83,11 +83,11 @@
                 <div class="form-group">
                     <select name="projects[]" style="width: 440px;" class="form-control select2-multiple" id="wz-project-select" multiple>
                         @foreach($projects_for_select as $proj)
-                            <option value="{{ $proj->id }}" data-name="{{ $proj->name }}">
-                                {{ $proj->name }}
-                                @if(!empty($proj->catalog_id))
-                                    （#{{ $proj->catalog->name ?? '-' }}）
-                                @endif
+                            @php
+                                $projectName = $proj->name . (empty($proj->catalog_id) ? '' : "（#{$proj->catalog->name}）");
+                            @endphp
+                            <option value="{{ $proj->id }}" data-name="{{ $projectName }}">
+                                {{ $projectName }}
                             </option>
                         @endforeach
                     </select>
