@@ -113,7 +113,8 @@ a:hover {
     position: absolute;
     top: 20px;
     right: 0;
-    width: 120px;
+    width: 145px;
+    text-align: right;
 }
 
 .wz-project-title .btn-group.open .dropdown-toggle {
@@ -169,6 +170,15 @@ a:hover {
     color: #ccc;
 }
 
+.wz-box-tag.pull-right {
+    right: 8px;
+}
+
+.wz-box-tag.pull-left {
+    right: auto;
+    left: 8px;
+}
+
 .wz-box:hover {
     color: #333;
     background-color: #e6e6e6;
@@ -179,6 +189,10 @@ a:hover {
     color: #ccc;
     bottom: 8px;
     top: auto;
+}
+
+.wz-box-tag-star {
+    color: #f1c40f;
 }
 
 .wz-box:active {

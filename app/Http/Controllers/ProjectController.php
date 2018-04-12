@@ -104,7 +104,7 @@ class ProjectController extends Controller
 
         event(new ProjectCreated($project));
 
-        $request->session()->flash('alert.message', __('common.operation_success'));
+        $this->alertSuccess(__('common.operation_success'));
         return [
             'id'          => $project->id,
             'name'        => $project->name,
@@ -196,6 +196,7 @@ class ProjectController extends Controller
             'comment_highlight' => $request->input('cm', ''),
             'navigators'        => navigator($id, $pageID),
             'history'           => $history ?? false,
+            'isFavorited'       => $project->isFavoriteByUser(\Auth::user()),
         ]);
     }
 
@@ -399,5 +400,35 @@ class ProjectController extends Controller
         }
 
         return redirect(route('project:setting:handle', ['id' => $id, 'op' => 'privilege']));
+    }
+
+    /**
+     * 关注、取消关注项目
+     *
+     * @param Request $request
+     * @param         $id
+     *
+     * @return array
+     */
+    public function favorite(Request $request, $id)
+    {
+        $this->validate($request, ['action' => 'required|in:fav,unfav']);
+
+        $action  = $request->input('action');
+        $project = Project::where('id', $id)->firstOrFail();
+        $user    = \Auth::user();
+
+        if ($action == 'fav') {
+            $user->favoriteProjects()->attach($project->id);
+        } else {
+            $user->favoriteProjects()->detach($project->id);
+        }
+
+        $this->alertSuccess($action == 'fav' ? '您已成功关注该项目' : '您已取消对该项目的关注');
+
+        return [
+            'message' => '操作成功',
+            'reload'  => true,
+        ];
     }
 }

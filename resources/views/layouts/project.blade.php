@@ -10,14 +10,24 @@
                     title="{{ $project->name }}">
                     {{ $project->name }}
                 </a>
-                @if(!Auth::guest() && (Auth::user()->can('page-add', $project) || Auth::user()->can('project-edit', $project)))
-                    <div class="dropdown pull-right" style="margin-right: 20px;" role="group">
+                @php
+                $hasEditPrivilege = !Auth::guest() && (Auth::user()->can('page-add', $project) || Auth::user()->can('project-edit', $project));
+                @endphp
+                <div class="dropdown pull-right" style="margin-right: 20px;" role="group">
+                    @if($hasEditPrivilege)
                         <button type="button" class="btn bmd-btn-icon " data-href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'pid' => $pageID]) !!}" title="创建Markdown文档">
                             <i class="material-icons">add_to_photos</i>
                         </button>
                         <button type="button" class="btn bmd-btn-icon " data-href="{!! wzRoute('search:search', ['project_id' => $project->id]) !!}" title="搜索">
                             <i class="material-icons">search</i>
                         </button>
+                    @endif
+                    @if(!Auth::guest())
+                        <button type="button" class="btn bmd-btn-icon" data-method="post" data-href="{{ wzRoute('project:favorite', ['id' => $project->id, 'action' => $isFavorited ? 'unfav':'fav']) }}" title="{{ $isFavorited ? '取消关注' : '关注该项目' }}">
+                            <i class="material-icons {{ $isFavorited ? 'wz-box-tag-star' : '' }}">star</i>
+                        </button>
+                    @endif
+                    @if($hasEditPrivilege)
                         <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="project-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">more_vert</i>
                         </button>
@@ -37,8 +47,8 @@
                                 </a>
                             @endcan
                         </ul>
-                    </div>
-                @endif
+                    @endif
+                </div>
             </div>
             <ul class="nav nav-pills nav-stacked wz-left-nav {{-- hide --}}">
                 @include('components.navbar', ['navbars' => $navigators])

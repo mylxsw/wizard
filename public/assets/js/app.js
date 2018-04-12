@@ -28,23 +28,26 @@ $.global = {
      *
      * @param spec
      */
-    updateSwaggerDraft: function (spec) {},
+    updateSwaggerDraft: function (spec) {
+    },
     /**
      * 清空暂存的文档
      *
      * 该方法用于清理swagger文档编辑器的暂存文件
      */
-    clearDocumentDraft: function () {},
+    clearDocumentDraft: function () {
+    },
 
     /**
      * 获取文档编辑器中的内容
      *
      * 表单提交时调用，获取页面中编辑器的内容
      */
-    getEditorContent: function() {}
+    getEditorContent: function () {
+    }
 };
 
-$(function() {
+$(function () {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -68,7 +71,14 @@ $(function() {
         });
     });
 
-    $('button[data-href]').on('click', function() {
-        window.location.href = $(this).data('href');
+    $('button[data-href]').on('click', function () {
+        var method = $(this).data('method') || 'get';
+        if (method === '' || method === 'get') {
+            window.location.href = $(this).data('href');
+        } else {
+            $.wz.request(method, $(this).data('href'), {}, function (data) {
+                window.location.reload(true);
+            });
+        }
     });
 });

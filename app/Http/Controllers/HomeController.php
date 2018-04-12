@@ -80,6 +80,18 @@ class HomeController extends Controller
             $projects = $projectModel->orderBy('sort_level', 'ASC')->paginate($perPage);
         }
 
+        // 当前用户关注的项目
+        // 展示条件：
+        // 1. 用户已登录
+        // 2. 非搜索请求
+        // 3. 页码为第一页
+        if (!empty($user) && empty($name) && $page === 1) {
+            if (!empty($catalogId)) {
+                $favorites = $user->favoriteProjects()->where('catalog_id', $catalogId)->get();
+            } else {
+                $favorites = $user->favoriteProjects;
+            }
+        }
         return view('index', [
             'projects'   => $projects->appends([
                 'per_page' => $perPage,
@@ -90,6 +102,7 @@ class HomeController extends Controller
             'catalogs'   => $catalogs ?? [],
             'catalog_id' => $catalogId ?? 0,
             'catalog'    => $catalog ?? null,
+            'favorites'  => $favorites ?? [],
         ]);
     }
 

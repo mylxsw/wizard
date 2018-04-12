@@ -49,6 +49,9 @@
                         <div class="col-3">
                             <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
                                 @include('components.project-tag', ['proj' => $proj])
+                                {{--@if(!empty($favorites) && $favorites->contains('id', $proj->id))--}}
+                                    {{--<span title="关注该项目" class="wz-box-tag pull-right icon-star wz-box-tag-star"></span>--}}
+                                {{--@endif--}}
                                 <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
                                 @if (!empty($name)) {{-- 搜索模式下，所有项目平级展示，因此要输出项目所属的目录名称 --}}
                                     <span title="所属目录" class="wz-box-tag pull-right wz-project-count">{{ $proj->catalog->name ?? '' }}</span>
@@ -64,7 +67,29 @@
         </div>
     </div>
 
-    @if(!Auth::guest())
+    @if(!Auth::guest() && empty($name))
+
+        {{-- 非搜索模式，同时用于有关注的项目，则展示 --}}
+        @if(!empty($favorites) && $favorites->count() > 0 && empty($name))
+        <div class="card mb-4">
+            <div class="card-header">我关注的</div>
+            <div class="card-body">
+                <div class="row col-12">
+                    @foreach($favorites as $proj)
+                        <div class="col-3">
+                            <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
+                                @include('components.project-tag', ['proj' => $proj])
+                                <span title="关注该项目" class="wz-box-tag pull-right icon-star wz-box-tag-star"></span>
+                                <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
+                                <span title="所属目录" class="wz-box-tag pull-right wz-project-count">{{ $proj->catalog->name ?? '' }}</span>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        @endif
+
         <div class="card mb-4">
             <div class="card-header">最近活动</div>
             <div class="card-body" id="operation-log-recently"></div>
@@ -75,7 +100,7 @@
 @endsection
 
 @push('script')
-    @if(!Auth::guest())
+    @if(!Auth::guest() && empty($name))
     <script>
         $(function () {
             $.wz.request('get', '{{ wzRoute('operation-log:recently', ['catalog' => $catalog_id,]) }}', {}, function (data) {

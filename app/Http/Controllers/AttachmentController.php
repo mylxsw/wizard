@@ -141,7 +141,8 @@ class AttachmentController extends Controller
             'pageID'      => $page_id,
             'pageItem'    => $page,
             'extensions'  => $this->extensions,
-            'navigators'  => navigator($id, $page_id)
+            'navigators'  => navigator($id, $page_id),
+            'isFavorited' => $project->isFavoriteByUser(\Auth::user()),
         ]);
     }
 
@@ -154,6 +155,7 @@ class AttachmentController extends Controller
      * @param         $attachment_id
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function delete(Request $request, $id, $page_id, $attachment_id)
     {

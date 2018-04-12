@@ -79,6 +79,16 @@ class Project extends Repository
     }
 
     /**
+     * 关注该项目的用户
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function favoriteUsers()
+    {
+        return $this->belongsToMany(User::class, 'wz_project_stars', 'project_id', 'user_id');
+    }
+
+    /**
      * 项目下所有的附件
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -96,5 +106,21 @@ class Project extends Repository
     public function catalog()
     {
         return $this->belongsTo(Catalog::class, 'catalog_id', 'id');
+    }
+
+    /**
+     * 判断是否用户关注了该项目
+     *
+     * @param User $user
+     *
+     * @return bool
+     */
+    public function isFavoriteByUser(User $user = null)
+    {
+        if (empty ($user)) {
+            return false;
+        }
+
+        return $this->favoriteUsers()->wherePivot('user_id', $user->id)->exists();
     }
 }

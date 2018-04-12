@@ -100,6 +100,16 @@ class User extends Authenticatable
     }
 
     /**
+     * 用户关注的项目
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function favoriteProjects()
+    {
+        return $this->belongsToMany(Project::class, 'wz_project_stars', 'user_id', 'project_id');
+    }
+
+    /**
      * 用户编辑过的历史页面
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

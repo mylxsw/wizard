@@ -40,11 +40,12 @@ class HistoryController extends Controller
             ->paginate(20);
 
         return view('doc.history', [
-            'histories'  => $histories,
-            'project'    => $project,
-            'pageID'     => $page_id,
-            'pageItem'   => $page,
-            'navigators' => navigator($id, $page_id)
+            'histories'   => $histories,
+            'project'     => $project,
+            'pageID'      => $page_id,
+            'pageItem'    => $page,
+            'navigators'  => navigator($id, $page_id),
+            'isFavorited' => $project->isFavoriteByUser(\Auth::user()),
         ]);
     }
 
@@ -69,12 +70,13 @@ class HistoryController extends Controller
         $type    = $page->type == Document::TYPE_DOC ? 'markdown' : 'swagger';
 
         return view('doc.history-doc', [
-            'history'    => $history,
-            'project'    => $project,
-            'pageID'     => $page_id,
-            'pageItem'   => $page,
-            'type'       => $type,
-            'navigators' => navigator($id, $page_id)
+            'history'     => $history,
+            'project'     => $project,
+            'pageID'      => $page_id,
+            'pageItem'    => $page,
+            'type'        => $type,
+            'navigators'  => navigator($id, $page_id),
+            'isFavorited' => $project->isFavoriteByUser(\Auth::user()),
         ]);
     }
 
@@ -117,7 +119,7 @@ class HistoryController extends Controller
     {
         if ($history_id == 0) {
             $document = Document::findOrFail($page_id);
-            $history = DocumentHistory::where('page_id', $page_id)
+            $history  = DocumentHistory::where('page_id', $page_id)
                 ->where('id', '!=', $document->history_id)
                 ->orderBy('id', 'desc')
                 ->firstOrFail();

@@ -144,6 +144,9 @@ Route::group(['middleware' => 'locale'], function () {
             Route::get('/{id}/doc/{page_id}/histories', 'HistoryController@pages')->name('doc:history');
             Route::get('/{id}/doc/{page_id}/histories/{history_id}', 'HistoryController@page')->name('doc:history:show');
             Route::put('/{id}/doc/{page_id}/histories/{history_id}', 'HistoryController@recover')->name('doc:history:recover');
+
+            // 关注项目
+            Route::post('/{id}/favorite', 'ProjectController@favorite')->name('favorite');
         });
 
         // 文档搜索
