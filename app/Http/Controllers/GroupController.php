@@ -45,7 +45,7 @@ class GroupController extends Controller
         $usersForSelect = User::whereDoesntHave('groups', $subQuery)->get();
         $users          = User::whereHas('groups', $subQuery)->get();
 
-        $projects = $group->projects;
+        $projects = $group->projects()->with('catalog')->get();
 
         return view('group.info', [
             'op'               => 'groups',

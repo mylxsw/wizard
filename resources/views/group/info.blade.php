@@ -89,7 +89,12 @@
             @forelse($projects as $project)
                 <tr>
                     <th scope="row">{{ $project->id }}</th>
-                    <td><a href="{!! route('project:home', ['id' => $project->id]) !!}">{{ $project->name }}</a> </td>
+                    <td>
+                        <a href="{!! route('project:home', ['id' => $project->id]) !!}">{{ $project->name }}</a>
+                        @if(!empty($project->catalog_id))
+                            <a target="_blank" class="badge badge-pill badge-info" href="{{ route('home', ['catalog' => $project->catalog_id]) }}">#{{ $project->catalog->name ?? '' }}</a>
+                        @endif
+                    </td>
                     <td>{{ $project->pivot->privilege == 1 ? __('common.yes') : __('common.no') }}</td>
                     <td>
                         <a href="#" wz-form-submit data-form="#form-project-{{ $project->id }}"
