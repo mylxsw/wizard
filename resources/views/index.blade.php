@@ -31,16 +31,18 @@
                         提示： 该页面为公共主页，如果要创建项目，请到 <a href="{{ wzRoute('user:home') }}">@lang('common.user_home')</a>。
                     </div>
                 @endunless
-                <div class="row col-12">
-                    @foreach($catalogs ?? [] as $cat)
-                        <div class="col-3">
-                            <a class="wz-box wz-box-catalog" href="{{ wzRoute('home', ['catalog' => $cat->id]) }}">
-                                <span title="项目数" class="wz-box-tag pull-right wz-project-count">{{ $cat->projects_count }} 个项目</span>
-                                <p class="wz-title" title="{{ $cat->name }}【排序：{{ $cat->sort_level }}】">{{ $cat->name }}</p>
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
+                @if(!empty($catalogs))
+                    <div class="row col-12">
+                        @foreach($catalogs ?? [] as $cat)
+                            <div class="col-3">
+                                <a class="wz-box wz-box-catalog" href="{{ wzRoute('home', ['catalog' => $cat->id]) }}">
+                                    <span title="项目数" class="wz-box-tag pull-right wz-project-count">{{ $cat->projects_count }} 个项目</span>
+                                    <p class="wz-title" title="{{ $cat->name }}【排序：{{ $cat->sort_level }}】">{{ $cat->name }}</p>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
 
                 <div class="row col-12">
                     @foreach($projects ?? [] as $proj)
@@ -48,6 +50,9 @@
                             <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
                                 @include('components.project-tag', ['proj' => $proj])
                                 <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
+                                @if (!empty($name)) {{-- 搜索模式下，所有项目平级展示，因此要输出项目所属的目录名称 --}}
+                                    <span title="所属目录" class="wz-box-tag pull-right wz-project-count">{{ $proj->catalog->name ?? '' }}</span>
+                                @endif
                             </a>
                         </div>
                     @endforeach

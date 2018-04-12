@@ -39,24 +39,23 @@ class HomeController extends Controller
 
         /** @var Project $projectModel */
         $projectModel = Project::query();
-        if (empty($catalogId) || !empty($name)) {
-            // 首页默认只查询不属于任何目录的项目
-            $projectModel->whereNull('catalog_id');
-
-            // 查询项目目录
-            // 在搜索模式下，不展示目录
-            // 在分页查询的第一页之外，不展示目录
-            if (empty($name) && $page === 1) {
-                /** @var Collection $catalogs */
-                $catalogs = Catalog::withCount('projects')->orderBy('sort_level', 'ASC')->get();
-            }
-        } else {
-            $catalog = Catalog::where('id', $catalogId)->firstOrFail();
-            $projectModel->where('catalog_id', intval($catalogId));
-        }
-
         if (!empty($name)) {
             $projectModel->where('name', 'like', "%{$name}%");
+        } else {
+            if (empty($catalogId)) {
+                // 首页默认只查询不属于任何目录的项目
+                $projectModel->whereNull('catalog_id');
+
+                // 查询项目目录
+                // 在分页查询的第一页之外，不展示目录
+                if ($page === 1) {
+                    /** @var Collection $catalogs */
+                    $catalogs = Catalog::withCount('projects')->orderBy('sort_level', 'ASC')->get();
+                }
+            } else {
+                $catalog = Catalog::where('id', $catalogId)->firstOrFail();
+                $projectModel->where('catalog_id', intval($catalogId));
+            }
         }
 
         $user = \Auth::user();
