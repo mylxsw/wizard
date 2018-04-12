@@ -43,8 +43,11 @@ class GroupController extends Controller
             $query->where('group_id', $id);
         };
 
-        $usersForSelect = User::whereDoesntHave('groups', $subQuery)->get();
-        $users          = User::whereHas('groups', $subQuery)->get();
+        $usersForSelect = User::whereDoesntHave('groups', $subQuery)
+            ->where('status', User::STATUS_ACTIVATED)
+            ->get();
+
+        $users = User::whereHas('groups', $subQuery)->get();
 
         $projects          = $group->projects()->with('catalog')->get();
         $projectsForSelect = Project::whereDoesntHave('groups', $subQuery)->with('catalog')->get();
