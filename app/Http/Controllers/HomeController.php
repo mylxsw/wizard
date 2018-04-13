@@ -37,6 +37,13 @@ class HomeController extends Controller
         $catalogId = (int)$catalog;
         unset($catalog);
 
+        // 基本策略
+        // $name为空则表示普通展示，非空则为搜索请求
+        // 1. $name非空（搜索请求），所有项目平级展示，不区分目录
+        // 2. $name空（普通展示），如果提供了目录id，则只查询目录下的项目，不展示目录列表
+        // 3. $name空（普通展示），如果没有提供目录ID，且当前为第一页，则展示不属于任何目录的项目，并且展示目录列表
+        // 如果分页不是第一页，则只展示不属于任何项目的目录，不展示目录列表
+
         /** @var Project $projectModel */
         $projectModel = Project::query();
         if (!empty($name)) {

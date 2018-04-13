@@ -100,6 +100,39 @@
             </tbody>
         </table>
     </div>
+
+    <div class="card mt-3">
+        <div class="card-header">创建的项目</div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>项目名称</th>
+                <th>文档数</th>
+                <th>创建时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            @forelse($user->projects()->with('catalog')->withCount('pages')->get() as $proj)
+                <tr>
+                    <td>{{ $proj->id }}</td>
+                    <td>
+                        <a href="{!! route('project:home', ['id' => $proj->id]) !!}">{{ $proj->name }}</a>
+                        @if(!empty($proj->catalog_id))
+                            <a target="_blank" class="badge badge-pill badge-info" href="{{ route('home', ['catalog' => $proj->catalog_id]) }}">#{{ $proj->catalog->name ?? '' }}</a>
+                        @endif
+                    </td>
+                    <td>{{ $proj->pages_count }}</td>
+                    <td>{{ $proj->created_at }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="3" class="text-center">没有符合条件的信息！</td>
+                </tr>
+            @endforelse
+            </tbody>
+        </table>
+    </div>
 @endsection
 
 @push('script')
