@@ -229,8 +229,8 @@ class UserController extends Controller
 
         $session                   = $request->session();
         $lastSendActivateEmailTime = $session->get('send_activate_email');
-        // 15分钟内只允许发送一次激活邮件
-        $retryDelay = 15 * 60;
+        // 5分钟内只允许发送一次激活邮件
+        $retryDelay = 5 * 60;
         if ($lastSendActivateEmailTime && time() - $lastSendActivateEmailTime <= $retryDelay) {
             $this->alertError(sprintf(
                 '请的操作太过频繁，请 %d 分钟后再试',
