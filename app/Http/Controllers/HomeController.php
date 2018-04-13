@@ -70,18 +70,19 @@ class HomeController extends Controller
             /** @var LengthAwarePaginator $projects */
             $projects = $projectModel->orderBy('sort_level', 'ASC')->paginate($perPage);
         } else {
-            $projectModel->where('visibility', Project::VISIBILITY_PUBLIC);
-            if (!empty($user)) {
-                $userGroups = $user->groups->pluck('id')->toArray();
+
+            $userGroups = empty($user) ? null : $user->groups->pluck('id')->toArray();
+            $projectModel->where(function ($query) use ($user, $userGroups) {
+                $query->where('visibility', Project::VISIBILITY_PUBLIC);
                 if (!empty($userGroups)) {
-                    $projectModel = $projectModel->orWhere(function ($query) use ($userGroups) {
+                    $query->orWhere(function ($query) use ($userGroups) {
                         $query->where('visibility', '!=', Project::VISIBILITY_PUBLIC)
                             ->whereHas('groups', function ($query) use ($userGroups) {
                                 $query->where('wz_groups.id', $userGroups);
                             });
-                    })->orWhere('user_id', \Auth::user()->id);
+                    })->orWhere('user_id', $user->id);
                 }
-            }
+            });
 
             /** @var LengthAwarePaginator $projects */
             $projects = $projectModel->orderBy('sort_level', 'ASC')->paginate($perPage);
