@@ -28,7 +28,7 @@
                 <tr class="{{ $user->id == Auth::user()->id ? 'info' : '' }}">
                     <th scope="row">{{ $user->id }}</th>
                     <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
+                    <td><a href="{{ wzRoute('admin:user', ['id' => $user->id]) }}">{{ $user->email }}</a></td>
                     <td>{{ $user->isAdmin() ? '管理员':'普通' }}</td>
                     <td>
                         @if($user->status == 0)
