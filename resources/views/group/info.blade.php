@@ -93,8 +93,15 @@
                     <form method="post"
                           action="{!! wzRoute('admin:groups:projects:add', ['id' => $group->id]) !!}">
                         {{ csrf_field() }}
+
+                        <div class="alert alert-info" role="alert">
+                            以“<b>#</b>”开头的选项为项目目录，选择该项会将该目录下所有项目权限批量赋予用户组。
+                        </div>
                         <div class="form-group">
                             <select name="projects[]" style="width: 440px;" class="form-control select2-multiple" id="wz-project-select" multiple>
+                                @foreach($catalogs as $cat)
+                                    <option value="#{{ $cat->id }}" data-name="#{{ $cat->name }}">#{{ $cat->name }}</option>
+                                @endforeach
                                 @foreach($projects_for_select as $proj)
                                     @php
                                         $projectName = $proj->name . (empty($proj->catalog_id) ? '' : "（#{$proj->catalog->name}）");

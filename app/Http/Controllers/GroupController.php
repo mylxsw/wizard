@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Repositories\Catalog;
 use App\Repositories\Group;
 use App\Repositories\Project;
 use App\Repositories\User;
@@ -54,6 +55,9 @@ class GroupController extends Controller
         $projects          = $group->projects()->with('catalog')->get();
         $projectsForSelect = Project::whereDoesntHave('groups', $subQuery)->with('catalog')->get();
 
+        // 目录列表，可以按照目录的维度批量选择目录下所有的项目批量为用户组授权
+        $catalogs = Catalog::all();
+
         return view('group.info', [
             'op'                  => 'groups',
             'group'               => $group,
@@ -62,6 +66,7 @@ class GroupController extends Controller
             'projects'            => $projects,
             'projects_for_select' => $projectsForSelect,
             'tab'                 => $request->input('tab', 'member'),
+            'catalogs'            => $catalogs,
         ]);
     }
 
@@ -226,10 +231,26 @@ class GroupController extends Controller
             ]
         );
 
-        $projectIds = $request->input('projects');
-        $privilege  = $request->input('privilege', 'r');
+        $projects  = $request->input('projects');
+        $privilege = $request->input('privilege', 'r');
+
+        $projectIds = [];
+        foreach ($projects as $pro) {
+            if (starts_with($pro, '#')) {
+                /** @var Catalog $catalog */
+                $catalog = Catalog::where('id', trim($pro, '#'))->firstOrFail();
+                foreach ($catalog->projects()->pluck('id')->toArray() as $projectId) {
+                    $projectIds[] = (int)$projectId;
+                }
+            } else {
+                $projectIds[] = (int)$pro;
+            }
+        }
+
+        $projectIds = array_unique($projectIds, SORT_NUMERIC);
 
         $group = Group::where('id', $id)->firstOrFail();
+        $group->projects()->detach($projectIds);
         $group->projects()->attach($projectIds, ['privilege' => $privilege == 'r' ? 2 : 1]);
 
         $this->alertSuccess(__('common.operation_success'));
