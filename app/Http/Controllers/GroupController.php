@@ -13,6 +13,7 @@ use App\Repositories\Group;
 use App\Repositories\Project;
 use App\Repositories\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class GroupController extends Controller
 {
@@ -32,11 +33,12 @@ class GroupController extends Controller
     /**
      * 分组信息
      *
-     * @param $id
+     * @param Request $request
+     * @param         $id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function info($id)
+    public function info(Request $request, $id)
     {
         $group    = Group::where('id', $id)->firstOrFail();
         $subQuery = function ($query) use ($id) {
@@ -59,6 +61,7 @@ class GroupController extends Controller
             'users'               => $users,
             'projects'            => $projects,
             'projects_for_select' => $projectsForSelect,
+            'tab'                 => $request->input('tab', 'member'),
         ]);
     }
 
@@ -89,7 +92,7 @@ class GroupController extends Controller
 
         $this->alertSuccess(__('common.operation_success'));
 
-        return redirect(wzRoute('admin:groups:view', ['id' => $id]));
+        return redirect(wzRoute('admin:groups:view', ['id' => $id, 'tab' => 'member']));
     }
 
     /**
@@ -108,7 +111,7 @@ class GroupController extends Controller
 
         $this->alertSuccess(__('common.operation_success'));
 
-        return redirect()->back();
+        return redirect(wzRoute('admin:groups:view', ['id' => $id, 'tab' => 'member']));
     }
 
     /**
@@ -139,6 +142,40 @@ class GroupController extends Controller
         $this->alertSuccess(__('common.operation_success'));
 
         return redirect(wzRoute('admin:groups'));
+    }
+
+    /**
+     * 更新分组信息
+     *
+     * @param Request $request
+     * @param         $id
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function update(Request $request, $id)
+    {
+        $this->validate(
+            $request,
+            [
+                'name' => [
+                    'required',
+                    Rule::unique('wz_groups', 'name')->ignore($id),
+                ]
+            ],
+            [
+                'name.required' => '分组名不能为空',
+                'name.unique'   => '分组名已经存在',
+            ]
+        );
+
+        $group       = Group::where('id', $id)->firstOrFail();
+        $group->name = $request->input('name');
+
+        $group->save();
+
+        $this->alertSuccess(__('common.operation_success'));
+
+        return redirect(wzRoute('admin:groups:view', ['id' => $id, 'tab' => 'setting']));
     }
 
     /**
@@ -197,6 +234,6 @@ class GroupController extends Controller
 
         $this->alertSuccess(__('common.operation_success'));
 
-        return redirect(wzRoute('admin:groups:view', ['id' => $id]));
+        return redirect(wzRoute('admin:groups:view', ['id' => $id, 'tab' => 'project']));
     }
 }

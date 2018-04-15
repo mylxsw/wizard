@@ -62,7 +62,8 @@ Route::group(['middleware' => 'locale'], function () {
         Route::post('/groups', 'GroupController@add')->name('groups:add');
         Route::delete('/groups/{id}', 'GroupController@delete')->name('groups:del');
         Route::get('/groups/{id}', 'GroupController@info')->name('groups:view');
-        Route::post('/groups/{id}', 'GroupController@addUser')->name('groups:users:add');
+        Route::post('/groups/{id}/user', 'GroupController@addUser')->name('groups:users:add');
+        Route::post('/groups/{id}', 'GroupController@update')->name('groups:update');
         Route::delete('/groups/{id}/users/{user_id}', 'GroupController@removeUser')->name('groups:users:del');
         Route::post('/groups/{id}/projects', 'GroupController@grantProjects')->name('groups:projects:add');
 
