@@ -355,11 +355,11 @@ class DocumentController extends Controller
     public function readMode($id, $page_id)
     {
         /** @var Project $project */
-        $project = Project::with([
-            'pages' => function (Relation $query) {
-                $query->select('id', 'pid', 'title', 'description', 'project_id', 'type', 'status');
-            }
-        ])->findOrFail($id);
+        $project = Project::query()->findOrFail($id);
+        $policy  = new ProjectPolicy();
+        if (!$policy->view(\Auth::user(), $project)) {
+            abort(403, '您没有访问该项目的权限');
+        }
 
         $page = Document::where('project_id', $id)->where('id', $page_id)->firstOrFail();
         $type = $page->type == Document::TYPE_DOC ? 'markdown' : 'swagger';
