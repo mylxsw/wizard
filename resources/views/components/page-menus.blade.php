@@ -9,6 +9,10 @@
                 <span class="icon-share-alt mr-2"></span>
                 @lang('common.btn_share')
         </a>
+        <a href="{{ wzRoute('project:doc:read', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}" target="_blank" class="dropdown-item">
+            <span class="icon-laptop mr-2"></span>
+            @lang('document.read_mode')
+        </a>
         @if($pageItem->type == \App\Repositories\Document::TYPE_DOC)
             <a wz-form-submit href="#" data-form="#form-{{ $pageItem->id }}-export-pdf" class="dropdown-item">
                 <span class="icon-download-alt mr-2"></span>

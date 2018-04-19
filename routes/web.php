@@ -131,6 +131,9 @@ Route::group(['middleware' => 'locale'], function () {
             // 文档分享
             Route::post('/{id}/doc/{page_id}/share', 'ShareController@create')->name('doc:share');
 
+            // 阅读模式
+            Route::get('/{id}/doc/{page_id}/read', 'DocumentController@readMode')->name('doc:read');
+
             // 文档评论
             Route::post('/{id}/doc/{page_id}/comments', 'CommentController@publish')->name('doc:comment');
 
