@@ -345,12 +345,12 @@ class DocumentController extends Controller
     }
 
     /**
-     * 获取Swagger文档
+     * 获取原生swagger文档
      *
      * @param $id
      * @param $page_id
      *
-     * @return mixed|string
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function getSwagger($id, $page_id)
     {
@@ -370,5 +370,33 @@ class DocumentController extends Controller
         }
 
         return response($page->content);
+    }
+
+    /**
+     * 阅读模式
+     *
+     * @param $id
+     * @param $page_id
+     *
+     * @return mixed|string
+     */
+    public function readMode($id, $page_id)
+    {
+        /** @var Project $project */
+        $project = Project::query()->findOrFail($id);
+        $policy  = new ProjectPolicy();
+        if (!$policy->view(\Auth::user(), $project)) {
+            abort(403, '您没有访问该项目的权限');
+        }
+
+        $page = Document::where('project_id', $id)->where('id', $page_id)->firstOrFail();
+        $type = $page->type == Document::TYPE_DOC ? 'markdown' : 'swagger';
+
+        return view('share-show', [
+            'project'  => $project,
+            'pageItem' => $page,
+            'type'     => $type,
+            'noheader' => true,
+        ]);
     }
 }

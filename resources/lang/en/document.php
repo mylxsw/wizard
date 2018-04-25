@@ -27,6 +27,7 @@ return [
     'document_differ'  => 'Document Differ',
     'latest_document'  => 'Latest',
     'history_document' => 'History Archive',
+    'read_mode'        => 'Read Mode',
     'after_modified'   => 'After',
 
     'select_template' => 'Choose Template',

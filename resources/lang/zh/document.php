@@ -29,6 +29,7 @@ return [
     'document_differ'  => '文档差异对比',
     'latest_document'  => '最新文档',
     'history_document' => '历史版本',
+    'read_mode'        => '阅读模式',
     'after_modified'   => '修改后',
 
     'select_template'        => '选择模板',
