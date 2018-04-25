@@ -343,4 +343,32 @@ class DocumentController extends Controller
             'updated_at'             => $pageItem->updated_at->format('Y-m-d H:i:s'),
         ];
     }
+
+    /**
+     * 获取Swagger文档
+     *
+     * @param $id
+     * @param $page_id
+     *
+     * @return mixed|string
+     */
+    public function getSwagger($id, $page_id)
+    {
+        /** @var Project $project */
+        $project = Project::findOrFail($id);
+
+        $policy = new ProjectPolicy();
+        if (!$policy->view(\Auth::user(), $project)) {
+            abort(403, '您没有访问该项目的权限');
+        }
+
+        $page = Document::where('project_id', $id)
+            ->where('id', $page_id)
+            ->firstOrFail();
+        if ($page->type != Document::TYPE_SWAGGER) {
+            abort(422, '该文档不是Swagger文档');
+        }
+
+        return response($page->content);
+    }
 }

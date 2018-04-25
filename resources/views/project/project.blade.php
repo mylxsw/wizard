@@ -40,6 +40,9 @@
         <nav class="wz-page-control clearfix">
             <h1 class="wz-page-title">
                 {{ $pageItem->title }}
+                @if($type == 'swagger')
+                    <a title="原始Swagger文档" target="_blank" href="{{ route('swagger:doc:yml', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="icon-link"></a>
+                @endif
             </h1>
         </nav>
 
