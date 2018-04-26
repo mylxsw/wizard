@@ -1,0 +1,57 @@
+version: "3"
+networks:
+  backend:
+volumes:
+  app_volume:
+  db_volume:
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_volume:/var/lib/mysql
+    restart: always
+    ports:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 111111
+      MYSQL_DATABASE: wizard
+      MYSQL_USER: wizard
+      MYSQL_PASSWORD: 111111
+    networks:
+      - backend
+  php-fpm:
+      build:
+        context: ./docker/php-fpm
+        dockerfile: Dockerfile
+      volumes:
+        - app_volume:/data/
+        - .:/webroot/wizard
+      ports:
+        - "9000"
+      networks:
+        - backend
+      depends_on:
+        - db
+  nginx:
+    image: nginx
+    volumes:
+      - app_volume:/data/www
+      - .:/webroot/wizard
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8888:80"
+    networks:
+      - backend
+    depends_on:
+      - php-fpm
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    volumes:
+      - app_volume:/data/
+      - .:/webroot/wizard
+    networks:
+      - backend
+    depends_on:
+      - db
