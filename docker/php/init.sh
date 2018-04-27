@@ -2,6 +2,6 @@
 
 cd /webroot/wizard && php /usr/bin/composer install
 
-cp .env.docker .env
+cp /webroot/wizard/.env.docker /webroot/wizard/.env
 php /webroot/wizard/artisan migrate --force
 php /webroot/wizard/artisan storage:link
