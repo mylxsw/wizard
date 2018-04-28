@@ -23,7 +23,7 @@
                 <div class="media text-muted pt-3 {{ (isset($comment_highlight) && $comment_highlight == $comment->id) ? 'wz-comment-highlight':'' }}"
                      id="cm-{{ $comment->id }}">
                     <img src="{{ user_face($comment->user->name) }}" class="wz-userface-small">
-                    <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+                    <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray wz-comment-body">
                         <strong class="d-block text-gray-dark">{{ $comment->user->name }} {{ $comment->created_at }}</strong>
                         {{ $comment->content }}
                     </p>
@@ -35,10 +35,25 @@
     </div>
 </div>
 
+@push('stylesheet')
+    <link href="/assets/vendor/at/css/jquery.atwho.css" rel="stylesheet">
+@endpush
 
 @push('script')
+    <script src="/assets/vendor/jquery.caret.min.js"></script>
+    <script src="/assets/vendor/at/js/jquery.atwho.min.js"></script>
     <script>
         $(function () {
+
+            // @某人自动提示
+            $('#wz-comment-textarea').atwho({
+                at: '@',
+                data: [
+                    {!! ui_usernames(users()) !!}
+                ]
+            });
+
+            // 发表评论
             $('#wz-comment-submit').on('click', function () {
                 var form = $(this).parents('form');
 
@@ -51,10 +66,17 @@
                 });
             });
 
+            // 评论内容解析，高亮@用户
+            var users = { {!! users()->map(function ($user) { return "'{$user->id}': {name: '{$user->name}', email: '{$user->email}'}";})->implode(',') !!} };
             $('.wz-comment-body').map(function () {
                 var html = $(this).html()
                     .replace(/(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g, ' <a target="_blank" href="$1$2"><span class="glyphicon glyphicon-link"></span> $1$2</a> ')
-                    .replace(/@(.*?)(?:\s|$)/g, ' @<span class="wz-text-dashed" style="font-weight: bold;">$1</span> ');
+                    .replace(/@{uid:(\d+)}/g, function (match, id) {
+                        if (users.hasOwnProperty(id)) {
+                            var user = users[id];
+                            return ' @<span class="wz-text-dashed" style="font-weight: bold;" title="' +  user.email + '">' + user.name + '</span> ';
+                        }
+                    });
                 $(this).html(html);
             });
 

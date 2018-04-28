@@ -44,7 +44,7 @@ class CommentCreatedListener
         }
 
         // 解析文本内容，如果包含@user，则通知该用户
-        $users = parseUsersFromContent($comment->content);
+        $users = comment_filter_users($comment->content);
         if (!empty($users)) {
             $users->map(function (User $user) use ($comment) {
                 $user->notify(new CommentMentioned($comment->document, $comment));
