@@ -55,6 +55,11 @@ Route::group(['middleware' => 'locale'], function () {
         Route::post('/{id}/doc/{page_id}.pdf', 'ExportController@pdf')->name('doc:pdf');
     });
 
+    Route::group(['prefix' => 'swagger', 'as' => 'swagger:'], function () {
+        // 获取swagger文档内容
+        Route::get('/{id}/doc/{page_id}.yml', 'DocumentController@getSwagger')->name('doc:yml');
+    });
+
     // 系统管理
     Route::group(['middleware' => ['auth', 'auth.admin'], 'prefix' => 'admin', 'as' => 'admin:'], function () {
         // 用户组管理

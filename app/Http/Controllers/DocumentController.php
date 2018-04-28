@@ -345,12 +345,40 @@ class DocumentController extends Controller
     }
 
     /**
-     * read mode
+     * 获取原生swagger文档
      *
      * @param $id
      * @param $page_id
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function getSwagger($id, $page_id)
+    {
+        /** @var Project $project */
+        $project = Project::findOrFail($id);
+
+        $policy = new ProjectPolicy();
+        if (!$policy->view(\Auth::user(), $project)) {
+            abort(403, '您没有访问该项目的权限');
+        }
+
+        $page = Document::where('project_id', $id)
+            ->where('id', $page_id)
+            ->firstOrFail();
+        if ($page->type != Document::TYPE_SWAGGER) {
+            abort(422, '该文档不是Swagger文档');
+        }
+
+        return response($page->content);
+    }
+
+    /**
+     * 阅读模式
+     *
+     * @param $id
+     * @param $page_id
+     *
+     * @return mixed|string
      */
     public function readMode($id, $page_id)
     {

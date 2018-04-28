@@ -49,6 +49,10 @@ Wizard是基于Laravel开发框架开发的一款开源项目（API）文档管�
     
 执行该命令后会在public目录下创建`storage/app/public`目录的符号链接。
 
+### 使用Docker运行
+
+    docker-compose up
+
 ## TODO
 
 * [ ] 新版本更新
