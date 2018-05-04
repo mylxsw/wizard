@@ -184,21 +184,33 @@ a:hover {
     background-color: #e6e6e6;
 }
 
-.wz-project-count {
+.wz-project-count{
     font-size: 12px;
     color: #ccc;
     bottom: 8px;
     top: auto;
 }
 
+.wz-page-count {
+    display: none;
+}
+
+.wz-box-project:hover .wz-page-count {
+    display: block;
+    color: #7693c399;
+    font-size: 12px;
+    margin: -35px auto 0;
+}
+
+.wz-box-project:hover .wz-title {
+    margin-top: 25px;
+}
+
 .wz-box-tag-star {
     color: #f1c40f;
 }
 
-.wz-box:active {
-}
-
-.wz-box .wz-title, .wz-box-disabled .wz-title {
+.wz-box .wz-title, .wz-box-disabled .wz-title, .wz-page-count {
     margin: 36px auto;
     text-align: center;
     color: #777;
