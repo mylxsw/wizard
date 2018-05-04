@@ -71,7 +71,7 @@ class AttachmentController extends Controller
 
         $this->validateParameters(
             [
-                'extension'  => $extension,
+                'extension'  => strtolower($extension),
                 'project_id' => $id,
                 'page_id'    => $page_id,
             ],
