@@ -22,11 +22,11 @@
             @forelse($pageItem->comments as $comment)
                 <div class="media text-muted pt-3 {{ (isset($comment_highlight) && $comment_highlight == $comment->id) ? 'wz-comment-highlight':'' }}"
                      id="cm-{{ $comment->id }}">
-                    <img src="{{ user_face($comment->user->name) }}" class="wz-userface-small">
-                    <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray wz-comment-body">
-                        <strong class="d-block text-gray-dark">{{ $comment->user->name }} {{ $comment->created_at }}</strong>
-                        {{ $comment->content }}
-                    </p>
+                    <img src="{{ user_face($comment->user->name) }}" class="wz-userface-small" title="{{ $comment->user->name }}（{{ $comment->user->email }}）">
+                    <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray wz-comment-box">
+                        <div class="d-block text-gray-dark wz-comment-header"><strong>{{ $comment->user->name }}</strong> 评论于 <span class="wz-comment-time" title="{{ $comment->created_at }}">{{ $comment->created_at }}</span></div>
+                        <div class="wz-comment-body">{{ $comment->content }}</div>
+                    </div>
                 </div>
             @empty
                 该文档还没有评论~
@@ -42,6 +42,7 @@
 @push('script')
     <script src="/assets/vendor/jquery.caret.min.js"></script>
     <script src="/assets/vendor/at/js/jquery.atwho.min.js"></script>
+    <script src="/assets/vendor/moment-with-locales.min.js"></script>
     <script>
         $(function () {
 
@@ -78,6 +79,12 @@
                         }
                     });
                 $(this).html(html);
+            });
+
+            // 时间格式化
+            moment.locale('zh-cn');
+            $('.wz-comments-box').find('.wz-comment-time').map(function() {
+                $(this).html(moment($(this).html(), 'YYYY-MM-DD hh:mm:ss').fromNow());
             });
 
             $('.wz-form-comment-content').on('focusin', function () {

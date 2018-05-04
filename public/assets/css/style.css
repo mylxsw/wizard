@@ -486,10 +486,23 @@ a:hover {
     margin-left: 15px;
 }
 
-.wz-comments-box .wz-comment-body {
+.wz-comments-box .wz-comment-box {
     margin-bottom: 8px;
     color: #777;
     clear: both;
+
+    border: 1px solid #d1d5da;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.wz-comments-box .wz-comment-box .wz-comment-header {
+    font-size: 14px;
+    border-bottom: 1px solid #d1d5da;
+    margin: -7px -8px 6px;
+    padding: 8px;
+    color: #586069;
+    background-color: #f6f8fa;
 }
 
 .wz-attachments ol li {
