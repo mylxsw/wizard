@@ -30,6 +30,9 @@
             @elseif ($log->message == 'project_created')
                 <span class="wz-text-dashed">{{ $log->context->username }}</span> 创建了项目
                 <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $log->project_id]) }}">{{ $log->context->project_name }}</a> </span>
+            @elseif ($log->message == 'comment_created')
+                <span class="wz-text-dashed">{{ $log->context->username }}</span> 评论了文档
+                <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $log->project_id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
             @endif
         </p>
     </div>

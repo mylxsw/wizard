@@ -5,16 +5,26 @@
                   action="{{ wzRoute('project:doc:comment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
                   id="wz-new-comment-form" style="position: relative;">
                 {{ csrf_field() }}
-                <div class="alert alert-info wz-comment-tip" style="display: none; position: absolute; bottom: -80px;">
+                <div class="alert alert-info wz-comment-tip">
                     <strong>提示</strong>
                     你可以在评论中 <b>@某人</b>，当前支持语法为 <b>@用户名 </b>，需要注意的是，用户名后面必须要有至少一个空格。
                 </div>
-                <div class="form-group">
-                    <label for="wz-comment-textarea" class="bmd-label-floating">评论内容</label>
-                    <textarea class="form-control wz-form-comment-content" rows="3" name="content" id="wz-comment-textarea"></textarea>
-                </div>
-                <div class="form-group">
-                    <button type="button" id="wz-comment-submit" class="btn btn-raised btn-success pull-right">评论</button>
+
+                <div class="wz-comment-editor-box">
+                    <img src="{{ user_face(Auth::user()->name) }}" class="wz-userface-small"/>
+                    <div class="wz-comment-editor">
+                        <div class="wz-comment-editor-header">
+                            <button class="wz-comment-editor-write">写评论</button>
+                        </div>
+                        <div class="wz-comment-editor-body">
+                            <textarea class="wz-form-comment-content" rows="3" name="content" id="wz-comment-textarea" placeholder="留下你的评论"></textarea>
+                        </div>
+                        <div class="wz-comment-editor-footer">
+                            <span style="margin-left: 11px; color: #6b6b6b;"><i class="sign-markdown">M</i>支持Markdown语法</span>
+                            <button type="button" id="wz-comment-submit" class="btn btn-raised btn-success pull-right">评论</button>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
                 </div>
             </form>
         @endcan
@@ -25,11 +35,10 @@
                     <img src="{{ user_face($comment->user->name) }}" class="wz-userface-small" title="{{ $comment->user->name }}（{{ $comment->user->email }}）">
                     <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray wz-comment-box">
                         <div class="d-block text-gray-dark wz-comment-header"><strong>{{ $comment->user->name }}</strong> 评论于 <span class="wz-comment-time" title="{{ $comment->created_at }}">{{ $comment->created_at }}</span></div>
-                        <div class="wz-comment-body">{{ $comment->content }}</div>
+                        <div class="wz-comment-body wz-markdown-comment">{{ $comment->content }}</div>
                     </div>
                 </div>
             @empty
-                该文档还没有评论~
             @endforelse
         </div>
     </div>
@@ -37,12 +46,14 @@
 
 @push('stylesheet')
     <link href="/assets/vendor/at/css/jquery.atwho.css" rel="stylesheet">
+    <link href="/assets/vendor/markdown-body.css" rel="stylesheet">
 @endpush
 
 @push('script')
     <script src="/assets/vendor/jquery.caret.min.js"></script>
     <script src="/assets/vendor/at/js/jquery.atwho.min.js"></script>
     <script src="/assets/vendor/moment-with-locales.min.js"></script>
+    <script src="/assets/vendor/markdown-it.min.js"></script>
     <script>
         $(function () {
 
@@ -67,11 +78,13 @@
                 });
             });
 
+
             // 评论内容解析，高亮@用户
             var users = { {!! users()->map(function ($user) { return "'{$user->id}': {name: '{$user->name}', email: '{$user->email}'}";})->implode(',') !!} };
+            var markdown = window.markdownit();
             $('.wz-comment-body').map(function () {
-                var html = $(this).html()
-                    .replace(/(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g, ' <a target="_blank" href="$1$2"><span class="glyphicon glyphicon-link"></span> $1$2</a> ')
+                var content = markdown.render($(this).html());
+                var html = content
                     .replace(/@{uid:(\d+)}/g, function (match, id) {
                         if (users.hasOwnProperty(id)) {
                             var user = users[id];
