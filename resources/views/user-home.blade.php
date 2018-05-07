@@ -126,6 +126,7 @@
 @endsection
 
 @push('script')
+<script src="/assets/vendor/moment-with-locales.min.js"></script>
 <script>
     $(function() {
         $('#wz-project-save').on('click', function () {
@@ -139,8 +140,12 @@
         });
 
         // 最近活动加载
+        moment.locale('zh-cn');
         $.wz.request('get', '{{ wzRoute('operation-log:recently', ['limit' => 'my']) }}', {}, function (data) {
             $('#operation-log-recently').html(data);
+            $('#operation-log-recently .wz-operation-log-time').map(function() {
+                $(this).html(moment($(this).html(), 'YYYY-MM-DD hh:mm:ss').fromNow());
+            });
         }, null, 'html');
 
         $('.search-btn').on('click', function () {

@@ -103,10 +103,17 @@
 
 @push('script')
     @if(!Auth::guest() && empty($name))
+    <script src="/assets/vendor/moment-with-locales.min.js"></script>
     <script>
         $(function () {
+            moment.locale('zh-cn');
+
             $.wz.request('get', '{{ wzRoute('operation-log:recently', ['catalog' => $catalog_id,]) }}', {}, function (data) {
                 $('#operation-log-recently').html(data);
+
+                $('#operation-log-recently .wz-operation-log-time').map(function() {
+                    $(this).html(moment($(this).html(), 'YYYY-MM-DD hh:mm:ss').fromNow());
+                });
             }, null, 'html');
         });
     </script>
