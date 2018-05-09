@@ -14,10 +14,14 @@
                     <img src="{{ user_face(Auth::user()->name) }}" class="wz-userface-small"/>
                     <div class="wz-comment-editor">
                         <div class="wz-comment-editor-header">
-                            <button class="wz-comment-editor-write">写评论</button>
+                            <button class="wz-comment-editor-write" data-tab=".wz-tab1" data-action="write">写评论</button>
+                            <button class="wz-comment-editor-write wz-comment-editor-readonly" data-tab=".wz-tab2" data-action="preview">预览</button>
                         </div>
                         <div class="wz-comment-editor-body">
-                            <textarea class="wz-form-comment-content" rows="3" name="content" id="wz-comment-textarea" placeholder="留下你的评论"></textarea>
+                            <div class="wz-tab wz-tab1">
+                                <textarea class="wz-form-comment-content" rows="5" name="content" id="wz-comment-textarea" placeholder="留下你的评论"></textarea>
+                            </div>
+                            <div class="wz-tab wz-tab2 wz-markdown-comment" style="display: none;"></div>
                         </div>
                         <div class="wz-comment-editor-footer">
                             <span style="margin-left: 11px; color: #6b6b6b;"><i class="sign-markdown">M</i>支持Markdown语法</span>
@@ -78,10 +82,10 @@
                 });
             });
 
+            var markdown = window.markdownit();
 
             // 评论内容解析，高亮@用户
             var users = { {!! users()->map(function ($user) { return "'{$user->id}': {name: '{$user->name}', email: '{$user->email}'}";})->implode(',') !!} };
-            var markdown = window.markdownit();
             $('.wz-comment-body').map(function () {
                 var content = markdown.render($(this).html());
                 var html = content
@@ -100,6 +104,28 @@
                 $(this).html(moment($(this).html(), 'YYYY-MM-DD hh:mm:ss').fromNow());
             });
 
+            // 评论框标签切换
+            var comment_editor = $('.wz-comment-editor');
+            comment_editor.find('.wz-comment-editor-write').on('click', function () {
+                if (!$(this).hasClass('wz-comment-editor-readonly')) {
+                    return false;
+                }
+
+                comment_editor.find('.wz-comment-editor-write').addClass('wz-comment-editor-readonly');
+                $(this).removeClass('wz-comment-editor-readonly');
+
+                comment_editor.find('.wz-tab').hide();
+                var content_area = comment_editor.find($(this).data('tab'));
+                content_area.show();
+
+                if ($(this).data('action') === 'preview') {
+                    content_area.html(markdown.render(comment_editor.find('#wz-comment-textarea').val()) + "<hr />");
+                }
+
+                return false;
+            });
+
+            // 评论框提示效果
             $('.wz-form-comment-content').on('focusin', function () {
                 $('.wz-comment-tip').fadeIn('fast');
             }).on('focusout', function () {

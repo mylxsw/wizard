@@ -737,7 +737,14 @@ tr.warning {
     border-radius: 4px 4px 0 0;
     border: 1px solid #d1d5da;
     border-bottom: 1px solid #fff;
+    cursor: pointer;
 }
+
+.wz-comment-editor .wz-comment-editor-header .wz-comment-editor-readonly {
+    background-color: transparent;
+    border: none;
+}
+
 
 .wz-comment-editor .wz-comment-editor-header {
     width: 100%;
@@ -755,7 +762,7 @@ tr.warning {
     width: 100%;
     border-radius: 4px;
     border: 1px solid #d1d5da;
-    height: 107px;
+    height: 190px;
     background-color: #fafbfc;
     padding: 10px;
 }
