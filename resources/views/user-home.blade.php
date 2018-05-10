@@ -20,11 +20,12 @@
             <div class="row marketing wz-main-container-full col-12">
                 @foreach($projects ?? [] as $proj)
                     <div class="col-3">
-                        <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}" >
+                        <a class="wz-box wz-box-project" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}" >
                             @if($proj->visibility == \App\Repositories\Project::VISIBILITY_PRIVATE)
                                 <span title="@lang('project.privilege_private')" class="wz-box-tag icon-eye-close"></span>
                             @endif
                             <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
+                            <p class="wz-page-count">{{ $proj->pages_count ?? '0' }} 个文档</p>
                             @if(!empty($proj->catalog_id))
                                 <span title="所属目录" class="wz-box-tag pull-right wz-project-count">{{ $proj->catalog->name ?? '' }}</span>
                             @endif
@@ -125,6 +126,7 @@
 @endsection
 
 @push('script')
+<script src="/assets/vendor/moment-with-locales.min.js"></script>
 <script>
     $(function() {
         $('#wz-project-save').on('click', function () {
@@ -138,8 +140,12 @@
         });
 
         // 最近活动加载
+        moment.locale('zh-cn');
         $.wz.request('get', '{{ wzRoute('operation-log:recently', ['limit' => 'my']) }}', {}, function (data) {
             $('#operation-log-recently').html(data);
+            $('#operation-log-recently .wz-operation-log-time').map(function() {
+                $(this).html(moment($(this).html(), 'YYYY-MM-DD hh:mm:ss').fromNow());
+            });
         }, null, 'html');
 
         $('.search-btn').on('click', function () {

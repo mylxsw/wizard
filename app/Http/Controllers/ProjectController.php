@@ -37,6 +37,7 @@ class ProjectController extends Controller
 
         /** @var Project $projectModel */
         $projectModel = Project::query();
+        $projectModel->withCount('pages');
         if (!empty($name)) {
             $projectModel->where('name', 'like', "%{$name}%");
         }

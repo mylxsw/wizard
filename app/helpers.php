@@ -248,23 +248,6 @@ function resourceVersion()
     return $version;
 }
 
-/**
- * 从内容中解析出用户
- *
- * @param string $content
- *
- * @return \Illuminate\Database\Eloquent\Collection|null|static[]
- */
-function parseUsersFromContent($content)
-{
-    preg_match_all('/@(.*?)(?:\s|$)/', $content, $matches);
-    if (!empty($matches[1])) {
-        $users = User::whereIn('name', $matches[1])->select('id', 'name', 'email')->get();
-        return $users;
-    }
-
-    return null;
-}
 
 /**
  * 创建一个JWT Token
@@ -321,4 +304,93 @@ function user_face($id)
 {
     $identicon = new Identicon\Identicon();
     return $identicon->getImageDataUri($id);
+}
+
+/**
+ * 获取所有用户列表
+ *
+ * @return \Illuminate\Database\Eloquent\Collection
+ */
+function users()
+{
+    static $users = null;
+    if (is_null($users)) {
+        $users = User::all();
+    }
+
+    return $users;
+}
+
+/**
+ * 用户名列表（js数组）
+ *
+ * @param \Illuminate\Database\Eloquent\Collection $users
+ * @param bool                                     $actived
+ *
+ * @return string
+ */
+function ui_usernames(\Illuminate\Database\Eloquent\Collection $users, $actived = true)
+{
+    return $users->filter(function (User $user) use ($actived) {
+        return $actived ? $user->isActivated() : true;
+    })->map(function (User $user) {
+        return "'{$user->name}'";
+    })->implode(',');
+}
+
+/**
+ * 从内容中解析出用户
+ *
+ * @param string $content
+ *
+ * @return \Illuminate\Database\Eloquent\Collection|null
+ */
+function comment_filter_users($content)
+{
+    preg_match_all('/@{uid:(\d+)}/', $content, $matches);
+    if (!empty($matches[1])) {
+        $users = User::whereIn('id', $matches[1])->select('id', 'name', 'email')->get();
+        return $users;
+    }
+
+    return null;
+}
+
+
+/**
+ * 对评论信息预处理
+ *
+ * @param string $comment
+ *
+ * @return string
+ */
+function comment_filter(string $comment): string
+{
+    $matchRegexp = '/@(.*?)(?:\s|$)/';
+
+    $users = (function ($content) use ($matchRegexp) {
+        preg_match_all($matchRegexp, $content, $matches);
+        if (!empty($matches[1])) {
+            $users = User::whereIn('name', $matches[1])->select('id', 'name', 'email')->get();
+            return $users;
+        }
+
+        return null;
+    })($comment);
+    if (is_null($users) || $users->isEmpty()) {
+        return $comment;
+    }
+
+    return preg_replace_callback($matchRegexp, function ($matches) use ($users) {
+        if (count($matches) < 2) {
+            return $matches[0];
+        }
+
+        $user = $users->firstWhere('name', '=', $matches[1]);
+        if (!empty($user)) {
+            return "@{uid:{$user->id}} ";
+        }
+
+        return $matches[0];
+    }, $comment);
 }

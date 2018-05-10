@@ -46,6 +46,7 @@ class HomeController extends Controller
 
         /** @var Project $projectModel */
         $projectModel = Project::query();
+        $projectModel->withCount('pages');
         if (!empty($name)) {
             $projectModel->where('name', 'like', "%{$name}%");
         } else {
@@ -95,9 +96,9 @@ class HomeController extends Controller
         // 3. 页码为第一页
         if (!empty($user) && empty($name) && $page === 1) {
             if (!empty($catalogId)) {
-                $favorites = $user->favoriteProjects()->where('catalog_id', $catalogId)->get();
+                $favorites = $user->favoriteProjects()->where('catalog_id', $catalogId)->withCount('pages')->get();
             } else {
-                $favorites = $user->favoriteProjects;
+                $favorites = $user->favoriteProjects()->withCount('pages')->get();
             }
         }
         return view('index', [

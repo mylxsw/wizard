@@ -47,12 +47,13 @@
                 <div class="row col-12">
                     @foreach($projects ?? [] as $proj)
                         <div class="col-3">
-                            <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
+                            <a class="wz-box wz-box-project" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
                                 @include('components.project-tag', ['proj' => $proj])
                                 {{--@if(!empty($favorites) && $favorites->contains('id', $proj->id))--}}
                                     {{--<span title="关注该项目" class="wz-box-tag pull-right icon-star wz-box-tag-star"></span>--}}
                                 {{--@endif--}}
                                 <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
+                                <p class="wz-page-count">{{ $proj->pages_count ?? '0' }} 个文档</p>
                                 @if (!empty($name)) {{-- 搜索模式下，所有项目平级展示，因此要输出项目所属的目录名称 --}}
                                     <span title="所属目录" class="wz-box-tag pull-right wz-project-count">{{ $proj->catalog->name ?? '' }}</span>
                                 @endif
@@ -77,10 +78,11 @@
                 <div class="row col-12">
                     @foreach($favorites as $proj)
                         <div class="col-3">
-                            <a class="wz-box" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
+                            <a class="wz-box wz-box-project" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
                                 @include('components.project-tag', ['proj' => $proj])
                                 <span title="关注该项目" class="wz-box-tag pull-right icon-star wz-box-tag-star"></span>
                                 <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
+                                <p class="wz-page-count">{{ $proj->pages_count ?? '0' }} 个文档</p>
                                 <span title="所属目录" class="wz-box-tag pull-right wz-project-count">{{ $proj->catalog->name ?? '' }}</span>
                             </a>
                         </div>
@@ -101,10 +103,17 @@
 
 @push('script')
     @if(!Auth::guest() && empty($name))
+    <script src="/assets/vendor/moment-with-locales.min.js"></script>
     <script>
         $(function () {
+            moment.locale('zh-cn');
+
             $.wz.request('get', '{{ wzRoute('operation-log:recently', ['catalog' => $catalog_id,]) }}', {}, function (data) {
                 $('#operation-log-recently').html(data);
+
+                $('#operation-log-recently .wz-operation-log-time').map(function() {
+                    $(this).html(moment($(this).html(), 'YYYY-MM-DD hh:mm:ss').fromNow());
+                });
             }, null, 'html');
         });
     </script>

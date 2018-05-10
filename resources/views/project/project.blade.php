@@ -139,13 +139,18 @@
 
 @push('script')
     @if(!Auth::guest())
+        <script src="/assets/vendor/moment-with-locales.min.js"></script>
         <script>
             $(function () {
+                moment.locale('zh-cn');
                 $.wz.request('get', '{!! wzRoute('operation-log:recently', ['limit' => 'project', 'project_id' => $project->id]) !!}', {}, function (data) {
                     if (data.trim() === '') {
                         $('.wz-recently-log').addClass('d-none');
                     } else {
                         $('#operation-log-recently').html(data);
+                        $('#operation-log-recently .wz-operation-log-time').map(function() {
+                            $(this).html(moment($(this).html(), 'YYYY-MM-DD hh:mm:ss').fromNow());
+                        });
                     }
                 }, null, 'html');
             });

@@ -50,8 +50,11 @@ class AttachmentController extends Controller
      * 上传文件
      *
      * @param Request $request
+     * @param         $id
+     * @param         $page_id
      *
-     * @return array
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function upload(Request $request, $id, $page_id)
     {
@@ -71,7 +74,7 @@ class AttachmentController extends Controller
 
         $this->validateParameters(
             [
-                'extension'  => $extension,
+                'extension'  => strtolower($extension),
                 'project_id' => $id,
                 'page_id'    => $page_id,
             ],
@@ -87,7 +90,10 @@ class AttachmentController extends Controller
 
         $this->authorize('page-edit', $page_id);
 
-        $path = $file->storePublicly(sprintf('public/%s', date('Y/m-d')));
+        $path = $file->storePubliclyAs(
+            sprintf('public/%s', date('Y/m-d')),
+            $this->getSaveAsName($file, $extension)
+        );
         $name = $request->input('name');
 
         Attachment::create([
@@ -105,13 +111,35 @@ class AttachmentController extends Controller
     /**
      * 获取文件扩展名
      *
-     * 有些文件，通过mime类型无法获取类型，所以直接读取文件扩展名
+     * 直接读取文件扩展名
      *
-     * @param \Illuminate\Http\UploadedFile $file
+     * @param $file
+     *
+     * @return string
      */
     private function getFileExtension($file)
     {
-        return $file->extension() ?? $file->getClientOriginalExtension();
+        return $file->getClientOriginalExtension();
+    }
+
+    /**
+     * 获取上传后保存的文件名
+     *
+     * 解决上传文件无法获取mime类型而存储为默认的zip格式的问题
+     *
+     * @param \Illuminate\Http\UploadedFile $file
+     * @param string                        $ext
+     *
+     * @return string
+     */
+    private function getSaveAsName($file, $ext): string
+    {
+        if (ends_with($file, $ext)) {
+            return $file->hashName();
+        }
+
+        $guessedName = $file->hashName();
+        return substr($guessedName, 0, strrpos($guessedName, '.')) . '.' . $ext;
     }
 
     /**
