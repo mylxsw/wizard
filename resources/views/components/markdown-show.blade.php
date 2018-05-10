@@ -26,7 +26,6 @@
             tocm: true,
             tocDropdown: false,
             markdownSourceCode: true,
-            emoji: true,
             taskList: true,
             tex: true,
             htmlDecode : 'style,script,iframe,sub,sup|on*',
