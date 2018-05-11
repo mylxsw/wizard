@@ -45,9 +45,9 @@
                 @endif
             </h1>
         </nav>
-
+        @include('components.tags')
         @include('components.document-info')
-
+        <hr>
         <div class="markdown-body wz-panel-limit {{ $type == 'markdown' ? 'wz-markdown-style-fix' : '' }}" id="markdown-body">
             @if($type == 'markdown')
             <textarea id="append-test" class="d-none">{{ $pageItem->content }}</textarea>
