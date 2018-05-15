@@ -45,7 +45,6 @@
                 @endif
             </h1>
         </nav>
-        @include('components.tags')
         @include('components.document-info')
         <hr>
         <div class="markdown-body wz-panel-limit {{ $type == 'markdown' ? 'wz-markdown-style-fix' : '' }}" id="markdown-body">
@@ -76,6 +75,7 @@
             </ol>
         </div>
         @endif
+        @include('components.tags')
     @else
         <div class="wz-panel-breadcrumb">
             <ol class="breadcrumb">

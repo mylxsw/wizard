@@ -173,5 +173,9 @@ Route::group(['middleware' => 'locale'], function () {
         // ajax获取操作历史
         Route::get('/operations/recently', 'OperationLogController@recently')->name('operation-log:recently');
 
+
+        Route::group(['prefix' => 'tag', 'as' => 'tag:'], function () {
+
+        });
     });
 });
