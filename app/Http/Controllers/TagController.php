@@ -12,13 +12,17 @@ class TagController extends Controller
 
     public function store(Request $request)
     {
+        /** @var Document $page */
         $page = Document::findOrFail($request->input('p'));
-
         $names = $request->input('tags');
+        $tags = [];
+        foreach ($names as $name) {
+            $tags[] = Tag::firstOrCreate(['name' => $name])->toArray();
+        }
+        $page->tags()->detach();
+        $page->tags()->attach(array_pluck($tags, 'id'));
 
-        $tags = Tag::whereIn('name', $names)->get();
-
-        dd($tags);
+        return $tags;
     }
 
 }

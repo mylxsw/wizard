@@ -175,7 +175,8 @@ Route::group(['middleware' => 'locale'], function () {
 
 
         Route::group(['prefix' => 'tag', 'as' => 'tag:'], function () {
-
+            // 创建标签
+            Route::post('/', 'TagController@store')->name('tag:store');
         });
     });
 });
