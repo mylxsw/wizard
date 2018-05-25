@@ -14,7 +14,7 @@ class TagController extends Controller
     {
         /** @var Document $page */
         $page = Document::findOrFail($request->input('p'));
-        $names = $request->input('tags');
+        $names = explode(',', $request->input('tags'));
         $tags = [];
         foreach ($names as $name) {
             $tags[] = Tag::firstOrCreate(['name' => $name])->toArray();

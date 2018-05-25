@@ -15,6 +15,8 @@
     <title>@yield('title') - {{ config('app.name', 'Wizard API') }}</title>
 
     <link href="/assets/css/normalize.css" rel="stylesheet">
+    <link href="/assets/css/tagmanager.css" rel="stylesheet">
+
     <!-- Bootstrap core CSS -->
     {{--<link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">--}}
     <link rel="stylesheet" href="/assets/vendor/material-design-icons/material-icons.css">
@@ -80,7 +82,7 @@
 <script src="/assets/vendor/wave/waves.min.js"></script>
 <script src="/assets/js/wizard.js?{{ resourceVersion() }}"></script>
 <script src="/assets/js/app.js?{{ resourceVersion() }}"></script>
-
+<script src="/assets/js/tagmanager.js"></script>
 <script>
     $(function () {
         {{-- 页面提示消息（上一个页面操作的结果） --}}
