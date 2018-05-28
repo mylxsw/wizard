@@ -209,16 +209,23 @@ function userHasNotifications()
 
 /**
  * 用户通知消息数
+ * 
+ * @param int $limit 显示限制数量，如果提供了，则返回string类型的数量展示，最大值为$limit，超过数量显示为"$limit+"
  *
- * @return int
+ * @return int|string
  */
-function userNotificationCount()
+function userNotificationCount($limit = 0)
 {
     if (Auth::guest()) {
         return 0;
     }
 
-    return count(Auth::user()->unreadNotifications);
+    $unreadCount = count(Auth::user()->unreadNotifications);
+    if ($limit > 0) {
+        return $unreadCount > $limit ? "{$limit}+" : $unreadCount;
+    }
+
+    return $unreadCount;
 }
 
 /**

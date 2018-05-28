@@ -37,6 +37,9 @@ form {
     .container-small {
         max-width: 960px;
     }
+    .container-medium {
+        max-width: 1140px;
+    }
 }
 
 .container-narrow > hr {
@@ -562,8 +565,14 @@ a:hover {
     font-weight: bold;
 }
 
+/* 消息数量提示气泡 */
 .wz-message-tip {
     font-weight: bold;
+    border: 1px solid #f00;
+    padding: 2px 5px;
+    border-radius: 56px;
+    color: #fff;
+    background: #f00;
 }
 
 @-webkit-keyframes twinkling {
