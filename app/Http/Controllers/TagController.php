@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Repositories\Document;
 use App\Repositories\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TagController extends Controller
 {
@@ -13,6 +14,9 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $page_id = $request->input('p');
+        if (Gate::denies('project-edit', $page_id)) {
+            return [];
+        }
         $tags    = $request->input('tags');
         $this->validateParameters(
             [
