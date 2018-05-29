@@ -157,7 +157,7 @@
         html += opts.tagCloseIcon + '</a></span> ';
         $el = $(html);
 
-        
+
         var typeAheadMess = $self.parents('.twitter-typeahead')[0] !== undefined;
         if (opts.tagsContainer !== null) {
           $(opts.tagsContainer).append($el);
@@ -167,8 +167,9 @@
               var lastTagId = $self.data("tm_rndid") + '_' + --tagId;
               jQuery('#' + lastTagId).after($el);
             } else {
-              lastTagObj = $self.siblings("#" + $self.data("tm_rndid") + "_" + tlid[tlid.length - 2]);
-              lastTagObj.after($el);
+                $self.before($el);
+              // lastTagObj = $self.siblings("#" + $self.data("tm_rndid") + "_" + tlid[tlid.length - 2]);
+              // lastTagObj.after($el);
             }
           } else {
             if (typeAheadMess) {

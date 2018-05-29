@@ -1,33 +1,11 @@
-<div class="card-body">
-    <input type="text" name="tags" placeholder="Tags" class="tm-input" @if(Auth::guest()) style="display: none;" @endif/>
+<div class="card-body" style="max-width: 960px;">
+    <input type="text" name="tags" placeholder="Tags" class="tm-input"
+           @cannot('project-edit', $pageItem->id) style="display: none;" @endcannot/>
 </div>
 
+
 @push('script')
-@if(!Auth::guest())
-    <script>
-        $(function () {
-            $(".tm-input").tagsManager({
-                prefilled: "{{$pageItem->tags->pluck('name')->implode(',')}}",
-                CapitalizeFirstLetter: false,
-                AjaxPush: '/tag',
-                AjaxPushAllTags: true,
-                AjaxPushParameters: {'p': {{$pageID}} },
-                delimiters: [9, 13, 44],
-                backspace: [8],
-                blinkBGColor_1: '#FFFF9C',
-                blinkBGColor_2: '#CDE69C',
-                hiddenTagListName: 'hiddenTagListA',
-                hiddenTagListId: null,
-                deleteTagsOnBackspace: true,
-                tagsContainer: null,
-                tagCloseIcon: '×',
-                tagClass: 'tm-tag-success',
-                validator: null,
-                onlyTagList: false
-            });
-        });
-    </script>
-@else
+@cannot('project-edit', $pageItem->id)
     <script>
         $(function () {
             $(".tm-input").tagsManager({
@@ -48,5 +26,32 @@
             });
         });
     </script>
-@endif
+@endcannot
+
+@can('project-edit', $pageItem->id)
+    <script>
+        $(function () {
+            $(".tm-input").tagsManager({
+                prefilled: "{{$pageItem->tags->pluck('name')->implode(',')}}",
+                CapitalizeFirstLetter: false,
+                AjaxPush: '/tag',
+                AjaxPushAllTags: true,
+                AjaxPushParameters: {'p': {{$pageID}} },
+                delimiters: [44, 9, 13],
+                backspace: [8],
+                blinkBGColor_1: '#FFFF9C',
+                blinkBGColor_2: '#CDE69C',
+                hiddenTagListName: 'hiddenTagListA',
+                hiddenTagListId: null,
+                deleteTagsOnBackspace: true,
+                tagsContainer: null,
+                tagCloseIcon: '×',
+                tagClass: 'tm-tag-success',
+                validator: null,
+                onlyTagList: false
+            });
+        });
+    </script>
+@endcan
+
 @endpush
