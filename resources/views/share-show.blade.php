@@ -12,6 +12,8 @@
         <textarea id="append-test" style="display:none;">{{ $pageItem->content }}</textarea>
     @endif
 </div>
+
+<div class="text-center wz-panel-limit mt-3">~ END ~</div>
 @endsection
 
 @includeIf("components.{$type}-show")

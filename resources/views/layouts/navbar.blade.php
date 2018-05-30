@@ -14,7 +14,7 @@
             <a class="p-2 text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ Auth::user()->name ?? Auth::user()->email }}
                 @if(userHasNotifications())
-                    <sup class="text-danger wz-message-tip" title="您有未读消息">{{ userNotificationCount() }}</sup>
+                    <sup class="wz-message-tip" title="您有未读消息">{{ userNotificationCount(99) }}</sup>
                 @endif
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
