@@ -47,7 +47,7 @@ class TagController extends Controller
         $tagNamesExisted = $tagsExisted->pluck('name');
 
         $tagsNewCreated = collect($names)->diff($tagNamesExisted)->map(function ($name) {
-            return Tag::create(['name' => $name]);
+            return Tag::firstOrCreate(['name' => $name]);
         });
 
         $tags = $tagsExisted->concat($tagsNewCreated);
