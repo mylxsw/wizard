@@ -1,57 +1,39 @@
-<div class="wz-tag">
-    <input type="text" name="tags" placeholder="Tags" class="tm-input"
-           @cannot('project-edit', $pageItem->id) style="display: none;" @endcannot/>
+
+@if(!Auth::guest() || $pageItem->tags->count() > 0)
+<div class="wz-tag-container">
+    <div class="wz-tags">
+        @can('project-edit', $pageItem->id)
+            <input type="text" name="tags" placeholder="添加标签" class="tm-input"/>
+            @push('script')
+                <script>
+                    $(function () {
+                        $(".tm-input").tagsManager({
+                            prefilled: "{{ $pageItem->tags->pluck('name')->implode(',') }}",
+                            CapitalizeFirstLetter: false,
+                            AjaxPush: '/tag',
+                            AjaxPushAllTags: true,
+                            AjaxPushParameters: {'p': {{ $pageID }} },
+                            delimiters: [44, 9, 13], // 支持tab, enter, comma分隔标签
+                            backspace: [], // 不使用删除键删除
+                            hiddenTagListName: 'hiddenTagListA',
+                            hiddenTagListId: null,
+                            deleteTagsOnBackspace: true,
+                            tagsContainer: null,
+                            tagCloseIcon: '<span class="icon-remove-sign" style="color: #545454;"></span>',
+                            tagClass: 'tm-tag-success',
+                            validator: null,
+                            onlyTagList: false
+                        });
+                    });
+                </script>
+            @endpush
+        @else
+            @foreach($pageItem->tags->pluck('name') as $tag)
+                <span class="tm-tag tm-tag-disabled">{{ $tag }}</span>
+            @endforeach
+        @endcan
+    </div>
 </div>
+@endif
 
 
-@push('script')
-@cannot('project-edit', $pageItem->id)
-    <script>
-        $(function () {
-            $(".tm-input").tagsManager({
-                prefilled: "{{$pageItem->tags->pluck('name')->implode(',')}}",
-                CapitalizeFirstLetter: false,
-                delimiters: [9, 13, 44],
-                backspace: [8],
-                blinkBGColor_1: '#FFFF9C',
-                blinkBGColor_2: '#CDE69C',
-                hiddenTagListName: 'hiddenTagListA',
-                hiddenTagListId: null,
-                deleteTagsOnBackspace: true,
-                tagsContainer: null,
-                tagCloseIcon: '×',
-                tagClass: 'tm-tag-disabled',
-                validator: null,
-                onlyTagList: false
-            });
-        });
-    </script>
-@endcannot
-
-@can('project-edit', $pageItem->id)
-    <script>
-        $(function () {
-            $(".tm-input").tagsManager({
-                prefilled: "{{$pageItem->tags->pluck('name')->implode(',')}}",
-                CapitalizeFirstLetter: false,
-                AjaxPush: '/tag',
-                AjaxPushAllTags: true,
-                AjaxPushParameters: {'p': {{$pageID}} },
-                delimiters: [44, 9, 13],
-                backspace: [8],
-                blinkBGColor_1: '#FFFF9C',
-                blinkBGColor_2: '#CDE69C',
-                hiddenTagListName: 'hiddenTagListA',
-                hiddenTagListId: null,
-                deleteTagsOnBackspace: true,
-                tagsContainer: null,
-                tagCloseIcon: '×',
-                tagClass: 'tm-tag-success',
-                validator: null,
-                onlyTagList: false
-            });
-        });
-    </script>
-@endcan
-
-@endpush

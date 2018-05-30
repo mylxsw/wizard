@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Document;
 use App\Repositories\Tag;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -16,40 +17,45 @@ class TagController extends Controller
      *
      * @param Request $request
      *
-     * @return array|string
+     * @return \Illuminate\Support\Collection
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request)
     {
-        $page_id = $request->input('p');
-        if (Gate::denies('project-edit', $page_id)) {
-            return [];
-        }
-        $tags = $request->input('tags');
-        $this->validateParameters(
+        $this->validate(
+            $request,
             [
-                'page_id' => $page_id,
-                'tags'    => $tags,
-            ],
-            [
-                'page_id' => "required|integer",
-                'tags'    => 'nullable|max:500',
+                'p'    => "required|integer",
+                'tags' => 'nullable|max:500',
             ],
             [
                 'tags.required' => '标签不能为空',
                 'tags.between'  => '标签最大不能超过500字符',
             ]
         );
-        /** @var Document $page */
-        $page  = Document::findOrFail($page_id);
-        $names = explode(',', $tags);
-        $tags  = [];
-        foreach ($names as $name) {
-            $tags[] = Tag::firstOrCreate(['name' => $name])->toArray();
-        }
-        $page->tags()->detach();
-        $page->tags()->attach(array_pluck($tags, 'id'));
 
-        return $tags;
+        /** @var Document $page */
+        $page = Document::findOrFail($request->input('p'));
+        $this->authorize('project-edit', $page);
+
+        $names = array_map(function ($val) {
+            return trim($val);
+        }, explode(',', $request->input('tags')));
+
+        /** @var Collection $tagsExisted */
+        $tagsExisted     = Tag::whereIn('name', $names)->get();
+        $tagNamesExisted = $tagsExisted->pluck('name');
+
+        $tagsNewCreated = collect($names)->diff($tagNamesExisted)->map(function ($name) {
+            return Tag::create(['name' => $name]);
+        });
+
+        $tags = $tagsExisted->concat($tagsNewCreated);
+
+        $page->tags()->detach();
+        $page->tags()->attach($tags->pluck('id'));
+
+        return $tags->pluck('name', 'id');
     }
 
 }

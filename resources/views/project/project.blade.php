@@ -46,7 +46,8 @@
             </h1>
         </nav>
         @include('components.document-info')
-        <hr>
+        @include('components.tags')
+
         <div class="markdown-body wz-panel-limit {{ $type == 'markdown' ? 'wz-markdown-style-fix' : '' }}" id="markdown-body">
             @if($type == 'markdown')
             <textarea id="append-test" class="d-none">{{ $pageItem->content }}</textarea>
@@ -57,7 +58,6 @@
 
         @if(count($pageItem->attachments) > 0)
         <div class="wz-attachments wz-panel-limit">
-            <hr />
             <h4>附件</h4>
             <ol>
                 @foreach($pageItem->attachments as $attachment)
@@ -75,6 +75,7 @@
             </ol>
         </div>
         @endif
+
     @else
         <div class="wz-panel-breadcrumb">
             <ol class="breadcrumb">
@@ -127,7 +128,7 @@
 @includeIf("components.{$type}-show")
 
 @push('page-panel')
-    @include('components.tags')
+
     @if($pageID != 0 && !(Auth::guest() && count($pageItem->comments) === 0))
         @include('components.comment')
     @endif
