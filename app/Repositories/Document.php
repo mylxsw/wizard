@@ -147,4 +147,14 @@ class Document extends Repository
     {
         return $this->hasMany(Attachment::class, 'page_id', 'id');
     }
+
+    /**
+     * 页面的标签
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'wz_page_tag', 'page_id', 'tag_id');
+    }
 }

@@ -45,9 +45,8 @@
                 @endif
             </h1>
         </nav>
-
         @include('components.document-info')
-
+        <hr>
         <div class="markdown-body wz-panel-limit {{ $type == 'markdown' ? 'wz-markdown-style-fix' : '' }}" id="markdown-body">
             @if($type == 'markdown')
             <textarea id="append-test" class="d-none">{{ $pageItem->content }}</textarea>
@@ -128,6 +127,7 @@
 @includeIf("components.{$type}-show")
 
 @push('page-panel')
+    @include('components.tags')
     @if($pageID != 0 && !(Auth::guest() && count($pageItem->comments) === 0))
         @include('components.comment')
     @endif
