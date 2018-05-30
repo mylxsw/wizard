@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title', $project->name)
-@section('container-style', 'container container-small')
+@section('container-style', 'container container-medium')
 @section('content')
 
     <div class="row marketing wz-main-container-full">

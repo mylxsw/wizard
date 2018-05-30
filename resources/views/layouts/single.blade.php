@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('container-style', 'container container-small')
+@section('container-style', 'container container-medium')
 @section('content')
     <div class="row marketing wz-main-container-full">
         <div class="col">
