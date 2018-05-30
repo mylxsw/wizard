@@ -797,3 +797,13 @@ tr.warning {
     display: inline-block;
     vertical-align: middle;
 }
+
+.wz-tag {
+    padding: 1.5rem;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    border-width: .2rem;
+    position: relative;
+    max-width: 960px;
+}

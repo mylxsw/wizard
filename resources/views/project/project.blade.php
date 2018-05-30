@@ -75,7 +75,6 @@
             </ol>
         </div>
         @endif
-        @include('components.tags')
     @else
         <div class="wz-panel-breadcrumb">
             <ol class="breadcrumb">
@@ -128,6 +127,7 @@
 @includeIf("components.{$type}-show")
 
 @push('page-panel')
+    @include('components.tags')
     @if($pageID != 0 && !(Auth::guest() && count($pageItem->comments) === 0))
         @include('components.comment')
     @endif

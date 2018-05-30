@@ -1,4 +1,4 @@
-<div class="card-body" style="max-width: 960px;">
+<div class="wz-tag">
     <input type="text" name="tags" placeholder="Tags" class="tm-input"
            @cannot('project-edit', $pageItem->id) style="display: none;" @endcannot/>
 </div>

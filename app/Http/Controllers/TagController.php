@@ -11,13 +11,20 @@ use Illuminate\Support\Facades\Gate;
 class TagController extends Controller
 {
 
+    /**
+     * store the tags
+     *
+     * @param Request $request
+     *
+     * @return array|string
+     */
     public function store(Request $request)
     {
         $page_id = $request->input('p');
         if (Gate::denies('project-edit', $page_id)) {
             return [];
         }
-        $tags    = $request->input('tags');
+        $tags = $request->input('tags');
         $this->validateParameters(
             [
                 'page_id' => $page_id,
