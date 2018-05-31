@@ -67,8 +67,8 @@ info:
   title: 短链接服务 - API文档
   version: v1
 schemes:
-- https
-host: aicode.cc
+- http
+host: s.yunsom.cn
 basePath: /
 paths:
   /:
@@ -76,7 +76,7 @@ paths:
       summary: 获取服务统计信息
       description: 获取服务统计信息
       responses:
-        "200":
+        200:
           description: 服务器统计信息
           schema:
             properties:
@@ -90,9 +90,9 @@ paths:
                 type: string
               status_code:
                 type: string
-        "422":
+        422:
           \$ref: '#/responses/Standard422ErrorResponse'
-        "500":
+        500:
           \$ref: '#/responses/Standard500ErrorResponse'
     post:
       consumes:
@@ -110,7 +110,7 @@ paths:
         name: expire
         type: integer
       responses:
-        "200":
+        200:
           description: 正常响应
           schema:
             properties:
@@ -127,9 +127,9 @@ paths:
                 type: string
               status_code:
                 type: string
-        "422":
+        422:
           \$ref: '#/responses/Standard422ErrorResponse'
-        "500":
+        500:
           \$ref: '#/responses/Standard500ErrorResponse'
   /{hash}:
     get:
@@ -151,11 +151,11 @@ paths:
     get:
       summary: 探针接口，用于获取服务所有路由
       responses:
-        "200":
+        200:
           description: 正常响应
-        "422":
+        422:
           \$ref: '#/responses/Standard422ErrorResponse'
-        "500":
+        500:
           \$ref: '#/responses/Standard500ErrorResponse'
           
 responses:
@@ -173,6 +173,8 @@ definitions:
     properties:
       errors:
         type: array
+        items:
+          type: string
       message:
         type: string
       status_code:
