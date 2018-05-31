@@ -17,11 +17,11 @@
                 SwaggerUIBundle.plugins.DownloadUrl
             ],
             validatorUrl: "",
-            layout: "StandaloneLayout",
+            layout: "BaseLayout",
             @if(isset($isHistoryPage) && $isHistoryPage)
-            url: "{!! wzRoute('project:doc:history:json', ['code' => $code, 'id' => $project->id, 'page_id' => $pageItem->id, 'history_id' => $history->id, 'only_body' => 1, 'ts' => microtime(true)]) !!}"
+            url: "{!! wzRoute('project:doc:history:json', ['code' => $code ?? '', 'id' => $project->id, 'page_id' => $pageItem->id, 'history_id' => $history->id, 'only_body' => 1, 'ts' => microtime(true)]) !!}"
             @else
-            url: "{!! wzRoute('project:doc:json', ['code' => $code,'id' => $project->id, 'page_id' => $pageItem->id, 'only_body' => 1, 'ts' => microtime(true)])  !!}"
+            url: "{!! wzRoute('project:doc:json', ['code' => $code ?? '','id' => $project->id, 'page_id' => $pageItem->id, 'only_body' => 1, 'ts' => microtime(true)])  !!}"
             @endif
         });
     });

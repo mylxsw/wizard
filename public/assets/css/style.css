@@ -859,3 +859,23 @@ tr.warning {
     background-color: #fff;
 }
 
+/* 隐藏swagger编辑器的标题部分 */
+.swagger-container .info .main, .swagger-ui .info .main {
+    display: none;
+}
+
+.swagger-ui .scheme-container {
+    margin: 0 34px 22px!important;
+}
+
+.swagger-ui table thead tr td, .swagger-ui table thead tr th,
+.swagger-ui .model,
+.swagger-ui .response-col_description__inner div.markdown,
+.swagger-ui .response-col_description__inner div.renderedMarkdown{
+    font-size: 14px!important;
+}
+
+.swagger-ui .opblock .opblock-summary-description,
+.swagger-ui .info li, .swagger-ui .info p, .swagger-ui .info table {
+    font-size: 16px!important;
+}
