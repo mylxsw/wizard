@@ -879,3 +879,19 @@ tr.warning {
 .swagger-ui .info li, .swagger-ui .info p, .swagger-ui .info table {
     font-size: 16px!important;
 }
+
+.swagger-ui .opblock-tag {
+    font-size: 20px!important;
+}
+.swagger-ui .opblock-tag small {
+    font-size: 16px!important;
+}
+
+.swagger-ui .opblock-tag .markdown p {
+    margin: auto!important;
+    color: #bdbdbd;
+}
+
+.swagger-ui .wrapper {
+    padding: 0!important;
+}
