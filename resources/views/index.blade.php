@@ -92,7 +92,7 @@
         </div>
         @endif
 
-        @if (!empty($tags))
+        @if (!empty($tags) && $tags->count() > 0)
             <div class="card mb-4">
                 <div class="card-header">标签</div>
                 <div class="card-body">
