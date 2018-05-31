@@ -11,23 +11,33 @@
                     <i class="material-icons">arrow_back</i>
                 </button>
             @endif
+            @if (!empty($tag))
+                <span class="tm-tag tm-tag-success">{{ $tag }}</span>
+            @else
             文档搜索
+            @endif
+
             @if (!empty($project_id))
                 （共 <b>{{ $documents->total() }}</b> 个文档）
             @endif
+
+
         </div>
         <div class="card-body">
-            <form action="{{ wzRoute('search:search') }}" method="get">
-                <div class="row marketing wz-main-container-full search-panel">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control mr-3" placeholder="输入要搜索的文档标题" name="keyword" value="{{ $keyword ?? '' }}">
-                        <input type="hidden" name="project_id" value="{{ $project_id ?? '' }}">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="submit">搜索</button>
+
+            @if (empty($tag))
+                <form action="{{ wzRoute('search:search') }}" method="get">
+                    <div class="row marketing wz-main-container-full search-panel">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control mr-3" placeholder="输入要搜索的文档标题" name="keyword" value="{{ $keyword ?? '' }}">
+                            <input type="hidden" name="project_id" value="{{ $project_id ?? '' }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="submit">搜索</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            @endif
 
             <div class="row marketing">
                 <div class="col-12">

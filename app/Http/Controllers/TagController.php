@@ -44,10 +44,14 @@ class TagController extends Controller
 
         /** @var Collection $tagsExisted */
         $tagsExisted     = Tag::whereIn('name', $names)->get();
-        $tagNamesExisted = $tagsExisted->pluck('name');
+        $tagNamesExisted = array_values($tagsExisted->pluck('name')->map(function ($tag) {
+            return strtolower($tag);
+        })->toArray());
 
-        $tagsNewCreated = collect($names)->diff($tagNamesExisted)->map(function ($name) {
-            return Tag::firstOrCreate(['name' => $name]);
+        $tagsNewCreated = collect($names)->filter(function ($tag) use ($tagNamesExisted) {
+            return !in_array(strtolower($tag), $tagNamesExisted);
+        })->map(function ($name) {
+            return Tag::create(['name' => $name]);
         });
 
         $tags = $tagsExisted->concat($tagsNewCreated);

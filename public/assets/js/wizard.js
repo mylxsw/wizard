@@ -39,7 +39,8 @@ $.wz = {
                     }
                     layer.alert(messages.join('; '), {icon: 5});
                 } else {
-                    layer.alert('数据加载错误，请稍后重试', {icon: 5});
+                    //layer.alert('数据加载错误，请稍后重试', {icon: 5});
+                    $.wz.message_failed('数据加载错误，请稍后重试');
                 }
             }
         });

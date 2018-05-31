@@ -92,6 +92,22 @@
         </div>
         @endif
 
+        @if (!empty($tags))
+            <div class="card mb-4">
+                <div class="card-header">标签</div>
+                <div class="card-body">
+                    <div class="wz-tag-container">
+                        @foreach($tags as $tag)
+                            <span class="tm-tag tm-tag-disabled">
+                            <a href="{{ wzRoute('search:search', ['tag' => $tag->name]) }}">{{ $tag->name }}</a>
+                            <span style="color: #6c6c6c;">[{{ $tag->pages_count ?? 0 }}]</span>
+                        </span>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <div class="card mb-4">
             <div class="card-header">最近活动</div>
             <div class="card-body" id="operation-log-recently"></div>

@@ -29,6 +29,7 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $keyword   = $request->input('keyword');
+        $tagName   = $request->input('tag');
         $projectId = (int)$request->input('project_id');
         $perPage   = (int)$request->input('per_page', 20);
 
@@ -36,6 +37,12 @@ class SearchController extends Controller
         $documentModel = Document::query()->with('project', 'user')->has('project');
         if (!empty($projectId)) {
             $documentModel->where('project_id', $projectId);
+        }
+
+        if (!empty($tagName)) {
+            $documentModel->whereHas('tags', function ($query) use ($tagName) {
+                $query->where('name', $tagName);
+            });
         }
 
         if (empty($keyword)) {
@@ -49,9 +56,11 @@ class SearchController extends Controller
                 'keyword'    => $keyword,
                 'per_page'   => $perPage,
                 'project_id' => $projectId,
+                'tag'        => $tagName,
             ]),
             'keyword'    => $keyword,
             'project_id' => $projectId,
+            'tag'        => $tagName,
         ]);
     }
 }

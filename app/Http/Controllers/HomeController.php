@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Catalog;
 use App\Repositories\Project;
+use App\Repositories\Tag;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -96,11 +97,19 @@ class HomeController extends Controller
         // 3. 页码为第一页
         if (!empty($user) && empty($name) && $page === 1) {
             if (!empty($catalogId)) {
-                $favorites = $user->favoriteProjects()->where('catalog_id', $catalogId)->withCount('pages')->get();
+                $favorites =
+                    $user->favoriteProjects()->where('catalog_id', $catalogId)->withCount('pages')
+                        ->with('catalog')
+                        ->get();
             } else {
-                $favorites = $user->favoriteProjects()->withCount('pages')->get();
+                $favorites =
+                    $user->favoriteProjects()->withCount('pages')->with('catalog')->get();
             }
         }
+
+        // 标签
+        $tags = Tag::has('pages')->withCount('pages')->orderBy('pages_count', 'desc')->get();
+
         return view('index', [
             'projects'   => $projects->appends([
                 'per_page' => $perPage,
@@ -112,6 +121,7 @@ class HomeController extends Controller
             'catalog_id' => $catalogId ?? 0,
             'catalog'    => $catalog ?? null,
             'favorites'  => $favorites ?? [],
+            'tags'       => $tags ?? [],
         ]);
     }
 
