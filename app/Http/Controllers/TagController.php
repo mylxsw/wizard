@@ -38,9 +38,11 @@ class TagController extends Controller
         $page = Document::findOrFail($request->input('p'));
         $this->authorize('page-edit', $page);
 
-        $names = array_map(function ($val) {
+        $names = array_filter(array_map(function ($val) {
             return trim($val);
-        }, explode(',', $request->input('tags')));
+        }, explode(',', $request->input('tags'))), function ($val) {
+            return !empty($val);
+        });
 
         /** @var Collection $tagsExisted */
         $tagsExisted     = Tag::whereIn('name', $names)->get();
