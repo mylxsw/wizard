@@ -1,7 +1,7 @@
 @if(!Auth::guest() || $pageItem->tags->count() > 0)
     <div class="wz-tag-container">
         <div class="wz-tags">
-            @can('project-edit', $pageItem->project_id)
+            @can('page-edit', $pageItem)
                 <input type="text" name="tags" placeholder="添加标签" class="tm-input"/>
                 @push('script')
                     <script>

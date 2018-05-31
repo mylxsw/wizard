@@ -36,7 +36,7 @@ class TagController extends Controller
 
         /** @var Document $page */
         $page = Document::findOrFail($request->input('p'));
-        $this->authorize('project-edit', $page);
+        $this->authorize('page-edit', $page);
 
         $names = array_map(function ($val) {
             return trim($val);
