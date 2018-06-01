@@ -410,14 +410,6 @@ a:hover {
     text-align: center;
 }
 
-.swagger-ui .info {
-    margin: 20px 0 !important;
-}
-
-.swagger-editor-toolbar {
-    margin-bottom: 5px;
-    margin-left: -15px;
-}
 
 #scrollUp {
     bottom: 20px;
@@ -906,4 +898,36 @@ tr.warning {
     -webkit-box-shadow: -3px 6px 10px -2px rgba(0, 0, 0, .15) !important;
     -moz-box-shadow: -3px 6px 10px -2px rgba(0, 0, 0, .15) !important;
     box-shadow: -3px 6px 10px -2px rgba(0, 0, 0, .15) !important;
+}
+
+.swagger-editor-body {
+    min-height: 800px;
+}
+
+.swagger-editor-body .swagger-editor-content {
+    position: absolute!important;
+    width: 100%!important;
+    left: 0!important;
+    min-height: 800px;
+}
+
+.swagger-ui .info {
+    margin: 20px 0 !important;
+}
+
+.swagger-editor-toolbar {
+    margin: 0 -26px -10px;
+}
+
+.swagger-fullscreen {
+    position: absolute;
+    background: #fff;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.swagger-fullscreen .swagger-editor-toolbar {
+    margin: 0;
 }

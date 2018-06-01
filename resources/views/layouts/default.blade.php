@@ -131,6 +131,9 @@
 
                 var minHeight = (window_height > frame_height ? window_height : frame_height) + "px";
                 $($('.wz-panel-right').length ? '.wz-panel-right' : '.wz-body').css('min-height', minHeight);
+
+                $.global.windowResize();
+                $.global.panel_height = minHeight;
             };
 
             resize_window();
@@ -142,7 +145,7 @@
             $('[data-toggle="tooltip"]').tooltip({
                 delay: { "show": 500, "hide": 100 }
             });
-        }, 0);
+        }, 500);
     });
 </script>
 

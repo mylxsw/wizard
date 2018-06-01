@@ -1,5 +1,5 @@
 
-<div class="row">
+<div class="row wz-editor-header">
     {{ csrf_field() }}
     <input type="hidden" name="project_id" id="editor-project_id" value="{{ $project->id or '' }}"/>
     <input type="hidden" name="page_id" id="editor-page_id" value="{{ $pageItem->id or '' }}">
