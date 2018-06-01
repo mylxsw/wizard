@@ -32,6 +32,11 @@
                             <span class="icon-paper-clip"></span>
                         </button>
                     </li>
+                    <li role="presentation" class="mr-2">
+                        <button type="button" data-href="{{ wzRoute('project:doc:read', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}" title="阅读模式" class="btn btn-primary bmd-btn-icon">
+                            <span class="icon-laptop"></span>
+                        </button>
+                    </li>
                 @endcan
                 @include('components.page-menus', ['project' => $project, 'pageItem' => $pageItem])
             </ul>

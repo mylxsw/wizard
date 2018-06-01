@@ -15,9 +15,17 @@
                 @endphp
                 <div class="dropdown pull-right" style="margin-right: 20px;" role="group">
                     @if($hasEditPrivilege)
-                        <button type="button" class="btn bmd-btn-icon " data-href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'pid' => $pageID]) !!}" title="创建Markdown文档">
+                        <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="new-document" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="material-icons">add_to_photos</i>
                         </button>
+                        <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="new-document" style="min-width: 13rem;">
+                            <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'pid' => $pageID]) !!}" class="dropdown-item">
+                                <i class="icon-book mr-2"></i> 创建 @lang('common.markdown')
+                            </a>
+                            <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger', 'pid' => $pageID]) !!}" class="dropdown-item">
+                                <i class="icon-align-justify mr-2"></i> 创建 @lang('common.swagger')
+                            </a>
+                        </ul>
                         <button type="button" class="btn bmd-btn-icon " data-href="{!! wzRoute('search:search', ['project_id' => $project->id]) !!}" title="搜索">
                             <i class="material-icons">search</i>
                         </button>
@@ -28,25 +36,11 @@
                         </button>
                     @endif
                     @if($hasEditPrivilege)
-                        <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="project-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
+                        @can('project-edit', $project)
+                        <button class="btn bmd-btn-icon" type="button" data-href="{{ wzRoute('project:setting:show', ['id' => $project->id]) }}" title="项目设置">
+                            <i class="material-icons">settings</i>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="project-menu" style="min-width: 13rem;">
-                            @can('page-add', $project)
-                                <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'pid' => $pageID]) !!}" class="dropdown-item">
-                                    <i class="icon-book mr-2"></i> 创建 @lang('common.markdown')
-                                </a>
-                                <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger', 'pid' => $pageID]) !!}" class="dropdown-item">
-                                    <i class="icon-align-justify mr-2"></i> 创建 @lang('common.swagger')
-                                </a>
-                            @endcan
-
-                            @can('project-edit', $project)
-                                <a href="{{ wzRoute('project:setting:show', ['id' => $project->id]) }}" class="dropdown-item">
-                                    <i class="icon-cog mr-2"></i> 项目设置
-                                </a>
-                            @endcan
-                        </ul>
+                        @endcan
                     @endif
                 </div>
             </div>
