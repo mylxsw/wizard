@@ -90,27 +90,9 @@
                 return window.editor.specSelectors.specStr();
             };
 
-            // 用于表单提交后回调，清理缓存内容
-            $.global.clearDocumentDraft = function () {
-                $.global.updateSwaggerDraft('');
-            };
-
             // 获取swagger编辑器本次存储内容的key
-            $.global.getSwaggerDraftKey = function() {
+            $.global.getDraftKey = function() {
                 return 'swagger-editor-content-{{ $project->id or '' }}-{{ $pageItem->id or '' }}';
-            };
-
-            // 获取swagger编辑器本地存储内容（未保存的内容）
-            $.global.updateSwaggerFromDraft = function (original, updateSwaggerContent) {
-                window.setTimeout(function () {
-                    if ($.global.getEditorContent() !== original) {
-                        $.wz.confirm('@lang('document.draft_continue_edit_confirm')', function () {
-                            updateSwaggerContent(original);
-                        }, function () {
-                            $.global.updateSwaggerDraft('');
-                        });
-                    }
-                }, 0);
             };
 
             window.editor = SwaggerEditorBundle({
@@ -138,6 +120,11 @@
                 window.editor.specActions.updateSpec(Base64.decode(template.data('content')));
                 templateSelector.modal('hide');
             });
+
+            // 更新编辑器内容
+            $.global.updateEditorContent = function (content) {
+                window.editor.specActions.updateSpec(content);
+            };
 
             // 动态调整swagger编辑器高度
             $.global.windowResize = function () {

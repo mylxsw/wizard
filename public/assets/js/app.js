@@ -47,6 +47,16 @@ $.global = {
     },
 
     /**
+     * 更新编辑器内容
+     */
+    updateEditorContent: function (content) {},
+
+    /**
+     * 获取文档草稿存储key
+     */
+    getDraftKey: function () {},
+
+    /**
      * 窗口大小调整后触发的事件
      */
     windowResize: function () {},
