@@ -919,6 +919,10 @@ tr.warning {
     margin: 0 -26px -10px;
 }
 
+.swagger-ui .opblock .opblock-summary-description {
+    min-width: 200px;
+}
+
 .swagger-fullscreen {
     position: absolute;
     background: #fff;
