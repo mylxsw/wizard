@@ -51,7 +51,7 @@
                     <td>{{ $group->projects[0]->pivot->privilege == 1 ? __('common.yes') : __('common.no') }}</td>
                     <td>
                         <a href="#" wz-form-submit data-form="#form-group-{{ $group->id }}">
-                            @lang('common.btn_delete')
+                            <i class="material-icons text-danger" title="@lang('common.btn_delete')">remove_circle_outline</i>
                             <form id="form-group-{{ $group->id }}" method="post"
                                   action="{{ wzRoute('project:privilege:revoke', ['id' => $project->id, 'group_id' => $group->id]) }}">
                                 {{ method_field('DELETE') }}{{ csrf_field() }}

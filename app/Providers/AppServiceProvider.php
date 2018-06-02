@@ -115,7 +115,7 @@ class AppServiceProvider extends ServiceProvider
             $ruleName,
             '用户名已经存在',
             function ($attribute, $value, $parameters, $validator) {
-                $excludeId         = $parameters[0] ?? 0;
+                $excludeId = $parameters[0] ?? 0;
 
                 $user = User::where('name', $value);
                 if (!empty($excludeId)) {
@@ -171,7 +171,14 @@ class AppServiceProvider extends ServiceProvider
             $ruleName,
             '模板名称已经存在',
             function ($attribute, $value, $parameters, $validator) {
-                return !Template::where('name', $value)->exists();
+                $excludeId = $parameters[0] ?? 0;
+
+                $template = Template::where('name', $value);
+                if (!empty($excludeId)) {
+                    $template = $template->where('id', '!=', $excludeId);
+                }
+
+                return !$template->exists();
             }
         );
     }

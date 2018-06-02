@@ -111,6 +111,9 @@ Route::group(['middleware' => 'locale'], function () {
 
             // 个人模板管理
             Route::get('/templates', 'TemplateController@all')->name('templates');
+            Route::delete('/templates/{id}', 'TemplateController@deleteTemplate')->name('templates:delete');
+            Route::get('/templates/{id}', 'TemplateController@edit')->name('templates:edit');
+            Route::put('/templates/{id}', 'TemplateController@editHandle')->name('templates:edit:handle');
         });
 
         Route::group(['prefix' => 'project', 'as' => 'project:'], function () {

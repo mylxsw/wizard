@@ -58,11 +58,13 @@
                     <td>{{ $cat->projects_count }}</td>
                     <td>{{ $cat->sort_level }}</td>
                     <td>
-                        <a href="{!! route('admin:catalogs:view', ['id' => $cat->id]) !!}">编辑</a>
-                        &nbsp;&nbsp;&nbsp;
+                        <a href="{!! route('admin:catalogs:view', ['id' => $cat->id]) !!}">
+                            <i class="material-icons" title="编辑">create</i>
+                        </a>
+                        &nbsp;
                         <a href="#" wz-form-submit data-form="#form-cat-{{ $cat->id }}"
                            data-confirm="确定要删除该目录？删除后所有内部项目将重置为无目录">
-                            @lang('common.btn_delete')
+                            <i class="material-icons text-danger" title="@lang('common.btn_delete')">delete_sweep</i>
                             <form id="form-cat-{{ $cat->id }}" method="post"
                                   action="{{ wzRoute('admin:catalogs:delete', ['id' => $cat->id]) }}">
                                 {{ method_field('DELETE') }}{{ csrf_field() }}

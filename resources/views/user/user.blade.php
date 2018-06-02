@@ -88,7 +88,7 @@
                             </form>
                             <a href="#" wz-form-submit data-form="#form-user-{{ $user->id }}"
                                data-confirm="确定要将用户从该用户组移除？">
-                                解除
+                                <i class="material-icons text-danger" title="解除">remove_circle_outline</i>
                             </a>
                         </td>
                     </tr>

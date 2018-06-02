@@ -42,7 +42,7 @@
                     <td>{{ $user->created_at->format('Y-m-d H:i') }}</td>
                     <td>
                         <a href="{{ wzRoute('admin:user', ['id' => $user->id]) }}">
-                            管理
+                            <i class="material-icons" title="管理">create</i>
                         </a>
                     </td>
                 </tr>

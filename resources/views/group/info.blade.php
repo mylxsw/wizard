@@ -69,7 +69,7 @@
                             <td>
                                 <a href="#" wz-form-submit data-form="#form-user-{{ $user->id }}"
                                    data-confirm="确定要将用户从该用户组移除？">
-                                    @lang('common.btn_delete')
+                                    <i class="material-icons text-danger" title="@lang('common.btn_delete')">delete_sweep</i>
                                     <form id="form-user-{{ $user->id }}" method="post"
                                           action="{!! wzRoute('admin:groups:users:del', ['id' => $group->id, 'user_id' => $user->id]) !!}">
                                         {{ method_field('DELETE') }}{{ csrf_field() }}
@@ -153,7 +153,7 @@
                             <td>
                                 <a href="#" wz-form-submit data-form="#form-project-{{ $project->id }}"
                                    data-confirm="确定要移除对该用户组对项目的访问权限吗？">
-                                    @lang('common.btn_delete')
+                                    <i class="material-icons text-danger" title="@lang('common.btn_delete')">delete_sweep</i>
                                     <form id="form-project-{{ $project->id }}" method="post"
                                           action="{!! wzRoute('project:privilege:revoke', ['id' => $project->id, 'group_id' => $group->id, 'redirect' => wzRoute('admin:groups:view', ['id' => $group->id])]) !!}">
                                         {{ method_field('DELETE') }}{{ csrf_field() }}

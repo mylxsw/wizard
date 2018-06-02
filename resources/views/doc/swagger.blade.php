@@ -38,7 +38,7 @@
                     <h5 class="modal-title">@lang('document.select_template')</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body wz-swagger-template">
                     @foreach(wzTemplates(\App\Repositories\Template::TYPE_SWAGGER) as $temp)
                         <div class="radio">
                             <label>

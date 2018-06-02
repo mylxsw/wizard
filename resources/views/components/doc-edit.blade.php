@@ -74,16 +74,17 @@
                             <input type="text" name="name" class="form-control" id="template-name">
                         </div>
                         <div class="form-group">
-                            <label for="template-description"
-                                   class="control-label">@lang('document.template_description')</label>
+                            <label for="template-description" class="control-label">
+                                @lang('document.template_description')
+                            </label>
                             <textarea class="form-control" name="description" id="template-description"></textarea>
                         </div>
                         @can('template-global-create')
                             <div class="form-group">
                                 <div class="">
                                     <label>
-                                        <input type="checkbox" name="scope"
-                                               value="1"> @lang('document.template_global_access')
+                                        <input type="checkbox" name="scope" value="1">
+                                        @lang('document.template_global_access')
                                     </label>
                                 </div>
                             </div>
@@ -155,7 +156,7 @@
                 $.wz.btnAutoLock($(this));
                 var form = $('#wz-template-save-form');
                 $.wz.asyncForm(form, {content: $.global.getEditorContent()}, function (data) {
-                    $.wz.alert('@lang('common.operation_success')', function () {
+                    $.wz.message_success('@lang('common.operation_success')', function () {
                         $('#wz-new-template').modal('hide');
                     });
                 });

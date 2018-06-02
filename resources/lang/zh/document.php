@@ -36,7 +36,7 @@ return [
     'save_as_template'       => '另存为模板',
     'template_name'          => '模板名称',
     'template_description'   => '模板描述',
-    'template_global_access' => '全局可用',
+    'template_global_access' => '与别人共享',
 
     'delete_confirm'              => '确定要删除文档“:title”？',
     'recover_confirm'             => '还原后将覆盖当前页面，确定要还原该记录吗？',
