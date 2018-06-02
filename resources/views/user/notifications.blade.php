@@ -20,7 +20,7 @@
             <table class="table table-hover wz-message-table">
                 @forelse($notifications as $notification)
                     <tr class="{{ is_null($notification->read_at) ? 'warning' : '' }}">
-                        <td>{{ $notification->created_at->format('Y-m-d H:i') }}</td>
+                        <td style="width: 145px;">{{ $notification->created_at->format('Y-m-d H:i') }}</td>
                         <td>
                             {!! $notification->data['message'] !!}
                             @if(is_null($notification->read_at))
