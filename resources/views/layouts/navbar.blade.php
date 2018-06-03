@@ -19,7 +19,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a href="{{ wzRoute('user:notifications') }}" class="dropdown-item">
-                    <i class="fa fa-bell-slash mr-2"></i> 通知
+                    <i class="fa fa-bell mr-2"></i> 通知
                     @if(userHasNotifications())
                         <span class="badge">{{ userNotificationCount() }}</span>
                     @endif

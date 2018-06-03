@@ -12,7 +12,7 @@
                     <i class="fa fa-lock mr-2"></i> @lang('common.change_password')
                 </a>
                 <a class="nav-link {{ $op == 'notification' ? 'active':'' }}" href="{{ wzRoute('user:notifications') }}">
-                    <i class="fa fa-bell-slash mr-2"></i> 通知
+                    <i class="fa fa-bell mr-2"></i> 通知
                     @if(userHasNotifications())
                         <span class="badge">{{ userNotificationCount() }}</span>
                     @endif

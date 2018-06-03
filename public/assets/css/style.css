@@ -951,6 +951,15 @@ tr.warning {
     overflow-y: auto;
 }
 
-.wz-nav-icon img {
-    height: 20px;
+
+/* 搜索结果页，文档类型图标效果 */
+.wz-search-result {
+    position: relative;
+}
+
+.wz-search-result .wz-search-result-sign {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 30px;
 }

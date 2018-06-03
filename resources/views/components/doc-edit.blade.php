@@ -32,7 +32,7 @@
                         <i class="fa fa-save mr-2"></i> @lang('document.force_save')
                     </a>
                     <a class="dropdown-item" href="#" wz-doc-compare-current>
-                        <i class="fa fa-flask mr-2"></i> @lang('document.show_diff')
+                        <i class="fa fa-adjust mr-2"></i> @lang('document.show_diff')
                     </a>
                 @endif
             </div>

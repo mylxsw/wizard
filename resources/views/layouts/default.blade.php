@@ -102,7 +102,7 @@
 
         // 滚动到顶部事件
         $.scrollUp({
-            scrollText: '<span class="fa fa-arrow-up"></span>'
+            scrollText: '<span class="fa fa-chevron-up"></span>'
         });
 
         // 可关闭对话框关闭事件

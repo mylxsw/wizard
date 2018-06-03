@@ -11,8 +11,8 @@
  * @param left_nav
  */
 $.wz.navigator_tree = function (left_nav) {
-    var icon_close = 'fa fa-folder';
-    var icon_open = 'fa fa-folder-open';
+    var icon_close = 'fa fa-folder-o';
+    var icon_open = 'fa fa-folder-open-o';
 
     var childrenShow = function (elementLi) {
         elementLi.children('ul').show();
