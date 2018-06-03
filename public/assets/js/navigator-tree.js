@@ -59,7 +59,7 @@ $.wz.navigator_tree = function (left_nav) {
     childrenShow(left_nav.children('li'));
 
     left_nav.find('li:not(.wz-has-child)').map(function () {
-        $(this).prepend('<a class="fa ' + ($(this).data('type') === 'swagger' ? 'fa-file-code-o' : 'fa-file-text-o') + ' wz-nav-fold" href="javascript:;"></a>');
+        $(this).prepend('<a class="fa ' + ($(this).data('type') === 'swagger' ? 'fa-code' : 'fa-file-text-o') + ' wz-nav-fold" href="javascript:;"></a>');
     });
 
 };
