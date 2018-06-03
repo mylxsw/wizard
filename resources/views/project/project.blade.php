@@ -68,7 +68,7 @@
                 @foreach($pageItem->attachments as $attachment)
                     <li>
                         <a href="{{ $attachment->path }}">
-                            <span class="glyphicon glyphicon-download-alt"></span>
+                            <span class="fa fa-download"></span>
                             {{ $attachment->name }}
                             <span class="wz-attachment-info">
                                 【{{ $attachment->user->name }}，
