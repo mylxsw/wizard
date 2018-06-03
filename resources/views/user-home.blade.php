@@ -22,7 +22,7 @@
                     <div class="col-3">
                         <a class="wz-box wz-box-project" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}" >
                             @if($proj->visibility == \App\Repositories\Project::VISIBILITY_PRIVATE)
-                                <span title="@lang('project.privilege_private')" class="wz-box-tag icon-eye-close"></span>
+                                <span title="@lang('project.privilege_private')" class="wz-box-tag fa fa-eye-slash"></span>
                             @endif
                             <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
                             <p class="wz-page-count">{{ $proj->pages_count ?? '0' }} 个文档</p>
@@ -36,14 +36,14 @@
                     <div class="col-3">
                         <a class="wz-box wz-box-new" href="#"
                            data-toggle="modal" data-target="#wz-new-project">
-                            <p class="wz-title"><span class="icon-plus"></span> @lang('project.new_project')</p>
+                            <p class="wz-title"><span class="fa fa-plus"></span> @lang('project.new_project')</p>
                         </a>
                     </div>
                 @else
                     <div class="col-3">
                 <span class="wz-box-disabled">
                     <p class="wz-title" title="您没有创建项目的权限">
-                        <span class="icon-ban-circle"></span>
+                        <span class="fa fa-ban"></span>
                         @lang('project.new_project')
                     </p>
                 </span>
@@ -110,7 +110,7 @@
                             <div class="form-group">
                                 <label for="project-sort" class="bmd-label-floating">排序（值越大越靠后）</label>
                                 <input type="number" name="sort_level" class="form-control float-left w-75" id="project-sort" value="1000" {{ Auth::user()->can('project-sort') ? '' : 'disabled' }}/>
-                                <i class="icon-question-sign ml-2" data-toggle="tooltip" title="" data-original-title="只有管理员可以修改"></i>
+                                <i class="fa fa-question-circle ml-2" data-toggle="tooltip" title="" data-original-title="只有管理员可以修改"></i>
                             </div>
                         </form>
                     </div>

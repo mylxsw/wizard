@@ -7,13 +7,13 @@
         <div class="col-3">
             <nav class="nav flex-column">
                 <a class="nav-link {{ $op == 'groups' ? 'active':'' }}" href="{{ wzRoute('admin:groups') }}">
-                    <i class="icon-group mr-2"></i>用户组管理
+                    <i class="fa fa-group mr-2"></i>用户组管理
                 </a>
                 <a class="nav-link {{ $op == 'users' ? 'active':'' }}" href="{!! wzRoute('admin:users') !!}">
-                    <i class="icon-user mr-2"></i> 用户管理
+                    <i class="fa fa-user mr-2"></i> 用户管理
                 </a>
                 <a class="nav-link {{ $op == 'catalogs' ? 'active':'' }}" href="{!! wzRoute('admin:catalogs') !!}">
-                    <i class="icon-folder-open"></i> 项目目录管理
+                    <i class="fa fa-folder-open"></i> 项目目录管理
                 </a>
             </nav>
         </div>

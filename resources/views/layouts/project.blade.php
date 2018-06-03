@@ -20,10 +20,10 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="new-document" style="min-width: 13rem;">
                             <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'pid' => $pageID]) !!}" class="dropdown-item">
-                                <i class="icon-book mr-2"></i> 创建 @lang('common.markdown')
+                                <i class="fa fa-book mr-2"></i> 创建 @lang('common.markdown')
                             </a>
                             <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger', 'pid' => $pageID]) !!}" class="dropdown-item">
-                                <i class="icon-align-justify mr-2"></i> 创建 @lang('common.swagger')
+                                <i class="fa fa-align-justify mr-2"></i> 创建 @lang('common.swagger')
                             </a>
                         </ul>
                         <button type="button" class="btn bmd-btn-icon " data-href="{!! wzRoute('search:search', ['project_id' => $project->id]) !!}" title="搜索">

@@ -8,13 +8,13 @@
         <div class="col-3">
             <nav class="nav flex-column">
                 <a class="nav-link {{ $op == 'basic' ? 'active':'' }}" href="{{ wzRoute('project:setting:show', ['id' => $project->id, 'op' => 'basic']) }}">
-                    <i class="icon-road mr-2"></i> @lang('project.basic')
+                    <i class="fa fa-road mr-2"></i> @lang('project.basic')
                 </a>
                 <a class="nav-link {{ $op == 'privilege' ? 'active':'' }}" href="{{ wzRoute('project:setting:show', ['id' => $project->id, 'op' => 'privilege']) }}">
-                    <i class="icon-sitemap mr-2"></i> @lang('project.privilege')
+                    <i class="fa fa-sitemap mr-2"></i> @lang('project.privilege')
                 </a>
                 <a class="nav-link {{ $op == 'advanced' ? 'active':'' }}" href="{{ wzRoute('project:setting:show', ['id' => $project->id, 'op' => 'advanced']) }}">
-                    <i class="icon-wrench mr-2"></i> @lang('project.advanced')
+                    <i class="fa fa-wrench mr-2"></i> @lang('project.advanced')
                 </a>
             </nav>
         </div>

@@ -25,7 +25,7 @@
                             {!! $notification->data['message'] !!}
                             @if(is_null($notification->read_at))
                             <span class="wz-message-read d-none">
-                                <a href="#" class="icon-ok wz-message-read-btn" title="设为已读"
+                                <a href="#" class="fa fa-check wz-message-read-btn" title="设为已读"
                                    data-url="{{ wzRoute('user:notifications:read', ['notification_id' => $notification->id]) }}"></a>
                             </span>
                             @endif

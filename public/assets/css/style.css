@@ -240,7 +240,6 @@ a:hover {
 }
 
 .wz-left-nav a.wz-nav-fold {
-    /*background: #fff !important;*/
     color: #ccc !important;
     margin-right: 0;
     padding-right: 4px !important;
@@ -950,4 +949,8 @@ tr.warning {
 .wz-swagger-template {
     max-height: 300px;
     overflow-y: auto;
+}
+
+.wz-nav-icon img {
+    height: 20px;
 }

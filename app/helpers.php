@@ -56,7 +56,7 @@ function navigator(
             'pid'        => (int)$page->pid,
             'url'        => route('project:home', ['id' => $projectID, 'p' => $page->id]),
             'selected'   => $pageID === (int)$page->id,
-            'type'       => $page->type == \App\Repositories\Document::TYPE_DOC ? 'doc' : 'sw',
+            'type'       => $page->type == \App\Repositories\Document::TYPE_DOC ? 'markdown' : 'swagger',
             'created_at' => $page->created_at,
         ];
     }

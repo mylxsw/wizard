@@ -11,8 +11,8 @@
  * @param left_nav
  */
 $.wz.navigator_tree = function (left_nav) {
-    var icon_close = 'icon-folder-close';
-    var icon_open = 'icon-folder-open';
+    var icon_close = 'fa fa-folder';
+    var icon_open = 'fa fa-folder-open';
 
     var childrenShow = function (elementLi) {
         elementLi.children('ul').show();
@@ -58,6 +58,8 @@ $.wz.navigator_tree = function (left_nav) {
     // 一级元素的子元素自动展示
     childrenShow(left_nav.children('li'));
 
-    left_nav.find('li:not(.wz-has-child)')
-        .prepend('<a class="icon-file-alt wz-nav-fold" href="javascript:;"></a>');
+    left_nav.find('li:not(.wz-has-child)').map(function () {
+        $(this).prepend('<a class="fa ' + ($(this).data('type') === 'swagger' ? 'fa-file-code-o' : 'fa-file-text-o') + ' wz-nav-fold" href="javascript:;"></a>');
+    });
+
 };

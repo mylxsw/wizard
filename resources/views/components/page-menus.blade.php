@@ -6,12 +6,12 @@
 
     <div class="dropdown-menu wz-dropdown-menu-left" aria-labelledby="wz-doc-more-btn">
         <a href="#" wz-share data-url="{{ wzRoute('project:doc:share', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="dropdown-item">
-                <span class="icon-share-alt mr-2"></span>
+                <span class="fa fa-share-alt mr-2"></span>
                 @lang('common.btn_share')
         </a>
         @if($pageItem->type == \App\Repositories\Document::TYPE_DOC)
             <a wz-form-submit href="#" data-form="#form-{{ $pageItem->id }}-export-pdf" class="dropdown-item">
-                <span class="icon-download-alt mr-2"></span>
+                <span class="fa fa-download mr-2"></span>
                 导出PDF
                 <form id="form-{{ $pageItem->id }}-export-pdf" method="post"
                       action="{{ route('project:doc:pdf', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
@@ -20,13 +20,13 @@
             </a>
         @endif
         <a href="{{ wzRoute('project:doc:history', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}" class="dropdown-item">
-            <span class="icon-time mr-2"></span>
+            <span class="fa fa-history mr-2"></span>
             @lang('document.page_history')
         </a>
 
         <a href="#" wz-form-submit data-form="#form-{{ $pageItem->id }}"
            data-confirm="@lang('document.delete_confirm', ['title' => $pageItem->title])" class="dropdown-item">
-            <span class="icon-trash mr-2"></span>
+            <span class="fa fa-trash mr-2"></span>
             @lang('common.btn_delete')
             <form id="form-{{ $pageItem->id }}" method="post"
                   action="{{ wzRoute('project:doc:delete', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">

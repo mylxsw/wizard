@@ -29,12 +29,12 @@
                     @endif
                     <li role="presentation" class="mr-2">
                         <button type="button" data-href="{{ wzRoute('project:doc:attachment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" title="附件" class="btn btn-primary bmd-btn-icon">
-                            <span class="icon-paper-clip"></span>
+                            <span class="fa fa-paperclip"></span>
                         </button>
                     </li>
                     <li role="presentation" class="mr-2">
                         <button type="button" data-href="{{ wzRoute('project:doc:read', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}" title="阅读模式" class="btn btn-primary bmd-btn-icon">
-                            <span class="icon-laptop"></span>
+                            <span class="fa fa-laptop"></span>
                         </button>
                     </li>
                 @endcan
@@ -46,7 +46,7 @@
             <h1 class="wz-page-title">
                 {{ $pageItem->title }}
                 @if($type == 'swagger')
-                    <a title="原始Swagger文档" target="_blank" href="{{ route('swagger:doc:yml', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="icon-link"></a>
+                    <a title="原始Swagger文档" target="_blank" href="{{ route('swagger:doc:yml', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="fa fa-link"></a>
                 @endif
             </h1>
         </nav>

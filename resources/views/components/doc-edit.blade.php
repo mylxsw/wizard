@@ -16,7 +16,7 @@
         </h3>
         <div class="form-group pull-right">
             <button type="button" class="btn btn-raised btn-primary mr-3" wz-doc-form-submit id="wz-doc-form-submit">
-                <i class="icon-save mr-1"></i> 保存
+                <i class="fa fa-save mr-1"></i> 保存
             </button>
             <button class="btn  dropdown-toggle" type="button" id="form-save-extra-menu" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -24,15 +24,15 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="form-save-extra-menu" style="min-width: 12rem;">
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#wz-new-template">
-                    <i class="icon-th mr-2"></i>
+                    <i class="fa fa-th mr-2"></i>
                     @lang('document.save_as_template')
                 </a>
                 @if(!$newPage)
                     <a class="dropdown-item" href="#" wz-doc-form-submit data-force="true">
-                        <i class="icon-save mr-2"></i> @lang('document.force_save')
+                        <i class="fa fa-save mr-2"></i> @lang('document.force_save')
                     </a>
                     <a class="dropdown-item" href="#" wz-doc-compare-current>
-                        <i class="icon-beaker mr-2"></i> @lang('document.show_diff')
+                        <i class="fa fa-flask mr-2"></i> @lang('document.show_diff')
                     </a>
                 @endif
             </div>

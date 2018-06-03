@@ -43,7 +43,7 @@
                         </label>
 
                         @if($user->id == 1)
-                            <i class="icon-question-sign" data-toggle="tooltip" title="该用户为系统初始管理员，不允许修改其身份"></i>
+                            <i class="fa fa-question-circle" data-toggle="tooltip" title="该用户为系统初始管理员，不允许修改其身份"></i>
                         @endif
                     </div>
                 </div>

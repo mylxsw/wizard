@@ -18,7 +18,7 @@
                                 hiddenTagListId: null,
                                 deleteTagsOnBackspace: true,
                                 tagsContainer: null,
-                                tagCloseIcon: '<span class="icon-remove-sign" style="color: #545454;"></span>',
+                                tagCloseIcon: '<span class="fa fa-times-circle-o" style="color: #545454;"></span>',
                                 tagClass: 'tm-tag-success',
                                 validator: null,
                                 onlyTagList: false

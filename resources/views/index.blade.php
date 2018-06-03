@@ -50,7 +50,7 @@
                             <a class="wz-box wz-box-project" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
                                 @include('components.project-tag', ['proj' => $proj])
                                 {{--@if(!empty($favorites) && $favorites->contains('id', $proj->id))--}}
-                                    {{--<span title="关注该项目" class="wz-box-tag pull-right icon-star wz-box-tag-star"></span>--}}
+                                    {{--<span title="关注该项目" class="wz-box-tag pull-right fa fa-star wz-box-tag-star"></span>--}}
                                 {{--@endif--}}
                                 <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
                                 <p class="wz-page-count">{{ $proj->pages_count ?? '0' }} 个文档</p>
@@ -80,7 +80,7 @@
                         <div class="col-3">
                             <a class="wz-box wz-box-project" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
                                 @include('components.project-tag', ['proj' => $proj])
-                                <span title="关注该项目" class="wz-box-tag pull-right icon-star wz-box-tag-star"></span>
+                                <span title="关注该项目" class="wz-box-tag pull-right fa fa-star wz-box-tag-star"></span>
                                 <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
                                 <p class="wz-page-count">{{ $proj->pages_count ?? '0' }} 个文档</p>
                                 <span title="所属目录" class="wz-box-tag pull-right wz-project-count">{{ $proj->catalog->name ?? '' }}</span>
