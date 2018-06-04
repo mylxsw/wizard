@@ -11,8 +11,13 @@ use Carbon\Carbon;
  * @property string  $name
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
- *
  * @package App\Repositories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Document[] $pages
+ * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Tag whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Tag whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Tag whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Tag whereUpdatedAt($value)
  */
 class Tag extends Repository
 {

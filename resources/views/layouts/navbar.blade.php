@@ -34,7 +34,7 @@
                     <i class="fa fa-th mr-2"></i> @lang('common.template_maintenance')
                 </a>
                 @if(Auth::user()->isAdmin())
-                    <a href="{!! wzRoute('admin:groups') !!}" class="dropdown-item">
+                    <a href="{!! wzRoute('admin:dashboard') !!}" class="dropdown-item">
                         <i class="fa fa-cog mr-2"></i> 系统管理
                     </a>
                 @endif

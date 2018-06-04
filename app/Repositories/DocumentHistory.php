@@ -24,8 +24,23 @@ namespace App\Repositories;
  * @property integer $operator_id
  * @property string  $created_at
  * @property string  $updated_at
- *
  * @package App\Repositories
+ * @property-read \App\Repositories\User $operator
+ * @property-read \App\Repositories\User $user
+ * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory whereOperatorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory wherePageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory wherePid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory whereProjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\DocumentHistory whereUserId($value)
  */
 class DocumentHistory extends Repository
 {

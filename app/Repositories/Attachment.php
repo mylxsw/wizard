@@ -24,8 +24,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
  * @property Carbon  $deleted_at
- *
  * @package App\Repositories
+ * @property-read \App\Repositories\Document $page
+ * @property-read \App\Repositories\Project $project
+ * @property-read \App\Repositories\User $user
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Attachment onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Attachment withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Attachment withoutTrashed()
+ * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Attachment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Attachment whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Attachment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Attachment whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Attachment wherePageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Attachment wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Attachment whereProjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Attachment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Attachment whereUserId($value)
  */
 class Attachment extends Repository
 {

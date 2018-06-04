@@ -62,6 +62,9 @@ Route::group(['middleware' => 'locale'], function () {
 
     // 系统管理
     Route::group(['middleware' => ['auth', 'auth.admin'], 'prefix' => 'admin', 'as' => 'admin:'], function () {
+        // 仪表盘
+        Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
         // 用户组管理
         Route::get('/groups', 'GroupController@groups')->name('groups');
         Route::post('/groups', 'GroupController@add')->name('groups:add');

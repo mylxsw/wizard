@@ -6,6 +6,9 @@
     <div class="row marketing wz-main-container-full">
         <div class="col-3">
             <nav class="nav flex-column">
+                <a class="nav-link {{ $op == 'dashboard' ? 'active':'' }}" href="{{ wzRoute('admin:dashboard') }}">
+                    <i class="fa fa-dashboard mr-2"></i> 仪表盘
+                </a>
                 <a class="nav-link {{ $op == 'groups' ? 'active':'' }}" href="{{ wzRoute('admin:groups') }}">
                     <i class="fa fa-group mr-2"></i>用户组管理
                 </a>

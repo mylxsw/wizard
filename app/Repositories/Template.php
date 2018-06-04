@@ -23,8 +23,18 @@ use Carbon\Carbon;
  * @property string  $scope
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
- *
  * @package App\Repositories
+ * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Template whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Template whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Template whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Template whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Template whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Template whereScope($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Template whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Template whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Template whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Template whereUserId($value)
  */
 class Template extends Repository
 {

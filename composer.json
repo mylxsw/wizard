@@ -14,7 +14,8 @@
         "lcobucci/jwt": "^3.2",
         "mpdf/mpdf": "^7.0",
         "sebastian/diff": "1.4.3",
-        "yzalis/identicon": "^1.2"
+        "yzalis/identicon": "^1.2",
+        "doctrine/dbal": "~2.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",

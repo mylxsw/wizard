@@ -9,6 +9,25 @@
 namespace App\Repositories;
 
 
+/**
+ * App\Repositories\OperationLogs
+ *
+ * @property mixed $context
+ * @mixin \Eloquent
+ * @property int $id
+ * @property int|null $user_id 操作用户ID
+ * @property string|null $message 日志消息内容
+ * @property string $created_at 创建时间
+ * @property int|null $project_id 关联的项目ID
+ * @property int|null $page_id 关联的文档ID
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\OperationLogs whereContext($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\OperationLogs whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\OperationLogs whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\OperationLogs whereMessage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\OperationLogs wherePageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\OperationLogs whereProjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\OperationLogs whereUserId($value)
+ */
 class OperationLogs extends Repository
 {
     protected $table = 'wz_operation_logs';

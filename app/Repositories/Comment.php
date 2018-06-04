@@ -23,8 +23,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
  * @property Carbon  $deleted_at
- *
  * @package App\Repositories
+ * @property-read \App\Repositories\Document $document
+ * @property-read \App\Repositories\Comment $replyComment
+ * @property-read \App\Repositories\User $user
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Comment onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Comment withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Comment withoutTrashed()
+ * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Comment whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Comment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Comment whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Comment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Comment wherePageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Comment whereReplyToId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Comment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Comment whereUserId($value)
  */
 class Comment extends Repository
 {

@@ -18,8 +18,16 @@ use Carbon\Carbon;
  * @property integer $user_id
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
- *
  * @package App\Repositories
+ * @property-read \App\Repositories\User $creator
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Project[] $projects
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\User[] $users
+ * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Group whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Group whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Group whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Group whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Group whereUserId($value)
  */
 class Group extends Repository
 {

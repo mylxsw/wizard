@@ -963,3 +963,8 @@ tr.warning {
     right: 10px;
     height: 30px;
 }
+
+/* vis 统计图 */
+.vis-timeline {
+    border: none;
+}

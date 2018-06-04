@@ -12,6 +12,21 @@ namespace App\Repositories;
  * 项目目录
  *
  * @package App\Repositories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Project[] $projects
+ * @property-read \App\Repositories\User $user
+ * @mixin \Eloquent
+ * @property int $id
+ * @property string $name 项目目录名称
+ * @property int $sort_level 排序，排序值越大越靠后
+ * @property int $user_id 创建用户ID
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Catalog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Catalog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Catalog whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Catalog whereSortLevel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Catalog whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Catalog whereUserId($value)
  */
 class Catalog extends Repository
 {

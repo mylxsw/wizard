@@ -22,8 +22,25 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property integer $status
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
- *
  * @package App\Repositories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Project[] $favoriteProjects
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Group[] $groups
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\DocumentHistory[] $histories
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Document[] $pages
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Project[] $projects
+ * @mixin \Eloquent
+ * @property string $email
+ * @property string|null $remember_token
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\User whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\User whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\User whereUpdatedAt($value)
  */
 class User extends Authenticatable
 {

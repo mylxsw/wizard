@@ -11,6 +11,42 @@ namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Repositories\Project
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Attachment[] $attachments
+ * @property-read \App\Repositories\Catalog $catalog
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\User[] $favoriteUsers
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Group[] $groups
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Document[] $pages
+ * @property-read \App\Repositories\User $user
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Project onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Project withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Project withoutTrashed()
+ * @mixin \Eloquent
+ * @property int $id
+ * @property string $name 项目名称
+ * @property string|null $description 项目描述
+ * @property int $visibility 可见性
+ * @property int $user_id 创建用户ID
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $deleted_at
+ * @property int $sort_level 项目排序，排序值越大越靠后
+ * @property int|null $catalog_id 目录ID
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereCatalogId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereSortLevel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereVisibility($value)
+ */
 class Project extends Repository
 {
 

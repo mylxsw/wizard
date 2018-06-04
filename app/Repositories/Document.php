@@ -27,8 +27,36 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $status
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
- *
  * @package App\Repositories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Attachment[] $attachments
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Comment[] $comments
+ * @property-read \App\Repositories\User $lastModifiedUser
+ * @property-read \App\Repositories\Document $parentPage
+ * @property-read \App\Repositories\Project $project
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Document[] $subPages
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Tag[] $tags
+ * @property-read \App\Repositories\User $user
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Document onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Document withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Document withoutTrashed()
+ * @mixin \Eloquent
+ * @property \Carbon\Carbon|null $deleted_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereHistoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereLastModifiedUid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document wherePid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereProjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereUserId($value)
  */
 class Document extends Repository
 {
