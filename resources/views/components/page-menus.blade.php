@@ -9,16 +9,16 @@
                 <span class="fa fa-share-alt mr-2"></span>
                 @lang('common.btn_share')
         </a>
-        @if($pageItem->type == \App\Repositories\Document::TYPE_DOC)
-            <a wz-form-submit href="#" data-form="#form-{{ $pageItem->id }}-export-pdf" class="dropdown-item">
-                <span class="fa fa-download mr-2"></span>
-                导出PDF
-                <form id="form-{{ $pageItem->id }}-export-pdf" method="post"
-                      action="{{ route('project:doc:pdf', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
-                    {{ csrf_field() }}
-                </form>
-            </a>
-        @endif
+        {{--@if($pageItem->type == \App\Repositories\Document::TYPE_DOC)--}}
+            {{--<a wz-form-submit href="#" data-form="#form-{{ $pageItem->id }}-export-pdf" class="dropdown-item">--}}
+                {{--<span class="fa fa-download mr-2"></span>--}}
+                {{--导出PDF--}}
+                {{--<form id="form-{{ $pageItem->id }}-export-pdf" method="post"--}}
+                      {{--action="{{ route('project:doc:pdf', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">--}}
+                    {{--{{ csrf_field() }}--}}
+                {{--</form>--}}
+            {{--</a>--}}
+        {{--@endif--}}
         <a href="{{ wzRoute('project:doc:history', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}" class="dropdown-item">
             <span class="fa fa-history mr-2"></span>
             @lang('document.page_history')
