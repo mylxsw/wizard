@@ -4,7 +4,10 @@
 @section('content')
 
     <div class="row marketing wz-main-container-full">
-        <div class="col-3">
+        <div class="col-12 wz-left-main-full">
+            <a class="wz-left-main-switch btn"><i class="fa fa-angle-double-down"></i> </a>
+        </div>
+        <div class="col-12 col-lg-3 wz-left-main">
             <nav class="nav flex-column">
                 <a class="nav-link {{ $op == 'dashboard' ? 'active':'' }}" href="{{ wzRoute('admin:dashboard') }}">
                     <i class="fa fa-dashboard mr-2"></i> 仪表盘
@@ -20,7 +23,7 @@
                 </a>
             </nav>
         </div>
-        <div class="col-9">
+        <div class="col-12 col-lg-9 ">
             @yield('breadcrumb')
             @include('components.error', ['error' => $errors ?? null])
             @yield('admin-content')

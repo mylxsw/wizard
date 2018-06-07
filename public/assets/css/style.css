@@ -43,6 +43,54 @@ form {
     }
 }
 
+
+.wz-left-main * {
+    box-sizing: initial;
+}
+
+.wz-left-main-full {
+    display: none;
+}
+
+@media screen and (max-width: 992px) {
+    .wz-left-main {
+        display: none;
+    }
+    
+    .wz-left-main-full {
+        display: block;
+    }
+
+    .wz-left-main-full .wz-left-main-switch {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .wz-main-container-full {
+        padding: 0 15px 15px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .wz-main-container-full {
+        padding: 0;
+    }
+
+    .container {
+        max-width: 98%;
+        margin-left: 2%;
+    }
+    
+    .wz-search-result-sign {
+        display: none;
+    }
+
+    .wz-userface-small {
+        display: none;
+    }
+}
+
 .container-narrow > hr {
     margin: 30px 0;
 }
@@ -99,11 +147,6 @@ a:hover {
 .wz-main-container, .wz-main-container > div {
     padding-right: 0;
     padding-left: 0;
-}
-
-.wz-main-container-full {
-    margin-top: 20px;
-    padding: 0 15px 15px;
 }
 
 .wz-project-title {
@@ -227,6 +270,10 @@ a:hover {
 
 .wz-nav-control {
     margin: 0 0 20px;
+}
+
+.wz-main-container-full {
+    margin-top: 20px;
 }
 
 .wz-left-nav {
@@ -717,9 +764,6 @@ tr.warning {
     background: #e9efec;
 }
 
-.wz-left-main * {
-    box-sizing: initial;
-}
 
 .wz-comment-editor-box {
     display: flex;
@@ -915,7 +959,7 @@ tr.warning {
 }
 
 .swagger-editor-toolbar {
-    margin: 0 -26px -10px;
+    margin: 0 -10px -10px;
 }
 
 .swagger-ui .opblock .opblock-summary-description {
@@ -967,4 +1011,9 @@ tr.warning {
 /* vis 统计图 */
 .vis-timeline {
     border: none;
+}
+
+.wz-editor-header {
+    margin-left: 0;
+    margin-right: 0;
 }

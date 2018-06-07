@@ -146,6 +146,19 @@
                 delay: { "show": 500, "hide": 100 }
             });
         }, 500);
+
+        // 左侧导航栏自适应布局切换
+        $('.wz-left-main-full .wz-left-main-switch').on('click', function (e) {
+            e.preventDefault();
+
+            $('.wz-left-main').slideToggle();
+            var icon = $(this).find('.fa')
+            if (icon.hasClass('fa-angle-double-up')) {
+                icon.removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
+            } else {
+                icon.removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
+            }
+        });
     });
 </script>
 

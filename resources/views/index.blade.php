@@ -34,7 +34,7 @@
                 @if(!empty($catalogs))
                     <div class="row col-12">
                         @foreach($catalogs ?? [] as $cat)
-                            <div class="col-3">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <a class="wz-box wz-box-catalog" href="{{ wzRoute('home', ['catalog' => $cat->id]) }}">
                                     <span title="项目数" class="wz-box-tag pull-right wz-project-count">{{ $cat->projects_count }} 个项目</span>
                                     <p class="wz-title" title="{{ $cat->name }}【排序：{{ $cat->sort_level }}】">{{ $cat->name }}</p>
@@ -46,7 +46,7 @@
 
                 <div class="row col-12">
                     @foreach($projects ?? [] as $proj)
-                        <div class="col-3">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <a class="wz-box wz-box-project" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
                                 @include('components.project-tag', ['proj' => $proj])
                                 {{--@if(!empty($favorites) && $favorites->contains('id', $proj->id))--}}
@@ -77,7 +77,7 @@
             <div class="card-body">
                 <div class="row col-12">
                     @foreach($favorites as $proj)
-                        <div class="col-3">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <a class="wz-box wz-box-project" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
                                 @include('components.project-tag', ['proj' => $proj])
                                 <span title="关注该项目" class="wz-box-tag pull-right fa fa-star wz-box-tag-star"></span>

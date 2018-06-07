@@ -19,7 +19,7 @@
         <div class="card-body">
             <div class="row marketing wz-main-container-full col-12">
                 @foreach($projects ?? [] as $proj)
-                    <div class="col-3">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <a class="wz-box wz-box-project" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}" >
                             @if($proj->visibility == \App\Repositories\Project::VISIBILITY_PRIVATE)
                                 <span title="@lang('project.privilege_private')" class="wz-box-tag fa fa-eye-slash"></span>
@@ -33,14 +33,14 @@
                     </div>
                 @endforeach
                 @can('project-create')
-                    <div class="col-3">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <a class="wz-box wz-box-new" href="#"
                            data-toggle="modal" data-target="#wz-new-project">
                             <p class="wz-title"><span class="fa fa-plus"></span> @lang('project.new_project')</p>
                         </a>
                     </div>
                 @else
-                    <div class="col-3">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                 <span class="wz-box-disabled">
                     <p class="wz-title" title="您没有创建项目的权限">
                         <span class="fa fa-ban"></span>

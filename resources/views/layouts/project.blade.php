@@ -4,7 +4,10 @@
 @section('content')
 
     <div class="row wz-main-container">
-        <div class="col-3 wz-left-main">
+        <div class="col-12 wz-left-main-full">
+            <a class="wz-left-main-switch btn"><i class="fa fa-angle-double-down"></i> </a>
+        </div>
+        <div class="col-12 col-lg-3 wz-left-main">
             <div class="wz-project-title">
                 <a href="{{ wzRoute('project:home', ['id' => $project->id]) }}" class="wz-nav-item"
                     title="{{ $project->name }}">
@@ -48,7 +51,7 @@
                 @include('components.navbar', ['navbars' => $navigators])
             </ul>
         </div>
-        <div class="col-9 wz-panel-right">
+        <div class="col-12 col-lg-9 wz-panel-right">
             <div class="panel panel-default">
                 <div class="panel-body" style="padding: 10px 15px;">
                     @yield('page-content')

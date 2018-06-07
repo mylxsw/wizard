@@ -5,7 +5,10 @@
 @section('content')
 
     <div class="row marketing wz-main-container-full">
-        <div class="col-3">
+        <div class="col-12 wz-left-main-full">
+            <a class="wz-left-main-switch btn"><i class="fa fa-angle-double-down"></i> </a>
+        </div>
+        <div class="col-12 col-lg-3 wz-left-main">
             <nav class="nav flex-column">
                 <a class="nav-link {{ $op == 'basic' ? 'active':'' }}" href="{{ wzRoute('project:setting:show', ['id' => $project->id, 'op' => 'basic']) }}">
                     <i class="fa fa-road mr-2"></i> @lang('project.basic')
@@ -18,7 +21,7 @@
                 </a>
             </nav>
         </div>
-        <div class="col-9">
+        <div class="col-12 col-lg-9">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ wzRoute('user:home') }}">@lang('common.home')</a></li>
                 @if(!empty($project->catalog))
