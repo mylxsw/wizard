@@ -20,6 +20,11 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-dark wz-fullscreen-edit">全屏编辑</button>
                         </div>
+                        <div class="btn-group">
+                            <a href="https://swagger.io/docs/specification/about/" target="_blank" class="btn btn-dark">
+                                帮助
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="swagger-editor-body">

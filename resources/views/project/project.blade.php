@@ -46,7 +46,7 @@
             <h1 class="wz-page-title">
                 {{ $pageItem->title }}
                 @if($type == 'swagger')
-                    <a title="原始Swagger文档" target="_blank" href="{{ route('swagger:doc:yml', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="fa fa-link"></a>
+                    <a title="原始Swagger文档" target="_blank" href="{{ route('swagger:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="fa fa-link"></a>
                 @endif
             </h1>
         </nav>
