@@ -58,6 +58,7 @@ Route::group(['middleware' => 'locale'], function () {
     Route::group(['prefix' => 'swagger', 'as' => 'swagger:'], function () {
         // 获取swagger文档内容
         Route::get('/{id}/doc/{page_id}.yml', 'DocumentController@getSwagger')->name('doc:yml');
+        Route::get('/{id}/doc/{page_id}.json', 'DocumentController@getJson')->name('doc:json');
     });
 
     // 系统管理

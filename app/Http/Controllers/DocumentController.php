@@ -21,6 +21,7 @@ use App\Repositories\Project;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
+use SoapBox\Formatter\Formatter;
 
 class DocumentController extends Controller
 {
@@ -354,6 +355,36 @@ class DocumentController extends Controller
      */
     public function getSwagger($id, $page_id)
     {
+        return response($this->getSwaggerContent($id, $page_id));
+    }
+
+    /**
+     * 获取json格式的文档
+     *
+     * @param $id
+     * @param $page_id
+     *
+     * @return mixed
+     */
+    public function getJson($id, $page_id)
+    {
+        $yaml      = $this->getSwaggerContent($id, $page_id);
+        $formatter = Formatter::make($yaml, Formatter::YAML);
+
+        return response($formatter->toJson(), 200, ['Content-Type' => 'application/json']);
+    }
+
+
+    /**
+     * 获取Swagger文档内容
+     *
+     * @param $id
+     * @param $page_id
+     *
+     * @return string
+     */
+    private function getSwaggerContent($id, $page_id): string
+    {
         /** @var Project $project */
         $project = Project::findOrFail($id);
 
@@ -369,7 +400,7 @@ class DocumentController extends Controller
             abort(422, '该文档不是Swagger文档');
         }
 
-        return response($page->content);
+        return $page->content;
     }
 
     /**
