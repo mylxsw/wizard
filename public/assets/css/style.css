@@ -1021,6 +1021,7 @@ tr.warning {
 .wz-table-float {
     position: fixed;
     top: 50px;
+    right: 10px;
     background: #fff;
     padding: 10px;
     border-radius: 6px;
@@ -1028,6 +1029,7 @@ tr.warning {
     z-index: 10;
 }
 
-.wz-wrap-table-open {
+.control-area button {
     float: right;
+    margin-left: 5px;
 }

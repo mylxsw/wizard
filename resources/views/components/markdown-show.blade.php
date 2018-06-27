@@ -54,13 +54,12 @@
             });
 
             // 表格超宽展示优化
-
             $("#markdown-body table").each(function() {
                 if ($(this)[0].scrollWidth > $('#markdown-body').width()) {
                     $(this).wrap("<div class='wz-wrap-table'></div>");
                 }
             });
-            $('#markdown-body .wz-wrap-table').prepend('<div class="control-area"><button class="btn btn-primary wz-wrap-table-open"><i class="fa fa-search-plus"></i></button></div>');
+            $('#markdown-body .wz-wrap-table').prepend('<div class="control-area"><button class="btn btn-primary wz-wrap-table-flow"><i class="fa fa-arrows-h"></i></button><button class="btn btn-primary wz-wrap-table-open"><i class="fa fa-search-plus"></i></button></div>');
             $('#markdown-body').on('click', '.wz-wrap-table-open', function () {
                 if ($(this).data('status') === 'open') {
                     $(this).data('status', 'close');
@@ -72,6 +71,16 @@
                     $(this).parents('.wz-wrap-table').addClass('wz-table-float');
                 }
 
+            }).on('click', '.wz-wrap-table-flow', function () {
+                if ($(this).data('status') === 'open') {
+                    $(this).data('status', 'close');
+                    $(this).html("<i class='fa fa-arrows-h'></i>");
+                    $(this).parents('.wz-wrap-table').find('table').css('word-break', 'keep-all')
+                } else {
+                    $(this).data('status', 'open');
+                    $(this).html("<i class='fa fa-arrows-v'></i>");
+                    $(this).parents('.wz-wrap-table').find('table').css('word-break', 'normal');
+                }
             });
         }, 0);
     });
