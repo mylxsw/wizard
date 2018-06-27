@@ -12,7 +12,7 @@
 <script src="/assets/vendor/editor-md/lib/sequence-diagram.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/flowchart.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/jquery.flowchart.min.js"></script>
-<script src="/assets/vendor/editor-md/editormd.js"></script>
+<script src="/assets/vendor/editor-md/editormd.js?{{ resourceVersion() }}"></script>
 
 <script type="text/javascript">
     $(function () {
