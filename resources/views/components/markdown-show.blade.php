@@ -12,7 +12,7 @@
 <script src="/assets/vendor/editor-md/lib/sequence-diagram.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/flowchart.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/jquery.flowchart.min.js"></script>
-<script src="/assets/vendor/editor-md/editormd.min.js"></script>
+<script src="/assets/vendor/editor-md/editormd.js"></script>
 
 <script type="text/javascript">
     $(function () {
@@ -33,8 +33,9 @@
             sequenceDiagram: true
         });
 
-        // TOC导航插入到侧边随滚动展示
+
         window.setTimeout(function () {
+            // TOC导航插入到侧边随滚动展示
             var tocElement = $('.markdown-body > .markdown-toc');
             if (tocElement.length < 1) {
                 return ;
@@ -50,6 +51,27 @@
                 } else {
                     tocContainer.addClass('d-none');
                 }
+            });
+
+            // 表格超宽展示优化
+
+            $("#markdown-body table").each(function() {
+                if ($(this)[0].scrollWidth > $('#markdown-body').width()) {
+                    $(this).wrap("<div class='wz-wrap-table'></div>");
+                }
+            });
+            $('#markdown-body .wz-wrap-table').prepend('<div class="control-area"><button class="btn btn-primary wz-wrap-table-open"><i class="fa fa-search-plus"></i></button></div>');
+            $('#markdown-body').on('click', '.wz-wrap-table-open', function () {
+                if ($(this).data('status') === 'open') {
+                    $(this).data('status', 'close');
+                    $(this).html('<i class="fa fa-search-plus">');
+                    $(this).parents('.wz-wrap-table').removeClass('wz-table-float');
+                } else {
+                    $(this).html('<i class="fa fa-search-minus">');
+                    $(this).data('status', 'open');
+                    $(this).parents('.wz-wrap-table').addClass('wz-table-float');
+                }
+
             });
         }, 0);
     });

@@ -1017,3 +1017,17 @@ tr.warning {
     margin-left: 0;
     margin-right: 0;
 }
+
+.wz-table-float {
+    position: fixed;
+    top: 50px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    z-index: 10;
+}
+
+.wz-wrap-table-open {
+    float: right;
+}
