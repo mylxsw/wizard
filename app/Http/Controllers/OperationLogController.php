@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Catalog;
 use App\Repositories\OperationLogs;
+use App\Repositories\Project;
 use Illuminate\Http\Request;
 
 class OperationLogController extends Controller
@@ -34,7 +35,7 @@ class OperationLogController extends Controller
 
         // 值查询目录下的项目日志
         if (empty($projectId) && !empty($catalogId)) {
-            $projectIds = Catalog::where('id', $catalogId)->select(['id'])->pluck('id')->toArray();
+            $projectIds = Project::where('catalog_id', $catalogId)->select(['id'])->pluck('id')->toArray();
             $operationLogModel->whereIn('project_id', $projectIds);
         }
 
