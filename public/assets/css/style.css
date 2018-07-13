@@ -582,7 +582,7 @@ a:hover {
 }
 
 .wz-markdown-style-fix img {
-    max-width: 940px !important;
+    max-width: 99% !important;
     box-shadow: 3px 3px 7px #ccc;
 }
 
