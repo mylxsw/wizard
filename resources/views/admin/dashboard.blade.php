@@ -17,11 +17,11 @@
                     <h4 class="my-0 font-weight-normal">用户</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">{{ $user['counts']['normal'] + $user['counts']['admin'] }}</h1>
+                    <h1 class="card-title pricing-card-title">{{ $user['counts']['normal'] ?? 0 + $user['counts']['admin'] ?? 0 }}</h1>
                     <ul class="list-unstyled mt-3 mb-4">
-                        <li>{{ $user['counts']['normal'] }} 个普通用户</li>
-                        <li>{{ $user['counts']['admin'] }} 个管理员</li>
-                        <li>{{ $user['group_count'] }} 个用户组</li>
+                        <li>{{ $user['counts']['normal'] ?? 0 }} 个普通用户</li>
+                        <li>{{ $user['counts']['admin'] ?? 0 }} 个管理员</li>
+                        <li>{{ $user['group_count'] ?? 0 }} 个用户组</li>
                     </ul>
                 </div>
             </div>
@@ -30,11 +30,11 @@
                     <h4 class="my-0 font-weight-normal">项目</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">{{ $project['counts']['private'] + $project['counts']['public'] }}</h1>
+                    <h1 class="card-title pricing-card-title">{{ $project['counts']['private'] ?? 0 + $project['counts']['public'] ?? 0 }}</h1>
                     <ul class="list-unstyled mt-3 mb-4">
-                        <li>{{ $project['counts']['private'] }} 个私有项目</li>
-                        <li>{{ $project['counts']['public'] }} 个公开项目</li>
-                        <li>{{ $project['catalog_count'] }} 个项目目录</li>
+                        <li>{{ $project['counts']['private'] ?? 0 }} 个私有项目</li>
+                        <li>{{ $project['counts']['public'] ?? 0 }} 个公开项目</li>
+                        <li>{{ $project['catalog_count'] ?? 0 }} 个项目目录</li>
                     </ul>
                 </div>
             </div>
@@ -43,11 +43,11 @@
                     <h4 class="my-0 font-weight-normal">文档</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">{{ $document['counts']['swagger'] + $document['counts']['markdown'] }}</h1>
+                    <h1 class="card-title pricing-card-title">{{ $document['counts']['swagger'] ?? 0 + $document['counts']['markdown'] ?? 0 }}</h1>
                     <ul class="list-unstyled mt-3 mb-4">
-                        <li>{{ $document['counts']['swagger'] }} 个Swagger文档</li>
-                        <li>{{ $document['counts']['markdown'] }} 个Markdown文档</li>
-                        <li>{{ $document['comment_count'] }} 条评论</li>
+                        <li>{{ $document['counts']['swagger'] ?? 0 }} 个Swagger文档</li>
+                        <li>{{ $document['counts']['markdown'] ?? 0 }} 个Markdown文档</li>
+                        <li>{{ $document['comment_count'] ?? 0 }} 条评论</li>
                     </ul>
                 </div>
             </div>
@@ -69,9 +69,9 @@
         $(function () {
             var container = document.getElementById('visualization');
             var items = [
-                    @foreach ($stats['document'] as $s)
+                @foreach ($stats['document'] as $s)
                 {
-                    x: '{{ $s['month'] }}', y: {{ $s['document_count'] }} }
+                    x: '{{ $s['month'] }}', y: {{ $s['document_count'] ?? 0 }} }
                 @if(!$loop->last)
                 ,
                 @endif
