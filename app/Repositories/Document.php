@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $history_id
  * @property integer $type
  * @property integer $status
+ * @property integer $sort_level
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
  * @package App\Repositories
@@ -79,6 +80,7 @@ class Document extends Repository
             'history_id',
             'type',
             'status',
+            'sort_level',
         ];
 
     public $dates = ['deleted_at'];
@@ -100,6 +102,7 @@ class Document extends Repository
         $document->last_modified_uid = $history->operator_id;
         $document->type              = $history->type;
         $document->status            = $history->status;
+        $document->sort_level        = $history->sort_level;
 
         $document->save();
 

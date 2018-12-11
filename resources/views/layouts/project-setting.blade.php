@@ -16,6 +16,9 @@
                 <a class="nav-link {{ $op == 'privilege' ? 'active':'' }}" href="{{ wzRoute('project:setting:show', ['id' => $project->id, 'op' => 'privilege']) }}">
                     <i class="fa fa-sitemap mr-2"></i> @lang('project.privilege')
                 </a>
+                <a class="nav-link {{ $op == 'sort' ? 'active':'' }}" href="{{ wzRoute('project:setting:show', ['id' => $project->id, 'op' => 'sort']) }}">
+                    <i class="fa fa-sort-alpha-asc mr-2"></i> @lang('project.sort')
+                </a>
                 <a class="nav-link {{ $op == 'advanced' ? 'active':'' }}" href="{{ wzRoute('project:setting:show', ['id' => $project->id, 'op' => 'advanced']) }}">
                     <i class="fa fa-wrench mr-2"></i> @lang('project.advanced')
                 </a>

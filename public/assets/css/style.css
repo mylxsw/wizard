@@ -1033,3 +1033,45 @@ tr.warning {
     float: right;
     margin-left: 5px;
 }
+
+
+.wz-nav-editor {
+    padding: 10px;
+    border-left: 7px solid #ccc;
+}
+
+.wz-nav-editor input {
+    width: 80px;
+    border: none;
+    border-bottom: 1px solid #d6d6d6;
+    margin-right: 10px;
+}
+
+.wz-nav-editor .wz-nav-editor-line {
+    padding: 5px;
+}
+
+.wz-sort-level-changed {
+    background: #76ff454a;
+    border-color: #28842c!important;
+}
+
+.wz-control > a {
+    margin-left: 10px;
+}
+
+.wz-control > a.wz-control-up {
+    color: #f00;
+}
+
+.wz-control > a.wz-control-down {
+    color: #000000;
+}
+
+.wz-nav-editor-line:first-child > .wz-control > a.wz-control-up {
+    display: none;
+}
+
+.wz-nav-editor-line:last-child > .wz-control > a.wz-control-down {
+    visibility: hidden;
+}

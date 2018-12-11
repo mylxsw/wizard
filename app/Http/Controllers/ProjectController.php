@@ -22,6 +22,8 @@ use App\Repositories\DocumentHistory;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class ProjectController extends Controller
 {
@@ -215,7 +217,7 @@ class ProjectController extends Controller
         $this->validate(
             $request,
             [
-                'op' => 'in:basic,privilege,advanced'
+                'op' => 'in:basic,privilege,advanced,sort'
             ]
         );
 
@@ -248,7 +250,9 @@ class ProjectController extends Controller
                 }
                 break;
             case 'advanced':
-
+                break;
+            case 'sort':
+                $viewData['navigators'] = navigator($id);
                 break;
         }
 
@@ -267,7 +271,7 @@ class ProjectController extends Controller
      */
     public function settingHandle(Request $request, $id)
     {
-        $this->validate($request, ['op' => 'required|in:basic,privilege,advanced']);
+        $this->validate($request, ['op' => 'required|in:basic,privilege,advanced,sort']);
 
         $op = $request->input('op');
 
@@ -283,6 +287,9 @@ class ProjectController extends Controller
                 break;
             case 'advanced':
                 $updated = false;
+                break;
+            case 'sort':
+                $updated = $this->sortSettingHandle($request, $project);
                 break;
             default:
                 $updated = false;
@@ -374,6 +381,51 @@ class ProjectController extends Controller
         $project->groups()->attach($groupID, ['privilege' => $privilege == 'r' ? 2 : 1]);
 
         return true;
+    }
+
+    /**
+     * 更新项目中文档的排序
+     *
+     * @param Request $request
+     * @param Project $project
+     *
+     * @return bool
+     */
+    private function sortSettingHandle(Request $request, Project $project): bool
+    {
+        $sortLevelsJson = $request->input('sort_levels');
+        if (empty($sortLevelsJson)) {
+            return false;
+        }
+
+        $sortLevels = new Collection(json_decode($sortLevelsJson, true));
+
+        // 检查ID是否存在
+        $ids = $sortLevels->map(function ($s) {
+            return $s['id'];
+        });
+
+        /** @var \Illuminate\Database\Eloquent\Collection $documents */
+        $documents   =
+            Document::whereIn('id', $ids->toArray())->where('project_id', $project->id)->get();
+        $retrivedIds = $documents->map(function ($s) {
+            return $s->id;
+        });
+
+        if (!$ids->diff($retrivedIds)->isEmpty()) {
+            throw new NotFoundResourceException('部分文档不存在');
+        }
+
+        // 更新文档
+        $sortLevelsById = $sortLevels->keyBy('id');
+        \DB::transaction(function () use ($documents, $sortLevelsById) {
+            $documents->each(function (Document $doc) use ($sortLevelsById) {
+                $doc->sort_level = (int)$sortLevelsById->get($doc->id)['sort_level'];
+                $doc->save();
+            });
+        });
+
+        return false;
     }
 
     /**

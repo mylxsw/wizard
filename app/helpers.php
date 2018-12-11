@@ -40,7 +40,7 @@ function navigator(
     $exclude = []
 ) {
     $pages = \App\Repositories\Document::where('project_id', $projectID)->select(
-        'id', 'pid', 'title', 'project_id', 'type', 'status', 'created_at'
+        'id', 'pid', 'title', 'project_id', 'type', 'status', 'created_at', 'sort_level'
     )->orderBy('pid')->get();
 
     $navigators = [];
@@ -56,8 +56,10 @@ function navigator(
             'pid'        => (int)$page->pid,
             'url'        => route('project:home', ['id' => $projectID, 'p' => $page->id]),
             'selected'   => $pageID === (int)$page->id,
-            'type'       => $page->type == \App\Repositories\Document::TYPE_DOC ? 'markdown' : 'swagger',
+            'type'       => $page->type == \App\Repositories\Document::TYPE_DOC ? 'markdown'
+                : 'swagger',
             'created_at' => $page->created_at,
+            'sort_level' => $page->sort_level ?? 1000,
         ];
     }
 
@@ -85,19 +87,36 @@ function navigator(
  */
 function navigatorSort($navbars)
 {
-    usort($navbars, function ($a, $b) {
-        if (!empty($a['nodes'])) {
-            return -1;
-        }
-
-        if (!empty($b['nodes'])) {
-            return 1;
-        }
-
+    $sortItem = function ($a, $b) {
         try {
-            return $a['created_at']->greaterThan($b['created_at']);
+            if ($a['sort_level'] > $b['sort_level']) {
+                return 1;
+            } else if ($a['sort_level'] < $b['sort_level']) {
+                return -1;
+            } else {
+                return $a['created_at']->greaterThan($b['created_at']);
+            }
         } catch (Exception $e) {
             return 0;
+        }
+    };
+
+    usort($navbars, function ($a, $b) use ($sortItem) {
+
+        $aIsFolder = !empty($a['nodes']);
+        $bIsFolder = !empty($b['nodes']);
+
+        $bothIsFolder  = $aIsFolder && $bIsFolder;
+        $bothNotFolder = !$aIsFolder && !$bIsFolder;
+
+        if ($bothIsFolder || $bothNotFolder) {
+            return $sortItem($a, $b);
+        } else {
+            if ($aIsFolder) {
+                return -1;
+            }
+
+            return 1;
         }
     });
 
@@ -209,7 +228,7 @@ function userHasNotifications()
 
 /**
  * 用户通知消息数
- * 
+ *
  * @param int $limit 显示限制数量，如果提供了，则返回string类型的数量展示，最大值为$limit，超过数量显示为"$limit+"
  *
  * @return int|string

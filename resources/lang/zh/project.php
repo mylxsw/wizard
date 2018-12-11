@@ -18,6 +18,7 @@ return [
     'privilege_private'      => '私有',
     'privilege_group_public' => '组共享',
     'project_delete'         => '删除项目',
+    'sort'                   => '文档排序',
 
     'group_name'          => '用户组',
     'group_write_enabled' => '允许修改',

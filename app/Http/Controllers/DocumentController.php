@@ -104,6 +104,7 @@ class DocumentController extends Controller
                 'title'      => 'required|between:1,255',
                 'type'       => 'required|in:doc,swagger',
                 'pid'        => 'integer|min:0',
+                'sort_level' => 'integer',
             ],
             [
                 'title.required' => __('document.validation.title_required'),
@@ -118,6 +119,7 @@ class DocumentController extends Controller
         $title     = $request->input('title');
         $content   = $request->input('content');
         $type      = $request->input('type', 'doc');
+        $sortLevel = $request->input('sort_level', 1000);
 
         $pageItem = Document::create([
             'pid'               => $pid,
@@ -129,6 +131,7 @@ class DocumentController extends Controller
             'last_modified_uid' => \Auth::user()->id,
             'type'              => $type == 'doc' ? Document::TYPE_DOC : Document::TYPE_SWAGGER,
             'status'            => 1,
+            'sort_level'        => $sortLevel,
         ]);
 
         // 记录文档变更历史
@@ -173,6 +176,7 @@ class DocumentController extends Controller
                 'last_modified_at' => 'required|date',
                 'force'            => 'bool',
                 'history_id'       => 'required|integer',
+                'sort_level'       => 'integer',
             ],
             [
                 'title.required' => __('document.validation.title_required'),
@@ -187,6 +191,7 @@ class DocumentController extends Controller
         $lastModifiedAt = Carbon::parse($request->input('last_modified_at'));
         $history_id     = $request->input('history_id');
         $forceSave      = $request->input('force', false);
+        $sortLevel      = $request->input('sort_level', 1000);
 
         /** @var Document $pageItem */
         $pageItem = Document::where('id', $page_id)->firstOrFail();
@@ -212,6 +217,7 @@ class DocumentController extends Controller
         $pageItem->project_id = $projectID;
         $pageItem->title      = $title;
         $pageItem->content    = $content;
+        $pageItem->sort_level = $sortLevel;
 
         // 只有文档内容发生修改才进行保存
         if ($pageItem->isDirty()) {
@@ -338,6 +344,7 @@ class DocumentController extends Controller
             'type'                   => $pageItem->type,
             'user_id'                => $pageItem->user_id,
             'username'               => $pageItem->user->name,
+            'sort_level'             => $pageItem->sort_level,
             'last_modified_user_id'  => $pageItem->lastModifiedUser->id,
             'last_modified_username' => $pageItem->lastModifiedUser->name,
             'created_at'             => $pageItem->created_at->format('Y-m-d H:i:s'),

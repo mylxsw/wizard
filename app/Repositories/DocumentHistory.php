@@ -21,6 +21,7 @@ namespace App\Repositories;
  * @property integer $user_id
  * @property string  $type
  * @property string  $status
+ * @property integer $sort_level
  * @property integer $operator_id
  * @property string  $created_at
  * @property string  $updated_at
@@ -57,6 +58,7 @@ class DocumentHistory extends Repository
             'type',
             'status',
             'operator_id',
+            'sort_level',
         ];
 
     /**
