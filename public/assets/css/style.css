@@ -1047,8 +1047,14 @@ tr.warning {
     margin-right: 10px;
 }
 
+.wz-nav-editor ul {
+    margin-left: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
 .wz-nav-editor .wz-nav-editor-line {
-    padding: 5px;
+    padding: 5px 0;
 }
 
 .wz-sort-level-changed {
@@ -1056,8 +1062,17 @@ tr.warning {
     border-color: #28842c!important;
 }
 
+.wz-modified-sign {
+    color: #f00;
+    display: none;
+}
+
 .wz-control > a {
     margin-left: 10px;
+}
+
+.wz-control {
+    float: right;
 }
 
 .wz-control > a.wz-control-up {
@@ -1074,4 +1089,8 @@ tr.warning {
 
 .wz-nav-editor-line:last-child > .wz-control > a.wz-control-down {
     visibility: hidden;
+}
+
+li.wz-nav-editor-line:hover > a, li.wz-nav-editor-line:hover > .wz-control {
+    border-bottom: 1px solid #f00;
 }

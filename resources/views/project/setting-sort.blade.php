@@ -10,7 +10,7 @@
                 <input type="hidden" name="op" value="{{ $op }}">
 
                 <div class="form-group wz-nav-editor">
-                    <ul>@include('components.navbar-edit', ['navbars' => $navigators])</ul>
+                    <ul>@include('components.navbar-edit', ['navbars' => $navigators, 'indent' => 0])</ul>
                 </div>
 
                 <div class="form-group">
@@ -49,9 +49,9 @@
                 var oldVal = parseInt(inputEle.data('original'));
 
                 if (newVal !== oldVal) {
-                    inputEle.parent('li').addClass('wz-sort-level-changed');
+                    inputEle.parent('li').find('.wz-modified-sign').show();
                 } else {
-                    inputEle.parent('li').removeClass('wz-sort-level-changed');
+                    inputEle.parent('li').find('.wz-modified-sign').hide();
                 }
             };
 
@@ -111,16 +111,16 @@
 
 
             $('.wz-nav-editor')
-                // .on('blur', 'input.wz-sort-level', function () {
-                //     var newVal = parseInt($(this).val());
-                //     var oldVal = parseInt($(this).data('original'));
-                //
-                //     if (newVal !== oldVal) {
-                //         // 更新页面展示排序
-                //         var parentUl = $(this).parent('li').parent('ul');
-                //         updateSortOrder(parentUl);
-                //     }
-                // })
+                .on('blur', 'input.wz-sort-level', function () {
+                    var newVal = parseInt($(this).val());
+                    var oldVal = parseInt($(this).data('original'));
+
+                    if (newVal !== oldVal) {
+                        // 更新页面展示排序
+                        var parentUl = $(this).parent('li').parent('ul');
+                        updateSortOrder(parentUl);
+                    }
+                })
                 .on('click', '.wz-control > a', function (e) {
                     e.preventDefault();
 

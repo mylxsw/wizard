@@ -1,9 +1,9 @@
 @php $___index = 0; @endphp
 @foreach(navigatorSort($navbars) as $nav)
     <li class="wz-nav-editor-line" data-type="{{ $nav['type'] }}">
-        <input type="hidden" class="wz-sort-level" data-id="{{ $nav['id'] }}" data-index="{{ $___index ++ }}" data-original="{{ $nav['sort_level'] }}" value="{{ $nav['sort_level'] }}">
-        <a href="{{ $nav['url'] }}" target="_blank" title="{{ $nav['url'] }}" class="">
-            {{ $nav['name'] }}
+        <input type="number" class="wz-sort-level" data-id="{{ $nav['id'] }}" data-index="{{ $___index ++ }}" data-original="{{ $nav['sort_level'] }}" value="{{ $nav['sort_level'] }}">
+        <a href="{{ $nav['url'] }}" target="_blank" title="{{ $nav['url'] }}" >
+           <pre style="display: inline;">{{ str_pad("▌", $indent * 8, ' ', STR_PAD_LEFT) }}</pre> {{ $nav['name'] }} <span class="wz-modified-sign">*</span>
         </a>
 
         <span class="wz-control">
@@ -13,7 +13,7 @@
 
         @if(!empty($nav['nodes']))
             <ul>
-                @include('components.navbar-edit', ['navbars' => $nav['nodes']])
+                @include('components.navbar-edit', ['navbars' => $nav['nodes'], 'indent' => $indent + 1])
             </ul>
         @endif
     </li>
