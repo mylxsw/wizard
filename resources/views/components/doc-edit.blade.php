@@ -5,6 +5,7 @@
     <input type="hidden" name="pid" id="editor-pid" value="{{ $pageItem->pid or '' }}">
     <input type="hidden" name="last_modified_at" value="{{ $pageItem->updated_at or '' }}">
     <input type="hidden" name="history_id" value="{{ $pageItem->history_id or '' }}">
+    <input type="hidden" name="sort_level" value="{{ $pageItem->sort_level or 1000 }}">
     <div class="col wz-edit-control">
         <h3 title="@lang('project.project_name')">
             <button type="button"
