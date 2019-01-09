@@ -1094,3 +1094,7 @@ tr.warning {
 li.wz-nav-editor-line:hover > a, li.wz-nav-editor-line:hover > .wz-control {
     border-bottom: 1px solid #f00;
 }
+
+.swagger-ui .responses-inner .model-box {
+    display: block!important;
+}
