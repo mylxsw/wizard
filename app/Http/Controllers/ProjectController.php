@@ -234,7 +234,7 @@ class ProjectController extends Controller
             case 'privilege':
                 $groups = Group::with([
                     'projects' => function ($query) use ($id) {
-                        $query->where('project_id', $id);
+                        $query->wherePivot('project_id', $id);
                     }
                 ])->get();
 
