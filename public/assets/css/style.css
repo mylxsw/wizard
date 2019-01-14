@@ -577,7 +577,7 @@ a:hover {
 }
 
 .wz-markdown-style-fix table th {
-    background: rgb(51, 122, 183);
+    background: #009688;
     color: #fff;
 }
 
@@ -1097,4 +1097,19 @@ li.wz-nav-editor-line:hover > a, li.wz-nav-editor-line:hover > .wz-control {
 
 .swagger-ui .opblock-body .model-box {
     display: block!important;
+}
+
+pre.prettyprint {
+    border: 1px solid #f1f1f1!important;
+    background: #ffffff!important;
+}
+
+.wz-comment-editor, .wz-comment-box, pre.prettyprint, tbody, thead {
+    -webkit-box-shadow: 4px 4px 4px #f1f1f1;
+    -moz-box-shadow: 4px 4px 4px #f1f1f1;
+    box-shadow: 4px 4px 4px #f1f1f1;
+}
+
+li.L1, li.L3, li.L5, li.L7, li.L9 {
+    background: #f1f1f14f!important;
 }
