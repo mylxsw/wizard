@@ -30,7 +30,7 @@ $.wz.mdEditor = function (editor_id, params) {
         jsonToTableConvert: function (dialog, cm) {
             var jsonContent = $('#json-to-table-editor-' + editor_table_id).val();
             if (jsonContent.trim() === '') {
-                return ;
+                return;
             }
 
             $.wz.request('post', '/tools/json-to-markdown', {content: jsonContent}, function (data) {
@@ -48,17 +48,17 @@ $.wz.mdEditor = function (editor_id, params) {
 
     $.extend(true, config, params);
 
-    return editormd(editor_id, {
+    var mdEditor = editormd(editor_id, {
         path: "/assets/vendor/editor-md/lib/",
         height: 800,
         taskList: true,
         tex: true,
         flowChart: true,
         sequenceDiagram: true,
-        imageUpload    : true,
-        imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp"],
-        imageUploadURL : "/upload",
-        htmlDecode : 'style,script,iframe,sub,sup|on*',
+        imageUpload: true,
+        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp"],
+        imageUploadURL: "/upload",
+        htmlDecode: 'style,script,iframe,sub,sup|on*',
         toolbarIcons: function () {
             return ["undo", "redo", "|",
                 "bold", "del", "italic", "quote", "|",
@@ -130,6 +130,13 @@ $.wz.mdEditor = function (editor_id, params) {
                 template: config.lang.chooseTemplate,
                 jsonToTable: config.lang.jsonToTable
             }
+        },
+        onload: function () {
+            editormd.loadPlugin("/assets/vendor/editor-md/plugins/image-handle-paste/image-handle-paste", function () {
+                mdEditor.imagePaste();
+            });
         }
     });
+
+    return mdEditor;
 };
