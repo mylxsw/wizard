@@ -72,6 +72,7 @@ class SearchController extends Controller
                 'per_page'   => $perPage,
                 'project_id' => $projectId,
                 'tag'        => $tagName,
+                'range'      => $range,
             ]),
             'keyword'    => $keyword,
             'project_id' => $projectId,
