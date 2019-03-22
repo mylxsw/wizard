@@ -11,7 +11,7 @@
                 <div class="bmd-form-group bmd-collapse-inline pull-right">
                     <i class="material-icons search-btn" data-input="#search-input">search</i>
                     <span id="search-input" style="{{ empty($name) ? 'display: none;' : '' }}">
-                        <input class="form-control" type="text" id="search" name="search_name" placeholder="搜索项目" value="{{ $name ?? '' }}">
+                        <input class="form-control" type="text" id="search" name="search_name" placeholder="搜索文档" value="{{ $name ?? '' }}">
                     </span>
                 </div>
             </div>
@@ -186,7 +186,8 @@
 
         $('#search-input').find('input').keydown(function (event) {
             if (event.keyCode === 13) {
-                window.location = "{{ route('user:home') }}?name=" + encodeURIComponent($(this).val().trim());
+                {{--window.location = "{{ route('user:home') }}?name=" + encodeURIComponent($(this).val().trim());--}}
+                window.location = "{{ wzRoute('search:search') }}?range=my&keyword=" + encodeURIComponent($(this).val().trim());
             }
         }).blur(function () {
             var value = $(this).val().trim();

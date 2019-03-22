@@ -161,7 +161,7 @@ class DocumentController extends Controller
      * @param         $id
      * @param         $page_id
      *
-     * @return array
+     * @return array|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function editPageHandle(Request $request, $id, $page_id)

@@ -682,7 +682,7 @@ a:hover {
 }
 
 .wz-panel-limit {
-    max-width: 960px;
+    max-width: 1100px;
 }
 
 .layui-layer-btn .layui-layer-btn0, .layui-layer-btn .layui-layer-btn1, .layui-layer-btn .layui-layer-btn2 {
@@ -1112,4 +1112,9 @@ pre.prettyprint {
 
 li.L1, li.L3, li.L5, li.L7, li.L9 {
     background: #f1f1f14f!important;
+}
+
+.wz-select-card-title {
+    border: none;
+    background: inherit;
 }

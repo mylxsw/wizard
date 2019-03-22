@@ -90,6 +90,11 @@ Route::group(['middleware' => 'locale'], function () {
         Route::delete('/catalogs/{id}/project/{project_id}', 'CatalogController@removeProject')->name('catalogs:project:del');
     });
 
+    // 文档搜索
+    Route::group(['prefix' => 'search', 'as' => 'search:'], function () {
+        Route::get('/', 'SearchController@search')->name('search');
+    });
+
     Route::group(['middleware' => 'auth'], function () {
         // 个人首页
         Route::get('/home', 'ProjectController@home')->name('user:home');
@@ -166,10 +171,6 @@ Route::group(['middleware' => 'locale'], function () {
             Route::post('/{id}/favorite', 'ProjectController@favorite')->name('favorite');
         });
 
-        // 文档搜索
-        Route::group(['prefix' => 'search', 'as' => 'search:'], function () {
-            Route::get('/', 'SearchController@search')->name('search');
-        });
 
         // 文档比较
         Route::post('/doc/compare', 'CompareController@compare')->name('doc:compare');

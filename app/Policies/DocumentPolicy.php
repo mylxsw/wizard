@@ -30,7 +30,7 @@ class DocumentPolicy
      *
      * @return bool
      */
-    public function edit(User $user = null, $page)
+    public function edit($user, $page)
     {
         return $this->groupHasEditPrv($user, $page);
     }
@@ -43,7 +43,7 @@ class DocumentPolicy
      *
      * @return bool
      */
-    public function share(User $user = null, $page)
+    public function share($user, $page)
     {
         return $this->groupHasEditPrv($user, $page);
     }
@@ -56,7 +56,7 @@ class DocumentPolicy
      *
      * @return bool
      */
-    private function groupHasEditPrv($user = null, $page): bool
+    private function groupHasEditPrv($user, $page): bool
     {
         if (empty($user) || !$user->isActivated()) {
             return false;
@@ -86,7 +86,7 @@ class DocumentPolicy
      *
      * @return bool
      */
-    public function recover(User $user = null, $page)
+    public function recover($user, $page)
     {
         return $this->groupHasEditPrv($user, $page);
     }
@@ -99,7 +99,7 @@ class DocumentPolicy
      *
      * @return bool
      */
-    private function isOwner(User $user = null, $page)
+    private function isOwner($user, $page)
     {
         if (empty($user) || !$user->isActivated()) {
             return false;

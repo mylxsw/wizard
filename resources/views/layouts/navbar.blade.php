@@ -4,7 +4,8 @@
     </h5>
 
     @if (Auth::guest())
-        <a class="btn btn-outline-primary" href="{{ wzRoute('login') }}">@lang('common.login')</a>
+        <a class="p-2 text-dark mr-3" href="{{ wzRoute('search:search') }}">搜索</a>
+        <a class="btn btn-info active" href="{{ wzRoute('login') }}">@lang('common.login')</a>
         {{--<a class="btn btn-outline-primary" href="{{ wzRoute('register') }}">@lang('common.register')</a>--}}
     @else
         <nav class="my-2 my-md-0">

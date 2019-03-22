@@ -30,7 +30,7 @@ class ProjectPolicy
      *
      * @return bool
      */
-    public function setting(User $user = null, $project)
+    public function setting($user, $project)
     {
         if (empty($user) || !$user->isActivated()) {
             return false;
@@ -47,7 +47,7 @@ class ProjectPolicy
      *
      * @return bool
      */
-    public function view(User $user = null, $project)
+    public function view($user, $project)
     {
         $project = $this->getProject($project);
         if ($project->visibility == Project::VISIBILITY_PUBLIC) {
@@ -72,7 +72,7 @@ class ProjectPolicy
      *
      * @return bool
      */
-    public function comment(User $user = null, $project)
+    public function comment($user, $project)
     {
         $canView = $this->view($user, $project);
         if (!$canView) {
@@ -94,7 +94,7 @@ class ProjectPolicy
      *
      * @return bool
      */
-    public function addPage(User $user = null, $project)
+    public function addPage($user, $project)
     {
         if (empty($user) || !$user->isActivated()) {
             return false;
@@ -123,7 +123,7 @@ class ProjectPolicy
      *
      * @return bool
      */
-    public function edit(User $user = null, $project)
+    public function edit($user, $project)
     {
         if (empty($user) || !$user->isActivated()) {
             return false;
@@ -140,7 +140,7 @@ class ProjectPolicy
      *
      * @return bool
      */
-    public function delete(User $user = null, $project)
+    public function delete($user, $project)
     {
         if (empty($user) || !$user->isActivated()) {
             return false;
@@ -190,7 +190,7 @@ class ProjectPolicy
      *
      * @return bool
      */
-    private function isOwner(User $user = null, $project)
+    private function isOwner($user, $project)
     {
         if (empty($user) || !$user->isActivated()) {
             return false;
