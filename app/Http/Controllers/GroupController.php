@@ -116,7 +116,11 @@ class GroupController extends Controller
 
         $this->alertSuccess(__('common.operation_success'));
 
-        return redirect(wzRoute('admin:groups:view', ['id' => $id, 'tab' => 'member']));
+        $origin    = $request->input('origin', 'admin:groups:view');
+        $originTab = $request->input('origin_tab', 'member');
+        $originId  = $request->input('origin_id', null);
+
+        return redirect(wzRoute($origin, ['id' => $originId ?? $id, 'tab' => $originTab]));
     }
 
     /**

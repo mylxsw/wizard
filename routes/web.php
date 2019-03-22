@@ -80,6 +80,7 @@ Route::group(['middleware' => 'locale'], function () {
         Route::get('/users', 'UserController@users')->name('users');
         Route::get('/users/{id}', 'UserController@user')->name('user');
         Route::post('/users/{id}', 'UserController@updateUser')->name('user:update');
+        Route::post('/users/{id}/groups', 'UserController@joinGroup')->name('user:join-group');
 
         // 项目目录管理
         Route::get('/catalogs', 'CatalogController@catalogs')->name('catalogs');
