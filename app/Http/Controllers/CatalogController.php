@@ -33,7 +33,7 @@ class CatalogController extends Controller
     {
         return view('catalog.catalogs', [
             'op'            => 'catalogs',
-            'catalogs'      => Catalog::withCount('projects')->get(),
+            'catalogs'      => Catalog::withCount('projects')->orderBy('sort_level', 'ASC')->get(),
             'catalogs_none' => Project::whereNull('catalog_id')
                 ->orWhere('catalog_id', '=', 0)
                 ->count(),
