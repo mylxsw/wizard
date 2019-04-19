@@ -14,36 +14,36 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Page
  *
- * @property integer $id
- * @property integer $pid
- * @property string  $title
- * @property string  $description
- * @property string  $content
- * @property integer $project_id
- * @property integer $user_id
- * @property integer $last_modified_uid
- * @property integer $history_id
- * @property integer $type
- * @property integer $status
- * @property integer $sort_level
- * @property Carbon  $created_at
- * @property Carbon  $updated_at
+ * @property integer                                                                      $id
+ * @property integer                                                                      $pid
+ * @property string                                                                       $title
+ * @property string                                                                       $description
+ * @property string                                                                       $content
+ * @property integer                                                                      $project_id
+ * @property integer                                                                      $user_id
+ * @property integer                                                                      $last_modified_uid
+ * @property integer                                                                      $history_id
+ * @property integer                                                                      $type
+ * @property integer                                                                      $status
+ * @property integer                                                                      $sort_level
+ * @property Carbon                                                                       $created_at
+ * @property Carbon                                                                       $updated_at
  * @package App\Repositories
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Attachment[] $attachments
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Comment[] $comments
- * @property-read \App\Repositories\User $lastModifiedUser
- * @property-read \App\Repositories\Document $parentPage
- * @property-read \App\Repositories\Project $project
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Document[] $subPages
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Tag[] $tags
- * @property-read \App\Repositories\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Comment[]    $comments
+ * @property-read \App\Repositories\User                                                  $lastModifiedUser
+ * @property-read \App\Repositories\Document                                              $parentPage
+ * @property-read \App\Repositories\Project                                               $project
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Document[]   $subPages
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Tag[]        $tags
+ * @property-read \App\Repositories\User                                                  $user
  * @method static bool|null forceDelete()
  * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Document onlyTrashed()
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Document withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Repositories\Document withoutTrashed()
  * @mixin \Eloquent
- * @property \Carbon\Carbon|null $deleted_at
+ * @property \Carbon\Carbon|null                                                          $deleted_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Document whereDeletedAt($value)
@@ -66,6 +66,7 @@ class Document extends Repository
 
     const TYPE_DOC     = 1;
     const TYPE_SWAGGER = 2;
+    const TYPE_TABLE   = 3;
 
     protected $table = 'wz_pages';
     protected $fillable

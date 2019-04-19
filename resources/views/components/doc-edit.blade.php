@@ -6,16 +6,33 @@
     <input type="hidden" name="last_modified_at" value="{{ $pageItem->updated_at or '' }}">
     <input type="hidden" name="history_id" value="{{ $pageItem->history_id or '' }}">
     <input type="hidden" name="sort_level" value="{{ $pageItem->sort_level or 1000 }}">
+    <div class="col-12" style="padding-left: 0;">
+        <div class="wz-panel-breadcrumb">
+            <ol class="breadcrumb pull-left">
+                <li class="breadcrumb-item"><a href="{{ wzRoute('home') }}">首页</a></li>
+                @if(!empty($project->catalog))
+                    <li class="breadcrumb-item"><a href="{{ wzRoute('home', ['catalog' => $project->catalog->id]) }}">{{ $project->catalog->name }}</a></li>
+                @endif
+                <li class="breadcrumb-item"><a href="{{ wzRoute('project:home', ['id' => $project->id]) }}">{{ $project->name }}</a></li>
+                @if(!empty($pageItem->title))
+                    <li class="breadcrumb-item active">{{ $pageItem->title }}</li>
+                @endif
+            </ol>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation" class="mr-2">
+                    <button type="button"
+                            data-href="{{ wzRoute('project:home', ['id' => $project->id] + (empty($pageItem) ? [] : ['p' => $pageItem->id])) }}"
+                            class="btn btn-default bmd-btn-icon" id="wz-document-goback">
+                        <i class="material-icons">clear</i>
+                    </button>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
     <div class="col wz-edit-control">
-        <h3 title="@lang('project.project_name')">
-            <button type="button"
-                    data-href="{{ wzRoute('project:home', ['id' => $project->id] + (empty($pageItem) ? [] : ['p' => $pageItem->id])) }}"
-                    class="btn btn-default bmd-btn-icon" id="wz-document-goback">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            {{ $project->name }}
-        </h3>
-        <div class="form-group pull-right">
+
+        <div class="form-group pull-right wz-edit-btn-group">
             <button type="button" class="btn btn-raised btn-primary mr-3" wz-doc-form-submit id="wz-doc-form-submit">
                 <i class="fa fa-save mr-1"></i> 保存
             </button>
@@ -39,13 +56,13 @@
             </div>
         </div>
         <div class="pull-left">
-            <div class="form-group" style="max-width: 400px;">
+            <div class="form-group" style="max-width: 500px;">
                 <label for="editor-title" class="bmd-label-static">@lang('document.title')</label>
                 <input type="text" class="form-control wz-input-long" name="title" id="editor-title"
                        value="{{ $pageItem->title or '' }}">
             </div>
 
-            <div class="form-group" style="max-width: 400px;">
+            <div class="form-group" style="max-width: 500px;">
                 <label for="form-pid" class="bmd-label-static">上级页面</label>
                 <select class="form-control" name="pid" id="form-pid">
                     <option value="0">@lang('document.no_parent_page')</option>

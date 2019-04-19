@@ -24,6 +24,24 @@ function wzRoute($name, $parameters = [], $absolute = false)
 }
 
 /**
+ * 文档类型标识转换
+ *
+ * @param $type
+ *
+ * @return string
+ */
+function documentType($type): string
+{
+    $types = [
+        \App\Repositories\Document::TYPE_DOC     => 'markdown',
+        \App\Repositories\Document::TYPE_SWAGGER => 'swagger',
+        \App\Repositories\Document::TYPE_TABLE   => 'table',
+    ];
+
+    return $types[$type] ?? '';
+}
+
+/**
  * 将页面集合转换为层级结构的菜单
  *
  * 必须保证pages是按照pid进行asc排序的，否则可能会出现菜单丢失
@@ -56,8 +74,7 @@ function navigator(
             'pid'        => (int)$page->pid,
             'url'        => route('project:home', ['id' => $projectID, 'p' => $page->id]),
             'selected'   => $pageID === (int)$page->id,
-            'type'       => $page->type == \App\Repositories\Document::TYPE_DOC ? 'markdown'
-                : 'swagger',
+            'type'       => documentType($page->type),
             'created_at' => $page->created_at,
             'sort_level' => $page->sort_level ?? 1000,
         ];

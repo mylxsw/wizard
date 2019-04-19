@@ -70,7 +70,7 @@
                                 最后更新于
                                 <span class="wz-text-dashed">{{ $doc->updated_at ?? '' }}</span>
 
-                                <img src="/assets/{{ $doc->type == \App\Repositories\Document::TYPE_DOC ? 'markdown' : 'swagger' }}.png" class="wz-search-result-sign">
+                                <img src="/assets/{{ documentType($doc->type) }}.png" class="wz-search-result-sign">
                             </p>
 
                         </div>

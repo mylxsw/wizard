@@ -57,6 +57,10 @@
             @if($type == 'markdown')
             <textarea id="append-test" class="d-none">{{ $pageItem->content }}</textarea>
             @endif
+            @if($type == 'table')
+                <textarea id="x-spreadsheet-content" class="d-none">{{ $pageItem->content }}</textarea>
+                <div id="x-spreadsheet"></div>
+            @endif
         </div>
 
         <div class="text-center wz-panel-limit mt-3">~ END ~</div>

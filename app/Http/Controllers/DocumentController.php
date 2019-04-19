@@ -26,6 +26,12 @@ use SoapBox\Formatter\Formatter;
 class DocumentController extends Controller
 {
 
+    protected $types = [
+        Document::TYPE_DOC     => 'doc',
+        Document::TYPE_SWAGGER => 'swagger',
+        Document::TYPE_TABLE   => 'table',
+    ];
+
     /**
      * 创建一个新文档页面
      *
@@ -39,7 +45,7 @@ class DocumentController extends Controller
     {
         $this->validate(
             $request,
-            ['type' => 'in:swagger,doc', 'pid' => 'integer|min:0']
+            ['type' => 'in:swagger,doc,table', 'pid' => 'integer|min:0']
         );
 
         /** @var Project $project */
@@ -74,7 +80,7 @@ class DocumentController extends Controller
 
         $this->authorize('page-edit', $pageItem);
 
-        $type = ((int)$pageItem->type === Document::TYPE_DOC ? 'doc' : 'swagger');
+        $type = $this->types[$pageItem->type];
         return view("doc.{$type}", [
             'pageItem'  => $pageItem,
             'project'   => $pageItem->project,
@@ -102,7 +108,7 @@ class DocumentController extends Controller
             [
                 'project_id' => "required|integer|min:1|in:{$id}|project_exist",
                 'title'      => 'required|between:1,255',
-                'type'       => 'required|in:doc,swagger',
+                'type'       => 'required|in:doc,swagger,table',
                 'pid'        => 'integer|min:0',
                 'sort_level' => 'integer',
             ],
@@ -129,7 +135,7 @@ class DocumentController extends Controller
             'project_id'        => $projectID,
             'user_id'           => \Auth::user()->id,
             'last_modified_uid' => \Auth::user()->id,
-            'type'              => $type == 'doc' ? Document::TYPE_DOC : Document::TYPE_SWAGGER,
+            'type'              => array_flip($this->types)[$type],
             'status'            => 1,
             'sort_level'        => $sortLevel,
         ]);
@@ -428,7 +434,7 @@ class DocumentController extends Controller
         }
 
         $page = Document::where('project_id', $id)->where('id', $page_id)->firstOrFail();
-        $type = $page->type == Document::TYPE_DOC ? 'markdown' : 'swagger';
+        $type = $this->types[$page->type];
 
         return view('share-show', [
             'project'  => $project,

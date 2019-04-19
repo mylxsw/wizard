@@ -52,7 +52,7 @@ class DashboardController extends Controller
             ->select(\DB::raw('type, count(id) as document_count'))
             ->get()
             ->mapWithKeys(function ($item) {
-                $type = $item['type'] == Document::TYPE_DOC ? 'markdown' : 'swagger';
+                $type = documentType($item['type']);
                 return [
                     $type => $item['document_count']
                 ];

@@ -27,6 +27,12 @@ use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class ProjectController extends Controller
 {
+    protected $types = [
+        Document::TYPE_DOC     => 'markdown',
+        Document::TYPE_SWAGGER => 'swagger',
+        Document::TYPE_TABLE   => 'table',
+    ];
+
     /**
      * 用户个人首页（个人项目列表）
      *
@@ -175,7 +181,7 @@ class ProjectController extends Controller
                 ->where('project_id', $id)
                 ->where('id', $pageID)
                 ->firstOrFail();
-            $type = $page->type == Document::TYPE_DOC ? 'markdown' : 'swagger';
+            $type = $this->types[$page->type];
 
             $history = DocumentHistory::where('page_id', $page->id)
                 ->where('id', '!=', $page->history_id)

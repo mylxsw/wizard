@@ -83,6 +83,9 @@
 <script src="/assets/js/wizard.js?{{ resourceVersion() }}"></script>
 <script src="/assets/js/app.js?{{ resourceVersion() }}"></script>
 <script src="/assets/js/tagmanager.js"></script>
+
+@stack('script-pre')
+
 <script>
     $(function () {
         {{-- 页面提示消息（上一个页面操作的结果） --}}

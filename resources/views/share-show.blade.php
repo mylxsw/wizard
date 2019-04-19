@@ -11,9 +11,24 @@
     @if($type == 'markdown')
         <textarea id="append-test" style="display:none;">{{ $pageItem->content }}</textarea>
     @endif
+    @if($type == 'table')
+        <textarea id="x-spreadsheet-content" class="d-none">{{ $pageItem->content }}</textarea>
+        <div id="x-spreadsheet"></div>
+    @endif
 </div>
 
 <div class="text-center wz-panel-limit mt-3">~ END ~</div>
 @endsection
 
 @includeIf("components.{$type}-show")
+
+@push('script-pre')
+    <script>
+        @if($type == 'table')
+        $(function () {
+            $('.wz-body').css('max-width', '100%');
+            $('.wz-panel-limit').css('max-width', '100%');
+        });
+        @endif
+    </script>
+@endpush

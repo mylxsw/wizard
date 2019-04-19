@@ -26,7 +26,10 @@
                                 <i class="fa fa-book mr-2"></i> 创建 @lang('common.markdown')
                             </a>
                             <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'swagger', 'pid' => $pageID]) !!}" class="dropdown-item">
-                                <i class="fa fa-align-justify mr-2"></i> 创建 @lang('common.swagger')
+                                <i class="fa fa-code mr-2"></i> 创建 @lang('common.swagger')
+                            </a>
+                            <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'table', 'pid' => $pageID]) !!}" class="dropdown-item">
+                                <i class="fa fa-table mr-2"></i> 创建 表格
                             </a>
                         </ul>
                         <button type="button" class="btn bmd-btn-icon " data-href="{!! wzRoute('search:search', ['project_id' => $project->id]) !!}" title="搜索">
