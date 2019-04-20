@@ -26,6 +26,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer                                                                      $type
  * @property integer                                                                      $status
  * @property integer                                                                      $sort_level
+ * @property string                                                                       $sync_url
+ * @property Carbon                                                                       $last_sync_at
  * @property Carbon                                                                       $created_at
  * @property Carbon                                                                       $updated_at
  * @package App\Repositories
@@ -82,6 +84,8 @@ class Document extends Repository
             'type',
             'status',
             'sort_level',
+            'sync_url',
+            'last_sync_at',
         ];
 
     public $dates = ['deleted_at'];
@@ -104,6 +108,8 @@ class Document extends Repository
         $document->type              = $history->type;
         $document->status            = $history->status;
         $document->sort_level        = $history->sort_level;
+        $document->sync_url          = $history->sync_url;
+        $document->last_sync_at      = $history->last_sync_at;
 
         $document->save();
 

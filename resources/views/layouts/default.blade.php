@@ -155,7 +155,7 @@
             e.preventDefault();
 
             $('.wz-left-main').slideToggle();
-            var icon = $(this).find('.fa')
+            var icon = $(this).find('.fa');
             if (icon.hasClass('fa-angle-double-up')) {
                 icon.removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
             } else {

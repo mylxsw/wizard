@@ -4,7 +4,6 @@
 @section('content')
 
     <div class="row marketing wz-main-container-full">
-        @include('components.error', ['error' => $errors ?? null])
         <form style="width: 100%;" method="POST" id="wz-doc-edit-form"
               action="{{ $newPage ? wzRoute('project:doc:new:show', ['id' => $project->id]) : wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
 
@@ -13,17 +12,19 @@
 
             <div class="col-row swagger-editor-panel">
                 <div class="swagger-editor-toolbar">
-                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-toolbar btn-toolbar-left" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group" role="group" aria-label="First group">
                             <button type="button" data-toggle="modal" data-target="#wz-select-template" class="btn btn-info btn-raised">@lang('document.select_template')</button>
                         </div>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-dark wz-fullscreen-edit">全屏编辑</button>
-                        </div>
-                        <div class="btn-group">
                             <a href="https://swagger.io/docs/specification/about/" target="_blank" class="btn btn-dark">
-                                帮助
+                                <i class="fa fa-question-circle"></i>
                             </a>
+                        </div>
+                    </div>
+                    <div class="btn-toolbar btn-toolbar-right" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-dark wz-fullscreen-edit"><i class="fa fa-arrows-alt"></i></button>
                         </div>
                     </div>
                 </div>
@@ -146,10 +147,10 @@
                 editor_panel.toggleClass('swagger-fullscreen');
                 if (editor_panel.hasClass('swagger-fullscreen')) {
                     $('.wz-body').css('min-height', 'auto');
-                    $(this).text('关闭全屏');
+                    $(this).html('<i class="fa fa-compress"></i>');
                 } else {
                     $('.wz-body').css('min-height', $.global.panel_height + 'px');
-                    $(this).text('全屏编辑');
+                    $(this).html('<i class="fa fa-arrows-alt"></i>');
                 }
             });
         });

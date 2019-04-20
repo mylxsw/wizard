@@ -15,11 +15,8 @@ use App\Events\DocumentModified;
 use App\Policies\ProjectPolicy;
 use App\Repositories\Document;
 use App\Repositories\DocumentHistory;
-use App\Repositories\OperationLogs;
-use App\Repositories\PageShare;
 use App\Repositories\Project;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use SoapBox\Formatter\Formatter;
 
@@ -111,10 +108,12 @@ class DocumentController extends Controller
                 'type'       => 'required|in:doc,swagger,table',
                 'pid'        => 'integer|min:0',
                 'sort_level' => 'integer',
+                'sync_url'   => 'nullable|url',
             ],
             [
                 'title.required' => __('document.validation.title_required'),
                 'title.between'  => __('document.validation.title_between'),
+                'sync_url.url'   => '文档同步地址必须为合法的URL地址',
             ]
         );
 
@@ -126,6 +125,7 @@ class DocumentController extends Controller
         $content   = $request->input('content');
         $type      = $request->input('type', 'doc');
         $sortLevel = $request->input('sort_level', 1000);
+        $syncUrl   = $request->input('sync_url');
 
         $pageItem = Document::create([
             'pid'               => $pid,
@@ -138,6 +138,7 @@ class DocumentController extends Controller
             'type'              => array_flip($this->types)[$type],
             'status'            => 1,
             'sort_level'        => $sortLevel,
+            'sync_url'          => $syncUrl,
         ]);
 
         // 记录文档变更历史
@@ -183,10 +184,12 @@ class DocumentController extends Controller
                 'force'            => 'bool',
                 'history_id'       => 'required|integer',
                 'sort_level'       => 'integer',
+                'sync_url'         => 'nullable|url',
             ],
             [
                 'title.required' => __('document.validation.title_required'),
                 'title.between'  => __('document.validation.title_between'),
+                'sync_url.url'   => '文档同步地址必须为合法的URL地址',
             ]
         );
 
@@ -198,6 +201,7 @@ class DocumentController extends Controller
         $history_id     = $request->input('history_id');
         $forceSave      = $request->input('force', false);
         $sortLevel      = $request->input('sort_level', 1000);
+        $syncUrl        = $request->input('sync_url');
 
         /** @var Document $pageItem */
         $pageItem = Document::where('id', $page_id)->firstOrFail();
@@ -224,6 +228,7 @@ class DocumentController extends Controller
         $pageItem->title      = $title;
         $pageItem->content    = $content;
         $pageItem->sort_level = $sortLevel;
+        $pageItem->sync_url   = $syncUrl;
 
         // 只有文档内容发生修改才进行保存
         if ($pageItem->isDirty()) {
@@ -442,5 +447,71 @@ class DocumentController extends Controller
             'type'     => $type,
             'noheader' => true,
         ]);
+    }
+
+    /**
+     * 文档同步
+     *
+     * 用于从sync_url同步swagger文档
+     *
+     * @param $id
+     * @param $page_id
+     *
+     * @return array
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Exception
+     */
+    public function syncFromRemote($id, $page_id)
+    {
+        /** @var Document $pageItem */
+        $pageItem = Document::where('id', $page_id)
+            ->where('project_id', $id)
+            ->firstOrFail();
+
+        $this->authorize('page-edit', $pageItem);
+
+        $synced = false;
+        if (!empty($pageItem->sync_url)) {
+            $client   = new \GuzzleHttp\Client();
+            $resp     = $client->get($pageItem->sync_url);
+            $respCode = $resp->getStatusCode();
+            $respBody = $resp->getBody()->getContents();
+
+            if ($respCode !== 200) {
+                \Log::error('document_sync_failed', [
+                    'status_code' => $respCode,
+                    'resp_body'   => $respBody,
+                    'project_id'  => $id,
+                    'page_id'     => $page_id,
+                    'operator_id' => \Auth::user()->id,
+                ]);
+                throw new \Exception('文档同步失败');
+            }
+
+            $pageItem->content = $respBody;
+
+            // 只有文档内容发生修改才进行保存
+            if ($pageItem->isDirty()) {
+                $pageItem->last_modified_uid = \Auth::user()->id;
+                $pageItem->last_sync_at      = Carbon::now();
+
+                $pageItem->save();
+
+                // 记录文档变更历史
+                DocumentHistory::write($pageItem);
+
+                event(new DocumentModified($pageItem));
+
+                $synced = true;
+            }
+        }
+
+        if ($synced) {
+            $this->alertSuccess('文档同步成功');
+        } else {
+            $this->alertSuccess('文档同步完成，没有新的内容');
+        }
+
+        return redirect(wzRoute('project:home', ['id' => $id, 'p' => $page_id]));
     }
 }

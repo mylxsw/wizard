@@ -55,24 +55,33 @@
                 @endif
             </div>
         </div>
-        <div class="pull-left">
-            <div class="form-group" style="max-width: 500px;">
-                <label for="editor-title" class="bmd-label-static">@lang('document.title')</label>
-                <input type="text" class="form-control wz-input-long" name="title" id="editor-title"
-                       value="{{ $pageItem->title or '' }}">
-            </div>
-
-            <div class="form-group" style="max-width: 500px;">
+        <div class="pull-left wz-document-form">
+            <div class="form-group wz-document-form-select">
                 <label for="form-pid" class="bmd-label-static">上级页面</label>
                 <select class="form-control" name="pid" id="form-pid">
                     <option value="0">@lang('document.no_parent_page')</option>
                     @include('components.doc-options', ['navbars' => $navigator, 'level' => 0])
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="editor-title" class="bmd-label-static">@lang('document.title')</label>
+                <input type="text" class="form-control wz-input-long" name="title" id="editor-title"
+                       value="{{ $pageItem->title or '' }}">
+            </div>
+
+            @if($type === 'swagger')
+                <div class="form-group">
+                    <label for="form-sync-url" class="bmd-label-static">文档同步地址</label>
+                    <input type="text" class="form-control wz-input-long" name="sync_url" id="editor-sync_url" value="{{ $pageItem->sync_url or '' }}" placeholder="http://"/>
+                </div>
+            @endif
         </div>
 
     </div>
 </div>
+
+@include('components.error', ['error' => $errors ?? null])
 
 @push('bottom')
     <div class="modal fade" id="wz-new-template" tabindex="-1" role="dialog" aria-labelledby="wz-new-template">

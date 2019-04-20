@@ -146,6 +146,9 @@ Route::group(['middleware' => 'locale'], function () {
             Route::post('/{id}/doc/{page_id}', 'DocumentController@editPageHandle')->name('doc:edit:handle');
             Route::delete('/{id}/doc/{page_id}', 'DocumentController@deletePage')->name('doc:delete');
 
+            // 文档同步
+            Route::post('/{id}/doc/{page_id}/sync-from', 'DocumentController@syncFromRemote')->name('doc:sync-from');
+
             // 文档分享
             Route::post('/{id}/doc/{page_id}/share', 'ShareController@create')->name('doc:share');
 

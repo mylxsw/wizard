@@ -53,6 +53,21 @@
         @include('components.document-info')
         @include('components.tags')
 
+        @if (!empty($pageItem->sync_url))
+            <div class="wz-document-swagger-sync-info wz-panel-limit">
+                文档同步地址：<a href="{{ $pageItem->sync_url }}" target="_blank">{{ $pageItem->sync_url }}</a>，最后同步于 {{ $pageItem->last_sync_at or '-' }}
+                @can('page-edit', $pageItem)
+                    <a href="#" wz-form-submit data-form="#form-document-sync" data-confirm="执行文档同步后，您将成为最后修改人，确定要执行文档同步吗？" class="ml-2" title="同步文档">
+                        <i class="fa fa-refresh"></i>
+                        <form id="form-document-sync" method="post" style="display: none;"
+                              action="{{ wzRoute('project:doc:sync-from', ['id' => $pageItem->project_id, 'page_id' => $pageItem->id]) }}">
+                            {{ csrf_field() }}
+                        </form>
+                    </a>
+                @endcan
+            </div>
+        @endif
+
         <div class="markdown-body wz-panel-limit {{ $type == 'markdown' ? 'wz-markdown-style-fix' : '' }}" id="markdown-body">
             @if($type == 'markdown')
             <textarea id="append-test" class="d-none">{{ $pageItem->content }}</textarea>

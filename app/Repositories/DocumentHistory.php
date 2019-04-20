@@ -8,23 +8,27 @@
 
 namespace App\Repositories;
 
+use Carbon\Carbon;
+
 /**
  * Class DocumentHistory
  *
- * @property integer $id
- * @property integer $page_id
- * @property integer $pid
- * @property string  $title
- * @property string  $description
- * @property string  $content
- * @property integer $project_id
- * @property integer $user_id
- * @property string  $type
- * @property string  $status
- * @property integer $sort_level
- * @property integer $operator_id
- * @property string  $created_at
- * @property string  $updated_at
+ * @property integer                     $id
+ * @property integer                     $page_id
+ * @property integer                     $pid
+ * @property string                      $title
+ * @property string                      $description
+ * @property string                      $content
+ * @property integer                     $project_id
+ * @property integer                     $user_id
+ * @property string                      $type
+ * @property string                      $status
+ * @property integer                     $sort_level
+ * @property string                      $sync_url
+ * @property Carbon                      $last_sync_at
+ * @property integer                     $operator_id
+ * @property string                      $created_at
+ * @property string                      $updated_at
  * @package App\Repositories
  * @property-read \App\Repositories\User $operator
  * @property-read \App\Repositories\User $user
@@ -59,6 +63,8 @@ class DocumentHistory extends Repository
             'status',
             'operator_id',
             'sort_level',
+            'sync_url',
+            'last_sync_at',
         ];
 
     /**
@@ -68,7 +74,7 @@ class DocumentHistory extends Repository
      *
      * @return DocumentHistory
      */
-    public static function write(Document $document) :DocumentHistory
+    public static function write(Document $document): DocumentHistory
     {
         $history = self::create(array_only(
                 $document->toArray(),

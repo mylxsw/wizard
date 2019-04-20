@@ -393,8 +393,13 @@ a:hover {
     margin: 10px 0 0 10px;
 }
 
-#editormd, .dropzone > .SplitPane{
+#editormd, .dropzone > .SplitPane, .wz-document-swagger-sync-info{
     border: 1px dashed #159e92
+}
+
+.wz-document-swagger-sync-info {
+    padding: 10px;
+    margin: 10px;
 }
 
 .markdown-body .swagger-ui {
@@ -977,7 +982,21 @@ tr.warning {
 }
 
 .swagger-editor-toolbar {
-    margin: 0 -10px -10px;
+    height: 61px;
+    position: relative;
+    width: 100%;
+}
+
+.swagger-editor-toolbar .btn-toolbar-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.swagger-editor-toolbar .btn-toolbar-right {
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .swagger-ui .opblock .opblock-summary-description {
@@ -1135,4 +1154,23 @@ li.L1, li.L3, li.L5, li.L7, li.L9 {
 .wz-select-card-title {
     border: none;
     background: inherit;
+}
+
+
+.wz-document-form {
+    max-width: 80%;
+}
+
+.wz-document-form .form-group {
+    float: left;
+    width: 40%;
+    margin-right: 30px;
+}
+
+.wz-document-form .wz-document-form-select {
+    width: 90%;
+}
+
+.wz-document-form .wz-document-form-select select {
+    max-width: 300px;
 }

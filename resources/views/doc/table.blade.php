@@ -4,7 +4,6 @@
 @section('content')
 
     <div class="row marketing wz-main-container-full">
-        @include('components.error', ['error' => $errors ?? null])
         <form style="width: 100%;" method="POST" id="wz-doc-edit-form"
               action="{{ $newPage ? wzRoute('project:doc:new:show', ['id' => $project->id]) : wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
 
