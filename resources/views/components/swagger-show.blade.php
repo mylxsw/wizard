@@ -24,6 +24,10 @@
             url: "{!! wzRoute('project:doc:json', ['code' => $code ?? '','id' => $project->id, 'page_id' => $pageItem->id, 'only_body' => 1, 'ts' => microtime(true)])  !!}"
             @endif
         });
+
+        window.setTimeout(function () {
+            $.wz.imageResize('#markdown-body');
+        }, 3000);
     });
 </script>
 @endpush
