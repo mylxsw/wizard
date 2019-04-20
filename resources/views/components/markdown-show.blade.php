@@ -84,9 +84,11 @@
             });
 
             // 图片缩放支持
+            $.wz.imageResize('#markdown-body');
+            // 延迟3s后再执行一次，避免因为页面尚未渲染完成造成图片缩放无效
             window.setTimeout(function() {
                 $.wz.imageResize('#markdown-body');
-            }, 500);
+            }, 3000);
         }, 0);
     });
 </script>
