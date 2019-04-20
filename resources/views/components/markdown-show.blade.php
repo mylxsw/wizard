@@ -84,7 +84,9 @@
             });
 
             // 图片缩放支持
-            $.wz.imageResize('#markdown-body');
+            window.setTimeout(function() {
+                $.wz.imageResize('#markdown-body');
+            }, 500);
         }, 0);
     });
 </script>

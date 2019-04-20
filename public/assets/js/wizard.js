@@ -249,11 +249,13 @@ $.wz = {
     imageResize: function(selector) {
         $(selector).find('img').each(function () {
             var size = $(this).attr('alt');
-            if (/size:\s*\d*,\d*/.test(size)) {
-                var sizes = size.substr(5).split(',');
+            var regexp = /size:\s*\d*,\d*/;
+            if (regexp.test(size)) {
+                var sizes = regexp.exec(size)[0].substr(5).split(',');
 
                 var width = parseInt(sizes[0]);
                 var height = parseInt(sizes[1]);
+
 
                 if (width > 0) {
                     $(this).css('max-width', width + 'px');
