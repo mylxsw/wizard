@@ -135,6 +135,11 @@ $.wz.mdEditor = function (editor_id, params) {
             editormd.loadPlugin("/assets/vendor/editor-md/plugins/image-handle-paste/image-handle-paste", function () {
                 mdEditor.imagePaste();
             });
+
+            $.wz.imageResize('.editormd-preview-container');
+        },
+        onchange: function () {
+            $.wz.imageResize('.editormd-preview-container');
         }
     });
 

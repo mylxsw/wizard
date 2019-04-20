@@ -44,7 +44,9 @@
                     _this.executePlugin("imageDialog", "image-dialog/image-dialog");
                     _ajax(settings.imageUploadURL, forms, function(ret){
                         if(ret.success == 1){
-                            $("." + classPrefix + "image-dialog").find("input[data-url]").val(ret.url);
+                            var dialog = $("." + classPrefix + "image-dialog");
+                            dialog.find("input[data-url]").val(ret.url);
+                            dialog.find('input[data-alt]').val('size:800,1000');
                             //cm.replaceSelection("![](" + ret.url  + ")");
                         }
                         console.log(ret.message);

@@ -240,5 +240,35 @@ $.wz = {
             element.prop('disabled', false);
             element.text(originalText);
         }, 3000);
+    },
+    /**
+     * 图片缩放支持
+     *
+     * @param selector
+     */
+    imageResize: function(selector) {
+        $(selector).find('img').each(function () {
+            var size = $(this).attr('alt');
+            if (/size:\s*\d*,\d*/.test(size)) {
+                var sizes = size.substr(5).split(',');
+
+                var width = parseInt(sizes[0]);
+                var height = parseInt(sizes[1]);
+
+                if (width > 0) {
+                    $(this).css('max-width', width + 'px');
+                }
+
+                if (height > 0) {
+                    $(this).css('max-height', height + 'px');
+                }
+            } else {
+                $(this).css('max-width', '99%');
+            }
+
+            if ($(this).parent().get(0).tagName !== 'A') {
+                $(this).wrap('<a href="' + $(this).attr('src') + '" target="_blank"></a>');
+            }
+        });
     }
 };

@@ -23,7 +23,7 @@
             var editor      = this.editor;
             var settings    = this.settings;
             var cursor      = cm.getCursor();
-            var selection   = cm.getSelection();
+            var selection   = cm.getSelection() + " size:800,1000";
             var imageLang   = lang.dialog.image;
             var classPrefix = this.classPrefix;
             var iframeName  = classPrefix + "image-iframe";
@@ -184,6 +184,7 @@
 			dialog.find("[type=\"text\"]").val("");
 			dialog.find("[type=\"file\"]").val("");
 			dialog.find("[data-link]").val("http://");
+			dialog.find("[data-alt]").val("size:800,1000");
 
 			this.dialogShowMask(dialog);
 			this.dialogLockScreen();

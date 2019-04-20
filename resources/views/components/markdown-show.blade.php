@@ -82,6 +82,9 @@
                     $(this).parents('.wz-wrap-table').find('table').css('word-break', 'normal');
                 }
             });
+
+            // 图片缩放支持
+            $.wz.imageResize('#markdown-body');
         }, 0);
     });
 </script>
