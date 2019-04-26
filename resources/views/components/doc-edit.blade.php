@@ -95,7 +95,7 @@
                 <div class="modal-body">
                     <form method="post" action="{{ wzRoute('template:create') }}" id="wz-template-save-form">
                         {{ csrf_field() }}
-                        <input type="hidden" name="type" value="{{ $type or 'doc' }}"/>
+                        <input type="hidden" name="type" value="{{ $type or 'markdown' }}"/>
                         <div class="form-group">
                             <label for="template-name" class="control-label">@lang('document.template_name')</label>
                             <input type="text" name="name" class="form-control" id="template-name">

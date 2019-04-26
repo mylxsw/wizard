@@ -24,7 +24,7 @@ class DocumentController extends Controller
 {
 
     protected $types = [
-        Document::TYPE_DOC     => 'doc',
+        Document::TYPE_DOC     => 'markdown',
         Document::TYPE_SWAGGER => 'swagger',
         Document::TYPE_TABLE   => 'table',
     ];
@@ -42,7 +42,7 @@ class DocumentController extends Controller
     {
         $this->validate(
             $request,
-            ['type' => 'in:swagger,doc,table', 'pid' => 'integer|min:0']
+            ['type' => 'in:swagger,markdown,table', 'pid' => 'integer|min:0']
         );
 
         /** @var Project $project */
@@ -50,7 +50,7 @@ class DocumentController extends Controller
 
         $this->authorize('page-add', $project);
 
-        $type = $request->input('type', 'doc');
+        $type = $request->input('type', 'markdown');
         $pid  = $request->input('pid', 0);
         return view("doc.{$type}", [
             'newPage'   => true,
@@ -105,7 +105,7 @@ class DocumentController extends Controller
             [
                 'project_id' => "required|integer|min:1|in:{$id}|project_exist",
                 'title'      => 'required|between:1,255',
-                'type'       => 'required|in:doc,swagger,table',
+                'type'       => 'required|in:markdown,swagger,table',
                 'pid'        => 'integer|min:0',
                 'sort_level' => 'integer',
                 'sync_url'   => 'nullable|url',
@@ -123,7 +123,7 @@ class DocumentController extends Controller
         $projectID = $request->input('project_id');
         $title     = $request->input('title');
         $content   = $request->input('content');
-        $type      = $request->input('type', 'doc');
+        $type      = $request->input('type', 'markdown');
         $sortLevel = $request->input('sort_level', 1000);
         $syncUrl   = $request->input('sync_url');
 

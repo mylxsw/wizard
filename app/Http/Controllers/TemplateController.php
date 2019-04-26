@@ -32,7 +32,7 @@ class TemplateController extends Controller
                 'content'     => 'required',
                 'description' => 'max:255',
                 'scope'       => 'in:1,2',
-                'type'        => 'in:swagger,doc',
+                'type'        => 'in:swagger,markdown',
             ],
             [
                 'name.required'        => __('document.validation.template_name_required'),
@@ -47,7 +47,7 @@ class TemplateController extends Controller
         $content     = $request->input('content');
         $description = $request->input('description', '');
         $scope       = $request->input('scope', Template::SCOPE_PRIVATE);
-        $type        = $request->input('type', 'doc');
+        $type        = $request->input('type', 'markdown');
 
         // 如果创建的是全局项目，则需要检查是否有权限进行创建
         if ($scope == Template::SCOPE_GLOBAL) {
