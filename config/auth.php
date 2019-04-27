@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard'     => 'web',
         'passwords' => 'users',
     ],
 
@@ -37,12 +37,12 @@ return [
 
     'guards' => [
         'web' => [
-            'driver' => 'session',
+            'driver'   => 'session',
             'provider' => 'users',
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver'   => 'token',
             'provider' => 'users',
         ],
     ],
@@ -66,8 +66,8 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Repositories\User::class,
+            'driver' => env('WIZARD_USE_LDAP', false) ? 'ldap' : 'eloquent',
+            'model'  => App\Repositories\User::class,
         ],
 
         // 'users' => [
@@ -94,8 +94,8 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'wz_password_resets',
-            'expire' => 60,
+            'table'    => 'wz_password_resets',
+            'expire'   => 60,
         ],
     ],
 

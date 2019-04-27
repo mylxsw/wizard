@@ -6,11 +6,12 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
-        "barryvdh/laravel-ide-helper": "^2.3",
+        "adldap2/adldap2-laravel": "^6.0",
+        "barryvdh/laravel-ide-helper": "^2.6",
         "doctrine/dbal": "~2.3",
         "erusev/parsedown": "^1.6",
         "guzzlehttp/guzzle": "^6.3",
-        "laravel/framework": "5.5.*",
+        "laravel/framework": "5.8.*",
         "laravel/tinker": "~1.0",
         "lcobucci/jwt": "^3.2",
         "mpdf/mpdf": "^7.0",
@@ -71,7 +72,7 @@
     "repositories": {
         "packagist": {
             "type": "composer",
-            "url": "https://packagist.phpcomposer.com"
+            "url": "https://packagist.laravel-china.org"
         }
     }
 }

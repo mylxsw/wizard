@@ -437,3 +437,19 @@ function comment_filter(string $comment): string
         return $matches[0];
     }, $comment);
 }
+
+
+/**
+ * 是否启用了LDAP支持
+ *
+ * @return bool
+ */
+function ldap_enabled(): bool
+{
+    static $enabled = null;
+    if (is_null($enabled)) {
+        $enabled = config('auth.providers.users.driver') === 'ldap';
+    }
+
+    return $enabled;
+}

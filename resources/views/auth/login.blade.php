@@ -9,7 +9,7 @@
 
         <div class="text-left form-group{{ $errors->has('email') ? ' has-error' : '' }}">
             <label for="email" class="bmd-label-floating">@lang('common.email')</label>
-            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+            <input id="email" type="text" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
             @if ($errors->has('email'))
                 <div class="invalid-feedback" style="display: block;">
@@ -41,13 +41,15 @@
             @lang('common.login')
         </button>
 
-        <a class="btn btn-link" href="{{ wzRoute('register') }}">
-            @lang('common.register')
-        </a>
+        @if (!ldap_enabled())
+            <a class="btn btn-link" href="{{ wzRoute('register') }}">
+                @lang('common.register')
+            </a>
 
-        <a class="btn btn-link" href="{{ wzRoute('password.request') }}">
-            @lang('common.password_back')?
-        </a>
+            <a class="btn btn-link" href="{{ wzRoute('password.request') }}">
+                @lang('common.password_back')?
+            </a>
+        @endif
 
         <p class="mt-5 mb-3 text-muted">&copy; {{ date('Y') }} {{ config('wizard.copyright', 'AICODE.CC') }}</p>
     </form>

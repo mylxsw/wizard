@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label for="editor-username" class="bmd-label-floating">@lang('common.username')</label>
                             <input type="text" class="form-control" value="{{ $user->name }}" id="editor-username"
-                                   name="username" {{ $user->id == Auth::user()->id ? 'readonly':'' }}>
+                                   name="username" {{ ($user->id == Auth::user()->id || ldap_enabled()) ? 'readonly':'' }}>
                         </div>
 
                         <div class="form-group">

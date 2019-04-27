@@ -28,9 +28,11 @@
                 <a href="{{ wzRoute('user:basic') }}" class="dropdown-item">
                     <i class="fa fa-user mr-2"></i> @lang('common.user_info')
                 </a>
+                @if (!ldap_enabled()) {
                 <a href="{{ wzRoute('user:password') }}" class="dropdown-item">
                     <i class="fa fa-lock mr-2"></i> @lang('common.change_password')
                 </a>
+                @endif
                 <a href="{{ wzRoute('user:templates') }}" class="dropdown-item">
                     <i class="fa fa-th mr-2"></i> @lang('common.template_maintenance')
                 </a>

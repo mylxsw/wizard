@@ -18,6 +18,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class HomeController extends Controller
 {
     /**
+     * 空白页，用于前端兼容
+     *
+     * @return string
+     */
+    public function blank()
+    {
+        return '';
+    }
+
+    /**
      * 公共首页
      *
      * 数据来源：

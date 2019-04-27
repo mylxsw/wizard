@@ -11,9 +11,11 @@
                 <a class="nav-link {{ $op == 'basic' ? 'active':'' }}" href="{{ wzRoute('user:basic') }}">
                     <i class="fa fa-user mr-2"></i> @lang('common.user_info')
                 </a>
-                <a class="nav-link {{ $op == 'password' ? 'active':'' }}" href="{{ wzRoute('user:password') }}">
-                    <i class="fa fa-lock mr-2"></i> @lang('common.change_password')
-                </a>
+                @if (!ldap_enabled())
+                    <a class="nav-link {{ $op == 'password' ? 'active':'' }}" href="{{ wzRoute('user:password') }}">
+                        <i class="fa fa-lock mr-2"></i> @lang('common.change_password')
+                    </a>
+                @endif
                 <a class="nav-link {{ $op == 'notification' ? 'active':'' }}" href="{{ wzRoute('user:notifications') }}">
                     <i class="fa fa-bell mr-2"></i> 通知
                     @if(userHasNotifications())
