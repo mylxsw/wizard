@@ -24,9 +24,18 @@
                            name="username" {{ ldap_enabled() ? 'readonly' : '' }}>
                 </div>
 
+                @if (ldap_enabled())
+                    <div class="form-group">
+                        <label for="editor-objectguid" class="bmd-label-floating">LDAP 对象ID</label>
+                        <input type="text" class="form-control" value="{{ $user->objectguid }}" id="editor-objectguid"
+                               name="objectguid" readonly>
+                    </div>
+                @endif
+
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success btn-raised" {{ ldap_enabled() ? 'disabled' : '' }}>@lang('common.btn_save')</button>
+                        <button type="submit"
+                                class="btn btn-success btn-raised" {{ ldap_enabled() ? 'disabled' : '' }}>@lang('common.btn_save')</button>
                     </div>
                 </div>
             </form>

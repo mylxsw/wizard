@@ -9,14 +9,33 @@
     </ol>
 @endsection
 @section('admin-content')
-
     <div class="card">
+        <div class="card-header">搜索</div>
+        <div class="card-body">
+            <form method="get"
+                  action="{!! wzRoute('admin:users') !!}">
+                <div class="form-group">
+                    <label for="form-name" class="bmd-label-floating">用户名</label>
+                    <input id="form-name" type="text" name="name" class="form-control w-75" value="{{ $query['name'] ?? ''  }}" />
+                </div>
+                <div class="form-group">
+                    <label for="search-email" class="bmd-label-floating">邮箱帐号</label>
+                    <input type="email" name="email" class="form-control float-left w-75" id="search-email" value="{{ $query['email'] ?? '' }}" />
+                </div>
+                <br/>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-raised btn-primary" >搜索</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card mt-3">
         <table class="table">
             <thead>
             <tr>
                 <th>#</th>
                 <th>真实姓名</th>
-                <th>账号</th>
+                <th>账号{{ ldap_enabled() ? ' / LDAP':'' }}</th>
                 <th>角色</th>
                 <th>状态</th>
                 <th>注册时间</th>
@@ -28,7 +47,13 @@
                 <tr class="{{ $user->id == Auth::user()->id ? 'info' : '' }}">
                     <th scope="row">{{ $user->id }}</th>
                     <td>{{ $user->name }}</td>
-                    <td><a href="{{ wzRoute('admin:user', ['id' => $user->id]) }}">{{ $user->email }}</a></td>
+                    <td>
+                        <a href="{{ wzRoute('admin:user', ['id' => $user->id]) }}">{{ $user->email }}</a>
+                        @if(ldap_enabled())
+                            <br/>
+                            {{ $user->objectguid ?? '-' }}
+                        @endif
+                    </td>
                     <td>{{ $user->isAdmin() ? '管理员':'普通' }}</td>
                     <td>
                         @if($user->status == 0)

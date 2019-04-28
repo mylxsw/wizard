@@ -28,8 +28,46 @@ class UserController extends Controller
      */
     public function users(Request $request)
     {
+        $username   = $request->input('name');
+        $email      = $request->input('email');
+        $objectguid = $request->input('guid');
+        $role       = $request->input('role', null);
+        $status     = $request->input('status', null);
+
+        $userQuery = User::query();
+        if (!empty($username)) {
+            $userQuery->where('name', 'like', "%{$username}%");
+        }
+
+        if (!empty($email)) {
+            $userQuery->where('email', '=', $email);
+        }
+
+        if (!empty($objectguid)) {
+            $userQuery->where('objectguid', '=', $objectguid);
+        }
+
+        if (!is_null($role) && $role !== '') {
+            $userQuery->where('role', intval($role));
+        }
+
+        if (!is_null($status) && $status !== '') {
+            $userQuery->where('status', intval($status));
+        }
+
+        $users = $userQuery->orderBy('created_at', 'desc')->paginate();
+
+        $queries = [
+            'name'   => $username,
+            'email'  => $email,
+            'guid'   => $objectguid,
+            'role'   => $role,
+            'status' => $status,
+        ];
+
         return view('user.users', [
-            'users' => User::orderBy('created_at', 'desc')->paginate(),
+            'users' => $users->appends($queries),
+            'query' => $queries,
             'op'    => 'users',
         ]);
     }

@@ -448,7 +448,7 @@ function ldap_enabled(): bool
 {
     static $enabled = null;
     if (is_null($enabled)) {
-        $enabled = config('auth.providers.users.driver') === 'ldap';
+        $enabled = (bool)config('wizard.ldap.enabled');
     }
 
     return $enabled;
