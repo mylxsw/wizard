@@ -28,7 +28,7 @@
                 <a href="{{ wzRoute('user:basic') }}" class="dropdown-item">
                     <i class="fa fa-user mr-2"></i> @lang('common.user_info')
                 </a>
-                @if (!ldap_enabled()) {
+                @if (!ldap_enabled())
                 <a href="{{ wzRoute('user:password') }}" class="dropdown-item">
                     <i class="fa fa-lock mr-2"></i> @lang('common.change_password')
                 </a>
