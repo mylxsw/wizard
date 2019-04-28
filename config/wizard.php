@@ -38,6 +38,6 @@ return [
          * 允许登录的成员，为空则不限制
          * 比如： 'CN=technology-products,CN=Users,DC=example,DC=com'
          */
-        'only_member_of' => env('WZ_LDAP_ONLY_MEMBER_OF', ''),
+        'only_member_of' => env('WIZARD_LDAP_ONLY_MEMBER_OF', ''),
     ],
 ];
