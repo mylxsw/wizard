@@ -1,56 +1,196 @@
-# Wizard 
+# Wizard 开源文档管理系统
 
-Wizard是基于Laravel开发框架开发的一款开源项目（API）文档管理工具。
+[TOC]
 
-在线预览体验地址：http://wizard.aicode.cc/
+## 概述
 
-## 特性
+Wizard是一款开源文档管理系统，目前支持三种类型的文档管理
 
-- 支持markdown文档
-- 支持Swagger文档
-- 支持用户权限管理
-- 支持团队协作，文档变更记录，文档对比
-- 支持项目分组
-- 支持标签
-- 支持文档搜索
-- 支持阅读模式
-- 完全开源，内网部署
-- 支持LDAP帐号体系
+- **Markdown**：也是Wizard最主要的文档类型，研发团队日常工作中交流所采用的最常用文档类型，在 Wizard 中，对 [Editor.md](https://pandao.github.io/editor.md/) 项目进行了功能扩展，增加了文档模板，Json 转表格，图片粘贴上传等功能
+- **Swagger**：支持 [OpenAPI 3.0](https://swagger.io/specification/) 规范，嵌入了 Swagger 官方的编辑器，通过定制开发，使其融入到 Wizard 项目当中，支持文档模板，全屏编辑，文档自动同步功能
+- **Table**：这种文档类型是类似于 Excel 电子表格，采用了 [x-spreadsheet](https://github.com/myliang/x-spreadsheet) 项目，将该项目嵌入到了 Wizard 中，目前还不是很完善
 
+> 在Wizard中，正在编辑的文档会定时自动保存到本地的 Local Storage 中，避免错误关闭页面而造成编辑内容丢失。
+
+目前主要包含以下功能
+
+- Swagger，Markdown，Table 类型的文档管理
+- 文档修改历史管理
+- 文档修改差异对比
+- 用户权限管理
+- 项目分组管理
+- LDAP 统一身份认证
+- 文档搜索，标签搜索
+- 阅读模式
+- 文档评论
+- 消息通知
+- 文档分享
+- 统计功能
+
+如果想快速体验一下Wizard的功能，有两种方式
+
+- 在线体验请访问 [http://wizard.aicode.cc/](http://wizard.aicode.cc/) ，目前只提供部分功能的体验，功能预览和使用说明请参考 [Wiki](https://github.com/mylxsw/wizard/wiki)。
+- 使用Docker来创建一个完整的Wizard服务
+    
+    进入项目的根目录，执行 `docker-compose up`，就可以快速创建一个Wizard服务了，访问地址 http://localhost:8080 。
+
+## 起源
+
+为了鼓励大家在开发过程中写开发文档，最开始我们选择了 [ShowDoc](https://www.showdoc.cc/) 项目来作为文档管理工具，当时团队规模也非常的小，大家都是直接用 Markdown 写一些简单的开发文档。后来随着团队的壮大，前后端分离，团队分工的细化，仅仅采用 Markdown 开始变得捉襟见肘，这时候，我们首先想到了使用开源界比较流行的 [Swagger](https://swagger.io/) 来创建开发文档。但是 Swagger 文档多了，总得有个地方维护起来吧？
+
+项目中的文档仅仅用Swagger也是不够的，它只适应于API文档的管理，还有很多其它文档，比如设计构想，流程图，架构文档，技术方案，数据库变更等各种文档需要一起维护起来。因此，我决定利用业余时间开发一款 **集成 Markdown 和 Swagger 文档的管理工具**，也就是 **Wizard** 项目了。
+
+起初打算用 Go 语言来开发，但是没过几天发现使用 Golang 来做 Web 项目开发效率太低（快速开发效率，并非指性能），很多常用的功能都需要自己去实现，遂放弃使用 Golang，转而使用 PHP 的 Laravel 框架来开发。所以虽然项目创建的时间为 2017年7月27日，但是实际上真正开始的时间应该算是 2017年7月31日。
+
+![-w986](media/15568588654111/15568614311881.jpg)
+
+起初Wizard项目的想法比较简单，只是用来将 Markdown 文档和 Swagger 文档放在一起，提供一个简单的管理界面就足够了，但是随着在团队中展开使用后，发现在企业中作为一款文档管理工具来说，只提供简单的文档管理功能是不够的，比如说权限控制，文档修改历史，文档搜索，文档分类等功能需求不断的被提出来，因此也促成了 Wizard 项目的功能越来越完善。
+
+- **用户权限管理** 参考了 Gitlab 的权限管理方式，在用户的身份上只区分了 **管理员** 和 **普通用户**，通过创建**用户组**来对用户的权限进行细致的管理，同时每个项目都支持单独的为用户赋予读写权限。
+- **项目分组** 在 Wizard 中，文档是以项目为单位进行组织的，刚开始的时候发现这样是OK的，后来项目越来越多，项目分组功能应运而生，以目录的形式来组织项目结构。
+- **文档修改历史** 每次对文档的修改，Wizard 都会记录一个快照，避免错误的修改了文档而造成损失，可以通过文档历史快速的恢复文档，对文档的修改，新增，删除等关键操作都会记录审计日志，以最近活动的形式展示出来。
+- **文档差异对比** 在团队协助中，经常会出现很多人修改同一份文档，为了避免冲突，文档修改后，其它人在提交旧的历史版本时，系统会提示用户文档内容发生了变更，用户可以通过文档比对功能找出文档中有哪些内容发生了修改。
+- **阅读模式** 当使用投影仪展示文档来过技术方案的时候，为了减少不必要的干扰，使用阅读模式，只展示文档内容部分，提供更好的展示体验。
+- **文档搜索** 通过搜索功能快速查找需要的文档，目前支持通过文档标题来搜素文档，后续会增加全文检索功能。
+- **LDAP支持** 很多公司都会使用 LDAP 来统一的管理公司员工的账号，员工的在公司内部的所有系统中都是用同一套帐号来登录各种系统比如 Jira，Wiki，Gitlab 等，Wizard 也提供了对 LDAP 的支持，只需要简单的几个配置，就可以快速的接入公司的统一帐号体系。
+- **文档附件**，**文档分享**，**统计**，**文档排序**，**模板管理**，**文档评论** ...
+
+## 关于代码
+
+项目采用了 Laravel 开发框架开发，目前框架的版本已经升级到最新的 5.8（最开始为5.4，一路升级过来）。为了提高开发效率，保持架构的简洁，在开发过程中，一直避免引入过多的外部组件，尽可能的利用 Laravel 提供的各种组件，比如 **Authentication**，**Authorization**，**Events**，**Mail**，**Notifications** 等，非常适合Laravel新手利用该项目来学习Laravel开发框架。
 
 ## 安装
 
-安装依赖
+目前支持两种安装方式，如果你熟悉Docker，可以直接使用Docker容器的方式来运行该项目，这也是最简单的方式了。如果你没有使用Docker或者不知道什么是Docker，那么请直接参考手动安装部分。
 
-    composer install --prefer-dist
+### 通过 Docker 安装 
 
-安装配置数据库
+我们需要创建一个Dockerfile，在Dockerfile中添加环境配置，比如我采用了宿主机上安装的MySQL服务器，就有了下面的这段Dockerfile配置
+
+    FROM mylxsw/wizard:latest
+
+    # 数据库连接配置
+    # 这里可以根据需要添加其它的Env配置，可用选项参考项目的.env.example文件
+    ENV DB_CONNECTION=mysql
+    ENV DB_HOST=host.docker.internal
+    ENV DB_PORT=3306
+    ENV DB_DATABASE=wizard_2
+    ENV DB_USERNAME=wizard
+    ENV DB_PASSWORD=wizard
+    ENV WIZARD_NEED_ACTIVATE=false
+    
+    # 文件上传存储目录
+    VOLUME /webroot/storage/app/public
+
+    RUN php artisan config:cache
+
+执行构建
+
+    docker build -t my-wizard .
+
+数据库初始化
+
+    docker run -it --rm --name my-wizard my-wizard php artisan migrate:install
+    docker run -it --rm --name my-wizard my-wizard php artisan migrate
+
+运行
+
+    docker run -d --name my-wizard -p 8080:80  my-wizard
+
+然后就可以通过 http://localhost:8080 访问 Wizard 了。    
+
+### 手动安装
+
+手动安装方式需要先安装配置好PHP环境，建议采用 PHP-FPM/Nginx 的方式来运行，具体配置参考 环境依赖 部分。
+
+#### 环境依赖
+
+以下组件的安装配置这里就不做详细展开，可以自行 百度/Google 安装方法。
+
+- PHP 7.2 + (需要启用 LDAP 扩展)
+- composer.phar
+- MySQL 5.6 +
+- Nginx
+- Git
+
+#### 下载代码
+
+推荐使用 git 来下载项目代码到服务器，我们假定将该项目放在服务器的 `/data/webroot` 目录
+
+    cd /data/webroot
+    git clone https://github.com/mylxsw/wizard.git
+    cd wizard
+
+下载代码之后，使用 **composer** 安装项目依赖
+
+    composer install --prefer-dist --ignore-platform-reqs
+
+composer 会在在项目目录中创建 **vender** 目录，其中包含了项目所依赖的所有第三方代码库。
+
+> 你也可以直接到项目的 [release](https://github.com/mylxsw/wizard/releases) 页面直接下载包含依赖的软件包。
+
+#### 配置
+
+复制一份配置文件 
 
     cp .env.example .env
-    
+
+修改 `.env` 中的配置信息，比如 MySQL 连接信息，文件存储目录，项目网址等。
+
+接下来创建数据库，提前在MySQL中创建好项目的数据库，然后在项目目录执行下面的命令
+
     php artisan migrate:install
     php artisan migrate
-    
-文件上传支持需要执行以下命令
+
+接下来配置文件上传目录
 
     php artisan storage:link
-    
-执行该命令后会在public目录下创建`storage/app/public`目录的符号链接。
 
-## 更新
+执行该命令后会在 public 目录下创建 `storage/app/public` 目录的符号链接。
 
-更新只需要到项目目录下执行
+在Nginx中配置项目的访问地址
+
+    server {
+        listen       80;
+        server_name  wizard.example.com;
+        root         /data/webroot/wizard/public;
+        index        index.php;
     
-    git pull
+        location / {
+            index index.php index.html index.htm;
+            try_files $uri $uri/ /index.php?$query_string;
+        }
+        
+        location ~ .*\.(gif|jpg|png|bmp|swf|js|css)$ {
+            try_files $uri  =302;
+        }
+        
+        location ~ .*\.php$ {
+            # php-fpm 监听地址，这里用了socket方式
+            fastcgi_pass  unix:/usr/local/php/var/run/php-cgi.sock;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_index index.php;
+            include fastcgi_params;
+        }
+    }
+
+#### 升级
+
+项目升级过程非常简单，只需要使用git拉取最新代码（git pull），然后执行下面的命令完成数据库迁移和依赖更新就OK了。
+
+    composer install --prefer-dist --ignore-platform-reqs
     php artisan migrate
 
-就可以完成更新。
+### 初始化
 
-### 使用Docker运行
+安装完成后，Wizard项目就可以通过浏览器访问了，接下来需要访问注册页面创建初始用户 
 
-    docker-compose up
+    http://项目地址/register
 
-## TODO
+在系统中注册的第一个用户为默认管理员角色。
+
+    
+## 开发计划
 
 * [x] __开发框架升级Laravel 5.8__
 * [ ] 新版本更新
