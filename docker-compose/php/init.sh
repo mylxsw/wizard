@@ -2,7 +2,7 @@
 
 cd /webroot/wizard && php /usr/bin/composer install
 
-cp /webroot/wizard/.env.docker /webroot/wizard/.env
+cp /webroot/wizard/docker-compose/.env.docker /webroot/wizard/.env
 chown www-data:www-data -R /webroot/wizard/
 
 php /webroot/wizard/artisan migrate --force

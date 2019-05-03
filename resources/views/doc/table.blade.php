@@ -10,7 +10,7 @@
             @include('components.doc-edit', ['project' => $project, 'pageItem' => $pageItem ?? null, 'navigator' => $navigator])
             <input type="hidden" name="type" value="table" />
 
-            <div id="xspreadsheet-content" style="display: none;">{{ $pageItem->content or '' }}</div>
+            <div id="xspreadsheet-content" style="display: none;">{{ $pageItem->content ?? '' }}</div>
             <div class="col-row" id="xspreadsheet"></div>
         </form>
     </div>
@@ -79,7 +79,7 @@
 
             // 获取swagger编辑器本次存储内容的key
             $.global.getDraftKey = function() {
-                return 'x-spreadsheet-content-{{ $project->id or '' }}-{{ $pageItem->id or '' }}';
+                return 'x-spreadsheet-content-{{ $project->id ?? '' }}-{{ $pageItem->id ?? '' }}';
             };
 
             // 更新编辑器内容

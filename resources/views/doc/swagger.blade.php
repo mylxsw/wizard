@@ -98,7 +98,7 @@
 
             // 获取swagger编辑器本次存储内容的key
             $.global.getDraftKey = function() {
-                return 'swagger-editor-content-{{ $project->id or '' }}-{{ $pageItem->id or '' }}';
+                return 'swagger-editor-content-{{ $project->id ?? '' }}-{{ $pageItem->id ?? '' }}';
             };
 
             window.editor = SwaggerEditorBundle({

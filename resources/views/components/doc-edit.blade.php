@@ -1,11 +1,11 @@
 <div class="row wz-editor-header">
     {{ csrf_field() }}
-    <input type="hidden" name="project_id" id="editor-project_id" value="{{ $project->id or '' }}"/>
-    <input type="hidden" name="page_id" id="editor-page_id" value="{{ $pageItem->id or '' }}">
-    <input type="hidden" name="pid" id="editor-pid" value="{{ $pageItem->pid or '' }}">
-    <input type="hidden" name="last_modified_at" value="{{ $pageItem->updated_at or '' }}">
-    <input type="hidden" name="history_id" value="{{ $pageItem->history_id or '' }}">
-    <input type="hidden" name="sort_level" value="{{ $pageItem->sort_level or 1000 }}">
+    <input type="hidden" name="project_id" id="editor-project_id" value="{{ $project->id ?? '' }}"/>
+    <input type="hidden" name="page_id" id="editor-page_id" value="{{ $pageItem->id ?? '' }}">
+    <input type="hidden" name="pid" id="editor-pid" value="{{ $pageItem->pid ?? '' }}">
+    <input type="hidden" name="last_modified_at" value="{{ $pageItem->updated_at ?? '' }}">
+    <input type="hidden" name="history_id" value="{{ $pageItem->history_id ?? '' }}">
+    <input type="hidden" name="sort_level" value="{{ $pageItem->sort_level ?? 1000 }}">
     <div class="col-12" style="padding-left: 0;">
         <div class="wz-panel-breadcrumb">
             <ol class="breadcrumb pull-left">
@@ -67,13 +67,13 @@
             <div class="form-group">
                 <label for="editor-title" class="bmd-label-static">@lang('document.title')</label>
                 <input type="text" class="form-control wz-input-long" name="title" id="editor-title"
-                       value="{{ $pageItem->title or '' }}">
+                       value="{{ $pageItem->title ?? '' }}">
             </div>
 
             @if($type === 'swagger')
                 <div class="form-group">
                     <label for="form-sync-url" class="bmd-label-static">文档同步地址</label>
-                    <input type="text" class="form-control wz-input-long" name="sync_url" id="editor-sync_url" value="{{ $pageItem->sync_url or '' }}" placeholder="http://"/>
+                    <input type="text" class="form-control wz-input-long" name="sync_url" id="editor-sync_url" value="{{ $pageItem->sync_url ?? '' }}" placeholder="http://"/>
                 </div>
             @endif
         </div>
@@ -95,7 +95,7 @@
                 <div class="modal-body">
                     <form method="post" action="{{ wzRoute('template:create') }}" id="wz-template-save-form">
                         {{ csrf_field() }}
-                        <input type="hidden" name="type" value="{{ $type or 'markdown' }}"/>
+                        <input type="hidden" name="type" value="{{ $type ?? 'markdown' }}"/>
                         <div class="form-group">
                             <label for="template-name" class="control-label">@lang('document.template_name')</label>
                             <input type="text" name="name" class="form-control" id="template-name">

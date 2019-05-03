@@ -21,7 +21,7 @@ services:
       - backend
   php-fpm:
       build:
-        context: ./docker/php-fpm
+        context: ./docker-compose/php-fpm
         dockerfile: Dockerfile
       volumes:
         - app_volume:/data/
@@ -37,16 +37,16 @@ services:
     volumes:
       - app_volume:/data/www
       - .:/webroot/wizard
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./docker-compose/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - "8888:80"
+      - "8080:80"
     networks:
       - backend
     depends_on:
       - php-fpm
   php:
     build:
-      context: ./docker/php
+      context: ./docker-compose/php
       dockerfile: Dockerfile
     volumes:
       - app_volume:/data/

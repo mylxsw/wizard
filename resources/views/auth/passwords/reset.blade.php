@@ -15,7 +15,7 @@
 
         <div class="text-left form-group{{ $errors->has('email') ? ' has-error' : '' }}">
             <label for="email" class="bmd-label-floating">邮箱地址</label>
-            <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
+            <input id="email" type="email" class="form-control" name="email" value="{{ $email ?? old('email') }}" required autofocus>
 
             @if ($errors->has('email'))
                 <div class="invalid-feedback d-block">{{ $errors->first('email') }}</div>

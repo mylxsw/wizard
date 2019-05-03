@@ -55,7 +55,7 @@
 
         @if (!empty($pageItem->sync_url))
             <div class="wz-document-swagger-sync-info wz-panel-limit">
-                文档同步地址：<a href="{{ $pageItem->sync_url }}" target="_blank">{{ $pageItem->sync_url }}</a>，最后同步于 {{ $pageItem->last_sync_at or '-' }}
+                文档同步地址：<a href="{{ $pageItem->sync_url }}" target="_blank">{{ $pageItem->sync_url }}</a>，最后同步于 {{ $pageItem->last_sync_at ?? '-' }}
                 @can('page-edit', $pageItem)
                     <a href="#" wz-form-submit data-form="#form-document-sync" data-confirm="执行文档同步后，您将成为最后修改人，确定要执行文档同步吗？" class="ml-2" title="同步文档">
                         <i class="fa fa-refresh"></i>
@@ -110,10 +110,10 @@
                 <li class="breadcrumb-item active">{{ $project->name }}</li>
             </ol>
         </div>
-        <h1>{{ $project->name or '' }}</h1>
+        <h1>{{ $project->name ?? '' }}</h1>
 
         <p class="wz-document-header wz-panel-limit">@lang('document.document_create_info', ['username' => $project->user->name, 'time' => $project->created_at])</p>
-        <p class="wz-panel-limit">{{ $project->description or '' }}</p>
+        <p class="wz-panel-limit">{{ $project->description ?? '' }}</p>
 
         @if (!Auth::guest())
             <div class="wz-recently-log wz-panel-limit">

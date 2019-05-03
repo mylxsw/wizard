@@ -12,7 +12,7 @@
                 <input type="hidden" name="type" value="markdown"/>
                 <div class="col" style="padding-left: 0; padding-right: 0;">
                     <div id="editormd" class="wz-markdown-style-fix">
-                        <textarea style="display:none;" name="content">{{ $pageItem->content or '' }}</textarea>
+                        <textarea style="display:none;" name="content">{{ $pageItem->content ?? '' }}</textarea>
                     </div>
                 </div>
             </div>
