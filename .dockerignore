@@ -10,6 +10,7 @@ data.db
 Homestead.json
 Homestead.yaml
 .env
+.env.local
 /old2
 *.log
 _ide_*.php
