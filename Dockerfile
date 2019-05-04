@@ -31,7 +31,7 @@ RUN wget https://getcomposer.org/download/1.6.4/composer.phar \
     && mv composer.phar /usr/bin/composer.phar \
     && chmod +x /usr/bin/composer.phar \
     && ln -s /usr/bin/composer.phar /usr/bin/composer \
-    && php /usr/bin/composer config -g repo.packagist composer https://packagist.phpcomposer.com
+    && php /usr/bin/composer config -g repo.packagist composer https://packagist.laravel-china.org
 
 RUN a2enmod rewrite
 
@@ -41,7 +41,6 @@ RUN php /usr/bin/composer install --prefer-dist --no-autoloader --no-scripts --n
 COPY ./ /webroot
 
 RUN cp .env.docker .env \
-    && php /usr/bin/composer dump-autoload --no-scripts --optimize \
-    && php /usr/bin/composer run-script post-install-cmd \
+    && php /usr/bin/composer dump-autoload --optimize \
     && chown www-data:www-data -R ./ \
     && php artisan storage:link
