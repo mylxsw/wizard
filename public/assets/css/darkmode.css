@@ -1,0 +1,137 @@
+
+/* 黑暗模式 */
+
+.wz-darkmode {
+    background-color: #252525;
+}
+
+.wz-darkmode .card,
+.wz-darkmode .card-footer {
+    background-color: #656565;
+}
+
+.wz-darkmode .wz-box {
+    background-color: #797979;
+    border: 1px solid #6d6d6d;
+}
+
+.wz-darkmode .wz-box .wz-title,
+.wz-darkmode .wz-box-disabled .wz-title,
+.wz-darkmode .wz-page-count {
+    color: #ffffff;
+}
+
+.wz-darkmode .wz-tag-container .tm-tag-disabled {
+    border: none;
+    background-color: #0F192A;
+}
+
+.wz-darkmode .bmd-help,
+.wz-darkmode .text-muted {
+    color: #dcdcdc!important;
+}
+
+.wz-darkmode .bg-white {
+    background-color: #3e3e3e!important;
+}
+
+.wz-darkmode .border-bottom {
+    border: none!important;
+}
+
+.wz-darkmode .wz-top-nav-search input, .wz-darkmode .dropdown-menu {
+    background-color: #000000;
+}
+
+.wz-darkmode .dropdown-menu * {
+    color: #d4d4d4;
+}
+
+.wz-darkmode .dropdown-menu a:hover,
+.wz-darkmode .dropdown-menu a:hover > i {
+    color: #000000;
+}
+
+.wz-darkmode .text-dark,
+.wz-darkmode a.text-dark:focus, a.text-dark:hover {
+    color: #d4d4d4!important;
+}
+
+.wz-darkmode .wz-panel-right {
+    background-color: #545454;
+}
+
+.wz-darkmode .wz-main-container {
+    background-color: #464646;
+}
+
+.wz-darkmode .wz-main-container * {
+    color: #d4d4d4;
+}
+
+.wz-darkmode .markdown-body {
+    background-color: transparent!important;
+}
+
+.wz-darkmode .wz-tags input {
+    background-color: #4c4c4c;
+}
+
+.wz-darkmode .wz-tag-container input.tm-input:focus {
+    background-color: #ffffff;
+    border: #000000 1px solid;
+}
+
+.wz-darkmode .tm-tag.tm-tag-success {
+    color: #638421;
+    background-color: #464646;
+    border: none;
+}
+
+.wz-darkmode .wz-comment-editor,
+.wz-darkmode .wz-comment-editor .wz-comment-editor-body textarea,
+.wz-darkmode .wz-comment-editor .wz-comment-editor-header,
+.wz-darkmode .wz-comment-editor .wz-comment-editor-header .wz-comment-editor-write{
+    border: 1px solid #4a4a4a;
+}
+
+.wz-darkmode .wz-comment-editor .wz-comment-editor-header,
+.wz-darkmode .wz-markdown-comment {
+    background-color: #484848;
+}
+
+.wz-darkmode .wz-comment-editor .wz-comment-editor-header .wz-comment-editor-write {
+    background-color: #000000;
+}
+
+.wz-darkmode .wz-comment-editor-readonly {
+    background-color: transparent!important;
+}
+
+.wz-darkmode .wz-comment-editor .wz-comment-editor-body textarea {
+    background-color: #484848;
+}
+
+.wz-darkmode .wz-comment-editor-footer *{
+    color: #ffffff!important;
+}
+
+.wz-darkmode .wz-edit-control {
+    background: #636363;
+}
+
+.wz-darkmode .wz-edit-control *,
+.wz-darkmode .swagger-ui .opblock .opblock-summary-description,
+.wz-darkmode .swagger-ui .model-title,
+.wz-darkmode .swagger-ui .opblock .opblock-section-header,
+.wz-darkmode .swagger-ui .opblock .opblock-section-header label{
+    color: #ffffff;
+}
+
+.wz-darkmode .footer {
+    background-color: #3e3e3e;
+    color: #dedede;
+    border-top: 1px solid #000
+}
+
+/* 黑暗模式 END */
