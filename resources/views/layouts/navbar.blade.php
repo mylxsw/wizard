@@ -1,5 +1,5 @@
-<div class="wz-top-navbar d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white border-bottom box-shadow ">
-    <h5 class="my-0 mr-md-auto font-weight-normal">
+<div class="wz-top-navbar d-flex flex-column flex-md-row align-items-center px-md-4 bg-white border-bottom box-shadow ">
+    <h5 class="my-0 mr-md-auto font-weight-normal wz-top-nav-item">
         <a href="/">{{ config('app.name', 'Wizard API') }}</a>
     </h5>
 
@@ -8,10 +8,14 @@
         <a class="btn btn-info active" href="{{ wzRoute('login') }}">@lang('common.login')</a>
         {{--<a class="btn btn-outline-primary" href="{{ wzRoute('register') }}">@lang('common.register')</a>--}}
     @else
-        <nav class="my-2 my-md-0">
-            <a class="p-2 text-dark" href="/">主页</a>
-            <a class="p-2 text-dark" href="{{ wzRoute('user:home') }}">@lang('common.user_home')</a>
-            <a class="p-2 text-dark" href="{{ wzRoute('search:search') }}">搜索</a>
+
+        <div class="wz-top-nav-search ml-md-auto d-flex justify-content-end">
+            <form action="{{ wzRoute('search:search') }}" method="get">
+                <label for="search-keyword"></label>
+                <input type="text" placeholder="@lang('common.search')" id="search-keyword" name="keyword" value="{{ $keyword ?? '' }}">
+            </form>
+        </div>
+        <nav class="my-2 my-md-0 wz-top-nav-item">
             <a class="p-2 text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ Auth::user()->name ?? Auth::user()->email }}
                 @if(userHasNotifications())
@@ -19,10 +23,13 @@
                 @endif
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="{{ wzRoute('user:home') }}">
+                    <i class="fa fa-home mr-2"></i> @lang('common.user_home')
+                </a>
                 <a href="{{ wzRoute('user:notifications') }}" class="dropdown-item">
                     <i class="fa fa-bell mr-2"></i> 通知
                     @if(userHasNotifications())
-                        <span class="badge">{{ userNotificationCount() }}</span>
+                        <span class="badge">{{ userNotificationCount(999) }}</span>
                     @endif
                 </a>
                 <a href="{{ wzRoute('user:basic') }}" class="dropdown-item">
@@ -49,3 +56,15 @@
         </nav>
     @endif
 </div>
+
+@push('script')
+    <script>
+        $(function () {
+            $('#search-keyword').keydown(function (event) {
+                if (event.keyCode === 13) {
+                    $(this).parents('form').submit();
+                }
+            })
+        });
+    </script>
+@endpush

@@ -27,6 +27,8 @@ return [
     'btn_view'    => '查看',
     'btn_diff'    => '差异',
 
+    'search' => '搜索',
+
     'yes' => '是',
     'no'  => '否',
 
@@ -40,7 +42,7 @@ return [
     'username'             => '真实姓名',
     'password_back'        => '找回密码',
     'logout'               => '退出',
-    'user_info'            => '用户信息',
+    'user_info'            => '个人信息',
     'change_password'      => '修改密码',
     'template_maintenance' => '模板维护',
 

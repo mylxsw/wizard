@@ -56,13 +56,17 @@ form {
     .wz-left-main {
         display: none;
     }
-    
+
     .wz-left-main-full {
         display: block;
     }
 
     .wz-left-main-full .wz-left-main-switch {
         width: 100%;
+    }
+
+    .wz-top-nav-search {
+        display: none !important;
     }
 }
 
@@ -81,7 +85,7 @@ form {
         max-width: 98%;
         margin-left: 2%;
     }
-    
+
     .wz-search-result-sign {
         display: none;
     }
@@ -393,7 +397,7 @@ a:hover {
     margin: 10px 0 0 10px;
 }
 
-#editormd, .dropzone > .SplitPane, .wz-document-swagger-sync-info{
+#editormd, .dropzone > .SplitPane, .wz-document-swagger-sync-info {
     border: 1px dashed #159e92
 }
 
@@ -971,9 +975,9 @@ tr.warning {
 }
 
 .swagger-editor-body .swagger-editor-content {
-    position: absolute!important;
-    width: 100%!important;
-    left: 0!important;
+    position: absolute !important;
+    width: 100% !important;
+    left: 0 !important;
     min-height: 800px;
 }
 
@@ -1017,7 +1021,7 @@ tr.warning {
 }
 
 .wz-plain-textarea {
-    line-height: 1.5!important;
+    line-height: 1.5 !important;
     background: #f5f5f5;
     padding: 11px;
     border-radius: 5px;
@@ -1096,7 +1100,7 @@ tr.warning {
 
 .wz-sort-level-changed {
     background: #76ff454a;
-    border-color: #28842c!important;
+    border-color: #28842c !important;
 }
 
 .wz-modified-sign {
@@ -1133,22 +1137,22 @@ li.wz-nav-editor-line:hover > a, li.wz-nav-editor-line:hover > .wz-control {
 }
 
 .swagger-ui .opblock-body .model-box {
-    display: block!important;
+    display: block !important;
 }
 
 pre.prettyprint {
-    border: 1px solid #f1f1f1!important;
-    background: #ffffff!important;
+    border: 1px solid #f1f1f1 !important;
+    background: #ffffff !important;
 }
 
 /*.wz-comment-editor, .wz-comment-box, pre.prettyprint, tbody, thead {*/
-    /*-webkit-box-shadow: 4px 4px 4px #f1f1f1;*/
-    /*-moz-box-shadow: 4px 4px 4px #f1f1f1;*/
-    /*box-shadow: 4px 4px 4px #f1f1f1;*/
+/*-webkit-box-shadow: 4px 4px 4px #f1f1f1;*/
+/*-moz-box-shadow: 4px 4px 4px #f1f1f1;*/
+/*box-shadow: 4px 4px 4px #f1f1f1;*/
 /*}*/
 
 li.L1, li.L3, li.L5, li.L7, li.L9 {
-    background: #f1f1f14f!important;
+    background: #f1f1f14f !important;
 }
 
 .wz-select-card-title {
@@ -1174,3 +1178,34 @@ li.L1, li.L3, li.L5, li.L7, li.L9 {
 .wz-document-form .wz-document-form-select select {
     max-width: 300px;
 }
+
+/* 顶部搜索 */
+.wz-top-nav-item {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.wz-top-nav-search {
+    padding: 0.5rem;
+}
+
+.wz-top-nav-search input {
+    padding: 8px;
+    border-radius: .1rem .1rem 0 0;
+    background: rgba(202, 202, 202, 0.33);
+    color: #868686;
+    text-overflow: clip;
+    border: 0;
+
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    transition: all .5s ease;
+    width: 12rem;
+}
+
+.wz-top-nav-search input:hover,
+.wz-top-nav-search input:focus {
+    background: #ffffff;
+    width: 30rem;
+}
+

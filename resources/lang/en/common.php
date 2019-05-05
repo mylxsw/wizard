@@ -24,6 +24,8 @@ return [
     'btn_back'   => 'Back',
     'btn_confirm' => 'OK',
 
+    'search' => 'Search',
+
     'login'            => 'Login',
     'register'         => 'Register',
     'password'         => 'Password',
