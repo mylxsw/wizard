@@ -14,3 +14,4 @@ yarn-error.log
 .env
 .env.local
 /old2
+custom/

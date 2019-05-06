@@ -453,3 +453,18 @@ function ldap_enabled(): bool
 
     return $enabled;
 }
+
+/**
+ * 站长统计代码区域
+ *
+ * @return string
+ */
+function statistics(): string
+{
+    $customFile = base_path('custom');
+    if (file_exists("{$customFile}/statistics.html")) {
+        return file_get_contents("{$customFile}/statistics.html");
+    }
+
+    return '';
+}

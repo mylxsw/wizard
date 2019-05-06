@@ -61,7 +61,11 @@
 @if(!isset($noheader) || !$noheader)
     <footer class="footer">
         <div class="@yield('container-style')">
-            <p>&copy; {{ date('Y') }} {{ config('wizard.copyright', 'AICODE.CC') }}  <a class="fa fa-github" target="_blank" href="https://github.com/mylxsw/wizard"></a></p>
+            <p>
+                &copy; {{ date('Y') }} {{ config('wizard.copyright', 'AICODE.CC') }}
+                <a class="fa fa-github" target="_blank" href="https://github.com/mylxsw/wizard"></a>
+                {!! statistics() !!}
+            </p>
         </div>
     </footer>
 @endif
