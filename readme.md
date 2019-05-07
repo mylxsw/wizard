@@ -189,6 +189,9 @@ composer 会在在项目目录中创建 **vender** 目录，其中包含了项�
 
 在系统中注册的第一个用户为默认管理员角色。
 
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/mylxsw/wizard.svg)](https://starchart.cc/mylxsw/wizard)
     
 ## 开发计划
 
