@@ -198,6 +198,14 @@ composer 会在在项目目录中创建 **vender** 目录，其中包含了项�
     - 在 `.env` 文件中添加配置项 `DB_CHARSET=utf8` 和 `DB_COLLATION=utf8_unicode_ci`，添加之后再执行 `php artisan migrate` 命令（缺点是这样就不支持Emoji了）
     - 升级MySQL到 5.7
 
+- 报错 `SQLSTATE[HY000] [2054] The server requested authentication method unknown to the client` 和 `The server requested authentication method unknown to the client [caching_sha2_password]`
+
+    因为Mariadb版本比较新，对应的MySQL版本在8.0之后也可能会有问题（默认认证方式修改为了`caching_sha2_password`），解决办法连接到数据库，修改一下密码的认证方式为 `mysql_native_password`：
+
+        ALTER USER 'USERNAME'@'HOSTNAME' IDENTIFIED WITH mysql_native_password BY 'PASSWORD';
+
+    > 参考 [Caching SHA-2 Pluggable Authentication](https://dev.mysql.com/doc/refman/8.0/en/caching-sha2-pluggable-authentication.html)
+
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/mylxsw/wizard.svg)](https://starchart.cc/mylxsw/wizard)
