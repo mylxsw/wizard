@@ -17,7 +17,7 @@ class CreatePageHistoryTable extends Migration
             $table->increments('id');
             $table->integer('page_id', false, true)->comment('文档ID');
             $table->integer('pid', false, true)->nullable()->comment('上级页面ID');
-            $table->string('title', 255)->nullable()->comment('页面标题');
+            $table->string('title')->nullable()->comment('页面标题');
             $table->text('description')->nullable()->comment('页面描述');
             $table->longText('content')->nullable()->comment('页面内容');
             $table->integer('project_id', false, true)->nullable()->comment('项目ID');

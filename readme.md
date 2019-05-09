@@ -109,7 +109,7 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
 
 - PHP 7.2 + (需要启用 LDAP 扩展)
 - composer.phar
-- MySQL 5.6 +
+- MySQL 5.7 +
 - Nginx
 - Git
 
@@ -189,6 +189,14 @@ composer 会在在项目目录中创建 **vender** 目录，其中包含了项�
 
 在系统中注册的第一个用户为默认管理员角色。
 
+## FAQ
+
+- 如果在执行数据库迁移（`php artisan migrate`）的时候，报错 `SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes`
+
+    该错误是因为 MySQL 版本低于 5.7，在低版本的 MySQL 中会出现该问题。解决方案如下，二选一即可
+
+    - 在 `.env` 文件中添加配置项 `DB_CHARSET=utf8` 和 `DB_COLLATION=utf8_unicode_ci`，添加之后再执行 `php artisan migrate` 命令（缺点是这样就不支持Emoji了）
+    - 升级MySQL到 5.7
     
 ## 开发计划
 

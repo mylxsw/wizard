@@ -15,8 +15,8 @@ class CreateAttachmentsTable extends Migration
     {
         Schema::create('wz_attachments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 255)->comment('附件名称');
-            $table->string('path', 255)->comment('存储路径');
+            $table->string('name')->comment('附件名称');
+            $table->string('path')->comment('存储路径');
             $table->integer('user_id', false, true)->comment('上传人ID');
             $table->integer('page_id', false, true)->nullable()->comment('附件对应的文档ID');
             $table->integer('project_id', false, true)->nullable()->comment('附件对应的项目ID');

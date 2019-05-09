@@ -15,7 +15,7 @@ class CreateTagsTable extends Migration
     {
         Schema::create('wz_tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 255)->comment('用户ID')->unique();
+            $table->string('name', 100)->comment('标签名称')->unique();
             $table->timestamps();
         });
     }

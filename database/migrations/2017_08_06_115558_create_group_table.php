@@ -15,7 +15,7 @@ class CreateGroupTable extends Migration
     {
         Schema::create('wz_groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 255)->comment('组名称');
+            $table->string('name')->comment('组名称');
             $table->integer('user_id', false, true)->nullable()->comment('创建者ID');
             $table->timestamps();
         });
