@@ -197,6 +197,10 @@ composer 会在在项目目录中创建 **vender** 目录，其中包含了项�
 
     - 在 `.env` 文件中添加配置项 `DB_CHARSET=utf8` 和 `DB_COLLATION=utf8_unicode_ci`，添加之后再执行 `php artisan migrate` 命令（缺点是这样就不支持Emoji了）
     - 升级MySQL到 5.7
+
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/mylxsw/wizard.svg)](https://starchart.cc/mylxsw/wizard)
     
 ## 开发计划
 
