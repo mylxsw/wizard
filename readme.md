@@ -107,7 +107,16 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
 
 以下组件的安装配置这里就不做详细展开，可以自行 百度/Google 安装方法。
 
-- PHP 7.2 + (需要启用 LDAP 扩展)
+- PHP 7.2 + (需要启用以下扩展)
+    - OpenSSL PHP Extension
+    - PDO PHP Extension
+    - Mbstring PHP Extension
+    - Tokenizer PHP Extension
+    - XML PHP Extension
+    - Ctype PHP Extension
+    - JSON PHP Extension
+    - BCMath PHP Extension
+    - LDAP PHP Extension
 - composer.phar
 - MySQL 5.7 + / MariaDB （需要支持ARCHIVE存储引擎，MariaDB 10.0+ 默认没有启用参考 **FAQ 3**）
 - Nginx
@@ -222,7 +231,7 @@ composer 会在在项目目录中创建 **vender** 目录，其中包含了项�
          Schema::create('wz_operation_logs', function (Blueprint $table) {
         -$table->engine = 'ARCHIVE';
         +// $table->engine = 'ARCHIVE';
-
+         
          $table->increments('id');
         ```
 
