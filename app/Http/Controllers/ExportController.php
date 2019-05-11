@@ -53,6 +53,10 @@ class ExportController extends Controller
         $mpdf->title                    = $title;
         $mpdf->author                   = $author ?? \Auth::user()->name ?? 'wizard';
 
+        if (file_exists('/tmp')) {
+            $mpdf->tempDir = '/tmp';
+        }
+
         $header = '<link href="/assets/css/normalize.css" rel="stylesheet">';
 
         switch ($type) {
