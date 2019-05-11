@@ -468,3 +468,17 @@ function statistics(): string
 
     return '';
 }
+
+/**
+ * 判断内容是否为json格式
+ *
+ * @param string $content
+ *
+ * @return bool
+ */
+function isJson($content): bool
+{
+    // 尝试解析为json
+    json_decode($content);
+    return json_last_error() === JSON_ERROR_NONE;
+}

@@ -38,6 +38,7 @@
                         </button>
                     </li>
                 @endcan
+                @include('components.page-menus-export', ['project' => $project, 'pageItem' => $pageItem])
                 @include('components.page-menus', ['project' => $project, 'pageItem' => $pageItem])
             </ul>
             <div class="clearfix"></div>

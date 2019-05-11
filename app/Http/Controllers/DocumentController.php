@@ -373,7 +373,13 @@ class DocumentController extends Controller
      */
     public function getSwagger($id, $page_id)
     {
-        return response($this->getSwaggerContent($id, $page_id));
+        $yaml = $this->getSwaggerContent($id, $page_id);
+        if (isJson($yaml)) {
+            $formatter = Formatter::make($yaml, Formatter::JSON);
+            return response($formatter->toYaml());
+        }
+
+        return response($yaml);
     }
 
     /**
@@ -386,10 +392,15 @@ class DocumentController extends Controller
      */
     public function getJson($id, $page_id)
     {
-        $yaml      = $this->getSwaggerContent($id, $page_id);
-        $formatter = Formatter::make($yaml, Formatter::YAML);
+        $yaml = $this->getSwaggerContent($id, $page_id);
+        if (isJson($yaml)) {
+            $jsonContent = $yaml;
+        } else {
+            $formatter   = Formatter::make($yaml, Formatter::YAML);
+            $jsonContent = $formatter->toJson();
+        }
 
-        return response($formatter->toJson(), 200, ['Content-Type' => 'application/json']);
+        return response($jsonContent, 200, ['Content-Type' => 'application/json']);
     }
 
 
