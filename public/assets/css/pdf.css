@@ -1,0 +1,30 @@
+/* PDF Export */
+
+.markdown-body {
+    font-family: "Microsoft YaHei", Helvetica, "Meiryo UI", "Malgun Gothic", "Segoe UI", "Trebuchet MS", "Monaco", monospace, Tahoma, STXihei, "华文细黑", STHeiti, "Helvetica Neue", "Droid Sans", "wenquanyi micro hei", FreeSans, Arimo, Arial, SimSun, "宋体", Heiti, "黑体";
+    line-height: 1.5;
+}
+
+.wz-pdf-content code {
+    background-color: transparent;
+    font-weight: bold;
+    color: #ff6060;
+}
+
+.wz-pdf-content pre.prettyprint {
+    padding: 5px;
+}
+
+.wz-pdf-content pre.prettyprint ol.linenums {
+    margin: 0;
+    padding: 0;
+}
+
+.wz-pdf-content pre.prettyprint ol li,
+.wz-pdf-content pre.prettyprint ol {
+    list-style-type: none!important;
+}
+
+.wz-pdf-content pre.prettyprint li.L1, li.L3, li.L5, li.L7, li.L9 {
+    background: none;
+}

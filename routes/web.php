@@ -50,15 +50,15 @@ Route::group(['middleware' => 'locale'], function () {
             ->name('json-to-markdown');
     });
 
+    // 文件导出
+    Route::post('/export/{type}.pdf', 'ExportController@pdf')->name('export:pdf');
+    Route::post('/export-file/{filename}', 'ExportController@download')->name('export:download');
 
     Route::group(['prefix' => 'project', 'middleware' => 'share', 'as' => 'project:'], function () {
         // 项目分享
         Route::get('/{id}/doc/{page_id}.json', 'DocumentController@getPageJSON')->name('doc:json');
         Route::get('/{id}/doc/{page_id}/histories/{history_id}.json',
             'HistoryController@getPageJSON')->name('doc:history:json');
-
-        // 导出
-        Route::post('/{id}/doc/{page_id}.pdf', 'ExportController@pdf')->name('doc:pdf');
     });
 
     Route::group(['prefix' => 'swagger', 'as' => 'swagger:'], function () {

@@ -8,57 +8,74 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Policies\ProjectPolicy;
-use App\Repositories\Document;
-use App\Repositories\Project;
 use Illuminate\Http\Request;
 use Mpdf\Mpdf;
 
 class ExportController extends Controller
 {
 
-    public function pdf(Request $request, $id, $page_id)
+    /**
+     * 直接将内容导出为下载文件
+     *
+     * @param Request $request
+     * @param         $filename
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function download(Request $request, $filename)
     {
-        $this->canExport($id);
-
-        /** @var Document $doc */
-        $doc = Document::where('id', $page_id)
-            ->where('project_id', $id)
-            ->where('type', Document::TYPE_DOC)
-            ->firstOrFail();
-
-        $html = (new \Parsedown())->text($doc->content);
-
-        $mpdf = new Mpdf([
-            'mode'         => 'utf-8',
-            'default_font' => 'dejavusans'
-        ]);
-        $mpdf->useAdobeCJK = true;
-        $mpdf->autoLangToFont = true;
-
-
-        $mpdf->WriteHTML($html);
-        $mpdf->Output();
+        return response()->streamDownload(function () use ($request) {
+            echo $request->input('content');
+        }, $filename);
     }
 
     /**
-     * 检查是否用户有导出权限
+     * 将HTML转换为PDF文档
      *
-     * @param int $projectId
+     * @param Request $request
+     * @param         $type
      *
-     * @return Project
+     * @throws \Mpdf\MpdfException
      */
-    private function canExport($projectId)
+    public function pdf(Request $request, $type)
     {
-        /** @var Project $project */
-        $project = Project::findOrFail($projectId);
+        $content = $request->input('html');
+        $title   = $request->input('title');
+        $author  = $request->input('author');
 
-        $policy = new ProjectPolicy();
-        if (!$policy->view(\Auth::user(), $project)) {
-            abort(404);
+//        $html = (new \Parsedown())->text("# {$doc->title}\n\n" . $doc->content);
+
+        $mpdf                           = new Mpdf(['mode' => 'utf-8']);
+        $mpdf->allow_charset_conversion = true;
+        $mpdf->useAdobeCJK              = true;
+        $mpdf->autoLangToFont           = true;
+        $mpdf->autoScriptToLang         = true;
+        $mpdf->title                    = $title;
+        $mpdf->author                   = $author ?? \Auth::user()->name ?? 'wizard';
+
+        $header = '<link href="/assets/css/normalize.css" rel="stylesheet">';
+
+        switch ($type) {
+            case 'markdown':
+                $header .= '<link href="/assets/vendor/editor-md/css/editormd.preview.css" rel="stylesheet"/>';
+                $header .= '<link href="/assets/vendor/markdown-body.css" rel="stylesheet">';
+                break;
+            case 'swagger':
+                $header .= '<link href="/assets/vendor/swagger-ui/swagger-ui.css" rel="stylesheet">';
+                break;
         }
 
-        return $project;
+
+        $header .= '<link href="/assets/css/style.css" rel="stylesheet">';
+        $header .= '<link href="/assets/css/pdf.css" rel="stylesheet">';
+        $mpdf->WriteHTML($header);
+
+
+        $html = "<div class='markdown-body wz-markdown-style-fix wz-pdf-content'>{$content}</div>";
+        $mpdf->Bookmark($title, 0);
+        $mpdf->WriteHTML($html);
+
+        $mpdf->Output();
     }
+
 }

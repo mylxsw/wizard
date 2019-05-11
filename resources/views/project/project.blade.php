@@ -70,7 +70,7 @@
 
         <div class="markdown-body wz-panel-limit {{ $type == 'markdown' ? 'wz-markdown-style-fix' : '' }}" id="markdown-body">
             @if($type == 'markdown')
-            <textarea id="append-test" class="d-none">{{ $pageItem->content }}</textarea>
+            <textarea class="d-none wz-markdown-content">{{ $pageItem->content }}</textarea>
             @endif
             @if($type == 'table')
                 <textarea id="x-spreadsheet-content" class="d-none">{{ $pageItem->content }}</textarea>
