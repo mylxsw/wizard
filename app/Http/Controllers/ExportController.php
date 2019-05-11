@@ -45,17 +45,17 @@ class ExportController extends Controller
 
 //        $html = (new \Parsedown())->text("# {$doc->title}\n\n" . $doc->content);
 
-        $mpdf                           = new Mpdf(['mode' => 'utf-8']);
+        $mpdf = new Mpdf([
+            'mode'    => 'utf-8',
+            'tempDir' => sys_get_temp_dir()
+        ]);
+
         $mpdf->allow_charset_conversion = true;
         $mpdf->useAdobeCJK              = true;
         $mpdf->autoLangToFont           = true;
         $mpdf->autoScriptToLang         = true;
         $mpdf->title                    = $title;
         $mpdf->author                   = $author ?? \Auth::user()->name ?? 'wizard';
-
-        if (file_exists('/tmp')) {
-            $mpdf->tempDir = '/tmp';
-        }
 
         $header = '<link href="/assets/css/normalize.css" rel="stylesheet">';
 
