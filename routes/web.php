@@ -54,6 +54,9 @@ Route::group(['middleware' => 'locale'], function () {
     Route::post('/export/{type}.pdf', 'ExportController@pdf')->name('export:pdf');
     Route::post('/export-file/{filename}', 'ExportController@download')->name('export:download');
 
+    // 批量导出（项目）
+    Route::post('/project/{project_id}/export', 'BatchExportController@batchExport')->name('export:batch');
+
     Route::group(['prefix' => 'project', 'middleware' => 'share', 'as' => 'project:'], function () {
         // 项目分享
         Route::get('/{id}/doc/{page_id}.json', 'DocumentController@getPageJSON')->name('doc:json');

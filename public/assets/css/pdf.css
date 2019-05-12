@@ -28,3 +28,10 @@
 .wz-pdf-content pre.prettyprint li.L1, li.L3, li.L5, li.L7, li.L9 {
     background: none;
 }
+
+.pdf-error {
+    color: #ffffff;
+    background-color: #FF0000;
+    text-align: center;
+    font-size: 20px;
+}

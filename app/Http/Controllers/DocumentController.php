@@ -37,6 +37,7 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function newPage(Request $request, $id)
     {
@@ -97,6 +98,7 @@ class DocumentController extends Controller
      *
      * @return array
      * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function newPageHandle(Request $request, $id)
     {
@@ -170,6 +172,7 @@ class DocumentController extends Controller
      *
      * @return array|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function editPageHandle(Request $request, $id, $page_id)
     {
@@ -264,6 +267,7 @@ class DocumentController extends Controller
      * @param         $page_id
      *
      * @return array
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function checkPageExpired(Request $request, $id, $page_id)
     {

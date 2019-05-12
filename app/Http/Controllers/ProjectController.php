@@ -70,6 +70,7 @@ class ProjectController extends Controller
      *
      * @return array
      * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function newProjectHandle(Request $request)
     {
@@ -153,6 +154,7 @@ class ProjectController extends Controller
      * @param         $id
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function project(Request $request, $id)
     {
@@ -217,6 +219,7 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function setting(Request $request, $id)
     {
@@ -274,6 +277,7 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function settingHandle(Request $request, $id)
     {
@@ -319,7 +323,8 @@ class ProjectController extends Controller
      * @param Request $request
      * @param Project $project
      *
-     * @return bool 如果返回true，说明执行了更新操作，false说明没有更新
+     * @return bool
+     * @throws \Illuminate\Validation\ValidationException
      */
     private function basicSettingHandle(Request $request, Project $project): bool
     {
@@ -369,6 +374,7 @@ class ProjectController extends Controller
      * @param Project $project
      *
      * @return bool 如果返回true，说明执行了更新操作，false说明没有更新
+     * @throws \Illuminate\Validation\ValidationException
      */
     private function privilegeSettingHandle(Request $request, Project $project): bool
     {
@@ -396,6 +402,7 @@ class ProjectController extends Controller
      * @param Project $project
      *
      * @return bool
+     * @throws \Throwable
      */
     private function sortSettingHandle(Request $request, Project $project): bool
     {
@@ -468,6 +475,7 @@ class ProjectController extends Controller
      * @param         $id
      *
      * @return array
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function favorite(Request $request, $id)
     {

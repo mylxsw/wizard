@@ -57,6 +57,13 @@ function navigator(
     int $pageID = 0,
     $exclude = []
 ) {
+    static $cached = [];
+
+    $key = "{$projectID}:{$pageID}:" . implode(':', $exclude);
+    if (isset($cached[$key])) {
+        return $cached[$key];
+    }
+
     $pages = \App\Repositories\Document::where('project_id', $projectID)->select(
         'id', 'pid', 'title', 'project_id', 'type', 'status', 'created_at', 'sort_level'
     )->orderBy('pid')->get();
@@ -90,9 +97,13 @@ function navigator(
         }
     }
 
-    return array_filter($navigators, function ($nav) {
+    $res = array_filter($navigators, function ($nav) {
         return $nav['pid'] === 0;
     });
+
+    $cached[$key] = $res;
+
+    return $res;
 }
 
 /**

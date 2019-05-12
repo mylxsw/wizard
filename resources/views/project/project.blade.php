@@ -103,13 +103,17 @@
 
     @else
         <div class="wz-panel-breadcrumb">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb pull-left">
                 <li class="breadcrumb-item"><a href="{{ wzRoute('home') }}">首页</a></li>
                 @if(!empty($project->catalog))
                     <li class="breadcrumb-item"><a href="{{ wzRoute('home', ['catalog' => $project->catalog->id]) }}">{{ $project->catalog->name }}</a></li>
                 @endif
                 <li class="breadcrumb-item active">{{ $project->name }}</li>
             </ol>
+            <ul class="nav nav-pills pull-right">
+                @include('components.page-menus-batch-export', ['project' => $project])
+            </ul>
+            <div class="clearfix"></div>
         </div>
         <h1>{{ $project->name ?? '' }}</h1>
 

@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Log;
 use Mpdf\Mpdf;
 
 class ExportController extends Controller
@@ -43,8 +44,6 @@ class ExportController extends Controller
         $title   = $request->input('title');
         $author  = $request->input('author');
 
-//        $html = (new \Parsedown())->text("# {$doc->title}\n\n" . $doc->content);
-
         $mpdf = new Mpdf([
             'mode'    => 'utf-8',
             'tempDir' => sys_get_temp_dir()
@@ -74,10 +73,21 @@ class ExportController extends Controller
         $header .= '<link href="/assets/css/pdf.css" rel="stylesheet">';
         $mpdf->WriteHTML($header);
 
-
         $html = "<div class='markdown-body wz-markdown-style-fix wz-pdf-content'>{$content}</div>";
         $mpdf->Bookmark($title, 0);
-        $mpdf->WriteHTML($html);
+        try {
+            $mpdf->WriteHTML($html);
+        } catch (\Exception $ex) {
+            Log::error('html_to_pdf_failed', [
+                'error' => $ex->getMessage(),
+                'code'  => $ex->getCode(),
+                'doc'   => [
+                    'content' => $html,
+                ]
+            ]);
+
+            $mpdf->WriteHTML('<p class="pdf-error">部分文档生成失败</p>');
+        }
 
         $mpdf->Output();
     }
