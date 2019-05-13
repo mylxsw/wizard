@@ -20,7 +20,7 @@ class CreateOperationLogsTable extends Migration
             $table->integer('user_id', false, true)->nullable()->comment('操作用户ID');
             $table->string('message')->nullable()->comment('日志消息内容');
             $table->text('context')->nullable()->comment('记录日志时候的上下文信息');
-            $table->timestamp('created_at')->comment('创建时间');
+            $table->timestamp('created_at')->useCurrent()->comment('创建时间');
         });
     }
 
