@@ -65,6 +65,8 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
 
 ### 通过 Docker 安装 
 
+详细安装方法参考 Docker Hub [mylxsw/wizard](https://hub.docker.com/r/mylxsw/wizard)。
+
 我们需要创建一个Dockerfile，在Dockerfile中添加环境配置，比如我采用了宿主机上安装的MySQL服务器，就有了下面的这段Dockerfile配置
 
     FROM mylxsw/wizard:latest
