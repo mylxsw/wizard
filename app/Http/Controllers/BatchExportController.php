@@ -8,7 +8,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Policies\ProjectPolicy;
 use App\Repositories\Document;
 use App\Repositories\Project;
@@ -167,6 +166,8 @@ class BatchExportController extends Controller
             'mode'              => 'utf-8',
             'tempDir'           => sys_get_temp_dir(),
             'defaultfooterline' => false,
+            'useSubstitutions'  => true,
+            'backupSubsFont'    => ['dejavusanscondensed', 'arialunicodems', 'sun-exta'],
         ]);
 
         $mpdf->allow_charset_conversion = true;
@@ -186,7 +187,8 @@ class BatchExportController extends Controller
         $mpdf->WriteHTML($header);
 
         $pageNo = 1;
-        $this->traverseNavigators($navigators,
+        $this->traverseNavigators(
+            $navigators,
             function ($id, array $parents) use ($documents, $mpdf, &$pageNo) {
                 if ($pageNo > 1) {
                     $mpdf->AddPage();
@@ -225,7 +227,9 @@ class BatchExportController extends Controller
                 }
 
                 $pageNo++;
-            }, []);
+            },
+            []
+        );
 
         $mpdf->Output();
     }
@@ -249,7 +253,6 @@ class BatchExportController extends Controller
             }
         }
     }
-
 
     /**
      * 检查是否用户有导出权限

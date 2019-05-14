@@ -14,7 +14,6 @@ use Mpdf\Mpdf;
 
 class ExportController extends Controller
 {
-
     /**
      * 直接将内容导出为下载文件
      *
@@ -45,15 +44,19 @@ class ExportController extends Controller
         $author  = $request->input('author');
 
         $mpdf = new Mpdf([
-            'mode'    => 'utf-8',
-            'tempDir' => sys_get_temp_dir()
+            'mode'             => 'utf-8',
+            'tempDir'          => sys_get_temp_dir(),
+            'useSubstitutions' => true,
+            'backupSubsFont'   => ['dejavusanscondensed', 'arialunicodems', 'sun-exta'],
         ]);
+
+        $mpdf->SetFooter('{PAGENO} / {nbpg}');
+        $mpdf->SetTitle($title);
 
         $mpdf->allow_charset_conversion = true;
         $mpdf->useAdobeCJK              = true;
         $mpdf->autoLangToFont           = true;
         $mpdf->autoScriptToLang         = true;
-        $mpdf->title                    = $title;
         $mpdf->author                   = $author ?? \Auth::user()->name ?? 'wizard';
 
         $header = '<link href="/assets/css/normalize.css" rel="stylesheet">';
@@ -67,7 +70,6 @@ class ExportController extends Controller
                 $header .= '<link href="/assets/vendor/swagger-ui/swagger-ui.css" rel="stylesheet">';
                 break;
         }
-
 
         $header .= '<link href="/assets/css/style.css" rel="stylesheet">';
         $header .= '<link href="/assets/css/pdf.css" rel="stylesheet">';
@@ -91,5 +93,4 @@ class ExportController extends Controller
 
         $mpdf->Output();
     }
-
 }
