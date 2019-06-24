@@ -199,10 +199,17 @@ class BatchExportController extends Controller
 
                 $title = "* {$doc->title}";
 
+                $author = $doc->user->name ?? '-';
+                $createdTime = $doc->created_at ?? '-';
+                $lastModifiedUser = $doc->lastModifiedUser->name ?? '-';
+                $updatedTime = $doc->updated_at ?? '-';
+
+                $intro = "该文档由 {$author} 创建于 {$createdTime} ， {$lastModifiedUser} 在 {$updatedTime} 修改了该文档。\n\n";
+
                 if ($doc->type != Document::TYPE_DOC) {
-                    $raw = "# {$title}\n\n暂不支持该类型的文档。";
+                    $raw = "# {$title}\n\n{$intro}暂不支持该类型的文档。";
                 } else {
-                    $raw = "# {$title}\n\n" . $doc->content;
+                    $raw = "# {$title}\n\n{$intro}" . $doc->content;
                 }
 
                 $html = (new \Parsedown())->text($raw);
