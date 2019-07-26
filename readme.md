@@ -1,6 +1,7 @@
 # Wizard 开源文档管理系统
 
-[TOC]
+![GitHub All Releases](https://img.shields.io/github/downloads/mylxsw/wizard/total)
+![Docker Pulls](https://img.shields.io/docker/pulls/mylxsw/wizard)
 
 ## 概述
 
