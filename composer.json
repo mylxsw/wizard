@@ -67,11 +67,5 @@
         "sort-packages": true,
         "optimize-autoloader": true,
         "secure-http": false
-    },
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://packagist.laravel-china.org"
-        }
     }
 }
