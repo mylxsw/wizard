@@ -15,3 +15,4 @@ yarn-error.log
 .env.local
 /old2
 custom/
+composer.lock
