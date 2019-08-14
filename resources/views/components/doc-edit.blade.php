@@ -134,6 +134,25 @@
 @push('script')
     <script>
         $(function () {
+            // 获取本地草稿内容
+            var getDraftContent = function () {
+                return store.get($.global.getDraftKey()) || '';
+            };
+
+            var autoSaveDraftTimer;
+
+            // 自动保存草稿
+            var autoSaveDraft = function () {
+                var currentContent = $.global.getEditorContent();
+                var savedContent = getDraftContent();
+
+                if (savedContent !== currentContent) {
+                    store.set($.global.getDraftKey(), currentContent);
+                }
+
+                autoSaveDraftTimer = setTimeout(autoSaveDraft, 3000);
+            };
+
             // 文档保存
             $('[wz-doc-form-submit]').on('click', function () {
                 var force = $(this).data('force');
@@ -190,27 +209,11 @@
             });
 
             $.global.clearDocumentDraft = function () {
-                store.remove($.global.getDraftKey());
                 // 停止自动保存草稿功能
-                window.clearTimeout(autoSaveDraft);
+                window.clearTimeout(autoSaveDraftTimer);
+                store.remove($.global.getDraftKey());
             };
 
-            // 获取本地草稿内容
-            var getDraftContent = function () {
-                return store.get($.global.getDraftKey()) || '';
-            };
-
-            // 自动保存草稿
-            var autoSaveDraft = function () {
-                var currentContent = $.global.getEditorContent();
-                var savedContent = getDraftContent();
-
-                if (savedContent !== currentContent) {
-                    store.set($.global.getDraftKey(), currentContent);
-                }
-
-                setTimeout(autoSaveDraft, 3000);
-            };
 
             // 检查草稿是否存在
             // 存在询问是否恢复，之后启动自动保存功能

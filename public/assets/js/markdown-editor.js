@@ -70,9 +70,9 @@ $.wz.mdEditor = function (editor_id, params) {
                 "help", "info"
             ];
         },
-        toolbarIconsClass: {
-            template: "fa-files-o",
-            jsonToTable: "fa-cubes"
+        toolbarIconTexts: {
+            template: "模板",
+            jsonToTable: "JSON-&gt;表格"
         },
         toolbarHandlers: {
             template: function (cm, icon, cursor, selection) {
