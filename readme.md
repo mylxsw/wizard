@@ -120,6 +120,7 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
     - JSON PHP Extension
     - BCMath PHP Extension
     - LDAP PHP Extension
+    - Zlib PHP Extension （PDF 导出功能需要用到）
 - composer.phar
 - MySQL 5.7 + / MariaDB （需要支持ARCHIVE存储引擎，MariaDB 10.0+ 默认没有启用参考 **FAQ 3**）
 - Nginx
