@@ -126,6 +126,8 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
 - Nginx
 - Git
 
+> PHP 运行环境的创建，可以参考这里 https://gist.github.com/mylxsw/4b7bbe81fb7f59714423f3284c867149
+
 #### 下载代码
 
 推荐使用 git 来下载项目代码到服务器，我们假定将该项目放在服务器的 `/data/webroot` 目录
