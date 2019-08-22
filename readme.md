@@ -239,6 +239,19 @@ composer 会在在项目目录中创建 **vender** 目录，其中包含了项�
          $table->increments('id');
         ```
 
+4. 默认上传文件大小限制为 2M，这个限制并不是 Wizard 自身的限制，而是运行环境的限制，如何提高上传文件大小限制呢？
+
+   首先需要修改 PHP 的配置文件 `php.ini`，修改以下两行
+   
+       ; 上传文件大小限制
+       upload_max_filesize = 100M
+       ; 表单提交大小限制，必须大于 upload_max_filesize，或者可以设置为 0，不做任何限制
+       post_max_size = 0
+   
+   然后，根据 web 服务器的不同进行修改
+   
+   - **nginx**： 在 nginx 配置中添加 `client_max_body_size 120M;` 来指定最大 body 大小，可以参考 `docker-compose/nginx.conf` 的配置
+   - **apache**：修改 Wizard 目录 `public/.htaccess` 文件中 `LimitRequestBody 0` 选项的值即可，默认为0表示不限制（默认已经修改过）
 
 ## Stargazers over time
 
