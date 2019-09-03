@@ -183,6 +183,17 @@
                         });
                     }
                 }, null, 'html');
+
+                // 快捷键导出
+                var exportBtn = $('#wz-export-trigger');
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === "s" && (e.ctrlKey||e.metaKey)) {
+                        e.preventDefault();
+                        if (exportBtn) {
+                            exportBtn.trigger('click');
+                        }
+                    }
+                });
             });
         </script>
     @endif
