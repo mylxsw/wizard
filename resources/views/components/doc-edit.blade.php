@@ -154,7 +154,14 @@
             };
 
             // 文档保存
+            var documentSaving = false;
             $('[wz-doc-form-submit]').on('click', function () {
+
+                if (documentSaving) {
+                    return false;
+                }
+                documentSaving = true;
+
                 var force = $(this).data('force');
                 var form = $(this).parents('form');
 
@@ -185,15 +192,31 @@
                         }, function () {
                             window.location.href = '{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => $type, 'pid' => $pid]) !!}';
                         });
+                    }, function() {
+                        setTimeout(function(){
+                            documentSaving = false;
+                        }, 3000);
                     });
                 };
 
                 if (force) {
                     $.wz.confirm('@lang('document.force_save_confirm')', function () {
                         formSubmit(form, true);
+                    }, function () {
+                        documentSaving = false;
                     });
                 } else {
                     formSubmit(form, false);
+                }
+            });
+
+            // 快捷键保存
+            document.addEventListener('keydown', function (e) {
+                if (e.key === "s" && (e.ctrlKey||e.metaKey)) {
+                    e.preventDefault();
+                    if (!documentSaving) {
+                        $('#wz-doc-form-submit').trigger('click');
+                    }
                 }
             });
 
@@ -290,6 +313,8 @@
                 continueCheck();
             })();
             @endif
+
+
         });
     </script>
 @endpush
