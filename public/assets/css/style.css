@@ -1209,6 +1209,7 @@ li.L1, li.L3, li.L5, li.L7, li.L9 {
     width: 30rem;
 }
 
-pre.prettyprint *{
+pre.prettyprint *,
+.cm-comment {
     font-family: 'Courier New', Courier, monospace, "YaHei Consolas Hybrid", Consolas, "Meiryo UI", "Malgun Gothic", "Segoe UI", "Trebuchet MS", Helvetica;
 }
