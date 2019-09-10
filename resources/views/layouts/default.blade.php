@@ -29,7 +29,7 @@
 
     {{--<link href="/assets/vendor/animate.css" rel="stylesheet">--}}
 
-    <!-- Custom styles for this template -->
+<!-- Custom styles for this template -->
     <link href="/assets/css/style.css?{{ resourceVersion() }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -45,7 +45,8 @@
 @unless($hideGlobalAlert ?? false)
     @if(Auth::user() && !Auth::user()->isActivated())
         <div class="alert alert-danger" style="border-radius: 0; margin-bottom: 0;">
-            <form action="{{ wzRoute('user:activate:send') }}" method="post" id="form-send-activate-email">{{ csrf_field() }}</form>
+            <form action="{{ wzRoute('user:activate:send') }}" method="post"
+                  id="form-send-activate-email">{{ csrf_field() }}</form>
             您尚未激活帐号，请先激活帐号后再进行操作<a href="#" data-form="#form-send-activate-email" wz-form-submit>【重新发送激活邮件】</a> 。
         </div>
     @endif
@@ -63,7 +64,8 @@
         <div class="@yield('container-style')">
             <p>
                 &copy; {{ date('Y') }} {{ config('wizard.copyright', 'AICODE.CC') }}
-                <a class="fa fa-github" target="_blank" href="https://github.com/mylxsw/wizard"></a>
+                <a class="fa fa-github wz-version" target="_blank" href="https://github.com/mylxsw/wizard">
+                    v{{ config('wizard.version', '1') }}</a>
                 {!! statistics() !!}
             </p>
         </div>
@@ -94,11 +96,11 @@
     $(function () {
         {{-- 页面提示消息（上一个页面操作的结果） --}}
         @if (session('alert.message.info'))
-            $.wz.message("{{ session('alert.message') }}");
+        $.wz.message("{{ session('alert.message') }}");
         @elseif (session('alert.message.success'))
-            $.wz.message_success("{{ session('alert.message.success') }}");
+        $.wz.message_success("{{ session('alert.message.success') }}");
         @elseif (session('alert.message.error'))
-            $.wz.message_failed("{{ session('alert.message.error') }}");
+        $.wz.message_failed("{{ session('alert.message.error') }}");
         @endif
 
         // 功能开发中提示消息
@@ -150,7 +152,7 @@
 
             // 鼠标经过提示
             $('[data-toggle="tooltip"]').tooltip({
-                delay: { "show": 500, "hide": 100 }
+                delay: {"show": 500, "hide": 100}
             });
         }, 500);
 
@@ -179,6 +181,21 @@
         });
     </script>
 @show
+
+@if(config('wizard.version-check'))
+    <script>
+        $(function () {
+            var version = '{{ config('wizard.version', '1') }}';
+            $.getJSON('https://aicode.cc/wizard-update/version?callback=?', function (data) {
+                if (data.tag_name !== version) {
+                    return;
+                }
+
+                $('.wz-version').append('<a href="' + data.html_url + '" target="_blank"><sup style="padding-left: 5px; color: red; font-weight: bold;" title="有新版本，请及时更新！' + data.body + '" >✱</sup></a>');
+            });
+        });
+    </script>
+@endif
 
 </body>
 </html>

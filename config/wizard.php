@@ -8,6 +8,14 @@
 
 return [
     /**
+     * 当前版本
+     */
+    'version'          => '1.0.6',
+    /**
+     * 版本检查
+     */
+    'version-check'    => env('WIZARD_VERSION_CHECK', true),
+    /**
      * 新注册账号是否需要邮箱激活
      */
     'need_activate'    => env('WIZARD_NEED_ACTIVATE', false),
@@ -33,7 +41,7 @@ return [
          * 是否启用ldap
          */
         'enabled'        => env('WIZARD_USE_LDAP', false),
-        
+
         /**
          * 允许登录的成员，为空则不限制
          * 比如： 'CN=technology-products,CN=Users,DC=example,DC=com'
