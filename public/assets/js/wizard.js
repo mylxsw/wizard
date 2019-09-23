@@ -26,6 +26,7 @@ $.wz = {
             type: method,
             data: params,
             dataType: dataType,
+            jsonp: false,
             success: successCallback,
             error: function (response) {
                 if (errorCallback(response)) {
