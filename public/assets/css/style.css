@@ -1213,3 +1213,9 @@ pre.prettyprint *,
 .cm-comment {
     font-family: 'Courier New', Courier, monospace, "YaHei Consolas Hybrid", Consolas, "Meiryo UI", "Malgun Gothic", "Segoe UI", "Trebuchet MS", Helvetica;
 }
+
+.wz-beta {
+    color: #0080ff;
+    margin-left: 5px;
+    font-weight: bold;
+}

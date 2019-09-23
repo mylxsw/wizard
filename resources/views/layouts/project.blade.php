@@ -29,7 +29,7 @@
                                 <i class="fa fa-code mr-2"></i> 创建 @lang('common.swagger')
                             </a>
                             <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'table', 'pid' => $pageID]) !!}" class="dropdown-item">
-                                <i class="fa fa-table mr-2"></i> 创建 表格
+                                <i class="fa fa-table mr-2"></i> 创建 表格 <sup class="wz-beta">beta</sup>
                             </a>
                         </ul>
                         <button type="button" class="btn bmd-btn-icon " data-href="{!! wzRoute('search:search', ['project_id' => $project->id]) !!}" title="搜索">

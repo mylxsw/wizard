@@ -49,6 +49,9 @@
                 @if($type == 'swagger')
                     <a title="原始Swagger文档" target="_blank" href="{{ route('swagger:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="fa fa-link"></a>
                 @endif
+                @if($type === 'table')
+                    <sup class="wz-beta">beta</sup>
+                @endif
             </h1>
         </nav>
         @include('components.document-info')
