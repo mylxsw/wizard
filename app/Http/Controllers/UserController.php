@@ -12,7 +12,10 @@ namespace App\Http\Controllers;
 use App\Exceptions\ValidationException;
 use App\Http\Controllers\Auth\UserActivateChannel;
 use App\Repositories\Group;
+use App\Repositories\Project;
 use App\Repositories\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -324,5 +327,40 @@ class UserController extends Controller
         $this->alertSuccess(__('common.operation_success'));
 
         return redirect(wzRoute('admin:user', ['id' => $id, 'tab' => 'user-group']));
+    }
+
+    /**
+     * 用户可写的所有项目列表
+     *
+     * @return Builder[]|Collection|\Illuminate\Support\Collection
+     */
+    public function projectsCanWrite()
+    {
+        /** @var User $user */
+        $user = \Auth::user();
+        if ($user->isAdmin()) {
+            $query = Project::query();
+        } else {
+            $groupIds = $user->groups->pluck('id');
+            $query    = Project::Where('user_id', $user->id)
+                ->orWhereHas('groups', function (Builder $query) use ($groupIds) {
+                    $query->whereIn('group_id', $groupIds)
+                        ->where('privilege', Project::PRIVILEGE_WR);
+                });
+
+        }
+        return $query
+            ->with('catalog')
+            ->get()
+            ->map(function (Project $project) {
+                return [
+                    'id'           => $project->id,
+                    'name'         => $project->name,
+                    'catalog_id'   => $project->catalog_id,
+                    'catalog_name' => $project->catalog->name ?? null,
+                ];
+            })->sortBy(function ($item) {
+                return $item['catalog_id'] ?? 0;
+            })->values();
     }
 }

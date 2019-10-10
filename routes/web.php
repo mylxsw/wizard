@@ -142,6 +142,9 @@ Route::group(['middleware' => 'locale'], function () {
             Route::get('/templates/{id}', 'TemplateController@edit')->name('templates:edit');
             Route::put('/templates/{id}', 'TemplateController@editHandle')
                 ->name('templates:edit:handle');
+
+            // 用户可写的项目列表
+            Route::get('/writable-projects', 'UserController@projectsCanWrite');
         });
 
         Route::group(['prefix' => 'project', 'as' => 'project:'], function () {
@@ -203,6 +206,10 @@ Route::group(['middleware' => 'locale'], function () {
 
             // 关注项目
             Route::post('/{id}/favorite', 'ProjectController@favorite')->name('favorite');
+
+            // 跨项目移动文档
+            Route::post('/{project_id}/doc/{page_id}/move-to', 'DocumentController@move')->name('move');
+            Route::get('/{project_id}/doc-selector', 'ProjectController@documentSelector')->name('doc-selector');
         });
 
 

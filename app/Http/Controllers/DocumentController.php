@@ -18,7 +18,9 @@ use App\Repositories\DocumentHistory;
 use App\Repositories\Project;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use SoapBox\Formatter\Formatter;
+use function foo\func;
 
 class DocumentController extends Controller
 {
@@ -528,5 +530,111 @@ class DocumentController extends Controller
         }
 
         return redirect(wzRoute('project:home', ['id' => $id, 'p' => $page_id]));
+    }
+
+    public function move(Request $request, $project_id, $page_id)
+    {
+        $this->validate(
+            $request,
+            [
+                'target_project_id' => 'required|integer',
+                'target_page_id'    => 'integer',
+            ]
+        );
+
+
+        /** @var Document $pageItem */
+        $pageItem = Document::where('id', $page_id)->firstOrFail();
+        $this->authorize('page-edit', $pageItem);
+
+        // 检查目标项目权限
+        $targetProjectId = $request->input('target_project_id', 0);
+        $targetPageId    = $request->input('target_page_id', 0);
+
+        /** @var Project $targetProject */
+        $targetProject = Project::where('id', $targetProjectId)->firstOrFail();
+        $this->authorize('page-add', $targetProject);
+
+        // 检查目标页面是否存在
+        $targetPage = null;
+        if (!empty($targetPageId)) {
+            /** @var Document $targetPage */
+            $targetPage = $targetProject->pages()->where('id', $targetPageId)->firstOrFail();
+        }
+
+        $navigators = navigatorSort(navigator($project_id, 0));
+
+        $navigators = $this->filterNavigators($navigators, function (array $nav) use ($pageItem) {
+            return (int)$nav['id'] === $pageItem->id;
+        });
+
+        DB::transaction(function () use ($pageItem, $targetProject, $targetPage, $navigators) {
+            // 修改当前页面的pid和project_id
+            $pageItem->project_id = $targetProject->id;
+            $pageItem->pid        = $targetPage->id ?? 0;
+
+            $pageItem->save();
+
+            // 历史
+            DocumentHistory::where('page_id', $pageItem->id)->update([
+                'project_id' => $targetProject->id,
+                'pid'        => $targetPage->id ?? 0,
+            ]);
+
+            // 修改子页面的project_id
+            $this->traverseNavigators(
+                $navigators,
+                function ($id, array $parents) use ($targetProject) {
+                    Document::where('id', $id)->update(['project_id' => $targetProject->id]);
+                    DocumentHistory::where('page_id', $id)->update([
+                        'project_id' => $targetProject->id,
+                    ]);
+                }
+            );
+        });
+
+        return redirect(wzRoute(
+            'project:home',
+            ['id' => $targetProject->id, 'p' => $targetPage->id ?? null]
+        ));
+    }
+
+    /**
+     * 过滤要导出的文档
+     *
+     * @param array    $navigators
+     * @param \Closure $filter
+     *
+     * @return array|mixed
+     */
+    private function filterNavigators(array $navigators, \Closure $filter)
+    {
+        foreach ($navigators as $nav) {
+            if ($filter($nav)) {
+                return $nav['nodes'] ?? [];
+            }
+        }
+
+        return [];
+    }
+
+    /**
+     * 遍历所有目录
+     *
+     * @param array    $navigators
+     * @param \Closure $callback
+     * @param array    $parents
+     */
+    private function traverseNavigators(array $navigators, \Closure $callback, array $parents = [])
+    {
+        foreach ($navigators as $nav) {
+            $callback($nav['id'], $parents);
+
+            if (!empty($nav['nodes'])) {
+                array_push($parents, ['id' => $nav['id'], 'name' => $nav['name']]);
+                $this->traverseNavigators($nav['nodes'], $callback, $parents);
+                array_pop($parents);
+            }
+        }
     }
 }

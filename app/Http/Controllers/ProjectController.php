@@ -498,4 +498,32 @@ class ProjectController extends Controller
             'reload'  => true,
         ];
     }
+
+    /**
+     * 文档目录选择，用于select的option
+     *
+     * @param Request $request
+     * @param         $project_id
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function documentSelector(Request $request, $project_id)
+    {
+        /** @var Project $project */
+        $project = Project::with('catalog')->findOrFail($project_id);
+
+        $policy = new ProjectPolicy();
+        if (!$policy->view(\Auth::user(), $project)) {
+            abort(403, '您没有访问该项目的权限');
+        }
+
+        $exclude       = [];
+        $excludePageID = $request->input('exclude_page_id');
+        if (!empty($excludePageID)) {
+            $exclude[] = $excludePageID;
+        }
+
+        return view('project.document-selector',
+            ['navigator' => navigator($project_id, 0, $exclude)]);
+    }
 }
