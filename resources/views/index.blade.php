@@ -17,7 +17,8 @@
                 <div class="bmd-form-group bmd-collapse-inline pull-right">
                     <i class="material-icons search-btn" data-input="#search-input">search</i>
                     <span id="search-input" style="{{ empty($name) ? 'display: none;' : '' }}">
-                        <input class="form-control" type="text" id="search" name="search_name" placeholder="搜索文档" value="{{ $name ?? '' }}">
+                        <input class="form-control" type="text" id="search" name="search_name" placeholder="搜索文档"
+                               value="{{ $name ?? '' }}">
                     </span>
                 </div>
             </div>
@@ -27,7 +28,8 @@
             <div class="row marketing wz-main-container-full">
                 @unless(Auth::guest() || !empty($catalog_id))
                     <div class="col alert alert-info alert-dismissible" data-alert-id="public-home-tip">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
                         提示： 该页面为公共主页，如果要创建项目，请到 <a href="{{ wzRoute('user:home') }}">@lang('common.user_home')</a>。
                     </div>
                 @endunless
@@ -37,7 +39,8 @@
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <a class="wz-box wz-box-catalog" href="{{ wzRoute('home', ['catalog' => $cat->id]) }}">
                                     <span title="项目数" class="wz-box-tag pull-right wz-project-count">{{ $cat->projects_count }} 个项目</span>
-                                    <p class="wz-title" title="{{ $cat->name }}【排序：{{ $cat->sort_level }}】">{{ $cat->name }}</p>
+                                    <p class="wz-title"
+                                       title="{{ $cat->name }}【排序：{{ $cat->sort_level }}】">{{ $cat->name }}</p>
                                 </a>
                             </div>
                         @endforeach
@@ -50,12 +53,14 @@
                             <a class="wz-box wz-box-project" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
                                 @include('components.project-tag', ['proj' => $proj])
                                 {{--@if(!empty($favorites) && $favorites->contains('id', $proj->id))--}}
-                                    {{--<span title="关注该项目" class="wz-box-tag pull-right fa fa-star wz-box-tag-star"></span>--}}
+                                {{--<span title="关注该项目" class="wz-box-tag pull-right fa fa-star wz-box-tag-star"></span>--}}
                                 {{--@endif--}}
-                                <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
+                                <p class="wz-title"
+                                   title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
                                 <p class="wz-page-count">{{ $proj->pages_count ?? '0' }} 个文档</p>
                                 @if (!empty($name)) {{-- 搜索模式下，所有项目平级展示，因此要输出项目所属的目录名称 --}}
-                                    <span title="所属目录" class="wz-box-tag pull-right wz-project-count">{{ $proj->catalog->name ?? '' }}</span>
+                                <span title="所属目录"
+                                      class="wz-box-tag pull-right wz-project-count">{{ $proj->catalog->name ?? '' }}</span>
                                 @endif
                             </a>
                         </div>
@@ -72,24 +77,27 @@
 
         {{-- 非搜索模式，同时用于有关注的项目，则展示 --}}
         @if(!empty($favorites) && $favorites->count() > 0 && empty($name))
-        <div class="card mb-4">
-            <div class="card-header">我关注的</div>
-            <div class="card-body">
-                <div class="row col-12">
-                    @foreach($favorites as $proj)
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <a class="wz-box wz-box-project" href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
-                                @include('components.project-tag', ['proj' => $proj])
-                                <span title="关注该项目" class="wz-box-tag pull-right fa fa-star wz-box-tag-star"></span>
-                                <p class="wz-title" title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
-                                <p class="wz-page-count">{{ $proj->pages_count ?? '0' }} 个文档</p>
-                                <span title="所属目录" class="wz-box-tag pull-right wz-project-count">{{ $proj->catalog->name ?? '' }}</span>
-                            </a>
-                        </div>
-                    @endforeach
+            <div class="card mb-4">
+                <div class="card-header">我关注的</div>
+                <div class="card-body">
+                    <div class="row col-12">
+                        @foreach($favorites as $proj)
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <a class="wz-box wz-box-project"
+                                   href="{{ wzRoute('project:home', ['id'=> $proj->id]) }}">
+                                    @include('components.project-tag', ['proj' => $proj])
+                                    <span title="关注该项目" class="wz-box-tag pull-right fa fa-star wz-box-tag-star"></span>
+                                    <p class="wz-title"
+                                       title="{{ $proj->name }}【排序：{{ $proj->sort_level }}】">{{ $proj->name }}</p>
+                                    <p class="wz-page-count">{{ $proj->pages_count ?? '0' }} 个文档</p>
+                                    <span title="所属目录"
+                                          class="wz-box-tag pull-right wz-project-count">{{ $proj->catalog->name ?? '' }}</span>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-        </div>
         @endif
 
         @if (!empty($tags) && $tags->count() > 0)
@@ -118,49 +126,58 @@
         @include('components.doc-compare-script')
     @endif
 
+    @unless(Auth::guest())
+        <div class="wz-version-suggest">
+            <ul class="wz-version-suggest-items">
+               <li>1、<a target="_blank" href="https://github.com/mylxsw/wizard/wiki/%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E#%E8%B7%A8%E9%A1%B9%E7%9B%AE%E7%A7%BB%E5%8A%A8%E6%96%87%E6%A1%A3">支持跨项目移动文档</a></li>
+               <li>2、<a target="_blank" href="https://github.com/mylxsw/wizard/wiki/%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E#%E5%BF%AB%E6%8D%B7%E6%93%8D%E4%BD%9C">增加一些常用的快捷键支持</a></li>
+            </ul>
+        </div>
+    @endunless
+
 @endsection
 
 @push('script')
     @if(!Auth::guest() && empty($name))
-    <script src="/assets/vendor/moment-with-locales.min.js"></script>
-    <script>
-        $(function () {
-            moment.locale('zh-cn');
+        <script src="/assets/vendor/moment-with-locales.min.js"></script>
+        <script>
+            $(function () {
+                moment.locale('zh-cn');
 
-            var getRecentlyLogs = function (offset) {
-                $('.wz-load-more').html('加载中...');
-                $.wz.request('get', '{{ wzRoute('operation-log:recently', ['catalog' => $catalog_id,]) }}', {offset: offset}, function (data) {
-                    $('#operation-log-recently').append(data);
+                var getRecentlyLogs = function (offset) {
+                    $('.wz-load-more').html('加载中...');
+                    $.wz.request('get', '{{ wzRoute('operation-log:recently', ['catalog' => $catalog_id,]) }}', {offset: offset}, function (data) {
+                        $('#operation-log-recently').append(data);
 
-                    $('#operation-log-recently .wz-operation-log-time').map(function() {
-                        $(this).html(moment($(this).prop('title'), 'YYYY-MM-DD hh:mm:ss').fromNow());
-                    });
+                        $('#operation-log-recently .wz-operation-log-time').map(function () {
+                            $(this).html(moment($(this).prop('title'), 'YYYY-MM-DD hh:mm:ss').fromNow());
+                        });
 
-                    if (data.trim() === "") {
-                        $('.wz-load-more').parent().html('没有更多了...');
-                    } else {
-                        $('.wz-load-more').html('加载更多');
+                        if (data.trim() === "") {
+                            $('.wz-load-more').parent().html('没有更多了...');
+                        } else {
+                            $('.wz-load-more').html('加载更多');
+                        }
+
+                    }, null, 'html');
+                };
+
+                // 初次加载最近操作日志
+                getRecentlyLogs(0);
+
+                $('.wz-load-more').click(function (e) {
+                    e.preventDefault();
+                    var offset = $('#operation-log-recently .wz-operation-log-time').size();
+                    if (offset > 100) {
+                        $(this).parent().html('只能加载这么多了...');
+                        return;
                     }
 
-                }, null, 'html');
-            };
+                    getRecentlyLogs(offset);
+                });
 
-            // 初次加载最近操作日志
-            getRecentlyLogs(0);
-
-            $('.wz-load-more').click(function(e) {
-                e.preventDefault();
-                var offset = $('#operation-log-recently .wz-operation-log-time').size();
-                if (offset > 100) {
-                    $(this).parent().html('只能加载这么多了...');
-                    return;
-                }
-
-                getRecentlyLogs(offset);
             });
-
-        });
-    </script>
+        </script>
     @endif
 
     <script>
@@ -184,5 +201,33 @@
                 }
             });
         });
+
     </script>
+
+    @unless(Auth::guest())
+        <script>
+            // 新版本更新时，弹出版本更新内容提示框，告知用户更新了哪些内容
+            $(function () {
+                var currentVersion = '{{ config('wizard.version') }}';
+                var storedVersion = store.get('feature_suggest');
+
+                if (currentVersion !== storedVersion) {
+                    window.setTimeout(function () {
+                        layer.open({
+                            type: 1,
+                            title: 'v' + currentVersion + '更新内容',
+                            shade: false,
+                            skin: 'layui-layer-molv',
+                            offset: 'rb',
+                            content: $('.wz-version-suggest').html(),
+                            area: ['420px'],
+                            cancel: function () {
+                                store.set('feature_suggest', currentVersion);
+                            }
+                        });
+                    }, 500);
+                }
+            });
+        </script>
+    @endunless
 @endpush

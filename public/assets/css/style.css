@@ -1219,3 +1219,16 @@ pre.prettyprint *,
     margin-left: 5px;
     font-weight: bold;
 }
+
+.wz-version-suggest {
+    display: none;
+}
+
+.wz-version-suggest-items {
+    padding-left: 20px;
+    padding-top: 15px;
+}
+
+.wz-version-suggest-items li {
+    list-style: none;
+}
