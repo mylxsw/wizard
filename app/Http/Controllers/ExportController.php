@@ -25,7 +25,9 @@ class ExportController extends Controller
     public function download(Request $request, $filename)
     {
         return response()->streamDownload(function () use ($request) {
-            echo $request->input('content');
+            $url = rtrim(config('app.url', '/'));
+            echo preg_replace('/\!\[(.*?)\]\(\/storage\/(.*?).(jpg|png|jpeg|gif)(.*?)\)/',
+                '![$1](' . $url . '/storage/$2.$3$4)', $request->input('content'));
         }, $filename);
     }
 
@@ -42,6 +44,10 @@ class ExportController extends Controller
         $content = $request->input('html');
         $title   = $request->input('title');
         $author  = $request->input('author');
+
+        // 修正 Docker 运行模式下，导出pdf图片无法展示的问题
+        $imageRoot = rtrim(config('filesystems.disks.public.root'), '/');
+        $content   = preg_replace('/src\s?=\s?"\/storage\/(.*?).(jpg|png|gif|jpeg)"/', "src=\"{$imageRoot}/$1.$2\"", $content);
 
         $mpdf = new Mpdf([
             'mode'             => 'utf-8',

@@ -50,6 +50,7 @@ return [
 
         'public' => [
             'driver'     => 'local',
+            // PDF 导出依赖该配置项，请勿随意修改
             'root'       => env('PUBLIC_DISK_ROOT', storage_path('app/public')),
             'url'        => env('APP_URL') . '/storage',
             'visibility' => 'public',

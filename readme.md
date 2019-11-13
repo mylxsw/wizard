@@ -81,6 +81,8 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
     ENV DB_USERNAME=wizard
     ENV DB_PASSWORD=wizard
     ENV WIZARD_NEED_ACTIVATE=false
+    # 访问地址，只有正确配置后，导出的 markdown 文档图片才能正常展示
+    ENV APP_URL=http://localhost:8080
     
     # 文件上传存储目录
     VOLUME /webroot/storage/app/public
@@ -254,6 +256,10 @@ composer 会在在项目目录中创建 **vender** 目录，其中包含了项�
    
    - **nginx**： 在 nginx 配置中添加 `client_max_body_size 120M;` 来指定最大 body 大小，可以参考 `docker-compose/nginx.conf` 的配置
    - **apache**：修改 Wizard 目录 `public/.htaccess` 文件中 `LimitRequestBody 0` 选项的值即可，默认为0表示不限制（默认已经修改过）
+
+5. 导出 Markdown 文档后，图片地址错误，无法显示图片
+
+   需要配置 `APP_URL` 环境变量参数，在 `.env` 文件中，修改 `APP_URL` 地址为当前访问 URL 地址即可。
 
 ## Stargazers over time
 

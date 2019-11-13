@@ -109,10 +109,12 @@ class BatchExportController extends Controller
         $options = new Archive();
         $options->setSendHttpHeaders(true);
 
+        $url = rtrim(config('app.url'), '/');
+
         $zip = new ZipStream("{$project->name}.zip", $options);
         $this->traverseNavigators(
             $navigators,
-            function ($id, array $parents) use ($documents, $zip) {
+            function ($id, array $parents) use ($documents, $zip, $url) {
                 /** @var Document $doc */
                 $doc = $documents->where('id', $id)->first();
 
@@ -134,6 +136,9 @@ class BatchExportController extends Controller
                         $ext     = 'txt';
                         $content = $doc->content;
                 }
+
+                $content = preg_replace('/\!\[(.*?)\]\(\/storage\/(.*?).(jpg|png|jpeg|gif)(.*?)\)/',
+                    '![$1](' . $url . '/storage/$2.$3$4)', $content);
 
                 $path     = collect($parents)->implode('name', '/');
                 $filename = "{$path}/{$doc->title}.{$ext}";
@@ -186,10 +191,12 @@ class BatchExportController extends Controller
         $header .= '<link href="/assets/css/pdf.css" rel="stylesheet">';
         $mpdf->WriteHTML($header);
 
+        $imageRoot = rtrim(config('filesystems.disks.public.root'), '/');
+
         $pageNo = 1;
         $this->traverseNavigators(
             $navigators,
-            function ($id, array $parents) use ($documents, $mpdf, &$pageNo) {
+            function ($id, array $parents) use ($documents, $mpdf, &$pageNo, $imageRoot) {
                 if ($pageNo > 1) {
                     $mpdf->AddPage();
                 }
@@ -199,12 +206,13 @@ class BatchExportController extends Controller
 
                 $title = "* {$doc->title}";
 
-                $author = $doc->user->name ?? '-';
-                $createdTime = $doc->created_at ?? '-';
+                $author           = $doc->user->name ?? '-';
+                $createdTime      = $doc->created_at ?? '-';
                 $lastModifiedUser = $doc->lastModifiedUser->name ?? '-';
-                $updatedTime = $doc->updated_at ?? '-';
+                $updatedTime      = $doc->updated_at ?? '-';
 
-                $intro = "该文档由 {$author} 创建于 {$createdTime} ， {$lastModifiedUser} 在 {$updatedTime} 修改了该文档。\n\n";
+                $intro =
+                    "该文档由 {$author} 创建于 {$createdTime} ， {$lastModifiedUser} 在 {$updatedTime} 修改了该文档。\n\n";
 
                 if ($doc->type != Document::TYPE_DOC) {
                     $raw = "# {$title}\n\n{$intro}暂不支持该类型的文档。";
@@ -215,6 +223,10 @@ class BatchExportController extends Controller
                 $html = (new \Parsedown())->text($raw);
                 $html =
                     "<div class='markdown-body wz-markdown-style-fix wz-pdf-content'>{$html}</div>";
+
+                // 修正 Docker 运行模式下，导出pdf图片无法展示的问题
+                $html = preg_replace('/src\s?=\s?"\/storage\/(.*?).(jpg|png|gif|jpeg)"/',
+                    "src=\"{$imageRoot}/$1.$2\"", $html);
 
                 $mpdf->Bookmark($doc->title, count($parents));
                 try {
