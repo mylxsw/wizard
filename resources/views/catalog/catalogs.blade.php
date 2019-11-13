@@ -23,6 +23,13 @@
                     <label for="catalog-sort" class="bmd-label-floating">排序（值越大越靠后）</label>
                     <input type="number" name="sort_level" class="form-control float-left w-75" id="catalog-sort" value="1000" />
                 </div>
+                <div class="form-group mt-4">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="show_in_home" value="1" checked> 在首页展示
+                        </label>
+                    </div>
+                </div>
                 <br/>
                 <div class="form-group">
                     <button type="submit" class="btn btn-raised btn-primary" >创建目录</button>
@@ -40,6 +47,7 @@
                 <th>目录名称</th>
                 <th>项目数目</th>
                 <th>排序</th>
+                <th>首页展示</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -57,6 +65,7 @@
                     <td><a href="{{ wzRoute('home', ['catalog' => $cat->id]) }}">{{ $cat->name }}</a></td>
                     <td>{{ $cat->projects_count }}</td>
                     <td>{{ $cat->sort_level }}</td>
+                    <td><i class="material-icons text-{{ ($cat->show_in_home ?? true) ? 'success':'warning' }}">{{ ($cat->show_in_home ?? true) ? 'check':'close' }}</i></td>
                     <td>
                         <a href="{!! route('admin:catalogs:view', ['id' => $cat->id]) !!}">
                             <i class="material-icons" title="编辑">create</i>

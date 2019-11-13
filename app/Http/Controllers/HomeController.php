@@ -69,7 +69,7 @@ class HomeController extends Controller
                 // 在分页查询的第一页之外，不展示目录
                 if ($page === 1) {
                     /** @var Collection $catalogs */
-                    $catalogs = Catalog::withCount('projects')->orderBy('sort_level', 'ASC')->get();
+                    $catalogs = Catalog::withCount('projects')->where('show_in_home', Catalog::SHOW_IN_HOME)->orderBy('sort_level', 'ASC')->get();
                 }
             } else {
                 $catalog = Catalog::where('id', $catalogId)->firstOrFail();

@@ -33,7 +33,7 @@ class CatalogController extends Controller
     {
         return view('catalog.catalogs', [
             'op'            => 'catalogs',
-            'catalogs'      => Catalog::withCount('projects')->orderBy('sort_level', 'ASC')->get(),
+            'catalogs'      => Catalog::withCount('projects')->orderBy('show_in_home', 'desc')->orderBy('sort_level', 'ASC')->get(),
             'catalogs_none' => Project::whereNull('catalog_id')
                 ->orWhere('catalog_id', '=', 0)
                 ->count(),
@@ -52,8 +52,9 @@ class CatalogController extends Controller
         $this->validate(
             $request,
             [
-                'name'       => 'required|unique:wz_project_catalogs,name',
-                'sort_level' => 'required|integer|between:-999999999,999999999',
+                'name'         => 'required|unique:wz_project_catalogs,name',
+                'sort_level'   => 'required|integer|between:-999999999,999999999',
+                'show_in_home' => 'boolean',
             ],
             [
                 'name.required' => '名称不能为空',
@@ -62,9 +63,11 @@ class CatalogController extends Controller
         );
 
         Catalog::create([
-            'name'       => $request->input('name'),
-            'sort_level' => (int)$request->input('sort_level'),
-            'user_id'    => \Auth::user()->id,
+            'name'         => $request->input('name'),
+            'sort_level'   => (int)$request->input('sort_level'),
+            'user_id'      => \Auth::user()->id,
+            'show_in_home' => $request->input('show_in_home') ? Catalog::SHOW_IN_HOME
+                : Catalog::NOT_SHOW_IN_HOME,
         ]);
 
         $this->alertSuccess(__('common.operation_success'));
@@ -104,21 +107,24 @@ class CatalogController extends Controller
         $this->validate(
             $request,
             [
-                'name'       => [
+                'name'         => [
                     'required',
                     Rule::unique('wz_project_catalogs', 'name')->ignore($id),
                 ],
-                'sort_level' => 'required|integer|between:-999999999,999999999',
+                'sort_level'   => 'required|integer|between:-999999999,999999999',
+                'show_in_home' => 'boolean',
             ]
         );
 
-        $name      = $request->input('name');
-        $sortLevel = (int)$request->input('sort_level');
+        $name       = $request->input('name');
+        $sortLevel  = (int)$request->input('sort_level');
+        $showInHome = $request->input('show_in_home');
 
         /** @var Catalog $catalog */
-        $catalog             = Catalog::where('id', $id)->firstOrFail();
-        $catalog->name       = $name;
-        $catalog->sort_level = $sortLevel;
+        $catalog               = Catalog::where('id', $id)->firstOrFail();
+        $catalog->name         = $name;
+        $catalog->sort_level   = $sortLevel;
+        $catalog->show_in_home = $showInHome ? Catalog::SHOW_IN_HOME : Catalog::NOT_SHOW_IN_HOME;
 
         $catalog->save();
 

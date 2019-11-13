@@ -25,6 +25,14 @@
                     <input type="number" name="sort_level" class="form-control float-left w-75" id="catalog-sort" value="{{ $catalog->sort_level }}" />
                 </div>
 
+                <div class="form-group mt-4">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="show_in_home" value="1" {{ ($catalog->show_in_home ?? true) ? 'checked':'' }}> 在首页展示
+                        </label>
+                    </div>
+                </div>
+
                 <br/>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success btn-raised" >保存</button>

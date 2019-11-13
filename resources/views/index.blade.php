@@ -129,8 +129,7 @@
     @unless(Auth::guest())
         <div class="wz-version-suggest">
             <ul class="wz-version-suggest-items">
-               <li>1、<a target="_blank" href="https://github.com/mylxsw/wizard/wiki/%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E#%E8%B7%A8%E9%A1%B9%E7%9B%AE%E7%A7%BB%E5%8A%A8%E6%96%87%E6%A1%A3">支持跨项目移动文档</a></li>
-               <li>2、<a target="_blank" href="https://github.com/mylxsw/wizard/wiki/%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E#%E5%BF%AB%E6%8D%B7%E6%93%8D%E4%BD%9C">增加一些常用的快捷键支持</a></li>
+               <li>1、<a target="_blank" href="https://github.com/mylxsw/wizard/wiki/%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E#%E9%9A%90%E8%97%8F%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%89%80%E6%9C%89%E6%96%87%E6%A1%A3">增加控制“项目目录是否在首页展示”的支持</a></li>
             </ul>
         </div>
     @endunless
