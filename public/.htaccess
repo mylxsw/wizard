@@ -19,3 +19,7 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
+
+<FilesMatch "^/storage/.*\.(?i:doc|odf|pdf|rtf|txt|md|sql)$">
+  Header set Content-Disposition attachment
+</FilesMatch>

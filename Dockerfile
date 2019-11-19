@@ -35,6 +35,7 @@ RUN wget https://getcomposer.org/download/1.6.4/composer.phar \
     && php /usr/bin/composer config -g repo.packagist composer https://packagist.laravel-china.org
 
 RUN a2enmod rewrite
+RUN a2enmod headers
 
 COPY ./composer.lock ./composer.json /webroot/
 RUN php /usr/bin/composer install --prefer-dist --no-autoloader --no-scripts --no-dev
