@@ -35,6 +35,7 @@ class AttachmentController extends Controller
             'svg',
             'md',
             'vsd',
+            'vsdx',
             'txt',
             'doc',
             'docx',
@@ -55,6 +56,7 @@ class AttachmentController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function upload(Request $request, $id, $page_id)
     {
