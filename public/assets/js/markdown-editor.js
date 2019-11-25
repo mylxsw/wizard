@@ -38,9 +38,26 @@ $.wz.mdEditor = function (editor_id, params) {
                 dialog.hide().lockScreen(false).hideMask();
             });
         },
+
+        sqlToTableTemplate: function () {
+            editor_table_id = (new Date()).getTime();
+            return "<textarea class='form-control sql-to-table-editor border' style='width: 100%; height: 277px;' id='sql-to-table-editor-" + editor_table_id + "'></textarea>";
+        },
+        sqlToTableConvert: function (dialog, cm) {
+            var jsonContent = $('#sql-to-table-editor-' + editor_table_id).val();
+            if (jsonContent.trim() === '') {
+                return;
+            }
+
+            $.wz.request('post', '/tools/sql-to-markdown', {content: jsonContent}, function (data) {
+                cm.replaceSelection(data.markdown);
+                dialog.hide().lockScreen(false).hideMask();
+            });
+        },
         lang: {
             chooseTemplate: '选择模板',
             jsonToTable: '从json创建表格',
+            sqlToTable: '从SQL创建表格',
             confirmBtn: '确定',
             cancelBtn: '取消'
         }
@@ -62,17 +79,18 @@ $.wz.mdEditor = function (editor_id, params) {
         toolbarIcons: function () {
             return ["undo", "redo", "|",
                 "bold", "del", "italic", "quote", "|",
-                "h1", "h2", "h3", "h4", "h5", "h6", "|",
+                "h2", "h3", "h4", "h5", "|",
                 "list-ul", "list-ol", "hr", "|",
-                "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "pagebreak", "|",
-                "goto-line", "watch", "preview", "fullscreen", "clear", "search", "|",
-                "template", "jsonToTable", "|",
-                "help", "info"
+                "link", "image", "code", "preformatted-text", "table", "pagebreak", "|",
+                "template", "jsonToTable", "sqlToTable", "|",
+                "watch", "preview", "fullscreen", "|",
+                "help"
             ];
         },
         toolbarIconTexts: {
             template: "模板",
-            jsonToTable: "JSON-&gt;表格"
+            jsonToTable: "JSON-&gt;表格",
+            sqlToTable: "SQL-&gt;表格",
         },
         toolbarHandlers: {
             template: function (cm, icon, cursor, selection) {
@@ -123,12 +141,36 @@ $.wz.mdEditor = function (editor_id, params) {
                         }]
                     }
                 });
+            },
+            sqlToTable: function (cm, icon, cursor, selection) {
+                this.createDialog({
+                    title: config.lang.sqlToTable,
+                    width: 480,
+                    height: 400,
+                    content: config.sqlToTableTemplate(),
+                    mask: true,
+                    drag: true,
+                    lockScreen: true,
+                    buttons: {
+                        enter: [config.lang.confirmBtn, function () {
+                            config.sqlToTableConvert(this, cm);
+                            return false;
+                        }],
+
+                        cancel: [config.lang.cancelBtn, function () {
+                            this.hide().lockScreen(false).hideMask();
+
+                            return false;
+                        }]
+                    }
+                });
             }
         },
         lang: {
             toolbar: {
                 template: config.lang.chooseTemplate,
-                jsonToTable: config.lang.jsonToTable
+                jsonToTable: config.lang.jsonToTable,
+                sqlToTable: config.lang.sqlToTable,
             }
         },
         onload: function () {

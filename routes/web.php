@@ -46,8 +46,8 @@ Route::group(['middleware' => 'locale'], function () {
 
     // 小工具
     Route::group(['middleware' => 'auth', 'prefix' => 'tools', 'as' => 'tools:'], function () {
-        Route::post('json-to-markdown', 'ToolController@convertJsonToTable')
-            ->name('json-to-markdown');
+        Route::post('json-to-markdown', 'ToolController@convertJsonToTable')->name('json-to-markdown');
+        Route::post('sql-to-markdown', 'ToolController@convertSQLToTable')->name('sql-to-markdown');
     });
 
     // 文件导出
