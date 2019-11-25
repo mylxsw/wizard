@@ -130,6 +130,7 @@
         <div class="wz-version-suggest">
             <ul class="wz-version-suggest-items">
                <li>1、<a target="_blank" href="https://github.com/mylxsw/wizard/wiki/%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E#%E5%9C%A8%E9%A6%96%E9%A1%B5%E9%9A%90%E8%97%8F%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95">增加控制“项目目录是否在首页展示”的支持</a></li>
+               <li>2、Markdown 文档编辑器增加 SQL 转 Markdown 表格支持</li>
             </ul>
         </div>
     @endunless
