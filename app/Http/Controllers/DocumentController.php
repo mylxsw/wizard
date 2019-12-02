@@ -98,7 +98,7 @@ class DocumentController extends Controller
      * @param Request $request
      * @param         $id
      *
-     * @return array
+     * @return array|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -130,6 +130,16 @@ class DocumentController extends Controller
         $type      = $request->input('type', 'markdown');
         $sortLevel = $request->input('sort_level', 1000);
         $syncUrl   = $request->input('sync_url');
+
+        // 类型如果是表格，则需要检验表格内容是否合法
+        if ($type === 'table') {
+            json_decode($content);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                return $this->buildFailedValidationResponse($request, [
+                    'content' => ['页面内容不合法，表格页面必须为合法的json格式'],
+                ]);
+            }
+        }
 
         $pageItem = Document::create([
             'pid'               => $pid,
@@ -210,6 +220,16 @@ class DocumentController extends Controller
 
         /** @var Document $pageItem */
         $pageItem = Document::where('id', $page_id)->firstOrFail();
+
+        // 类型如果是表格，则需要检验表格内容是否合法
+        if ($pageItem->isTable()) {
+            json_decode($content);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                return $this->buildFailedValidationResponse($request, [
+                    'content' => ['页面内容不合法，表格页面必须为合法的json格式'],
+                ]);
+            }
+        }
 
         $this->authorize('page-edit', $pageItem);
 

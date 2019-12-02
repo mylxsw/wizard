@@ -195,4 +195,35 @@ class Document extends Repository
     {
         return $this->belongsToMany(Tag::class, 'wz_page_tag', 'page_id', 'tag_id');
     }
+
+    /**
+     * 判断当前文档是否为 Markdown 文档
+     *
+     * @return bool
+     */
+    public function isMarkdown()
+    {
+        return (int)$this->type === self::TYPE_DOC;
+    }
+
+    /**
+     * 判断当前文档是否为 Swagger 文档
+     *
+     * @return bool
+     */
+    public function isSwagger()
+    {
+        return (int)$this->type === self::TYPE_SWAGGER;
+    }
+
+    /**
+     * 判断当前文档是否为 Table 文档
+     *
+     * @return bool
+     */
+    public function isTable()
+    {
+        return (int)$this->type === self::TYPE_TABLE;
+    }
+
 }

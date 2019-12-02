@@ -210,6 +210,7 @@ body {
 }
 .x-spreadsheet-editor,
 .x-spreadsheet-selector {
+  box-sizing: content-box;
   position: absolute;
   overflow: hidden;
   pointer-events: none;
