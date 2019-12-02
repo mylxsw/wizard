@@ -66,11 +66,11 @@
                 if ($(this).data('status') === 'open') {
                     $(this).data('status', 'close');
                     $(this).html('<i class="fa fa-search-plus">');
-                    $(this).parents('.wz-wrap-table').removeClass('wz-table-float');
+                    $(this).parents('.wz-wrap-table').removeClass('wz-table-float').css('max-height', '100%');
                 } else {
                     $(this).html('<i class="fa fa-search-minus">');
                     $(this).data('status', 'open');
-                    $(this).parents('.wz-wrap-table').addClass('wz-table-float');
+                    $(this).parents('.wz-wrap-table').addClass('wz-table-float').css('max-height', window.innerHeight - 100);
                 }
 
             }).on('click', '.wz-wrap-table-flow', function () {
