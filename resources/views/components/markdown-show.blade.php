@@ -52,7 +52,9 @@
                     tocContainer.addClass('d-none');
                 }
             });
+        }, 0);
 
+        window.setTimeout(function () {
             // 表格超宽展示优化
             $("#markdown-body table").each(function() {
                 if ($(this)[0].scrollWidth > $('#markdown-body').width()) {
@@ -79,12 +81,9 @@
                 } else {
                     $(this).data('status', 'open');
                     $(this).html("<i class='fa fa-arrows-v'></i>");
-                    $(this).parents('.wz-wrap-table').find('table').css('word-break', 'normal');
+                    $(this).parents('.wz-wrap-table').find('table').css('word-break', 'break-all');
                 }
             });
-        }, 0);
-
-        window.setTimeout(function () {
             // 图片缩放支持
             $.wz.imageResize('#markdown-body');
         }, 0);
