@@ -89,6 +89,6 @@ class ToolController extends Controller
             $markdowns[] = convertSqlToHTMLTable($sql);
         }
 
-        return ['html' => implode("\n", $markdowns)];
+        return ['html' => implode("<hr>\n", $markdowns)];
     }
 }

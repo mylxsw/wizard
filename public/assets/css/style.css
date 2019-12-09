@@ -1247,3 +1247,7 @@ pre.prettyprint *,
 .wz-sql-create .nav-tabs .nav-link.active{
     border-color: #dee2e6 #dee2e6 #4caf50
 }
+
+.card {
+    border-radius: 4px;
+}

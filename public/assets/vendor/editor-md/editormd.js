@@ -3633,7 +3633,7 @@
             {
                 return "<p class=\"" + editormd.classNames.tex + "\">" + code + "</p>";
             }
-            // wizard 添加，用于支持 sql 创建语句的解析
+            // wizard 添加，用于支持 sql 创建语句的解析 START
             else if (lang === 'sql_create') {
 
                 var randomId = function () {
@@ -3662,6 +3662,13 @@
                 return marked.Renderer.prototype.code.apply(this, arguments);
             }
         };
+
+        // wizard 添加扩展 START
+        markedRenderer.table = function(header, body) {
+            return '<div class="table-responsive"><table class="table table-hover"><thead>' + header + '</thead><tbody>' + body + '</tbody></table></div>';
+        };
+
+        // wizard 添加扩展 END
 
         markedRenderer.tablecell = function(content, flags) {
             var type = (flags.header) ? "th" : "td";
