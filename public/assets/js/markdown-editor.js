@@ -23,6 +23,12 @@ $.wz.mdEditor = function (editor_id, params) {
             return '';
         },
 
+
+        sqlCreateBox: function () {
+            editor_table_id = (new Date()).getTime();
+            return "<textarea class='form-control border wz-sql-create-box' style='width: 100%; height: 277px;' id='sql-create-box-editor-" + editor_table_id + "'></textarea>";
+        },
+
         jsonToTableTemplate: function () {
             editor_table_id = (new Date()).getTime();
             return "<textarea class='form-control json-to-table-editor border' style='width: 100%; height: 277px;' id='json-to-table-editor-" + editor_table_id + "'></textarea>";
@@ -58,6 +64,7 @@ $.wz.mdEditor = function (editor_id, params) {
             chooseTemplate: '选择模板',
             jsonToTable: '从json创建表格',
             sqlToTable: '从SQL创建表格',
+            sqlCreateBox: 'SQL建表语句',
             confirmBtn: '确定',
             cancelBtn: '取消'
         }
@@ -82,7 +89,7 @@ $.wz.mdEditor = function (editor_id, params) {
                 "h2", "h3", "h4", "h5", "|",
                 "list-ul", "list-ol", "hr", "|",
                 "link", "image", "code", "preformatted-text", "table", "pagebreak", "|",
-                "template", "jsonToTable", "sqlToTable", "|",
+                "template", "jsonToTable", "sqlToTable", "sqlCreateBox", "|",
                 "watch", "preview", "fullscreen", "|",
                 "help"
             ];
@@ -91,6 +98,7 @@ $.wz.mdEditor = function (editor_id, params) {
             template: "模板",
             jsonToTable: "JSON-&gt;表格",
             sqlToTable: "SQL-&gt;表格",
+            sqlCreateBox: 'SQL建表语句',
         },
         toolbarHandlers: {
             template: function (cm, icon, cursor, selection) {
@@ -105,7 +113,7 @@ $.wz.mdEditor = function (editor_id, params) {
                     buttons: {
                         enter: [config.lang.confirmBtn, function () {
 
-                            cm.replaceSelection(config.templateSelected(this));
+                            cm.replaceSelection
                             this.hide().lockScreen(false).hideMask();
 
                             return false;
@@ -164,6 +172,30 @@ $.wz.mdEditor = function (editor_id, params) {
                         }]
                     }
                 });
+            },
+            sqlCreateBox: function (cm, icon, cursor, selection) {
+                this.createDialog({
+                    title: config.lang.sqlCreateBox,
+                    width: 480,
+                    height: 400,
+                    content: config.sqlCreateBox(),
+                    mask: true,
+                    drag: true,
+                    lockScreen: true,
+                    buttons: {
+                        enter: [config.lang.confirmBtn, function () {
+                            cm.replaceSelection("```sql_create\n" + $('#sql-create-box-editor-' + editor_table_id).val() + "```");
+                            this.hide().lockScreen(false).hideMask();
+                            return false;
+                        }],
+
+                        cancel: [config.lang.cancelBtn, function () {
+                            this.hide().lockScreen(false).hideMask();
+
+                            return false;
+                        }]
+                    }
+                });
             }
         },
         lang: {
@@ -171,6 +203,7 @@ $.wz.mdEditor = function (editor_id, params) {
                 template: config.lang.chooseTemplate,
                 jsonToTable: config.lang.jsonToTable,
                 sqlToTable: config.lang.sqlToTable,
+                sqlCreateBox: config.lang.sqlCreateBox,
             }
         },
         onload: function () {

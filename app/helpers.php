@@ -501,56 +501,131 @@ function isJson($content): bool
  *
  * @return string
  */
-function convertSqlToMarkdownTable(string $sql): string
+function convertSqlToMarkdownTable(string $sql)
 {
-    $parser = new PHPSQLParser\PHPSQLParser();
-    $parsed = $parser->parse($sql);
-
-    $fields    = $parsed['TABLE']['create-def']['sub_tree'];
-    $tableName = $parsed['TABLE']['base_expr'];
-
-    $markdowns = [
-        ['字段', '类型', '空', '说明'],
-        ['---', '---', '---', '---',],
-    ];
-
-    foreach ($fields as $field) {
-        if ($field['sub_tree'][0]['expr_type'] == 'constraint') {
-            continue;
+    return convertSqlTo($sql, function ($markdowns, $tableName, $tableComment) {
+        if (empty($markdowns)) {
+            return '';
         }
 
-        $type = $length = '';
-        foreach ($field['sub_tree'][1]['sub_tree'] as $item) {
-            if ($item['expr_type'] == 'data-type') {
-                $type   = $item['base_expr'] ?? '';
-                $length = $item['length'] ?? '';
+        $headers = [
+            ['字段', '类型', '空', '说明'],
+            ['---', '---', '---', '---',],
+        ];
+
+        array_unshift($markdowns, ...$headers);
+
+        $html = '';
+        foreach ($markdowns as $line) {
+            $html .= '| ' . implode(' | ', $line) . ' | ' . "\n";
+        }
+
+        return "\n表名：**{$tableName}**   \n说明：*{$tableComment}*\n\n{$html}\n";
+    });
+}
+
+/**
+ * 转换 SQL 为 HTML 表格
+ *
+ * @param string $sql
+ *
+ * @return string
+ */
+function convertSqlToHTMLTable(string $sql)
+{
+    return convertSqlTo($sql, function ($markdowns, $tableName, $tableComment) {
+        if (empty($markdowns)) {
+            return '';
+        }
+
+        $html = '';
+        foreach ($markdowns as $line) {
+            $html .= '<tr><td>' . implode('</td><td>', $line) . "</td></tr>";
+        }
+
+        return <<<HEADER
+<p>表名： <b>{$tableName}</b></p>
+<p>说明：<i>{$tableComment}</i></p>
+<p></p>
+<table>
+    <thead>
+        <tr>
+           <th>字段</th> 
+           <th>类型</th> 
+           <th>空</th> 
+           <th>说明</th> 
+        </tr>
+    </thead>
+    <tbody>{$html}</tbody>
+</thead>
+</table>
+HEADER;
+
+    });
+}
+
+/**
+ * SQL 格式转换
+ *
+ * @param string $sql
+ * @param        $callback
+ *
+ * @return string
+ */
+function convertSqlTo(string $sql, $callback)
+{
+    try {
+        $parser = new PHPSQLParser\PHPSQLParser();
+        $parsed = $parser->parse($sql);
+
+        $fields    = $parsed['TABLE']['create-def']['sub_tree'];
+        $tableName = $parsed['TABLE']['base_expr'];
+
+        $markdowns = [
+            ['字段', '类型', '空', '说明'],
+        ];
+
+        foreach ($fields as $field) {
+            if ($field['sub_tree'][0]['expr_type'] == 'constraint') {
+                continue;
             }
-        }
 
-        $name     = $field['sub_tree'][0]['base_expr'];
-        $comment  = trim($field['sub_tree'][1]['comment'] ?? '', "'");
-        $nullable = $field['sub_tree'][1]['nullable'] ?? false;
+            $type = $length = '';
+            foreach ($field['sub_tree'][1]['sub_tree'] as $item) {
+                if ($item['expr_type'] == 'data-type') {
+                    $type   = $item['base_expr'] ?? '';
+                    $length = $item['length'] ?? '';
+                }
+            }
+
+            $name     = $field['sub_tree'][0]['base_expr'];
+            $comment  = trim($field['sub_tree'][1]['comment'] ?? '', "'");
+            $nullable = $field['sub_tree'][1]['nullable'] ?? false;
 //        $autoInc      = $field['sub_tree'][1]['auto_inc'] ?? false;
 //        $primary      = $field['sub_tree'][1]['primary'] ?? false;
 //        $defaultValue = $field['sub_tree'][1]['default'] ?? '-';
 
-        $type        = empty($length) ? $type : "{$type} ($length)";
-        $markdowns[] = [$name, $type, $nullable ? 'Y' : 'N', $comment];
-    }
-
-    $html = '';
-    foreach ($markdowns as $line) {
-        $html .= '| ' . implode(' | ', $line) . ' | ' . "\n";
-    }
-
-    $tableComment = '-';
-    foreach ($parsed['TABLE']['options'] ?? [] as $option) {
-        $type = strtoupper($option['sub_tree'][0]['base_expr'] ?? '');
-        if ($type === 'COMMENT') {
-            $tableComment = trim($option['sub_tree'][1]['base_expr'] ?? '', "'");
-            break;
+            $type        = empty($length) ? $type : "{$type} ($length)";
+            $markdowns[] = [$name, $type, $nullable ? 'Y' : 'N', $comment];
         }
-    }
 
-    return "\n表名：**{$tableName}**   \n说明：*{$tableComment}*\n\n{$html}\n";
+
+        $tableComment = '-';
+        $options      = $parsed['TABLE']['options'] ?? [];
+        if (!$options || empty($options)) {
+            $options = [];
+        }
+
+        foreach ($options as $option) {
+            $type = strtoupper($option['sub_tree'][0]['base_expr'] ?? '');
+            if ($type === 'COMMENT') {
+                $tableComment = trim($option['sub_tree'][1]['base_expr'] ?? '', "'");
+                break;
+            }
+        }
+
+        return $callback($markdowns, $tableName, $tableComment);
+    } catch (Exception $ex) {
+        return "{$ex->getMessage()} @{$ex->getFile()}:{$ex->getLine()}";
+    }
 }

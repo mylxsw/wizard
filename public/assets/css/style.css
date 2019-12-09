@@ -1233,3 +1233,17 @@ pre.prettyprint *,
 .wz-version-suggest-items li {
     list-style: none;
 }
+
+
+.wz-sql-create .tab-content .wz-sql-table {
+    padding: 10px;
+}
+
+.wz-sql-create .nav {
+    border-bottom: 1px dashed #4caf50;
+}
+
+.wz-sql-create .nav-tabs .nav-item.show .nav-link,
+.wz-sql-create .nav-tabs .nav-link.active{
+    border-color: #dee2e6 #dee2e6 #4caf50
+}

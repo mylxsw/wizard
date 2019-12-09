@@ -86,6 +86,17 @@
             });
             // 图片缩放支持
             $.wz.imageResize('#markdown-body');
+
+            // sql-create 标签解析
+            $('#markdown-body .wz-sql-create').each(function() {
+                let sqlText = $(this).find('.wz-sql-text');
+
+                var self = $(this);
+                $.wz.request('post', '/tools/sql-to-html', {content: sqlText.text()}, function (data) {
+                    sqlText.parent().find('.wz-sql-table-parsed').html(data.html);
+                    $('#' + self.data('id') + '-table').trigger('click');
+                });
+            });
         }, 0);
     });
 </script>
