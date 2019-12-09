@@ -3522,6 +3522,18 @@
                 }
             }
 
+            // Wizard 功能增强 START
+            // var wizardEnhanceReg = /^wizard-style:\s*(.*?)$/;
+            // if (wizardEnhanceReg.test(title)) {
+            //     switch (title.match(wizardEnhanceReg)[1]) {
+            //         case 'card':
+            //             return "<div class='card'><div class='card-header'>" + text + "</div><div class='card-body'>" + href + "</div></div>";
+            //         default:
+            //     }
+            // }
+
+            // Wizard 功能增强 END
+
             var out = "<a href=\"" + href + "\"";
 
             if (atLinkReg.test(title) || atLinkReg.test(text))

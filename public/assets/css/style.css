@@ -1252,6 +1252,7 @@ pre.prettyprint *,
     border-color: #dee2e6 #dee2e6 #4caf50
 }
 
-.card {
+.markdown-body .card {
     border-radius: 4px;
+    margin-bottom: 20px;
 }
