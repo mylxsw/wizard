@@ -406,6 +406,10 @@ a:hover {
     margin: 10px;
 }
 
+.markdown-body table {
+    display: table!important;
+}
+
 .markdown-body .swagger-ui {
     margin-top: 20px;
 }
