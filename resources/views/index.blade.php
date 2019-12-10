@@ -126,14 +126,13 @@
         @include('components.doc-compare-script')
     @endif
 
-    @unless(Auth::guest())
-        <div class="wz-version-suggest">
-            <ul class="wz-version-suggest-items">
-               <li>1、<a target="_blank" href="https://github.com/mylxsw/wizard/wiki/%E9%9A%90%E8%97%8F%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E#%E5%9C%A8%E9%A6%96%E9%A1%B5%E9%9A%90%E8%97%8F%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95">增加控制“项目目录是否在首页展示”的支持</a></li>
-               <li>2、Markdown 文档编辑器增加 SQL 转 Markdown 表格支持</li>
-            </ul>
-        </div>
-    @endunless
+    <div class="wz-version-suggest">
+        <ul class="wz-version-suggest-items">
+           <li>1、实现了对 mermaid 绘制流程图，序列图，饼图，类图，状态图等各种图表的支持。<a target="_blank" href="https://github.com/mylxsw/wizard/wiki/%E6%B5%81%E7%A8%8B%E5%9B%BE%EF%BC%8C%E5%BA%8F%E5%88%97%E5%9B%BE%EF%BC%8C%E9%A5%BC%E5%9B%BE%EF%BC%8CTex-LaTex-%E7%A7%91%E5%AD%A6%E5%85%AC%E5%BC%8F%E6%94%AF%E6%8C%81"> 查看使用说明 </a></li>
+           <li>2、增加了对数据库数据结构展示卡片的支持，现在，你可以直接将 SQL 建表语句放置在代码块中，Wizard 将会为你转换为表格展示。<a target="_blank" href="https://github.com/mylxsw/wizard/wiki/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8D%A1%E7%89%87%E5%B1%95%E7%A4%BA%E6%94%AF%E6%8C%81"> 查看使用说明 </a> </li>
+           <li>3、Markdown 文档页面中的表格样式优化</li>
+        </ul>
+    </div>
 
 @endsection
 
@@ -204,30 +203,28 @@
 
     </script>
 
-    @unless(Auth::guest())
-        <script>
-            // 新版本更新时，弹出版本更新内容提示框，告知用户更新了哪些内容
-            $(function () {
-                var currentVersion = '{{ config('wizard.version') }}';
-                var storedVersion = store.get('feature_suggest');
+    <script>
+        // 新版本更新时，弹出版本更新内容提示框，告知用户更新了哪些内容
+        $(function () {
+            var currentVersion = '{{ config('wizard.version') }}';
+            var storedVersion = store.get('feature_suggest');
 
-                if (currentVersion !== storedVersion) {
-                    window.setTimeout(function () {
-                        layer.open({
-                            type: 1,
-                            title: 'v' + currentVersion + '更新内容',
-                            shade: false,
-                            skin: 'layui-layer-molv',
-                            offset: 'rb',
-                            content: $('.wz-version-suggest').html(),
-                            area: ['420px'],
-                            cancel: function () {
-                                store.set('feature_suggest', currentVersion);
-                            }
-                        });
-                    }, 500);
-                }
-            });
-        </script>
-    @endunless
+            if (currentVersion !== storedVersion) {
+                window.setTimeout(function () {
+                    layer.open({
+                        type: 1,
+                        title: 'v' + currentVersion + '更新内容',
+                        shade: false,
+                        skin: 'layui-layer-molv',
+                        offset: 'rb',
+                        content: $('.wz-version-suggest').html(),
+                        area: ['420px'],
+                        cancel: function () {
+                            store.set('feature_suggest', currentVersion);
+                        }
+                    });
+                }, 500);
+            }
+        });
+    </script>
 @endpush

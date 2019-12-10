@@ -1232,10 +1232,13 @@ pre.prettyprint *,
 .wz-version-suggest-items {
     padding-left: 20px;
     padding-top: 15px;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 .wz-version-suggest-items li {
     list-style: none;
+    padding: 5px;
 }
 
 
