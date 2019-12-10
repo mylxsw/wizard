@@ -88,7 +88,7 @@ $.wz.mdEditor = function (editor_id, params) {
                 "bold", "del", "italic", "quote", "|",
                 "h2", "h3", "h4", "h5", "|",
                 "list-ul", "list-ol", "hr", "|",
-                "link", "image", "code", "preformatted-text", "table", "pagebreak", "|",
+                "link", "image", "code", "code-block", "table", "pagebreak", "|",
                 "template", "jsonToTable", "sqlToTable", "sqlCreateBox", "|",
                 "watch", "preview", "fullscreen", "|",
                 "help"
@@ -211,10 +211,26 @@ $.wz.mdEditor = function (editor_id, params) {
                 mdEditor.imagePaste();
             });
 
+            editormd.loadPlugin('/assets/vendor/mermaid.min', function() {
+                mermaid.init(undefined, $(".markdown-body .mermaid"));
+            });
+
             $.wz.imageResize('.editormd-preview-container');
+            $.wz.sqlCreateSyntaxParser('.editormd-preview-container .wz-sql-create');
         },
         onchange: function () {
+            // 图片缩放支持
             $.wz.imageResize('.editormd-preview-container');
+            // mermaid 支持
+            var mermaidElements = $('.editormd-preview').find('.mermaid');
+            if (mermaidElements.length > 0) {
+                mermaidElements.each(function() {
+                    $(this).html($(this).html()).removeAttr('data-processed');
+                    mermaid.init(undefined, $(this));
+                });
+            }
+            // sql 建表语句解析
+            $.wz.sqlCreateSyntaxParser('.editormd-preview-container .wz-sql-create');
         }
     });
 

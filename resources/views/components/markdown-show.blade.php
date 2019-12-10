@@ -12,6 +12,7 @@
 <script src="/assets/vendor/editor-md/lib/sequence-diagram.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/flowchart.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/jquery.flowchart.min.js"></script>
+<script src="/assets/vendor/mermaid.min.js"></script>
 <script src="/assets/vendor/editor-md/editormd.js?{{ resourceVersion() }}"></script>
 
 <script type="text/javascript">
@@ -20,6 +21,10 @@
         $('[data-toggle="tooltip"]').tooltip({
             delay: {"show": 500, "hide": 100}
         });
+
+        // 初始化 Mermaid
+        // mermaid.initialize({startOnLoad:true});
+        mermaid.init(undefined, $(".markdown-body .mermaid"));
 
         // 内容区域解析markdown
         editormd.markdownToHTML('markdown-body', {
@@ -88,15 +93,7 @@
             $.wz.imageResize('#markdown-body');
 
             // sql-create 标签解析
-            $('#markdown-body .wz-sql-create').each(function() {
-                let sqlText = $(this).find('.wz-sql-text');
-
-                var self = $(this);
-                $.wz.request('post', '/tools/sql-to-html', {content: sqlText.text()}, function (data) {
-                    sqlText.parent().find('.wz-sql-table-parsed').html(data.html);
-                    $('#' + self.data('id') + '-table').trigger('click');
-                });
-            });
+            $.wz.sqlCreateSyntaxParser('#markdown-body .wz-sql-create');
         }, 0);
     });
 </script>

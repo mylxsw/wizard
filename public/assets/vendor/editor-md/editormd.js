@@ -3633,6 +3633,16 @@
 
         markedRenderer.code = function (code, lang, escaped) {
 
+            // Wizard 添加 START
+            var randomId = function () {
+                var rnd = "";
+                for (var i = 0; i < 6; i++)
+                    rnd += Math.floor(Math.random() * 10);
+                return rnd;
+            };
+            // Wizard 添加 END
+
+
             if (lang === "seq" || lang === "sequence")
             {
                 return "<div class=\"sequence-diagram\">" + code + "</div>";
@@ -3647,16 +3657,7 @@
             }
             // wizard 添加，用于支持 sql 创建语句的解析 START
             else if (lang === 'sql_create') {
-
-                var randomId = function () {
-                    var rnd = "";
-                    for (var i = 0; i < 6; i++)
-                        rnd += Math.floor(Math.random() * 10);
-                    return rnd;
-                };
-
                 var cardId = randomId();
-
                 return '<div class="wz-sql-create card" data-id="nav-tab-' + cardId + '"><nav>\n' +
                     '  <div class="nav nav-tabs" id="nav-tab-' + cardId + '" role="tablist">\n' +
                     '    <a class="nav-item nav-link active" id="nav-tab-' + cardId + '-sql" data-toggle="tab" href="#nav-' + cardId + '-sql">SQL</a>\n' +
@@ -3668,6 +3669,9 @@
                     '  <div class="tab-pane fade wz-sql-table" id="nav-' + cardId + '-table"><span class="wz-sql-text" style="display: none">' + code + '</span><div class="wz-sql-table-parsed">该功能只在预览模式有效</div></div>\n' +
                     '</div>' +
                     '</div>';
+            }
+            else if (lang === 'mermaid') {
+                return '<div class="mermaid">' + code + "</div>";
             }
             // wizard 添加 END
             else {

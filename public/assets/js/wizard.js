@@ -273,5 +273,25 @@ $.wz = {
                 $(this).wrap('<a href="' + $(this).attr('src') + '" target="_blank"></a>');
             }
         });
+    },
+    /**
+     * SQL 建表语句解析
+     *
+     * @param selector
+     */
+    sqlCreateSyntaxParser: function (selector) {
+        if ($(selector).length === 0) {
+            return ;
+        }
+
+        $(selector).each(function() {
+            let sqlText = $(this).find('.wz-sql-text');
+
+            var self = $(this);
+            $.wz.request('post', '/tools/sql-to-html', {content: sqlText.text()}, function (data) {
+                sqlText.parent().find('.wz-sql-table-parsed').html(data.html);
+                $('#' + self.data('id') + '-table').trigger('click');
+            });
+        });
     }
 };

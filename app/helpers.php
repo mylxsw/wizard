@@ -580,12 +580,15 @@ function convertSqlTo(string $sql, $callback)
         $fields    = $parsed['TABLE']['create-def']['sub_tree'];
         $tableName = $parsed['TABLE']['base_expr'];
 
-        $markdowns = [
-            ['字段', '类型', '空', '说明'],
-        ];
+        $markdowns = [];
 
         foreach ($fields as $field) {
             if ($field['sub_tree'][0]['expr_type'] == 'constraint') {
+                continue;
+            }
+
+            // 如果当前行不是列定义，则没有 sub_tree，比如 PRIMARY KEY(id)
+            if (!isset($field['sub_tree'][1]['sub_tree'])) {
                 continue;
             }
 
@@ -600,12 +603,13 @@ function convertSqlTo(string $sql, $callback)
             $name     = $field['sub_tree'][0]['base_expr'];
             $comment  = trim($field['sub_tree'][1]['comment'] ?? '', "'");
             $nullable = $field['sub_tree'][1]['nullable'] ?? false;
+
 //        $autoInc      = $field['sub_tree'][1]['auto_inc'] ?? false;
 //        $primary      = $field['sub_tree'][1]['primary'] ?? false;
 //        $defaultValue = $field['sub_tree'][1]['default'] ?? '-';
 
             $type        = empty($length) ? $type : "{$type} ($length)";
-            $markdowns[] = [$name, $type, $nullable ? 'Y' : 'N', $comment];
+            $markdowns[] = [trim($name, '`'), $type, $nullable ? 'Y' : 'N', $comment];
         }
 
 
@@ -623,7 +627,7 @@ function convertSqlTo(string $sql, $callback)
             }
         }
 
-        return $callback($markdowns, $tableName, $tableComment);
+        return $callback($markdowns, trim($tableName, '`'), $tableComment);
     } catch (Exception $ex) {
         return "{$ex->getMessage()} @{$ex->getFile()}:{$ex->getLine()}";
     }

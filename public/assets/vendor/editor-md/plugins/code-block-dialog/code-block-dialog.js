@@ -17,6 +17,11 @@
     
 		// for CodeBlock dialog select
 		var codeLanguages = exports.codeLanguages = {
+			// Wizard 增加 START
+			mermaid       : ["Mermaid", "mermaid"],
+			flow          : ["流程图", "flow"],
+			sequence      : ["时序图/序列图", "sequence"],
+			// Wizard 增加 END
 			asp           : ["ASP", "vbscript"],
 			actionscript  : ["ActionScript(3.0)/Flash/Flex", "clike"],
 			bash          : ["Bash/Bat", "shell"],

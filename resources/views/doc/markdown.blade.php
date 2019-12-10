@@ -38,6 +38,8 @@
     <script src="/assets/js/markdown-editor.js?{{ resourceVersion() }}"></script>
     <script type="text/javascript">
         $(function () {
+
+            // 初始化 Editor.md
             var editor = $.wz.mdEditor('editormd', {
                 template: function () {
                     return $('#editor-template-dialog').html();
