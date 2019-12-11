@@ -46,14 +46,18 @@
                                         "<input type=\"text\" value=\"http://\" data-url />" +
                                         "<br/>" + 
                                         "<label>" + linkLang.urlTitle + "</label>" + 
-                                        "<input type=\"text\" value=\"" + selection + "\" data-title />" + 
+                                        "<input type=\"text\" value=\"" + selection + "\" data-title />" +
                                         "<br/>" +
+                                        // Wizard 添加 START
+                                        "<label>展示方式</label>" +
+                                        "<select data-style><option value='normal'>普通链接</option><option value='frame'>框架页嵌入</option></select>" +
+                                        // Wizard 添加 END
                                     "</div>";
 
                 dialog = this.createDialog({
                     title      : linkLang.title,
                     width      : 380,
-                    height     : 211,
+                    height     : 230,
                     content    : dialogHTML,
                     mask       : settings.dialogShowMask,
                     drag       : settings.dialogDraggable,
@@ -66,6 +70,7 @@
                         enter  : [lang.buttons.enter, function() {
                             var url   = this.find("[data-url]").val();
                             var title = this.find("[data-title]").val();
+                            var displayStyle = this.find("[data-style]").val();
 
                             if (url === "http://" || url === "")
                             {
@@ -73,15 +78,21 @@
                                 return false;
                             }
 
-                            /*if (title === "")
-                            {
-                                alert(linkLang.titleEmpty);
-                                return false;
-                            }*/
+                            // Wizard 添加 START
+                            var controlTitle = '';
+                            switch (displayStyle) {
+                                case 'normal':
+                                    controlTitle = title;
+                                    break;
+                                default:
+                                    controlTitle = "wizard-style:" + displayStyle;
+                            }
+
+
+                            var str = "[" + title + "](" + url + " \"" + controlTitle + "\")";
+                            // Wizard 添加 END
                             
-                            var str = "[" + title + "](" + url + " \"" + title + "\")";
-                            
-                            if (title == "")
+                            if (controlTitle === "")
                             {
                                 str = "[" + url + "](" + url + ")";
                             }                                

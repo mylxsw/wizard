@@ -3523,14 +3523,19 @@
             }
 
             // Wizard 功能增强 START
-            // var wizardEnhanceReg = /^wizard-style:\s*(.*?)$/;
-            // if (wizardEnhanceReg.test(title)) {
-            //     switch (title.match(wizardEnhanceReg)[1]) {
-            //         case 'card':
-            //             return "<div class='card'><div class='card-header'>" + text + "</div><div class='card-body'>" + href + "</div></div>";
-            //         default:
-            //     }
-            // }
+            var wizardEnhanceReg = /^wizard-style:\s*(.*?)$/;
+            if (wizardEnhanceReg.test(title)) {
+                switch (title.match(wizardEnhanceReg)[1]) {
+                    case 'frame':
+                        var header = "";
+                        if (text !== '') {
+                            header = "<div class='card-header'>" + text + "</div>";
+                        }
+
+                        return "<div class='card'>" + header + "<div class='card-body'><iframe frameborder=\"0\" style=\"display:block; width: 100%; height:500px;\" src=\"" + href + "\"></iframe></div></div>";
+                    default:
+                }
+            }
 
             // Wizard 功能增强 END
 

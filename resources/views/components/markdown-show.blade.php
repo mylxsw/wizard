@@ -37,7 +37,7 @@
             markdownSourceCode: true,
             taskList: true,
             tex: true,
-            htmlDecode : 'style,script,iframe,sub,sup|on*',
+            htmlDecode : true,
             flowChart: true,
             sequenceDiagram: true
         });
