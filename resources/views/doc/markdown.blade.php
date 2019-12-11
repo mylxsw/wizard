@@ -21,7 +21,7 @@
 @endsection
 
 @push('stylesheet')
-    <link href="/assets/vendor/editor-md/css/editormd.min.css" rel="stylesheet"/>
+    <link href="/assets/vendor/editor-md/css/editormd.min.css?{{ resourceVersion() }}" rel="stylesheet"/>
 @endpush
 
 @push('script')
