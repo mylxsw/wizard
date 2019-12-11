@@ -12,7 +12,7 @@
 <script src="/assets/vendor/editor-md/lib/sequence-diagram.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/flowchart.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/jquery.flowchart.min.js"></script>
-<script src="/assets/vendor/mermaid.min.js"></script>
+<script src="/assets/vendor/mermaid.js?{{ resourceVersion() }}"></script>
 <script src="/assets/vendor/editor-md/editormd.js?{{ resourceVersion() }}"></script>
 
 <script type="text/javascript">
@@ -27,6 +27,10 @@
         mermaid.init(undefined, $(".markdown-body .mermaid"));
 
         // 内容区域解析markdown
+        editormd.katexURL  = {
+            css : "/assets/vendor/katex.min",
+            js  : "/assets/vendor/katex.min"
+        }
         editormd.markdownToHTML('markdown-body', {
             tocm: true,
             tocDropdown: false,

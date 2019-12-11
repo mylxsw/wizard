@@ -72,6 +72,11 @@ $.wz.mdEditor = function (editor_id, params) {
 
     $.extend(true, config, params);
 
+    editormd.katexURL  = {
+        css : "/assets/vendor/katex.min",
+        js  : "/assets/vendor/katex.min"
+    };
+
     var mdEditor = editormd(editor_id, {
         path: "/assets/vendor/editor-md/lib/",
         height: 800,
@@ -211,7 +216,7 @@ $.wz.mdEditor = function (editor_id, params) {
                 mdEditor.imagePaste();
             });
 
-            editormd.loadPlugin('/assets/vendor/mermaid.min', function() {
+            editormd.loadPlugin('/assets/vendor/mermaid', function() {
                 mermaid.init(undefined, $(".markdown-body .mermaid"));
             });
 
