@@ -23,7 +23,7 @@
             </thead>
             <tbody>
 
-            @foreach($histories as $history)
+            @foreach($histories as $index => $history)
                 <tr>
                     <th scope="row">{{ $history->id }}</th>
                     <td>{{ $history->created_at }}</td>
@@ -33,12 +33,13 @@
                             <i class="material-icons" title="@lang('common.btn_view')">remove_red_eye</i>
                         </a>
                         &nbsp;
+                        @if($index < count($histories) - 1)
                         <a href="#" wz-doc-compare-submit
-                           data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
-                           data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}">
+                           data-doc1="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}"
+                           data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $histories[$index + 1]->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}">
                             <i class="material-icons" title=" @lang('common.btn_diff')">tonality</i>
                         </a>
-                        &nbsp;
+                        @endif
 
                         @can('page-edit', $pageItem)
                         <a href="#" wz-form-submit data-form="#form-recover-{{ $history->id }}"
