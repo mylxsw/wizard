@@ -11,7 +11,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use SebastianBergmann\Diff\Differ;
-use SebastianBergmann\Diff\Output\StrictUnifiedDiffOutputBuilder;
 use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
 
 
@@ -56,6 +55,11 @@ class CompareController extends Controller
         $act = $request->input('act', 'diff');
         if ($act === 'diff') {
             $differ = new Differ(new UnifiedDiffOutputBuilder("--- Original\n+++ New\n", true));
+
+            if (isJson($doc1) && isJson($doc2)) {
+                $doc1 = json_encode(json_decode($doc1), JSON_PRETTY_PRINT);
+                $doc2 = json_encode(json_decode($doc2), JSON_PRETTY_PRINT);
+            }
 
             $viewData['differContents'] = $differ->diff($doc2, $doc1);
         }
