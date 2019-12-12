@@ -18,7 +18,7 @@
         "lcobucci/jwt": "^3.2",
         "maennchen/zipstream-php": "^1.1",
         "mpdf/mpdf": "^8.0",
-        "sebastian/diff": "1.4.3",
+        "sebastian/diff": "3.0.2",
         "soapbox/laravel-formatter": "^3.0",
         "yzalis/identicon": "^1.2"
     },
@@ -27,7 +27,7 @@
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~6.0"
+        "phpunit/phpunit": "8.5.0"
     },
     "autoload": {
         "classmap": [

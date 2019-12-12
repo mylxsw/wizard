@@ -16,33 +16,32 @@
 
     <div class="row wz-full-box" id="wz-main-box">
         <div id="wz-compared" class="wz-compare-container w-100">
-
-            <table class="wz-differ-box">
-                <tbody>
-                @foreach($differContents as $line)
-                    @if($line[1] === 1) {{-- added --}}
-                    <tr class="differ-added">
-                        <td class="line-sign" title="新增" data-toggle="tooltip" data-placement="left">+</td>
-                        <td><pre>{{ $line[0] }}</pre></td>
-                    </tr>
-                    @elseif($line[1] === 2) {{-- removed --}}
-                    <tr class="differ-removed">
-                        <td class="line-sign" title="移除">-</td>
-                        <td><pre>{{ $line[0] }}</pre></td>
-                    </tr>
-                    @else
-                        <tr>
-                            <td class="line-sign">&nbsp;</td>
-                            <td><pre>{{ $line[0] }}</pre></td>
-                        </tr>
-                    @endif
-                @endforeach
-                </tbody>
-            </table>
+            <div style="display: none" id="wz-diff-original">{!! base64_encode($differContents) !!}</div>
+            <div id="wz-diff-result"></div>
         </div>
     </div>
 @endsection
 
-@push('script')
+@push('stylesheet')
+    <link rel="stylesheet" href="/assets/vendor/highlight/styles/github.css">
+    <link href="/assets/vendor/diff2html/diff2html.min.css?{{ resourceVersion() }}" rel="stylesheet"/>
+    <style type="text/css">
+        .d2h-code-side-linenumber {
+            padding-right: 10px;
+        }
+    </style>
+@endpush
 
+@push('script')
+    <script src="/assets/vendor/highlight/highlight.pack.js"></script>
+    <script src="/assets/vendor/diff2html/diff2html.min.js"></script>
+    <script src="/assets/vendor/diff2html/diff2html-ui.min.js"></script>
+    <script src="/assets/vendor/base64.min.js"></script>
+    <script>
+        $(function () {
+            var diff2htmlUi = new Diff2HtmlUI({diff: Base64.decode($('#wz-diff-original').text())});
+            diff2htmlUi.draw('#wz-diff-result', {inputFormat: 'diff', showFiles: false, matching: 'lines', outputFormat: 'side-by-side'});
+            diff2htmlUi.highlightCode('#wz-diff-result');
+        });
+    </script>
 @endpush

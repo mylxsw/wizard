@@ -11,6 +11,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use SebastianBergmann\Diff\Differ;
+use SebastianBergmann\Diff\Output\StrictUnifiedDiffOutputBuilder;
+use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
+
 
 class CompareController extends Controller
 {
@@ -43,19 +46,19 @@ class CompareController extends Controller
         $doc2      = $request->input('doc2');
 
         $viewData = [
-            'doc1'           => $doc1,
-            'doc2'           => $doc2,
-            'doc1title'      => $doc1title,
-            'doc2title'      => $doc2title,
-            'noheader'       => !!$request->input('noheader', 0)
+            'doc1'      => $doc1,
+            'doc2'      => $doc2,
+            'doc1title' => $doc1title,
+            'doc2title' => $doc2title,
+            'noheader'  => !!$request->input('noheader', 0)
         ];
 
         $act = $request->input('act', 'diff');
         if ($act === 'diff') {
-            $differ         = new Differ();
-            $viewData['differContents'] = $differ->diffToArray($doc2, $doc1);
-        }
+            $differ = new Differ(new UnifiedDiffOutputBuilder("--- Original\n+++ New\n", true));
 
+            $viewData['differContents'] = $differ->diff($doc2, $doc1);
+        }
 
         return view("doc.{$act}", $viewData);
     }
