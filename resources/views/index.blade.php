@@ -5,24 +5,18 @@
 @section('content')
 
     <div class="card mt-4 mb-4">
+        @if (!empty($catalog))
         <div class="card-header">
-            <div class="card-header-title">
-                @if (!empty($catalog))
-                    <a class="badge badge-info badge-pill" href="{{ wzRoute('home') }}">
-                        #{{ $catalog->name }}
-                    </a>
-                @endif
-            </div>
             <div class="card-header-operation">
-                <div class="bmd-form-group bmd-collapse-inline pull-right">
-                    <i class="material-icons search-btn" data-input="#search-input">search</i>
-                    <span id="search-input" style="{{ empty($name) ? 'display: none;' : '' }}">
-                        <input class="form-control" type="text" id="search" name="search_name" placeholder="搜索文档"
-                               value="{{ $name ?? '' }}">
-                    </span>
+                <div class="bmd-form-group bmd-collapse-inline pull-left">
+                    <a href="{{ wzRoute('home') }}" class="material-icons" data-toggle="tooltip" title="返回首页">home</a>
                 </div>
+                <div class="bmd-form-group bmd-collapse-inline pull-right" style="padding-top: 3px;">
+                    <a class="badge badge-success badge-pill" href="{{ wzRoute('home', ['catalog' => $catalog_id]) }}" data-toggle="tooltip" title="点击此处刷新页面">#{{ $catalog->name }}</a>
+                </div> 
             </div>
         </div>
+        @endif
         <div class="card-body">
 
             <div class="row marketing wz-main-container-full">
@@ -178,30 +172,6 @@
             });
         </script>
     @endif
-
-    <script>
-        $(function () {
-            $('.search-btn').on('click', function () {
-                var inputItem = $($(this).data('input'));
-                inputItem.fadeToggle();
-                inputItem.find('input').focus();
-            });
-
-            $('#search-input').find('input').keydown(function (event) {
-                if (event.keyCode === 13) {
-                    {{--window.location = "{{ route('home') }}?catalog={{ $catalog_id }}&name=" + encodeURIComponent($(this).val().trim());--}}
-                    // 首页文档目录搜索修改为文档搜素
-                    window.location = "{{ wzRoute('search:search') }}?keyword=" + encodeURIComponent($(this).val().trim());
-                }
-            }).blur(function () {
-                var value = $(this).val().trim();
-                if (value === '') {
-                    $(this).parent('#search-input').fadeToggle();
-                }
-            });
-        });
-
-    </script>
 
     <script>
         // 新版本更新时，弹出版本更新内容提示框，告知用户更新了哪些内容

@@ -175,12 +175,17 @@ class ProjectController extends Controller
 
         $page = $type = null;
         if ($pageID !== 0) {
-            $page = Document::with([
-                'comments' => function ($query) {
-                    $query->orderBy('created_at', 'desc');
-                }
-            ])
-                ->where('project_id', $id)
+            $queryBuilder = Document::query();
+            
+            if (config('wizard.reply_support')) {
+                $queryBuilder->with([
+                    'comments' => function ($query) {
+                        $query->orderBy('created_at', 'desc');
+                    }
+                ]);
+            }
+            
+            $page = $queryBuilder->where('project_id', $id)
                 ->where('id', $pageID)
                 ->firstOrFail();
             $type = $this->types[$page->type];

@@ -34,6 +34,11 @@ return [
     'copyright'        => env('WIZARD_COPYRIGHT', 'AICODE.CC'),
 
     /**
+     * 是否启用文档评论功能
+     */
+    'reply_support' => env('WIZARD_REPLY_SUPPORT', true),
+
+    /**
      * LDAP
      */
     'ldap'             => [

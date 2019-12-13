@@ -163,7 +163,7 @@
 
 @push('page-panel')
 
-    @if($pageID != 0 && !(Auth::guest() && count($pageItem->comments) === 0))
+    @if(config('wizard.reply_support') && $pageID != 0 && !(Auth::guest() && count($pageItem->comments) === 0))
         @include('components.comment')
     @endif
 
