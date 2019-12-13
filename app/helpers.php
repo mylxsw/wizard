@@ -632,3 +632,37 @@ function convertSqlTo(string $sql, $callback)
         return "{$ex->getMessage()} @{$ex->getFile()}:{$ex->getLine()}";
     }
 }
+
+/**
+ * 预处理 X-spreadsheet 表格内容
+ *
+ * @param string $content
+ *
+ * @return string
+ */
+function processSpreedSheet(string $content): string
+{
+    $contentArray = json_decode($content, true);
+
+    $maxRowNum = collect(array_keys($contentArray['rows']))
+        ->filter(function ($item) {
+            return is_numeric($item);
+        })->map(function ($item) {
+            return (int)$item;
+        })->max();
+
+    $maxColNum = collect($contentArray['rows'])
+        ->filter(function ($item, $key) { return is_numeric($key); })
+        ->map(function ($item) {
+            return collect(array_keys($item['cells'] ?? []))
+                ->filter(function ($item) { return is_numeric($item); })
+                ->map(function ($item) { return (int)$item; })
+                ->max();
+        })->max();
+
+    $contentArray['cols']['len'] = $maxColNum + 1;
+    $contentArray['rows']['len'] = $maxRowNum + 1;
+
+    $content = json_encode($contentArray, JSON_UNESCAPED_UNICODE);
+    return $content;
+}

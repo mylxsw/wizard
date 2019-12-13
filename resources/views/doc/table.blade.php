@@ -43,7 +43,7 @@
 
             var savedContent = $('#xspreadsheet-content').html();
             if (savedContent === '') {
-                savedContent = "{}";
+                savedContent = "{\"cols\":{\"len\":25},\"rows\":{\"len\":100}}";
             }
 
             var options = {
@@ -55,11 +55,11 @@
                     width: () => document.documentElement.clientWidth - 20,
                 },
                 row: {
-                    len: 100,
+                    len: {{ config('wizard.spreedsheet.max_rows') }},
                     height: 25,
                 },
                 col: {
-                    len: 26,
+                    len: {{ config('wizard.spreedsheet.max_cols') }},
                     width: 100,
                     indexWidth: 60,
                     minWidth: 60,
@@ -69,7 +69,10 @@
             // x.spreadsheet.locale('zh-cn');
 
             var sheet = x.spreadsheet('#xspreadsheet', options);
-            sheet.loadData(JSON.parse(savedContent));
+            var data = JSON.parse(savedContent);
+            data.cols.len = options.col.len;
+            data.rows.len = options.row.len;
+            sheet.loadData(data);
 
             // 获取编辑器中的内容
             $.global.getEditorContent = function () {
@@ -84,7 +87,10 @@
 
             // 更新编辑器内容
             $.global.updateEditorContent = function (content) {
-                sheet.loadData(JSON.parse(content));
+                var data = JSON.parse(content);
+                data.cols.len = options.col.len;
+                data.rows.len = options.row.len;
+                sheet.loadData(data);
             };
 
         });

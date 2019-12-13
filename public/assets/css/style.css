@@ -666,6 +666,14 @@ a:hover {
     left: auto;
 }
 
+.wz-panel-breadcrumb {
+    padding: 10px 15px 0;
+}
+
+.wz-project-main {
+    padding: 0 15px 10px;
+}
+
 .wz-panel-breadcrumb .breadcrumb {
     margin-bottom: 0;
     background: none;
@@ -802,8 +810,8 @@ tr.warning {
 
 .wz-comment-editor {
     width: 100%;
-    border: 1px solid #d1d5da;
-    border-radius: 4px;
+    border: 1px solid #c3c3c3;
+    border-radius: 2px;
 }
 
 .wz-comment-editor .wz-comment-editor-header .wz-comment-editor-write {
@@ -836,7 +844,7 @@ tr.warning {
 .wz-comment-editor .wz-comment-editor-body textarea {
     width: 100%;
     border-radius: 4px;
-    border: 1px solid #d1d5da;
+    border: 1px dashed #d1d5da;
     height: 150px;
     background-color: #fafbfc;
     padding: 10px;
@@ -844,6 +852,8 @@ tr.warning {
 
 .wz-comment-editor .wz-comment-editor-body textarea:focus {
     background-color: #fff;
+    outline:none;
+    border: 1px solid #d1d5da;
 }
 
 .wz-comment-editor .wz-comment-editor-footer {
@@ -1201,6 +1211,7 @@ li.L1, li.L3, li.L5, li.L7, li.L9 {
     color: #868686;
     text-overflow: clip;
     border: 0;
+    outline:none;
 
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
@@ -1210,7 +1221,7 @@ li.L1, li.L3, li.L5, li.L7, li.L9 {
 
 .wz-top-nav-search input:hover,
 .wz-top-nav-search input:focus {
-    background: #ffffff;
+    background: #fbfbfb;
     width: 30rem;
 }
 
@@ -1258,4 +1269,22 @@ pre.prettyprint *,
 .markdown-body .card {
     border-radius: 4px;
     margin-bottom: 20px;
+}
+
+.wz-tag-input {
+    outline:none;
+}
+
+.wz-panel-separator {
+    width: 15px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.wz-panel-separator:hover {
+    box-shadow: 6px -2px 6px -3px #4caf50;
 }

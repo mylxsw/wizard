@@ -45,66 +45,76 @@
             </ul>
             <div class="clearfix"></div>
         </div>
-        <nav class="wz-page-control clearfix">
-            <h1 class="wz-page-title">
-                {{ $pageItem->title }}
-                @if($type == 'swagger')
-                    <a title="原始Swagger文档" target="_blank" href="{{ route('swagger:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="fa fa-link"></a>
+        <div class="wz-project-main">
+            <nav class="wz-page-control clearfix">
+                <h1 class="wz-page-title">
+                    {{ $pageItem->title }}
+                    @if($type == 'swagger')
+                        <a title="原始Swagger文档" target="_blank" href="{{ route('swagger:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="fa fa-link"></a>
+                    @endif
+                    @if($type === 'table')
+                        <sup class="wz-beta">beta</sup>
+                    @endif
+                </h1>
+            </nav>
+            @include('components.document-info')
+            @include('components.tags')
+
+            @if (!empty($pageItem->sync_url))
+                <div class="wz-document-swagger-sync-info wz-panel-limit">
+                    文档同步地址：<a href="{{ $pageItem->sync_url }}" target="_blank">{{ $pageItem->sync_url }}</a>，最后同步于 {{ $pageItem->last_sync_at ?? '-' }}
+                    @can('page-edit', $pageItem)
+                        <a href="#" wz-form-submit data-form="#form-document-sync" data-confirm="执行文档同步后，您将成为最后修改人，确定要执行文档同步吗？" class="ml-2" title="同步文档">
+                            <i class="fa fa-refresh" data-toggle="tooltip" title="同步文档"></i>
+                            <form id="form-document-sync" method="post" style="display: none;"
+                                  action="{{ wzRoute('project:doc:sync-from', ['id' => $pageItem->project_id, 'page_id' => $pageItem->id]) }}">
+                                {{ csrf_field() }}
+                            </form>
+                        </a>
+                    @endcan
+                </div>
+            @endif
+
+            <div class="markdown-body wz-panel-limit {{ $type == 'markdown' ? 'wz-markdown-style-fix' : '' }}" id="markdown-body">
+                @if($type === 'markdown')
+                    <textarea class="d-none wz-markdown-content">{{ $pageItem->content }}</textarea>
                 @endif
                 @if($type === 'table')
-                    <sup class="wz-beta">beta</sup>
+                    <textarea id="x-spreadsheet-content" class="d-none">{{ processSpreedSheet($pageItem->content) }}</textarea>
+                    <div class="wz-spreadsheet">
+                        <div class="wz-spreadsheet-control">
+                            <button class="btn btn-primary wz-spreadsheet-mode pull-right" data-mode="photo">
+                                <i class="fa fa-clipboard" title="文本复制模式"></i>
+                            </button>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div id="x-spreadsheet"></div>
+                    </div>
                 @endif
-            </h1>
-        </nav>
-        @include('components.document-info')
-        @include('components.tags')
-
-        @if (!empty($pageItem->sync_url))
-            <div class="wz-document-swagger-sync-info wz-panel-limit">
-                文档同步地址：<a href="{{ $pageItem->sync_url }}" target="_blank">{{ $pageItem->sync_url }}</a>，最后同步于 {{ $pageItem->last_sync_at ?? '-' }}
-                @can('page-edit', $pageItem)
-                    <a href="#" wz-form-submit data-form="#form-document-sync" data-confirm="执行文档同步后，您将成为最后修改人，确定要执行文档同步吗？" class="ml-2" title="同步文档">
-                        <i class="fa fa-refresh" data-toggle="tooltip" title="同步文档"></i>
-                        <form id="form-document-sync" method="post" style="display: none;"
-                              action="{{ wzRoute('project:doc:sync-from', ['id' => $pageItem->project_id, 'page_id' => $pageItem->id]) }}">
-                            {{ csrf_field() }}
-                        </form>
-                    </a>
-                @endcan
             </div>
-        @endif
 
-        <div class="markdown-body wz-panel-limit {{ $type == 'markdown' ? 'wz-markdown-style-fix' : '' }}" id="markdown-body">
-            @if($type == 'markdown')
-            <textarea class="d-none wz-markdown-content">{{ $pageItem->content }}</textarea>
-            @endif
-            @if($type == 'table')
-                <textarea id="x-spreadsheet-content" class="d-none">{{ $pageItem->content }}</textarea>
-                <div id="x-spreadsheet"></div>
-            @endif
-        </div>
+            <div class="text-center wz-panel-limit mt-3">~ END ~</div>
 
-        <div class="text-center wz-panel-limit mt-3">~ END ~</div>
-
-        @if(count($pageItem->attachments) > 0)
-        <div class="wz-attachments wz-panel-limit">
-            <h4>附件</h4>
-            <ol>
-                @foreach($pageItem->attachments as $attachment)
-                    <li>
-                        <a href="{{ $attachment->path }}">
-                            <span class="fa fa-download"></span>
-                            {{ $attachment->name }}
-                            <span class="wz-attachment-info">
+            @if(count($pageItem->attachments) > 0)
+                <div class="wz-attachments wz-panel-limit">
+                    <h4>附件</h4>
+                    <ol>
+                        @foreach($pageItem->attachments as $attachment)
+                            <li>
+                                <a href="{{ $attachment->path }}">
+                                    <span class="fa fa-download"></span>
+                                    {{ $attachment->name }}
+                                    <span class="wz-attachment-info">
                                 【{{ $attachment->user->name }}，
                                 {{ $attachment->created_at }}】
                             </span>
-                        </a>
-                    </li>
-                @endforeach
-            </ol>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ol>
+                </div>
+            @endif
         </div>
-        @endif
 
     @else
         <div class="wz-panel-breadcrumb">
@@ -120,42 +130,44 @@
             </ul>
             <div class="clearfix"></div>
         </div>
-        <h1>{{ $project->name ?? '' }}</h1>
+        <div class="wz-project-main">
+            <h1>{{ $project->name ?? '' }}</h1>
 
-        <p class="wz-document-header wz-panel-limit">@lang('document.document_create_info', ['username' => $project->user->name, 'time' => $project->created_at])</p>
-        <p class="wz-panel-limit">{{ $project->description ?? '' }}</p>
+            <p class="wz-document-header wz-panel-limit">@lang('document.document_create_info', ['username' => $project->user->name, 'time' => $project->created_at])</p>
+            <p class="wz-panel-limit">{{ $project->description ?? '' }}</p>
 
-        @if (!Auth::guest())
-            <div class="wz-recently-log wz-panel-limit">
-                <h4>最近活动</h4>
-                <div id="operation-log-recently"></div>
-            </div>
-        @endif
+            @if (!Auth::guest())
+                <div class="wz-recently-log wz-panel-limit">
+                    <h4>最近活动</h4>
+                    <div id="operation-log-recently"></div>
+                </div>
+            @endif
 
-        @if($project->groups->count() > 0)
-            <div class="wz-group-allowed-list wz-panel-limit">
-                <h4>@lang('project.group_added')</h4>
-                <table class="table">
-                    <caption></caption>
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>@lang('project.group_name')</th>
-                        <th>@lang('project.group_write_enabled')</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($project->groups as $group)
+            @if($project->groups->count() > 0)
+                <div class="wz-group-allowed-list wz-panel-limit">
+                    <h4>@lang('project.group_added')</h4>
+                    <table class="table">
+                        <caption></caption>
+                        <thead>
                         <tr>
-                            <th scope="row">{{ $group->id }}</th>
-                            <td>{{ $group->name }}</td>
-                            <td>{{ $group->projects[0]->pivot->privilege == 1 ? __('common.yes') : __('common.no') }}</td>
+                            <th>#</th>
+                            <th>@lang('project.group_name')</th>
+                            <th>@lang('project.group_write_enabled')</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-        @endif
+                        </thead>
+                        <tbody>
+                        @foreach($project->groups as $group)
+                            <tr>
+                                <th scope="row">{{ $group->id }}</th>
+                                <td>{{ $group->name }}</td>
+                                <td>{{ $group->projects[0]->pivot->privilege == 1 ? __('common.yes') : __('common.no') }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+        </div>
     @endif
 @endsection
 
@@ -164,7 +176,7 @@
 @push('page-panel')
 
     @if(config('wizard.reply_support') && $pageID != 0 && !(Auth::guest() && count($pageItem->comments) === 0))
-        @include('components.comment')
+        <div class="wz-project-main">@include('components.comment')</div>
     @endif
 
     @include('components.doc-compare-script')

@@ -36,7 +36,7 @@ return [
     /**
      * 是否启用文档评论功能
      */
-    'reply_support' => env('WIZARD_REPLY_SUPPORT', true),
+    'reply_support'    => env('WIZARD_REPLY_SUPPORT', true),
 
     /**
      * LDAP
@@ -52,5 +52,19 @@ return [
          * 比如： 'CN=technology-products,CN=Users,DC=example,DC=com'
          */
         'only_member_of' => env('WIZARD_LDAP_ONLY_MEMBER_OF', ''),
+    ],
+
+    /**
+     * 表格类型文档配置
+     */
+    'spreedsheet'      => [
+        /**
+         * 最大支持的行数
+         */
+        'max_rows' => env('WIZARD_SPREEDSHEET_MAX_ROWS', 100),
+        /**
+         * 最大支持的列数
+         */
+        'max_cols' => env('WIZARD_SPREEDSHEET_MAX_COLS', 26),
     ],
 ];

@@ -2,7 +2,7 @@
     <div class="wz-tag-container">
         <div class="wz-tags">
             @can('page-edit', $pageItem)
-                <input type="text" name="tags" placeholder="添加标签" class="tm-input"/>
+                <input type="text" name="tags" placeholder="添加标签" class="tm-input wz-tag-input"/>
                 @push('script')
                     <script>
                         $(function () {

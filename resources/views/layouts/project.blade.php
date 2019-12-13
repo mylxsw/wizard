@@ -55,8 +55,9 @@
             </ul>
         </div>
         <div class="col-12 col-lg-9 wz-panel-right">
+            <button class="btn btn-link wz-panel-separator" title="展开/折叠侧边栏"></button>
             <div class="panel panel-default">
-                <div class="panel-body" style="padding: 10px 15px;">
+                <div class="panel-body">
                     @yield('page-content')
                 </div>
             </div>
@@ -75,6 +76,16 @@
 //            window.setTimeout(function () {
 //                $('.wz-left-nav').removeClass('hide').addClass('animated fadeIn');
 //            }, 20);
+
+            var rightPanel = $('.wz-panel-right');
+            var leftPanel = $('.wz-left-main');
+
+            $('.wz-panel-separator').on('click', function (e) {
+                e.preventDefault();
+
+                leftPanel.toggle();
+                rightPanel.toggleClass('col-lg-9');
+            });
         });
     </script>
 @endpush
