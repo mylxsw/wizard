@@ -56,7 +56,7 @@
                         height += 25;
                     }
 
-                    return height + 26;
+                    return height + 46;
                 })(sheetData);
 
                 tableWidth = (function (sheetData) {
