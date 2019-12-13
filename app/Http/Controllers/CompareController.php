@@ -29,8 +29,6 @@ class CompareController extends Controller
         $this->validate(
             $request,
             [
-                'doc1'      => 'required',
-                'doc2'      => 'required',
                 'doc1title' => 'required',
                 'doc2title' => 'required',
                 'noheader'  => 'in:0,1',
@@ -39,10 +37,10 @@ class CompareController extends Controller
         );
 
         $doc1title = $request->input('doc1title');
-        $doc1      = $request->input('doc1');
+        $doc1      = $request->input('doc1', '');
 
         $doc2title = $request->input('doc2title');
-        $doc2      = $request->input('doc2');
+        $doc2      = $request->input('doc2', '');
 
         $viewData = [
             'doc1'      => $doc1,
