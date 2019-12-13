@@ -277,8 +277,10 @@
                             {
                                 doc1: $.global.getEditorContent(),
                                 doc2: resp.data.content,
-                                doc1title: '@lang('document.after_modified')',
-                                doc2title: '@lang('document.latest_document')',
+                                doc1title: $('#editor-title').val(),
+                                doc2title: resp.data.title,
+                                doc1pid: $('#form-pid').val(),
+                                doc2pid: resp.data.pid,
                                 noheader: 1
                             },
                             iframeId

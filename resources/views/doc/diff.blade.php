@@ -17,6 +17,16 @@
     <div class="row wz-full-box" id="wz-main-box">
         <div id="wz-compared" class="wz-compare-container w-100">
             <div style="display: none" id="wz-diff-original">{!! base64_encode($differContents) !!}</div>
+            @if($doc1title !== $doc2title)
+            <div class="wz-title-changed">
+                原标题 <s class="text-danger">{{ $doc2title }}</s> 修改为 <b class="text-success">{{ $doc1title }}</b>
+            </div>
+            @endif
+            @if($doc1pid !== $doc2pid)
+            <div class="wz-title-changed">
+                上级目录ID <s class="text-danger">{{ $doc2pid }}</s> 修改为 <b class="text-success">{{ $doc1pid }}</b>
+            </div>
+            @endif
             <div id="wz-diff-result"></div>
         </div>
     </div>
@@ -28,6 +38,9 @@
     <style type="text/css">
         .d2h-code-side-linenumber {
             padding-right: 10px;
+        }
+        .wz-title-changed {
+            margin-bottom: 10px;
         }
     </style>
 @endpush

@@ -24,8 +24,10 @@
                         {
                             doc1: resp1.data.content,
                             doc2: resp2.data.content,
-                            doc1title: '@lang('document.latest_document')',
-                            doc2title: '@lang('document.history_document')',
+                            doc1title: resp1.data.title,
+                            doc2title: resp2.data.title,
+                            doc1pid: resp1.data.pid,
+                            doc2pid: resp2.data.pid,
                             noheader: 1
                         },
                         iframeId

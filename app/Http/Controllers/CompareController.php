@@ -38,15 +38,19 @@ class CompareController extends Controller
 
         $doc1title = $request->input('doc1title');
         $doc1      = $request->input('doc1', '');
+        $doc1pid   = $request->input('doc1pid');
 
         $doc2title = $request->input('doc2title');
         $doc2      = $request->input('doc2', '');
+        $doc2pid   = $request->input('doc2pid');
 
         $viewData = [
             'doc1'      => $doc1,
             'doc2'      => $doc2,
             'doc1title' => $doc1title,
             'doc2title' => $doc2title,
+            'doc1pid'   => $doc1pid,
+            'doc2pid'   => $doc2pid,
             'noheader'  => !!$request->input('noheader', 0)
         ];
 
