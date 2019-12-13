@@ -43,9 +43,13 @@ Route::group(['middleware' => 'locale'], function () {
 
     // 空白页，用于前端兼容
     Route::get('/blank', 'HomeController@blank')->name('blank');
+    // 文档比较
+    Route::post('/doc/compare', 'CompareController@compare')->name('doc:compare');
+    // 阅读模式
+    Route::get('/project/{id}/doc/{page_id}/read', 'DocumentController@readMode')->name('project:doc:read');
 
     // 小工具
-    Route::group(['middleware' => 'auth', 'prefix' => 'tools', 'as' => 'tools:'], function () {
+    Route::group(['prefix' => 'tools', 'as' => 'tools:'], function () {
         Route::post('json-to-markdown', 'ToolController@convertJsonToTable')->name('json-to-markdown');
         Route::post('sql-to-markdown', 'ToolController@convertSQLToMarkdownTable')->name('sql-to-markdown');
         Route::post('sql-to-html', 'ToolController@convertSQLToHTMLTable')->name('sql-to-html');
@@ -178,9 +182,6 @@ Route::group(['middleware' => 'locale'], function () {
             // 文档分享
             Route::post('/{id}/doc/{page_id}/share', 'ShareController@create')->name('doc:share');
 
-            // 阅读模式
-            Route::get('/{id}/doc/{page_id}/read', 'DocumentController@readMode')->name('doc:read');
-
             // 文档评论
             Route::post('/{id}/doc/{page_id}/comments', 'CommentController@publish')
                 ->name('doc:comment');
@@ -213,9 +214,6 @@ Route::group(['middleware' => 'locale'], function () {
             Route::get('/{project_id}/doc-selector', 'ProjectController@documentSelector')->name('doc-selector');
         });
 
-
-        // 文档比较
-        Route::post('/doc/compare', 'CompareController@compare')->name('doc:compare');
 
         // 创建模板
         Route::post('/template', 'TemplateController@create')->name('template:create');

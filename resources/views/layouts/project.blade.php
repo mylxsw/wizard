@@ -19,7 +19,7 @@
                 <div class="dropdown pull-right" style="margin-right: 20px;" role="group">
                     @if($hasEditPrivilege)
                         <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="new-document" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">add_to_photos</i>
+                            <i class="material-icons" data-toggle="tooltip" title="创建文档">add_to_photos</i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="new-document" style="min-width: 13rem;">
                             <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'pid' => $pageID]) !!}" class="dropdown-item">
@@ -32,18 +32,18 @@
                                 <i class="fa fa-table mr-2"></i> 创建 表格 <sup class="wz-beta">beta</sup>
                             </a>
                         </ul>
-                        <button type="button" class="btn bmd-btn-icon " data-href="{!! wzRoute('search:search', ['project_id' => $project->id]) !!}" title="搜索">
+                        <button type="button" class="btn bmd-btn-icon" data-href="{!! wzRoute('search:search', ['project_id' => $project->id]) !!}" data-toggle="tooltip" title="搜索">
                             <i class="material-icons">search</i>
                         </button>
                     @endif
                     @if(!Auth::guest())
-                        <button type="button" class="btn bmd-btn-icon" data-method="post" data-href="{{ wzRoute('project:favorite', ['id' => $project->id, 'action' => $isFavorited ? 'unfav':'fav']) }}" title="{{ $isFavorited ? '取消关注' : '关注该项目' }}">
+                        <button type="button" class="btn bmd-btn-icon" data-method="post" data-href="{{ wzRoute('project:favorite', ['id' => $project->id, 'action' => $isFavorited ? 'unfav':'fav']) }}" data-toggle="tooltip" title="{{ $isFavorited ? '取消关注' : '关注该项目' }}">
                             <i class="material-icons {{ $isFavorited ? 'wz-box-tag-star' : '' }}">star</i>
                         </button>
                     @endif
                     @if($hasEditPrivilege)
                         @can('project-edit', $project)
-                        <button class="btn bmd-btn-icon" type="button" data-href="{{ wzRoute('project:setting:show', ['id' => $project->id]) }}" title="项目设置">
+                        <button class="btn bmd-btn-icon" type="button" data-href="{{ wzRoute('project:setting:show', ['id' => $project->id]) }}" data-toggle="tooltip" title="项目设置">
                             <i class="material-icons">settings</i>
                         </button>
                         @endcan

@@ -1,7 +1,7 @@
 
 <li role="presentation" class="mr-2">
     <button type="button" data-toggle="modal" data-target="#wz-export" title="导出文件" class="btn btn-primary bmd-btn-icon" id="wz-export-trigger">
-        <span class="fa fa-download"></span>
+        <span class="fa fa-download" data-toggle="tooltip" title="导出为"></span>
     </button>
 </li>
 

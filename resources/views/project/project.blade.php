@@ -13,31 +13,33 @@
             <ul class="nav nav-pills pull-right">
                 @can('page-edit', $pageItem)
                     <li role="presentation" class="mr-2">
-                        <button type="button" data-href="{{ wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" title="@lang('common.btn_edit')" class="btn btn-primary bmd-btn-icon">
+                        <button type="button" data-href="{{ wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" data-toggle="tooltip" title="@lang('common.btn_edit')" class="btn btn-primary bmd-btn-icon">
                             <i class="material-icons">mode_edit</i>
                         </button>
                     </li>
-                    @if(!empty($history))
-                        <li role="presentation" class="mr-2">
-                            <button type="button" wz-doc-compare-submit
-                               data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
-                               data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}"
-                               title="@lang('common.btn_diff')" class="btn btn-primary  bmd-btn-icon">
-                                <i class="material-icons">history</i>
-                            </button>
-                        </li>
-                    @endif
                     <li role="presentation" class="mr-2">
-                        <button type="button" data-href="{{ wzRoute('project:doc:attachment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" title="附件" class="btn btn-primary bmd-btn-icon">
+                        <button type="button" data-href="{{ wzRoute('project:doc:attachment', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" data-toggle="tooltip" title="附件" class="btn btn-primary bmd-btn-icon">
                             <span class="fa fa-paperclip"></span>
                         </button>
                     </li>
+                @endcan
+                @if(!empty($history))
                     <li role="presentation" class="mr-2">
-                        <button type="button" data-href="{{ wzRoute('project:doc:read', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}" title="阅读模式" class="btn btn-primary bmd-btn-icon">
-                            <span class="fa fa-laptop"></span>
+                        <button type="button" wz-doc-compare-submit
+                                data-doc1="{{ wzRoute('project:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}"
+                                data-doc2="{{ wzRoute('project:doc:history:json', ['history_id' => $history->id, 'id' => $project->id, 'page_id' => $pageItem->id]) }}"
+                                data-toggle="tooltip"
+                                title="@lang('common.btn_diff')" class="btn btn-primary  bmd-btn-icon">
+                            <i class="material-icons">history</i>
                         </button>
                     </li>
-                @endcan
+                @endif
+
+                <li role="presentation" class="mr-2">
+                    <button type="button" data-href="{{ wzRoute('project:doc:read', ['id' => $project->id, 'page_id' => $pageItem->id ]) }}" data-toggle="tooltip" title="阅读模式" class="btn btn-primary bmd-btn-icon">
+                        <span class="fa fa-laptop"></span>
+                    </button>
+                </li>
                 @include('components.page-menus-export', ['project' => $project, 'pageItem' => $pageItem])
                 @include('components.page-menus', ['project' => $project, 'pageItem' => $pageItem])
             </ul>
@@ -165,39 +167,38 @@
         @include('components.comment')
     @endif
 
-    @if(!Auth::guest())
-        @include('components.doc-compare-script')
-    @endif
+    @include('components.doc-compare-script')
 @endpush
 
 @push('script')
-    @if(!Auth::guest())
-        <script src="/assets/vendor/moment-with-locales.min.js"></script>
-        <script>
-            $(function () {
-                moment.locale('zh-cn');
-                $.wz.request('get', '{!! wzRoute('operation-log:recently', ['limit' => 'project', 'project_id' => $project->id]) !!}', {}, function (data) {
-                    if (data.trim() === '') {
-                        $('.wz-recently-log').addClass('d-none');
-                    } else {
-                        $('#operation-log-recently').html(data);
-                        $('#operation-log-recently .wz-operation-log-time').map(function() {
-                            $(this).html(moment($(this).html(), 'YYYY-MM-DD hh:mm:ss').fromNow());
-                        });
-                    }
-                }, null, 'html');
 
-                // 快捷键导出
-                var exportBtn = $('#wz-export-trigger');
-                document.addEventListener('keydown', function (e) {
-                    if (e.key === "s" && (e.ctrlKey||e.metaKey)) {
-                        e.preventDefault();
-                        if (exportBtn) {
-                            exportBtn.trigger('click');
-                        }
-                    }
+<script src="/assets/vendor/moment-with-locales.min.js"></script>
+<script>
+    $(function () {
+        moment.locale('zh-cn');
+        @if(!Auth::guest())
+        $.wz.request('get', '{!! wzRoute('operation-log:recently', ['limit' => 'project', 'project_id' => $project->id]) !!}', {}, function (data) {
+            if (data.trim() === '') {
+                $('.wz-recently-log').addClass('d-none');
+            } else {
+                $('#operation-log-recently').html(data);
+                $('#operation-log-recently .wz-operation-log-time').map(function() {
+                    $(this).html(moment($(this).html(), 'YYYY-MM-DD hh:mm:ss').fromNow());
                 });
-            });
-        </script>
-    @endif
+            }
+        }, null, 'html');
+        @endif
+        // 快捷键导出
+        var exportBtn = $('#wz-export-trigger');
+        document.addEventListener('keydown', function (e) {
+            if (e.key === "s" && (e.ctrlKey||e.metaKey)) {
+                e.preventDefault();
+                if (exportBtn) {
+                    exportBtn.trigger('click');
+                }
+            }
+        });
+    });
+</script>
+
 @endpush
