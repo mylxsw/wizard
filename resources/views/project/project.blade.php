@@ -48,12 +48,10 @@
         <div class="wz-project-main">
             <nav class="wz-page-control clearfix">
                 <h1 class="wz-page-title">
+                    <i class="fa fa-hashtag" style="color: #909090;" title="文档标题" data-toggle="tooltip"></i>
                     {{ $pageItem->title }}
                     @if($type == 'swagger')
                         <a title="原始Swagger文档" target="_blank" href="{{ route('swagger:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="fa fa-link"></a>
-                    @endif
-                    @if($type === 'table')
-                        <sup class="wz-beta">beta</sup>
                     @endif
                 </h1>
             </nav>
