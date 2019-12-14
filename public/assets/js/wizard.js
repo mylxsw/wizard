@@ -199,6 +199,8 @@ $.wz = {
     dialogOpen: function (layerId, title, callback) {
         var pageLoaded = false;
 
+        $('body').addClass('wz-body-overflow-hide');
+
         layer.open({
             id: layerId,
             type: 2,
@@ -215,6 +217,9 @@ $.wz = {
 
                 callback($('#' + layerId + ' iframe').attr('id'));
                 pageLoaded = true;
+            },
+            cancel: function(index, layero) {
+                $('body').removeClass('wz-body-overflow-hide');
             }
         });
     },

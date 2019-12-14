@@ -29,7 +29,7 @@
 
     {{--<link href="/assets/vendor/animate.css" rel="stylesheet">--}}
 
-<!-- Custom styles for this template -->
+    <!-- Custom styles for this template -->
     <link href="/assets/css/style.css?{{ resourceVersion() }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -39,6 +39,8 @@
     <![endif]-->
 
     @stack('stylesheet')
+
+    <link href="/assets/css/style-{{ config('wizard.theme') }}.css?{{ resourceVersion() }}" rel="stylesheet">
 </head>
 
 <body>

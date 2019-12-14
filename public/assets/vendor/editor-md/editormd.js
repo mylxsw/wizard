@@ -3595,6 +3595,14 @@
 
             var headingHTML = "<h" + level + " id=\"h"+ level + "-" + this.options.headerPrefix + id +"\">";
 
+            // Wizard 添加样式 START
+            if (level === 2) {
+                headingHTML    += "<i class='fa fa-thumb-tack mr-2'></i>";
+            } else if (level === 1) {
+                headingHTML    += "<i class='fa fa-slack mr-2'></i>";
+            }
+
+            // Wizard 添加样式 END
             headingHTML    += "<a name=\"" + text + "\" class=\"reference-link\"></a>";
             headingHTML    += "<span class=\"header-link octicon octicon-link\"></span>";
             headingHTML    += (hasLinkReg) ? this.atLink(this.emoji(linkText)) : this.atLink(this.emoji(text));
@@ -3687,6 +3695,10 @@
         // wizard 添加扩展 START
         markedRenderer.table = function(header, body) {
             return '<div class="table-responsive"><table class="table table-hover"><thead>' + header + '</thead><tbody>' + body + '</tbody></table></div>';
+        };
+
+        markedRenderer.blockquote = function(quote) {
+            return"<blockquote><i class='fa fa-quote-left'></i>\n"+quote+"</blockquote>\n"
         };
 
         // wizard 添加扩展 END

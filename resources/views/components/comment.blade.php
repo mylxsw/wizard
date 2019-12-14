@@ -6,7 +6,7 @@
                   id="wz-new-comment-form" style="position: relative;">
                 {{ csrf_field() }}
                 <div class="alert alert-info wz-comment-tip">
-                    <strong>提示</strong>
+                    <i class="fa fa-bullhorn"></i>
                     你可以在评论中 <b>@某人</b>，当前支持语法为 <b>@用户名 </b>，需要注意的是，用户名后面必须要有至少一个空格。
                 </div>
 
@@ -24,7 +24,7 @@
                             <div class="wz-tab wz-tab2 wz-markdown-comment" style="display: none;"></div>
                         </div>
                         <div class="wz-comment-editor-footer">
-                            <span style="margin-left: 11px; color: #6b6b6b;"><i class="sign-markdown">M</i>支持Markdown语法</span>
+                            <span style="margin-left: 11px; color: #6b6b6b;"><i class="fa fa-magic m-2"></i>支持Markdown语法</span>
                             <button type="button" id="wz-comment-submit" class="btn btn-raised btn-success pull-right">评论</button>
                             <div class="clearfix"></div>
                         </div>

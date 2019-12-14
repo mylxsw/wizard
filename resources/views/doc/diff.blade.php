@@ -15,18 +15,32 @@
     @endif
 
     <div class="row wz-full-box" id="wz-main-box">
+        <div class="wz-diff-control">
+            <button class="btn btn-primary wz-switch-display">双页展示</button>
+
+            <div class="wz-title-changed">
+                <i class="fa fa-quote-left"> 标题</i>
+                @if($doc1title !== $doc2title)
+                <s class="text-danger">{{ $doc2title }}</s> 修改为 <b class="text-success">{{ $doc1title }}</b>
+                @else
+                    <i class="text-success">无变更</i>
+                @endif
+            </div>
+
+
+            <div class="wz-title-changed">
+                <i class="fa fa-quote-left"> 上级目录ID</i>
+                @if($doc1pid !== $doc2pid)
+                <s class="text-danger">{{ $doc2pid }}</s> 修改为 <b class="text-success">{{ $doc1pid }}</b>
+                @else
+                    <i class="text-success">无变更</i>
+                @endif
+            </div>
+
+        </div>
         <div id="wz-compared" class="wz-compare-container w-100">
             <div style="display: none" id="wz-diff-original">{!! base64_encode($differContents) !!}</div>
-            @if($doc1title !== $doc2title)
-            <div class="wz-title-changed">
-                原标题 <s class="text-danger">{{ $doc2title }}</s> 修改为 <b class="text-success">{{ $doc1title }}</b>
-            </div>
-            @endif
-            @if($doc1pid !== $doc2pid)
-            <div class="wz-title-changed">
-                上级目录ID <s class="text-danger">{{ $doc2pid }}</s> 修改为 <b class="text-success">{{ $doc1pid }}</b>
-            </div>
-            @endif
+
             <div id="wz-diff-result"></div>
         </div>
     </div>
@@ -39,8 +53,31 @@
         .d2h-code-side-linenumber {
             padding-right: 10px;
         }
+        .d2h-file-wrapper {
+            border: none;
+            margin-bottom: 0;
+        }
         .wz-title-changed {
+            margin: 10px;
+        }
+        .wz-diff-control {
+            padding: 10px;
+            border: 1px dashed #ccc;
+            border-radius: 3px;
+            width: 100%;
             margin-bottom: 10px;
+            position: relative;
+            min-height: 100px;
+        }
+
+        .wz-switch-display {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .wz-compare-container {
+            border: 1px dashed #ccc;
+            border-radius: 3px;
         }
     </style>
 @endpush
@@ -52,9 +89,27 @@
     <script src="/assets/vendor/base64.min.js"></script>
     <script>
         $(function () {
-            var diff2htmlUi = new Diff2HtmlUI({diff: Base64.decode($('#wz-diff-original').text())});
-            diff2htmlUi.draw('#wz-diff-result', {inputFormat: 'diff', showFiles: false, matching: 'lines', outputFormat: 'side-by-side'});
-            diff2htmlUi.highlightCode('#wz-diff-result');
+            var switchDisplay = function(mode) {
+                $('#wz-diff-result').html('');
+                var diff2htmlUi = new Diff2HtmlUI({diff: Base64.decode($('#wz-diff-original').text())});
+                diff2htmlUi.draw('#wz-diff-result', {inputFormat: 'diff', showFiles: false, matching: 'lines', outputFormat: mode});
+                diff2htmlUi.highlightCode('#wz-diff-result');
+            };
+
+            var currentDisplayMode = 'line-by-line';
+            switchDisplay(currentDisplayMode);
+
+            $('.wz-switch-display').on('click', function () {
+                if (currentDisplayMode === 'line-by-line') {
+                    currentDisplayMode = 'side-by-side';
+                    $(this).html('单页展示');
+                    switchDisplay(currentDisplayMode);
+                } else {
+                    $(this).html('双页展示');
+                    currentDisplayMode = 'line-by-line';
+                    switchDisplay(currentDisplayMode);
+                }
+            });
         });
     </script>
 @endpush

@@ -25,6 +25,11 @@ return [
     'jwt_secret'       => env('WIZARD_JWT_SECRET'),
 
     /**
+     * 主题选择，支持 default/dark
+     */
+    'theme'            => env('WIZARD_THEME', 'default'),
+
+    /**
      * 静态资源版本
      */
     'resource_version' => env('WIZARD_RESOURCE_VERSION', '201709071013'),

@@ -407,7 +407,7 @@ a:hover {
 }
 
 .markdown-body table {
-    display: table!important;
+    display: table !important;
 }
 
 .markdown-body .swagger-ui {
@@ -810,7 +810,7 @@ tr.warning {
 
 .wz-comment-editor {
     width: 100%;
-    border: 1px solid #c3c3c3;
+    border: 1px solid #d1d5da;
     border-radius: 2px;
 }
 
@@ -852,7 +852,7 @@ tr.warning {
 
 .wz-comment-editor .wz-comment-editor-body textarea:focus {
     background-color: #fff;
-    outline:none;
+    outline: none;
     border: 1px solid #d1d5da;
 }
 
@@ -869,19 +869,6 @@ tr.warning {
     margin-left: 41px;
 }
 
-.sign-markdown {
-    padding: 2px;
-    background: #656565;
-    color: #fff;
-    border-radius: 5px;
-    font-size: 12px;
-    width: 22px;
-    height: 22px;
-    text-align: center;
-    margin-right: 5px;
-    display: inline-block;
-    vertical-align: middle;
-}
 
 .wz-tag-container {
     padding-left: 10px;
@@ -1211,7 +1198,7 @@ li.L1, li.L3, li.L5, li.L7, li.L9 {
     color: #868686;
     text-overflow: clip;
     border: 0;
-    outline:none;
+    outline: none;
 
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
@@ -1262,7 +1249,7 @@ pre.prettyprint *,
 }
 
 .wz-sql-create .nav-tabs .nav-item.show .nav-link,
-.wz-sql-create .nav-tabs .nav-link.active{
+.wz-sql-create .nav-tabs .nav-link.active {
     border-color: #dee2e6 #dee2e6 #4caf50
 }
 
@@ -1272,7 +1259,7 @@ pre.prettyprint *,
 }
 
 .wz-tag-input {
-    outline:none;
+    outline: none;
 }
 
 .wz-panel-separator {
@@ -1283,9 +1270,46 @@ pre.prettyprint *,
     left: 0;
     padding: 0;
     margin: 0;
+    border-radius: 0;
 }
 
 .wz-panel-separator:hover {
-    box-shadow: 6px -2px 6px -3px #4caf50;
-    z-index: 999;
+    box-shadow: inset 3px -3px 9px 0px rgba(0,0,0,.5);
+    z-index: 99;
+    background: #03a9f436;
+}
+
+.wz-body-overflow-hide {
+    overflow-y: hidden;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+    border-bottom: none!important;
+}
+
+.markdown-body h1>.fa,
+.markdown-body h2>.fa {
+    color: #eaeaeae8;
+}
+
+.markdown-body blockquote {
+    border: none!important;
+}
+.markdown-body blockquote>p {
+    text-indent: 2em;
+}
+.markdown-body pre.prettyprint {
+    border: 1px dashed #ddd!important;
+}
+.markdown-body pre.prettyprint li {
+    border-left: 1px dashed #ccc;
+    padding-left: 10px;
+}
+.markdown-body pre.prettyprint:hover {
+    border: 1px solid #ddd!important;
+}
+.markdown-body code {
+    border: none!important;
+    background: #f8f8f8;
 }
