@@ -1287,4 +1287,5 @@ pre.prettyprint *,
 
 .wz-panel-separator:hover {
     box-shadow: 6px -2px 6px -3px #4caf50;
+    z-index: 999;
 }
