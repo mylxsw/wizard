@@ -220,6 +220,14 @@
                 }
             });
 
+            // 禁止标题表单回车自动提交
+            // 解决标题输入表单中，按下回车时自动提交表单，直接展示为json页面的问题
+            $('.wz-document-form input').keydown(function (event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                }
+            });
+
             // 另存为模板
             $('#wz-template-save').on('click', function () {
                 $.wz.btnAutoLock($(this));
