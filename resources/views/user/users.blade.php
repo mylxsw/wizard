@@ -9,7 +9,7 @@
     </ol>
 @endsection
 @section('admin-content')
-    <div class="card">
+    <div class="card card-white">
         <div class="card-header">搜索</div>
         <div class="card-body">
             <form method="get"
@@ -29,7 +29,7 @@
             </form>
         </div>
     </div>
-    <div class="card mt-3">
+    <div class="card mt-3 card-white">
         <table class="table">
             <thead>
             <tr>

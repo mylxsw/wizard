@@ -9,7 +9,7 @@
     </ol>
 @endsection
 @section('admin-content')
-    <div class="card">
+    <div class="card card-white">
         <div class="card-header">创建用户组</div>
         <div class="card-body">
             <form method="post"
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="card mt-3">
+    <div class="card mt-3 card-white">
         <div class="card-header">用户组</div>
         <table class="table">
             <thead>

@@ -9,7 +9,7 @@
     </ol>
 @endsection
 @section('user-content')
-    <div class="card">
+    <div class="card card-white">
         <div class="card-body">
             <table class="table table-hover wz-message-table">
                 <thead>

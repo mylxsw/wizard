@@ -24,7 +24,7 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
-            <div class="card">
+            <div class="card card-white">
                 <div class="card-body">
                     @if($user->id == Auth::user()->id)
                         <div class="alert alert-warning" role="alert">
@@ -88,7 +88,7 @@
         </div>
         <div class="tab-pane fade" id="user-group" role="tabpanel" aria-labelledby="user-group-tab">
 
-            <div class="card">
+            <div class="card card-white">
                 <div class="card-header">加入用户组</div>
                 <div class="card-body">
                     <form method="post"
@@ -111,7 +111,7 @@
                 </div>
             </div>
 
-            <div class="card mt-3">
+            <div class="card mt-3 card-white">
                 <div class="card-header">已加入的用户组</div>
                 <table class="table">
                     <thead>
@@ -149,7 +149,7 @@
             </div>
         </div>
         <div class="tab-pane fade" id="project" role="tabpanel" aria-labelledby="project-tab">
-            <div class="card mt-3">
+            <div class="card mt-3 card-white">
                 <div class="card-header">创建的项目</div>
                 <table class="table">
                     <thead>

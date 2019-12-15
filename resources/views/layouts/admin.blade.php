@@ -24,7 +24,7 @@
             </nav>
         </div>
         <div class="col-12 col-lg-9 ">
-            @yield('breadcrumb')
+            <div class="wz-setting-breadcrumb">@yield('breadcrumb')</div>
             @include('components.error', ['error' => $errors ?? null])
             @yield('admin-content')
         </div>

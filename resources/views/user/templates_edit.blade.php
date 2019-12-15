@@ -10,7 +10,7 @@
     </ol>
 @endsection
 @section('user-content')
-    <div class="card">
+    <div class="card card-white">
         <div class="card-header">编辑模板</div>
         <div class="card-body">
 

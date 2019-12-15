@@ -1,4 +1,4 @@
-<div class="card wz-panel-limit" style="box-shadow: none">
+<div class="card wz-panel-limit wz-comment-panel" style="box-shadow: none">
     <div class="card-body">
         @can('project-comment', $project)
             <form method="post"

@@ -10,7 +10,7 @@
 @endsection
 @section('user-content')
 
-    <div class="card">
+    <div class="card card-white">
         <div class="card-body">
             <div class="btn-group wz-nav-control">
                 <form action="{{ route('user:notifications:read-all') }}" method="post" id="form-notifications-readall">{{ method_field('PUT') }}{{ csrf_field() }}</form>

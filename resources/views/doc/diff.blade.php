@@ -41,7 +41,7 @@
         <div id="wz-compared" class="wz-compare-container w-100">
             <div style="display: none" id="wz-diff-original">{!! base64_encode($differContents) !!}</div>
 
-            <div id="wz-diff-result"></div>
+            <div id="wz-diff-result" class="wz-diff-result"></div>
         </div>
     </div>
 @endsection

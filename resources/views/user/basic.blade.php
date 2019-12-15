@@ -9,7 +9,7 @@
     </ol>
 @endsection
 @section('user-content')
-    <div class="card">
+    <div class="card card-white">
         <div class="card-body">
             <form class="form-horizontal" method="post" action="{{ wzRoute('user:basic:handle') }}">
                 {{ csrf_field() }}

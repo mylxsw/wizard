@@ -40,7 +40,7 @@
 
     @stack('stylesheet')
 
-    <link href="/assets/css/style-{{ config('wizard.theme') }}.css?{{ resourceVersion() }}" rel="stylesheet">
+    <link href="/assets/css/style-dark.css?{{ resourceVersion() }}" rel="stylesheet">
 </head>
 
 <body>
@@ -74,9 +74,23 @@
     </footer>
 @endif
 
-@stack('bottom')
 <script src="/assets/vendor/jquery.min.js"></script>
-{{--<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>--}}
+<script src="/assets/vendor/store.everything.min.js"></script>
+<script>
+    $(function () {
+        var currentTheme = store.get('wizard-theme');
+        if (currentTheme === undefined) {
+            currentTheme = 'default';
+        }
+
+        if (currentTheme === 'dark') {
+            $('body').addClass('wz-dark-theme');
+        }
+    });
+</script>
+
+@stack('bottom')
+
 <script src="/assets/vendor/popper.js"></script>
 <script src="/assets/vendor/bootstrap-material-design/js/bootstrap-material-design.min.js"></script>
 <script src="/assets/vendor/jquery.easing.js"></script>
@@ -86,7 +100,6 @@
 <script src="/assets/vendor/ie10-viewport-bug-workaround.js"></script>
 <script src="/assets/vendor/layer/layer.js"></script>
 <script src="/assets/vendor/axios.min.js"></script>
-<script src="/assets/vendor/store.everything.min.js"></script>
 <script src="/assets/vendor/wave/waves.min.js"></script>
 <script src="/assets/js/wizard.js?{{ resourceVersion() }}"></script>
 <script src="/assets/js/app.js?{{ resourceVersion() }}"></script>

@@ -9,7 +9,7 @@
     </ol>
 @endsection
 @section('admin-content')
-    <div class="card">
+    <div class="card card-white">
         <div class="card-header">总览</div>
         <div class="card-deck mb-3 text-center card-body">
             <div class="card mb-4 box-shadow text-white bg-success">
@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    <div class="card mt-3">
+    <div class="card mt-3 card-white">
         <div class="card-header">新增文档统计</div>
         <div class="card-body" id="visualization" style="padding: 0;"></div>
     </div>

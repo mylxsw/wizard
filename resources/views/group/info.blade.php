@@ -23,7 +23,7 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="card">
+            <div class="card card-white">
                 <div class="card-header">添加成员</div>
                 <div class="card-body">
                     <form method="post"
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="card mt-3">
+            <div class="card mt-3 card-white">
                 <div class="card-header">成员</div>
                 <table class="table">
                     <thead>
@@ -87,7 +87,7 @@
             </div>
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="card mt-3">
+            <div class="card card-white">
                 <div class="card-header">添加项目</div>
                 <div class="card-body">
                     <form method="post"
@@ -128,7 +128,7 @@
                 </div>
             </div>
 
-            <div class="card mt-3">
+            <div class="card mt-3 card-white">
                 <div class="card-header">@lang('common.project')</div>
                 <table class="table">
                     <thead>
@@ -171,7 +171,7 @@
             </div>
         </div>
         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-            <div class="card mt-3">
+            <div class="card card-white">
                 <div class="card-header">修改组名</div>
                 <div class="card-body">
                     <form method="post"

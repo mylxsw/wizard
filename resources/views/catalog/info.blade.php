@@ -10,7 +10,7 @@
     </ol>
 @endsection
 @section('admin-content')
-    <div class="card">
+    <div class="card card-white">
         <div class="card-header">编辑目录信息</div>
         <div class="card-body">
 
@@ -41,7 +41,7 @@
             </form>
         </div>
     </div>
-    <div class="card mt-3">
+    <div class="card mt-3 card-white">
         <div class="card-header">包含的项目</div>
         <table class="table">
             <thead>
