@@ -17,8 +17,11 @@ $.wz = {
      * @param dataType
      */
     request: function (method, url, params, successCallback, errorCallback, dataType) {
-        successCallback = successCallback || function (data) {};
-        errorCallback = errorCallback || function (response) { return false; };
+        successCallback = successCallback || function (data) {
+        };
+        errorCallback = errorCallback || function (response) {
+            return false;
+        };
         dataType = dataType || 'json';
 
         $.ajax({
@@ -55,8 +58,11 @@ $.wz = {
      * @param errorCallback 返回true则跳过默认逻辑，返回false则继续执行默认逻辑
      */
     asyncForm: function (form, params, successCallback, errorCallback) {
-        successCallback = successCallback || function (data) {};
-        errorCallback = errorCallback || function (response) { return false; };
+        successCallback = successCallback || function (data) {
+        };
+        errorCallback = errorCallback || function (response) {
+            return false;
+        };
         params = params || {};
 
         var datas = [];
@@ -90,8 +96,9 @@ $.wz = {
         // 5 - cry
         // 6 - smile
         // 7 - ！
-        icon = icon ||  -1;
-        callback = callback || function () {};
+        icon = icon || -1;
+        callback = callback || function () {
+        };
         layer.msg(message, {
             icon: icon,
             offset: 't'
@@ -126,7 +133,8 @@ $.wz = {
      * @param params
      */
     alert: function (message, callback, params) {
-        callback = callback || function() {};
+        callback = callback || function () {
+        };
 
         var defaults = {closeBtn: 0, scrollbar: false};
         $.extend(defaults, params);
@@ -144,7 +152,8 @@ $.wz = {
      * @param callback_cancel
      */
     confirm: function (message, callback, callback_cancel) {
-        callback_cancel = callback_cancel || function () {};
+        callback_cancel = callback_cancel || function () {
+        };
         var index = layer.confirm(message, {icon: 3}, function () {
             callback();
             layer.close(index);
@@ -210,15 +219,15 @@ $.wz = {
             maxmin: false,
             area: ['100%', '100%'],
             content: '/blank',
-            success: function(layero, index) {
+            success: function (layero, index) {
                 if (pageLoaded) {
-                    return ;
+                    return;
                 }
 
                 callback($('#' + layerId + ' iframe').attr('id'));
                 pageLoaded = true;
             },
-            cancel: function(index, layero) {
+            cancel: function (index, layero) {
                 $('body').removeClass('wz-body-overflow-hide');
             }
         });
@@ -252,7 +261,7 @@ $.wz = {
      *
      * @param selector
      */
-    imageResize: function(selector) {
+    imageResize: function (selector) {
         $(selector).find('img').each(function () {
             var size = $(this).attr('alt');
             var regexp = /size:\s*\d*,\d*/;
@@ -286,10 +295,10 @@ $.wz = {
      */
     sqlCreateSyntaxParser: function (selector) {
         if ($(selector).length === 0) {
-            return ;
+            return;
         }
 
-        $(selector).each(function() {
+        $(selector).each(function () {
             let sqlText = $(this).find('.wz-sql-text');
 
             var self = $(this);
@@ -297,6 +306,14 @@ $.wz = {
                 sqlText.parent().find('.wz-sql-table-parsed').html(data.html);
                 $('#' + self.data('id') + '-table').trigger('click');
             });
+        });
+    },
+    /**
+     * 加载延迟的 iframe
+     */
+    loadIframe: function () {
+        $('.markdown-body iframe').each(function () {
+            $(this).attr('src', $(this).data('src'));
         });
     }
 };

@@ -28,6 +28,10 @@
     padding-bottom: 5px;
 }
 
+.btn:hover {
+    transform: scale(1.1);
+}
+
 form {
     margin: 0;
 }
@@ -668,12 +672,19 @@ a:hover {
     left: auto;
 }
 
+.wz-editor-header-toolbar .wz-panel-breadcrumb {
+    box-shadow: none;
+}
+
 .wz-panel-breadcrumb {
     padding: 10px 15px 0;
+    background: #f7f7f7;
 }
 
 .wz-project-main {
     padding: 0 15px 10px;
+    padding-left: 20px;
+    padding-top: 15px;
 }
 
 .wz-panel-breadcrumb .breadcrumb {
@@ -1306,25 +1317,32 @@ pre.prettyprint *,
 
 .wz-panel-separator {
     width: 15px;
-    height: 100%;
     position: absolute;
-    top: 0;
     left: 0;
     padding: 0;
     margin: 0;
     border-radius: 0;
+
+    height: 90%;
+    top: 58px;
+    border-bottom-right-radius: 2em;
 }
 
 .wz-panel-separator:hover {
-    box-shadow: inset 3px -3px 9px 0px rgba(0,0,0,.5);
+    box-shadow: 12px 7px 9px 0px rgba(0, 0, 0, 0.15);
     z-index: 99;
-    background: #03a9f436;
+    background: #f7f7f7;
+    transform: none;
 }
 
 .wz-body-overflow-hide {
     overflow-y: hidden;
 }
 
-.btn:hover {
-    transform: scale(1.1);
+.wz-editor-header .wz-editor-header-toolbar {
+    padding: 0;
+    margin-left: -14px;
+    margin-top: -17px;
+    line-height: 1;
+    margin-bottom: 7px;
 }

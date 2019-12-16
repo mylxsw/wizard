@@ -69,18 +69,9 @@ body.wz-dark-theme {
 .wz-dark-theme .wz-top-navbar .wz-top-nav-search input::-webkit-input-placeholder {
   color: #dcdcdc;
 }
-.wz-dark-theme .wz-panel-separator {
-  height: 90%;
-  top: 58px;
-  border-bottom-right-radius: 2em;
-}
 .wz-dark-theme .wz-panel-separator:hover {
   box-shadow: 8px 3px 5px 0 #b1b1b1;
   background: #343a40;
-}
-.wz-dark-theme .wz-project-main {
-  padding-left: 20px;
-  padding-top: 15px;
 }
 .wz-dark-theme .wz-panel-breadcrumb {
   background: #343a40;
@@ -201,12 +192,5 @@ body.wz-dark-theme {
 }
 .wz-dark-theme .nav-tabs .nav-item a {
   color: #fffffc;
-}
-.wz-dark-theme .wz-editor-header .wz-editor-header-toolbar {
-  padding: 0;
-  margin-left: -14px;
-  margin-top: -17px;
-  line-height: 1;
-  margin-bottom: 7px;
 }
 /*# sourceMappingURL=style-dark.css.map */

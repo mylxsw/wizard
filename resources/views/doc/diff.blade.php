@@ -16,7 +16,9 @@
 
     <div class="row wz-full-box" id="wz-main-box">
         <div class="wz-diff-control">
-            <button class="btn btn-primary wz-switch-display">双页展示</button>
+            <button class="btn btn-primary wz-switch-display">
+                <i class="fa fa-columns" data-toggle="tooltip" title="切换展示方式"></i>
+            </button>
 
             <div class="wz-title-changed">
                 <i class="fa fa-quote-left"> 标题</i>
@@ -102,10 +104,10 @@
             $('.wz-switch-display').on('click', function () {
                 if (currentDisplayMode === 'line-by-line') {
                     currentDisplayMode = 'side-by-side';
-                    $(this).html('单页展示');
+                    $(this).find('i').removeClass('fa-columns').addClass('fa-file');
                     switchDisplay(currentDisplayMode);
                 } else {
-                    $(this).html('双页展示');
+                    $(this).find('i').removeClass('fa-file').addClass('fa-columns');
                     currentDisplayMode = 'line-by-line';
                     switchDisplay(currentDisplayMode);
                 }

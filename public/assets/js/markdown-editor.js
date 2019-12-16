@@ -222,6 +222,7 @@ $.wz.mdEditor = function (editor_id, params) {
 
             $.wz.imageResize('.editormd-preview-container');
             $.wz.sqlCreateSyntaxParser('.editormd-preview-container .wz-sql-create');
+            $.wz.loadIframe();
         },
         onchange: function () {
             // 图片缩放支持
@@ -236,6 +237,7 @@ $.wz.mdEditor = function (editor_id, params) {
             }
             // sql 建表语句解析
             $.wz.sqlCreateSyntaxParser('.editormd-preview-container .wz-sql-create');
+            $.wz.loadIframe();
         }
     });
 
