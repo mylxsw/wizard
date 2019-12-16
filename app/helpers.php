@@ -8,6 +8,7 @@
 
 use App\Repositories\Template;
 use App\Repositories\User;
+use Carbon\Carbon;
 
 /**
  * 生成路由url
@@ -665,4 +666,25 @@ function processSpreedSheet(string $content): string
 
     $content = json_encode($contentArray, JSON_UNESCAPED_UNICODE);
     return $content;
+}
+
+/**
+ * 是否使用较为严格的 markdown 解释器
+ *
+ * 2019-12-16T21:54:00+08:00 之后创建的所有文档人采用该模式
+ *
+ * @param \App\Repositories\Document $pageItem
+ *
+ * @return bool
+ */
+function markdownCompatibilityStrict($pageItem = null)
+{
+    if (empty($pageItem) || empty($pageItem->created_at)) {
+        return true;
+    }
+
+    return $pageItem->created_at->greaterThan(Carbon::createFromFormat(
+        Carbon::RFC3339,
+        '2019-12-16T21:54:00+08:00'
+    ));
 }

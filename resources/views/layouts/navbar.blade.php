@@ -70,7 +70,7 @@
             (function () {
                 var currentTheme = store.get('wizard-theme');
                 if (currentTheme === undefined) {
-                    currentTheme = 'default';
+                    currentTheme = '{{ config('wizard.theme') }}';
                 }
 
                 var themeIndicator = $('.wz-theme-indicator .material-icons');

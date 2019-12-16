@@ -4,8 +4,14 @@
 
 @push('script')
 <script src="/assets/vendor/bootstrap-treeview.js"></script>
-<script src="/assets/vendor/editor-md/lib/marked.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/prettify.min.js"></script>
+
+{{-- 从 2019-12-16T21:54:00+08:00 开始创建的新文档，使用最新的 marked 库，对 Markdown 文档格式要求更为严格一些，也更加规范，这里是对之前已经创建的不符合规范的文档做一个兼容 --}}
+@if(markdownCompatibilityStrict($pageItem ?? null))
+    <script src="/assets/vendor/editor-md/lib/marked.min.js"></script>
+@else
+    <script src="/assets/vendor/editor-md/lib/marked-0.3.3.min.js"></script>
+@endif
 
 <script src="/assets/vendor/editor-md/lib/raphael.min.js"></script>
 <script src="/assets/vendor/editor-md/lib/underscore.min.js"></script>
@@ -64,6 +70,13 @@
         }, 0);
 
         window.setTimeout(function () {
+            // 延迟加载iframe，避免阻塞页面加载
+            window.setTimeout(function () {
+                $('.markdown-body iframe').each(function () {
+                    $(this).attr('src', $(this).data('src'));
+                });
+            },1000);
+
             // 表格超宽展示优化
             $("#markdown-body table").each(function() {
                 if ($(this)[0].scrollWidth > $('#markdown-body').width()) {

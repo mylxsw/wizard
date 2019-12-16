@@ -577,7 +577,7 @@
 
                         _this.setToolbar();
 
-                        editormd.loadScript(loadPath + "marked.min", function() {
+                        editormd.loadScript(editormd.markedURL.js, function() {
 
                             editormd.$marked = marked;
 
@@ -3532,7 +3532,7 @@
                             header = "<div class='card-header'>" + text + "</div>";
                         }
 
-                        return "<div class='card'>" + header + "<div class='card-body'><iframe frameborder=\"0\" style=\"display:block; width: 100%; height:500px;\" src=\"" + href + "\"></iframe></div></div>";
+                        return "<div class='card'>" + header + "<div class='card-body'><iframe frameborder=\"0\" style=\"display:block; width: 100%; height:500px;\" data-src=\"" + href + "\"></iframe></div></div>";
                     default:
                 }
             }
@@ -4020,6 +4020,8 @@
             smartypants : true
         };
 
+		// markdownDoc = new String(markdownDoc);
+
         var markdownParsed = marked(markdownDoc, markedOptions);
 
         markdownParsed = editormd.filterHTMLTags(markdownParsed, settings.htmlDecode);
@@ -4257,6 +4259,17 @@
         editormd.loadCSS(editormd.katexURL.css, function(){
             editormd.loadScript(editormd.katexURL.js, callback || function(){});
         });
+    };
+
+    /**
+     * Wizard 增加配置
+     *
+     * 可以配置加载的 marked 库版本，用于兼容已有的格式不规范的 markdown 文档
+     *
+     * @type {{js: string}}
+     */
+    editormd.markedURL = {
+        js: "/assets/vendor/editor-md/lib/marked.min"
     };
 
     /**
