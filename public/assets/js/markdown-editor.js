@@ -118,7 +118,7 @@ $.wz.mdEditor = function (editor_id, params) {
                     buttons: {
                         enter: [config.lang.confirmBtn, function () {
 
-                            cm.replaceSelection
+                            cm.replaceSelection(config.templateSelected(this));
                             this.hide().lockScreen(false).hideMask();
 
                             return false;
