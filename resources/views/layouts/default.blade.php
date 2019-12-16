@@ -22,12 +22,9 @@
     <link rel="stylesheet" href="/assets/vendor/material-design-icons/material-icons.css">
     <link rel="stylesheet" href="/assets/vendor/bootstrap-material-design/css/bootstrap-material-design.min.css">
     <link href="/assets/vendor/font-awesome4/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/assets/vendor/wave/waves.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="/assets/vendor/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    {{--<link href="/assets/vendor/animate.css" rel="stylesheet">--}}
 
     <!-- Custom styles for this template -->
     <link href="/assets/css/style.css?{{ resourceVersion() }}" rel="stylesheet">
@@ -100,7 +97,6 @@
 <script src="/assets/vendor/ie10-viewport-bug-workaround.js"></script>
 <script src="/assets/vendor/layer/layer.js"></script>
 <script src="/assets/vendor/axios.min.js"></script>
-<script src="/assets/vendor/wave/waves.min.js"></script>
 <script src="/assets/js/wizard.js?{{ resourceVersion() }}"></script>
 <script src="/assets/js/app.js?{{ resourceVersion() }}"></script>
 <script src="/assets/js/tagmanager.js"></script>
@@ -138,10 +134,6 @@
                 $(this).hide();
             }
         });
-
-        // 按钮wave效果
-        Waves.attach('.wz-box');
-        Waves.init();
 
         // 所有js执行完后再执行
         window.setTimeout(function () {

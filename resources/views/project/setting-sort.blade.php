@@ -1,7 +1,7 @@
 @extends('layouts.project-setting')
 
 @section('project-setting')
-    <div class="card">
+    <div class="card card-white">
         <div class="card-body">
             <form method="post" action="{{ wzRoute('project:setting:handle', ['id' => $project->id]) }}"
                   id="wz-sort-form">

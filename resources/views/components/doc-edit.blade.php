@@ -6,7 +6,7 @@
     <input type="hidden" name="last_modified_at" value="{{ $pageItem->updated_at ?? '' }}">
     <input type="hidden" name="history_id" value="{{ $pageItem->history_id ?? '' }}">
     <input type="hidden" name="sort_level" value="{{ $pageItem->sort_level ?? 1000 }}">
-    <div class="col-12" style="padding-left: 0;">
+    <div class="col-12 wz-editor-header-toolbar">
         <div class="wz-panel-breadcrumb">
             <ol class="breadcrumb pull-left">
                 <li class="breadcrumb-item"><a href="{{ wzRoute('home') }}">首页</a></li>

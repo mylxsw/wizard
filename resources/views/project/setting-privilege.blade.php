@@ -1,7 +1,7 @@
 @extends('layouts.project-setting')
 
 @section('project-setting')
-    <div class="card">
+    <div class="card card-white">
         <div class="card-body">
             <form method="post" action="{{ wzRoute('project:setting:handle', ['id' => $project->id]) }}">
                 {{ csrf_field() }}
@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div class="card mt-3">
+    <div class="card card-white mt-3">
         <div class="card-header">@lang('project.group_added')</div>
         <table class="table">
             <thead>

@@ -1,7 +1,7 @@
 @extends('layouts.project-setting')
 
 @section('project-setting')
-    <div class="card">
+    <div class="card card-white">
         <div class="card-body">
             <input type="hidden" name="project_id" value="{{ $project->id }}">
             <input type="hidden" name="op" value="{{ $op }}">
