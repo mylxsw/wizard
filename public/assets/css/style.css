@@ -210,6 +210,7 @@ a:hover {
     box-shadow: 5px 5px 3px #878787b3;
 }
 
+
 .wz-box-disabled {
     background: #fff;
 }
@@ -233,6 +234,7 @@ a:hover {
 .wz-box:hover {
     color: #333;
     background-color: #e6e6e6;
+    transform: scale(1.1);
 }
 
 .wz-project-count {
@@ -1323,3 +1325,6 @@ pre.prettyprint *,
     overflow-y: hidden;
 }
 
+.btn:hover {
+    transform: scale(1.1);
+}
