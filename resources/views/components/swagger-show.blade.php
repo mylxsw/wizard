@@ -27,7 +27,7 @@
 
         window.setTimeout(function () {
             $.wz.imageResize('#markdown-body');
-            $('.swagger-ui section.models h4').trigger('click');
+            // $('.swagger-ui section.models h4').trigger('click');
         }, 3000);
     });
 </script>
