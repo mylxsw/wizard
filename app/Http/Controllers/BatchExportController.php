@@ -262,15 +262,7 @@ class BatchExportController extends Controller
      */
     private function traverseNavigators(array $navigators, \Closure $callback, array $parents = [])
     {
-        foreach ($navigators as $nav) {
-            $callback($nav['id'], $parents);
-
-            if (!empty($nav['nodes'])) {
-                array_push($parents, ['id' => $nav['id'], 'name' => $nav['name']]);
-                $this->traverseNavigators($nav['nodes'], $callback, $parents);
-                array_pop($parents);
-            }
-        }
+        $this->traverseNavigators($navigators, $callback, $parents);
     }
 
     /**
