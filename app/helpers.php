@@ -6,16 +6,18 @@
  * @copyright 管宜尧 <mylxsw@aicode.cc>
  */
 
+use App\Repositories\Document;
 use App\Repositories\Template;
 use App\Repositories\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * 生成路由url
  *
  * @param string $name
- * @param array  $parameters
- * @param bool   $absolute
+ * @param array $parameters
+ * @param bool $absolute
  *
  * @return string
  */
@@ -34,9 +36,9 @@ function wzRoute($name, $parameters = [], $absolute = false)
 function documentType($type): string
 {
     $types = [
-        \App\Repositories\Document::TYPE_DOC     => 'markdown',
-        \App\Repositories\Document::TYPE_SWAGGER => 'swagger',
-        \App\Repositories\Document::TYPE_TABLE   => 'table',
+        Document::TYPE_DOC => 'markdown',
+        Document::TYPE_SWAGGER => 'swagger',
+        Document::TYPE_TABLE => 'table',
     ];
 
     return $types[$type] ?? '';
@@ -47,9 +49,9 @@ function documentType($type): string
  *
  * 必须保证pages是按照pid进行asc排序的，否则可能会出现菜单丢失
  *
- * @param int   $projectID 当前项目ID
- * @param int   $pageID    选中的文档ID
- * @param array $exclude   排除的文档ID列表
+ * @param int $projectID 当前项目ID
+ * @param int $pageID 选中的文档ID
+ * @param array $exclude 排除的文档ID列表
  *
  * @return array
  */
@@ -65,24 +67,24 @@ function navigator(
         return $cached[$key];
     }
 
-    $pages = \App\Repositories\Document::where('project_id', $projectID)->select(
+    $pages = Document::where('project_id', $projectID)->select(
         'id', 'pid', 'title', 'project_id', 'type', 'status', 'created_at', 'sort_level'
     )->orderBy('pid')->get();
 
     $navigators = [];
-    /** @var \App\Repositories\Document $page */
+    /** @var Document $page */
     foreach ($pages as $page) {
         if (in_array((int)$page->id, $exclude)) {
             continue;
         }
 
         $navigators[$page->id] = [
-            'id'         => (int)$page->id,
-            'name'       => $page->title,
-            'pid'        => (int)$page->pid,
-            'url'        => route('project:home', ['id' => $projectID, 'p' => $page->id]),
-            'selected'   => $pageID === (int)$page->id,
-            'type'       => documentType($page->type),
+            'id' => (int)$page->id,
+            'name' => $page->title,
+            'pid' => (int)$page->pid,
+            'url' => route('project:home', ['id' => $projectID, 'p' => $page->id]),
+            'selected' => $pageID === (int)$page->id,
+            'type' => documentType($page->type),
             'created_at' => $page->created_at,
             'sort_level' => $page->sort_level ?? 1000,
         ];
@@ -110,32 +112,34 @@ function navigator(
 /**
  * 导航排序，排序后，文件夹靠前，普通文件靠后
  *
- * @param array $navbars
+ * @param array $navItems
  *
  * @return array
  */
-function navigatorSort($navbars)
+function navigatorSort($navItems)
 {
     $sortItem = function ($a, $b) {
         try {
             if ($a['sort_level'] > $b['sort_level']) {
                 return 1;
-            } else if ($a['sort_level'] < $b['sort_level']) {
-                return -1;
             } else {
-                return $a['created_at']->greaterThan($b['created_at']);
+                if ($a['sort_level'] < $b['sort_level']) {
+                    return -1;
+                } else {
+                    return $a['created_at']->greaterThan($b['created_at']);
+                }
             }
         } catch (Exception $e) {
             return 0;
         }
     };
 
-    usort($navbars, function ($a, $b) use ($sortItem) {
+    usort($navItems, function ($a, $b) use ($sortItem) {
 
         $aIsFolder = !empty($a['nodes']);
         $bIsFolder = !empty($b['nodes']);
 
-        $bothIsFolder  = $aIsFolder && $bIsFolder;
+        $bothIsFolder = $aIsFolder && $bIsFolder;
         $bothNotFolder = !$aIsFolder && !$bIsFolder;
 
         if ($bothIsFolder || $bothNotFolder) {
@@ -149,13 +153,13 @@ function navigatorSort($navbars)
         }
     });
 
-    return $navbars;
+    return $navItems;
 }
 
 /**
  * 文档模板
  *
- * @param int       $type
+ * @param int $type
  * @param User|null $user
  *
  * @return array
@@ -221,20 +225,24 @@ function jsonFlatten(string $json): array
             foreach ($object as $o) {
                 $flatten($o, "{$prefix}.[]");
             }
-        } else if (is_object($object)) {
-            foreach (get_object_vars($object) as $key => $obj) {
-                $flatten($obj, "{$prefix}.{$key}");
-            }
         } else {
-            $setCurrent($prefix, gettype($object));
+            if (is_object($object)) {
+                foreach (get_object_vars($object) as $key => $obj) {
+                    $flatten($obj, "{$prefix}.{$key}");
+                }
+            } else {
+                $setCurrent($prefix, gettype($object));
+            }
         }
     };
 
     if (is_array($object)) {
         $flatten($object, '');
-    } else if (is_object($object)) {
-        foreach (get_object_vars($object) as $key => $obj) {
-            $flatten($obj, $key);
+    } else {
+        if (is_object($object)) {
+            foreach (get_object_vars($object) as $key => $obj) {
+                $flatten($obj, $key);
+            }
         }
     }
 
@@ -285,7 +293,7 @@ function userNotificationCount($limit = 0)
  */
 function subDocuments($pid)
 {
-    return \App\Repositories\Document::where('pid', $pid)->select('id', 'title')->get();
+    return Document::where('pid', $pid)->select('id', 'title')->get();
 }
 
 /**
@@ -308,7 +316,7 @@ function resourceVersion()
  * 创建一个JWT Token
  *
  * @param array $payloads
- * @param int   $expire
+ * @param int $expire
  *
  * @return \Lcobucci\JWT\Token
  */
@@ -380,7 +388,7 @@ function users()
  * 用户名列表（js数组）
  *
  * @param \Illuminate\Database\Eloquent\Collection $users
- * @param bool                                     $actived
+ * @param bool $actived
  *
  * @return string
  */
@@ -578,7 +586,7 @@ function convertSqlTo(string $sql, $callback)
         $parser = new PHPSQLParser\PHPSQLParser();
         $parsed = $parser->parse($sql);
 
-        $fields    = $parsed['TABLE']['create-def']['sub_tree'];
+        $fields = $parsed['TABLE']['create-def']['sub_tree'];
         $tableName = $parsed['TABLE']['base_expr'];
 
         $markdowns = [];
@@ -596,26 +604,26 @@ function convertSqlTo(string $sql, $callback)
             $type = $length = '';
             foreach ($field['sub_tree'][1]['sub_tree'] as $item) {
                 if ($item['expr_type'] == 'data-type') {
-                    $type   = $item['base_expr'] ?? '';
+                    $type = $item['base_expr'] ?? '';
                     $length = $item['length'] ?? '';
                 }
             }
 
-            $name     = $field['sub_tree'][0]['base_expr'];
-            $comment  = trim($field['sub_tree'][1]['comment'] ?? '', "'");
+            $name = $field['sub_tree'][0]['base_expr'];
+            $comment = trim($field['sub_tree'][1]['comment'] ?? '', "'");
             $nullable = $field['sub_tree'][1]['nullable'] ?? false;
 
 //        $autoInc      = $field['sub_tree'][1]['auto_inc'] ?? false;
 //        $primary      = $field['sub_tree'][1]['primary'] ?? false;
 //        $defaultValue = $field['sub_tree'][1]['default'] ?? '-';
 
-            $type        = empty($length) ? $type : "{$type} ($length)";
+            $type = empty($length) ? $type : "{$type} ($length)";
             $markdowns[] = [trim($name, '`'), $type, $nullable ? 'Y' : 'N', $comment];
         }
 
 
         $tableComment = '-';
-        $options      = $parsed['TABLE']['options'] ?? [];
+        $options = $parsed['TABLE']['options'] ?? [];
         if (!$options || empty($options)) {
             $options = [];
         }
@@ -653,11 +661,17 @@ function processSpreedSheet(string $content): string
         })->max();
 
     $maxColNum = collect($contentArray['rows'])
-        ->filter(function ($item, $key) { return is_numeric($key); })
+        ->filter(function ($item, $key) {
+            return is_numeric($key);
+        })
         ->map(function ($item) {
             return collect(array_keys($item['cells'] ?? []))
-                ->filter(function ($item) { return is_numeric($item); })
-                ->map(function ($item) { return (int)$item; })
+                ->filter(function ($item) {
+                    return is_numeric($item);
+                })
+                ->map(function ($item) {
+                    return (int)$item;
+                })
                 ->max();
         })->max();
 
@@ -673,7 +687,7 @@ function processSpreedSheet(string $content): string
  *
  * 2019-12-16T21:54:00+08:00 之后创建的所有文档人采用该模式
  *
- * @param \App\Repositories\Document $pageItem
+ * @param Document $pageItem
  *
  * @return bool
  */
@@ -687,4 +701,24 @@ function markdownCompatibilityStrict($pageItem = null)
         Carbon::RFC3339,
         '2019-12-16T21:54:00+08:00'
     ));
+}
+
+/**
+ * 遍历导航项
+ *
+ * @param array $navigators
+ * @param Closure $callback
+ * @param array $parents
+ */
+function traverseNavigators(array $navigators, \Closure $callback, array $parents = [])
+{
+    foreach ($navigators as $nav) {
+        $callback($nav['id'], $parents);
+
+        if (!empty($nav['nodes'])) {
+            array_push($parents, ['id' => $nav['id'], 'name' => $nav['name']]);
+            traverseNavigators($nav['nodes'], $callback, $parents);
+            array_pop($parents);
+        }
+    }
 }
