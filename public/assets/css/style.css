@@ -1321,11 +1321,9 @@ pre.prettyprint *,
     left: 0;
     padding: 0;
     margin: 0;
-    border-radius: 0;
-
     height: 90%;
     top: 58px;
-    border-bottom-right-radius: 2em;
+    border-radius: 0 0 2em 0;
 }
 
 .wz-panel-separator:hover {
@@ -1335,14 +1333,33 @@ pre.prettyprint *,
     transform: none;
 }
 
-.wz-body-overflow-hide {
-    overflow-y: hidden;
-}
-
 .wz-editor-header .wz-editor-header-toolbar {
     padding: 0;
     margin-left: -14px;
     margin-top: -17px;
     line-height: 1;
     margin-bottom: 7px;
+}
+
+.markdown-body .wz-card-frame {
+    box-shadow: none;
+    border: 1px dashed #ccc;
+}
+
+.markdown-body .wz-card-frame iframe {
+    overflow: hidden;
+}
+
+.markdown-body .wz-card-frame .card-header > div {
+    margin-bottom: -8px;
+    margin-top: -6px;
+}
+
+.markdown-body .wz-card-frame .card-header .card-header-tool {
+    float: right;
+}
+
+.markdown-body .wz-card-frame .card-header .card-header-title,
+.markdown-body .wz-card-frame .card-header .card-header-tool .bmd-btn-icon {
+    line-height: 1.8;
 }

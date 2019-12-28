@@ -3529,10 +3529,21 @@
                     case 'frame':
                         var header = "";
                         if (text !== '') {
-                            header = "<div class='card-header'>" + text + "</div>";
+                            header = "<div class='card-header'>" +
+                                "   <div class='card-header-title'>" + text + "</div>" +
+                                "   <div class='card-header-tool'>" +
+                                "       <a href='" + href + "' target='_blank' class='btn bmd-btn-icon' title='新窗口打开'>" +
+                                "           <i class='material-icons'>open_in_new</i>" +
+                                "       </a>" +
+                                "   </div>" +
+                                "</div>";
                         }
 
-                        return "<div class='card'>" + header + "<div class='card-body'><iframe frameborder=\"0\" style=\"display:block; width: 100%; height:500px;\" data-src=\"" + href + "\"></iframe></div></div>";
+                        return "<div class='card wz-card-frame'>" + header +
+                            "   <div class='card-body'>" +
+                            "       <iframe frameborder=\"0\" style=\"display:block; width: 100%; height:500px;\" data-src=\"" + href + "\"></iframe>" +
+                            "   </div>" +
+                            "</div>";
                     default:
                 }
             }
