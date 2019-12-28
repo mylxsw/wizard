@@ -3541,7 +3541,7 @@
 
                         return "<div class='card wz-card-frame'>" + header +
                             "   <div class='card-body'>" +
-                            "       <iframe frameborder=\"0\" style=\"display:block; width: 100%; height:500px;\" data-src=\"" + href + "\"></iframe>" +
+                            "       <iframe frameborder=\"0\" style=\"display:block; width: 100%; height:500px;\" data-src=\"" + href + "\" allowfullscreen=\"true\"></iframe>" +
                             "   </div>" +
                             "</div>";
                     default:

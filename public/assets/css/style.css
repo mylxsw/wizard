@@ -1359,6 +1359,10 @@ pre.prettyprint *,
     float: right;
 }
 
+.markdown-body .wz-card-frame .card-body {
+    padding: 0;
+}
+
 .markdown-body .wz-card-frame .card-header .card-header-title,
 .markdown-body .wz-card-frame .card-header .card-header-tool .bmd-btn-icon {
     line-height: 1.8;

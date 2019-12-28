@@ -122,9 +122,12 @@
 
     <div class="wz-version-suggest">
         <ul class="wz-version-suggest-items">
-           <li>1、实现了对 mermaid 绘制流程图，序列图，饼图，类图，状态图等各种图表的支持。<a target="_blank" href="https://github.com/mylxsw/wizard/wiki/%E6%B5%81%E7%A8%8B%E5%9B%BE%EF%BC%8C%E5%BA%8F%E5%88%97%E5%9B%BE%EF%BC%8C%E9%A5%BC%E5%9B%BE%EF%BC%8CTex-LaTex-%E7%A7%91%E5%AD%A6%E5%85%AC%E5%BC%8F%E6%94%AF%E6%8C%81"> 查看使用说明 </a></li>
-           <li>2、增加了对数据库数据结构展示卡片的支持，现在，你可以直接将 SQL 建表语句放置在代码块中，Wizard 将会为你转换为表格展示。<a target="_blank" href="https://github.com/mylxsw/wizard/wiki/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8D%A1%E7%89%87%E5%B1%95%E7%A4%BA%E6%94%AF%E6%8C%81"> 查看使用说明 </a> </li>
-           <li>3、Markdown 文档页面中的表格样式优化</li>
+           <li>1、新增 <a href="https://github.com/mylxsw/wizard/wiki/%E9%BB%91%E6%9A%97%E4%B8%BB%E9%A2%98%E5%88%87%E6%8D%A2" target="_blank">暗色风格 </a>主题模式，页面部分细节，样式效果微调</li>
+           <li>2、<a href="https://github.com/mylxsw/wizard/wiki/%E8%A1%A8%E6%A0%BC%E7%B1%BB%E5%9E%8B%E6%96%87%E6%A1%A3%E6%94%AF%E6%8C%81" target="_blank">表格类型文档</a> 完善，现在作为正式功能，去掉 beta 标识 </li>
+           <li>3、<a href="https://github.com/mylxsw/wizard/wiki/%E6%96%87%E6%A1%A3%E5%B7%AE%E5%BC%82%E5%AF%B9%E6%AF%94%E4%BB%A5%E5%8F%8A%E5%8E%86%E5%8F%B2%E6%96%87%E6%A1%A3" target="_blank">文档差异对比</a> 优化，文档差异对比更加清晰</li>
+           <li>4、Markdown 文档展示优化，展示效果更加友好，新建文档使用最新的 markdown 解释器，修复了之前的一些 bug</li>
+           <li>5、Markdown 增加 <a href="https://github.com/mylxsw/wizard/wiki/%E6%A1%86%E6%9E%B6%E9%A1%B5%E5%B5%8C%E5%85%A5%E6%94%AF%E6%8C%81" target="_blank">框架页展示</a> 支持</li>
+           <li>6、项目及文档页面侧边栏增加折叠支持</li>
         </ul>
     </div>
 
