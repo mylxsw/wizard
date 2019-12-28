@@ -8,16 +8,16 @@
 Wizard是一款开源文档管理系统，目前支持三种类型的文档管理
 
 - **Markdown**：也是Wizard最主要的文档类型，研发团队日常工作中交流所采用的最常用文档类型，在 Wizard 中，对 [Editor.md](https://pandao.github.io/editor.md/) 项目进行了功能扩展，增加了文档模板，Json 转表格，图片粘贴上传等功能
-- **Swagger**：支持 [OpenAPI 3.0](https://swagger.io/specification/) 规范，嵌入了 Swagger 官方的编辑器，通过定制开发，使其融入到 Wizard 项目当中，支持文档模板，全屏编辑，文档自动同步功能
-- **Table**：这种文档类型是类似于 Excel 电子表格，采用了 [x-spreadsheet](https://github.com/myliang/x-spreadsheet) 项目，将该项目嵌入到了 Wizard 中，目前还不是很完善
+- **Swagger**：支持 [OpenAPI 3.0](https://swagger.io/specification/) 规范，集成了 Swagger 官方的编辑器，支持文档模板，全屏编辑，文档自动同步功能
+- **Table**：这种文档类型是类似于 Excel 电子表格，集成了 [x-spreadsheet](https://github.com/myliang/x-spreadsheet) 项目
 
 > 在Wizard中，正在编辑的文档会定时自动保存到本地的 Local Storage 中，避免错误关闭页面而造成编辑内容丢失。
 
 目前主要包含以下功能
 
-- Swagger，Markdown，Table 类型的文档管理
-- 文档修改历史管理
-- 文档修改差异对比
+- Swagger，Markdown，[Table](https://github.com/mylxsw/wizard/wiki/%E8%A1%A8%E6%A0%BC%E7%B1%BB%E5%9E%8B%E6%96%87%E6%A1%A3%E6%94%AF%E6%8C%81) 类型的文档管理
+- [文档修改历史管理](https://github.com/mylxsw/wizard/wiki/%E6%96%87%E6%A1%A3%E5%B7%AE%E5%BC%82%E5%AF%B9%E6%AF%94%E4%BB%A5%E5%8F%8A%E5%8E%86%E5%8F%B2%E6%96%87%E6%A1%A3)
+- [文档修改差异对比](https://github.com/mylxsw/wizard/wiki/%E6%96%87%E6%A1%A3%E5%B7%AE%E5%BC%82%E5%AF%B9%E6%AF%94%E4%BB%A5%E5%8F%8A%E5%8E%86%E5%8F%B2%E6%96%87%E6%A1%A3)
 - 用户权限管理
 - 项目分组管理
 - LDAP 统一身份认证
@@ -27,6 +27,8 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
 - 消息通知
 - 文档分享
 - 统计功能
+- [流程图，序列图，饼图，Tex LaTex 科学公式支持](https://github.com/mylxsw/wizard/wiki/%E6%B5%81%E7%A8%8B%E5%9B%BE%EF%BC%8C%E5%BA%8F%E5%88%97%E5%9B%BE%EF%BC%8C%E9%A5%BC%E5%9B%BE%EF%BC%8CTex-LaTex-%E7%A7%91%E5%AD%A6%E5%85%AC%E5%BC%8F%E6%94%AF%E6%8C%81)
+- [多主题切换](https://github.com/mylxsw/wizard/wiki/%E9%BB%91%E6%9A%97%E4%B8%BB%E9%A2%98%E5%88%87%E6%8D%A2)
 
 如果想快速体验一下Wizard的功能，有两种方式
 
@@ -41,10 +43,6 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
 
 项目中的文档仅仅用Swagger也是不够的，它只适应于API文档的管理，还有很多其它文档，比如设计构想，流程图，架构文档，技术方案，数据库变更等各种文档需要一起维护起来。因此，我决定利用业余时间开发一款 **集成 Markdown 和 Swagger 文档的管理工具**，也就是 **Wizard** 项目了。
 
-起初打算用 Go 语言来开发，但是没过几天发现使用 Golang 来做 Web 项目开发效率太低（快速开发效率，并非指性能），很多常用的功能都需要自己去实现，遂放弃使用 Golang，转而使用 PHP 的 Laravel 框架来开发。所以虽然项目创建的时间为 2017年7月27日，但是实际上真正开始的时间应该算是 2017年7月31日。
-
-![-w986](https://ssl.aicode.cc/2019-05-04-15568614311881.jpg)
-
 起初Wizard项目的想法比较简单，只是用来将 Markdown 文档和 Swagger 文档放在一起，提供一个简单的管理界面就足够了，但是随着在团队中展开使用后，发现在企业中作为一款文档管理工具来说，只提供简单的文档管理功能是不够的，比如说权限控制，文档修改历史，文档搜索，文档分类等功能需求不断的被提出来，因此也促成了 Wizard 项目的功能越来越完善。
 
 - **用户权限管理** 参考了 Gitlab 的权限管理方式，在用户的身份上只区分了 **管理员** 和 **普通用户**，通过创建**用户组**来对用户的权限进行细致的管理，同时每个项目都支持单独的为用户赋予读写权限。
@@ -55,6 +53,13 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
 - **文档搜索** 通过搜索功能快速查找需要的文档，目前支持通过文档标题来搜素文档，后续会增加全文检索功能。
 - **LDAP支持** 很多公司都会使用 LDAP 来统一的管理公司员工的账号，员工的在公司内部的所有系统中都是用同一套帐号来登录各种系统比如 Jira，Wiki，Gitlab 等，Wizard 也提供了对 LDAP 的支持，只需要简单的几个配置，就可以快速的接入公司的统一帐号体系。
 - **文档附件**，**文档分享**，**统计**，**文档排序**，**模板管理**，**文档评论** ...
+
+
+## 功能演示
+
+请查看项目的 [Wiki](https://github.com/mylxsw/wizard/wiki) 文档。
+
+![Wizard-功能预览图](https://ssl.aicode.cc/mweb/Wizard-%E5%8A%9F%E8%83%BD%E9%A2%84%E8%A7%88%E5%9B%BE.gif)
 
 ## 关于代码
 
