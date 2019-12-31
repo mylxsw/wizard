@@ -24,8 +24,8 @@ Route::group(['middleware' => 'locale'], function () {
     // 如果启用 LDAP ，则不允许用户注册和重置密码
     $ldapDisabled = !ldap_enabled();
     Auth::routes([
-        'reset'    => $ldapDisabled,
-        'verify'   => $ldapDisabled,
+        'reset' => $ldapDisabled,
+        'verify' => $ldapDisabled,
         'register' => $ldapDisabled,
     ]);
 
@@ -119,6 +119,12 @@ Route::group(['middleware' => 'locale'], function () {
         Route::get('/home', 'ProjectController@home')->name('user:home');
         // 文件上传
         Route::post('/upload', 'FileController@imageUpload')->name('upload');
+
+        // 思维导图
+        Route::group(['prefix' => 'mind-mapping', 'as' => 'mind-mapping:'], function () {
+            Route::get('/editor', 'MindMappingController@editor')->name('editor');
+            Route::post('/', 'MindMappingController@save')->name('save');
+        });
 
         // 用户信息
         Route::group(['prefix' => 'user', 'as' => 'user:'], function () {
