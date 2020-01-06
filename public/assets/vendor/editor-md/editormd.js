@@ -3539,7 +3539,7 @@
                                 "</div>";
                         }
 
-                        return "<div class='card wz-card-frame'>" + header +
+                        return "<div class='card card-white wz-card-frame'>" + header +
                             "   <div class='card-body'>" +
                             "       <iframe frameborder=\"0\" style=\"display:block; width: 100%; height:500px;\" data-src=\"" + href + "\" allowfullscreen=\"true\"></iframe>" +
                             "   </div>" +
@@ -3682,7 +3682,7 @@
             // wizard 添加，用于支持 sql 创建语句的解析 START
             else if (lang === 'sql_create') {
                 var cardId = randomId();
-                return '<div class="wz-sql-create card" data-id="nav-tab-' + cardId + '"><nav>\n' +
+                return '<div class="wz-sql-create card card-white" data-id="nav-tab-' + cardId + '"><nav>\n' +
                     '  <div class="nav nav-tabs" id="nav-tab-' + cardId + '" role="tablist">\n' +
                     '    <a class="nav-item nav-link active" id="nav-tab-' + cardId + '-sql" data-toggle="tab" href="#nav-' + cardId + '-sql">SQL</a>\n' +
                     '    <a class="nav-item nav-link" id="nav-tab-' + cardId + '-table" data-toggle="tab" href="#nav-' + cardId + '-table" >Table</a>\n' +

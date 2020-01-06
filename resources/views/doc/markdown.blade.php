@@ -64,6 +64,8 @@
                 }
             });
 
+            $.global.markdownEditor = editor;
+
             $.global.getEditorContent = function () {
                 try {
                     return editor.getMarkdown();

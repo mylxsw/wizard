@@ -139,15 +139,22 @@ $.wz.mdEditor = function (editor_id, params) {
                     title: config.lang.mindMapping,
                     width: '100%',
                     height: '100%',
-                    content: '<iframe src="/mind-mapping/editor" frameborder="0" width="100%" height="100%" allowfullscreen="true"></iframe>',
+                    content: '<iframe src="/mind-mapping/editor?readonly=0" frameborder="0" width="100%" height="' + (window.innerHeight - 140) + 'px" allowfullscreen="true" id="mind-mapping-editor"></iframe>',
                     mask: true,
                     drag: false,
                     lockScreen: true,
                     buttons: {
                         enter: [config.lang.confirmBtn, function () {
-
-                            // cm.replaceSelection(config.templateSelected(this));
-                            this.hide().lockScreen(false).hideMask();
+                            let self = this;
+                            let iframe = window.top.document.getElementById('mind-mapping-editor').contentWindow;
+                            if (iframe !== null && iframe !== undefined) {
+                                iframe.saveMindMapping(function (data) {
+                                    cm.replaceSelection("[" + data.name + "](" + data.url + "&readonly=true \"wizard-style:frame\")");
+                                    self.hide().lockScreen(false).hideMask();
+                                });
+                            } else {
+                                $.wz.message_failed('思维导图编辑器回调失败');
+                            }
 
                             return false;
                         }],

@@ -66,7 +66,8 @@ $.global = {
     /**
      * 主面板高度
      */
-    panel_height: 0
+    panel_height: 0,
+    markdownEditor: null,
 };
 
 $(function () {
