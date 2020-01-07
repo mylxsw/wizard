@@ -57,7 +57,10 @@ class ToolController extends Controller
                 return !Str::startsWith($line, ['--', '//', '#']) && $line !== '';
             })->toArray());
 
-            $markdowns[] = convertSqlToMarkdownTable($sql);
+            $markdownTable = convertSqlToMarkdownTable($sql);
+            if (!is_null($markdownTable)) {
+                $markdowns[] = $markdownTable;
+            }
         }
 
         return ['markdown' => implode("\n", $markdowns)];
@@ -86,7 +89,10 @@ class ToolController extends Controller
                 return !Str::startsWith($line, ['--', '//', '#']) && $line !== '';
             })->toArray());
 
-            $markdowns[] = convertSqlToHTMLTable($sql);
+            $htmlTable = convertSqlToHTMLTable($sql);
+            if (!is_null($htmlTable)) {
+                $markdowns[] = $htmlTable;
+            }
         }
 
         return ['html' => implode("<hr>\n", $markdowns)];
