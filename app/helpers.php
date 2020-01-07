@@ -586,6 +586,10 @@ function convertSqlTo(string $sql, $callback)
         $parser = new PHPSQLParser\PHPSQLParser();
         $parsed = $parser->parse($sql);
 
+        if (!isset($parsed['CREATE'])) {
+            return null;
+        }
+
         $fields = $parsed['TABLE']['create-def']['sub_tree'];
         $tableName = $parsed['TABLE']['base_expr'];
 
