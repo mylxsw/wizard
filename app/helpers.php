@@ -793,5 +793,16 @@ function cdn_resource(string $resourceUrl)
         $cdnUrl = rtrim(config('wizard.cdn.url'), '/') . '/';
     }
 
+    // 这里替换的目的是，如果使用 七牛 CDN，是无法自己配置跨域的，必须提交工单才行
+    // 这里用公共 CDN，可以避免字体跨域
+    $replace = [
+        '/assets/vendor/font-awesome4/css/font-awesome.min.css'   => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+        '/assets/vendor/material-design-icons/material-icons.css' => 'https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css',
+    ];
+
+    if (isset($replace[$resourceUrl])) {
+        return $replace[$resourceUrl];
+    }
+
     return "{$cdnUrl}{$resourceUrl}";
 }
