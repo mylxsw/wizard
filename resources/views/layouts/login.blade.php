@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- 网站icon，来自于Google开源图标 -->
-    <link rel="icon" type="image/png" href="/favorite.png">
+    <link rel="icon" type="image/png" href="{{ cdn_resource('/favorite.png') }}">
 
     <title>@yield('title') - {{ config('app.name', 'Wizard API') }}</title>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" crossorigin="anonymous">
@@ -77,7 +77,7 @@
         </div>
     </div>
 
-<script src="/assets/vendor/jquery.min.js"></script>
+<script src="{{ cdn_resource('/assets/vendor/jquery.min.js') }}"></script>
 {{--<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>--}}
 <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" crossorigin="anonymous"></script>

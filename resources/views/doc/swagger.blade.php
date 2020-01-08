@@ -68,7 +68,7 @@
 @endpush
 
 @push('stylesheet')
-    <link href="/assets/vendor/swagger-editor/swagger-editor.css" rel="stylesheet">
+    <link href="{{ cdn_resource('/assets/vendor/swagger-editor/swagger-editor.css') }}" rel="stylesheet">
     <style>
         #editor-wrapper {
             height: 100%;
@@ -85,9 +85,9 @@
 @endpush
 
 @push('script')
-    <script src="/assets/vendor/base64.min.js"></script>
-    <script src="/assets/vendor/swagger-editor/swagger-editor-bundle.js"></script>
-    <script src="/assets/vendor/swagger-editor/swagger-editor-standalone-preset.js"></script>
+    <script src="{{ cdn_resource('/assets/vendor/base64.min.js') }}"></script>
+    <script src="{{ cdn_resource('/assets/vendor/swagger-editor/swagger-editor-bundle.js') }}"></script>
+    <script src="{{ cdn_resource('/assets/vendor/swagger-editor/swagger-editor-standalone-preset.js') }}"></script>
 
     <script>
         $(function() {

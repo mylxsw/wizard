@@ -200,12 +200,12 @@
 @endsection
 
 @push('stylesheet')
-    <link href="/assets/vendor/select2/css/select2.min.css" rel="stylesheet">
-    <link href="/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" rel="stylesheet">
+    <link href="{{ cdn_resource('/assets/vendor/select2/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ cdn_resource('/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css') }}" rel="stylesheet">
 @endpush
 
 @push('script')
-<script src="/assets/vendor/select2/js/select2.full.min.js"></script>
+<script src="{{ cdn_resource('/assets/vendor/select2/js/select2.full.min.js') }}"></script>
 <script>
     $(function () {
         $.fn.select2.defaults.set("theme", "bootstrap");

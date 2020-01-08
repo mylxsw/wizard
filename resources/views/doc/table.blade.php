@@ -21,7 +21,7 @@
 @endpush
 
 @push('stylesheet')
-    <link rel="stylesheet" href="/assets/vendor/x-spreadsheet/xspreadsheet.css">
+    <link rel="stylesheet" href="{{ cdn_resource('/assets/vendor/x-spreadsheet/xspreadsheet.css') }}">
     <style>
         #xspreadsheet * {
             box-sizing: initial;
@@ -34,9 +34,9 @@
 @endpush
 
 @push('script')
-    <script src="/assets/vendor/base64.min.js"></script>
-    <script src="/assets/vendor/x-spreadsheet/xspreadsheet.js"></script>
-    {{--<script src="/assets/vendor/x-spreadsheet/locale/zh-cn.js"></script>--}}
+    <script src="{{ cdn_resource('/assets/vendor/base64.min.js') }}"></script>
+    <script src="{{ cdn_resource('/assets/vendor/x-spreadsheet/xspreadsheet.js') }}"></script>
+    {{--<script src="{{ cdn_resource('/assets/vendor/x-spreadsheet/locale/zh-cn.js') }}"></script>--}}
 
     <script>
         $(function() {

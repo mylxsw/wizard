@@ -10,29 +10,29 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- 网站icon，来自于Google开源图标 -->
-    <link rel="icon" type="image/png" href="/favorite.png">
+    <link rel="icon" type="image/png" href="{{ cdn_resource('/favorite.png') }}">
 
     <title>@yield('title') - {{ config('app.name', 'Wizard API') }}</title>
 
-    <link href="/assets/css/normalize.css" rel="stylesheet">
-    <link href="/assets/css/tagmanager.css" rel="stylesheet">
+    <link href="{{ cdn_resource('/assets/css/normalize.css') }}" rel="stylesheet">
+    <link href="{{ cdn_resource('/assets/css/tagmanager.css') }}" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
-    {{--<link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">--}}
-    <link rel="stylesheet" href="/assets/vendor/material-design-icons/material-icons.css">
-    <link rel="stylesheet" href="/assets/vendor/bootstrap-material-design/css/bootstrap-material-design.min.css">
-    <link href="/assets/vendor/font-awesome4/css/font-awesome.min.css" rel="stylesheet">
+    {{--<link href="{{ cdn_resource('/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">--}}
+    <link rel="stylesheet" href="{{ cdn_resource('/assets/vendor/material-design-icons/material-icons.css') }}">
+    <link rel="stylesheet" href="{{ cdn_resource('/assets/vendor/bootstrap-material-design/css/bootstrap-material-design.min.css') }}">
+    <link href="{{ cdn_resource('/assets/vendor/font-awesome4/css/font-awesome.min.css') }}" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="/assets/vendor/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="{{ cdn_resource('/assets/vendor/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/assets/css/style.css?{{ resourceVersion() }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="/assets/vendor/html5shiv.min.js"></script>
-    <script src="/assets/vendor/respond.min.js"></script>
+    <script src="{{ cdn_resource('/assets/vendor/html5shiv.min.js') }}"></script>
+    <script src="{{ cdn_resource('/assets/vendor/respond.min.js') }}"></script>
     <![endif]-->
 
     @stack('stylesheet')
@@ -71,8 +71,8 @@
     </footer>
 @endif
 
-<script src="/assets/vendor/jquery.min.js"></script>
-<script src="/assets/vendor/store.everything.min.js"></script>
+<script src="{{ cdn_resource('/assets/vendor/jquery.min.js') }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/store.everything.min.js') }}"></script>
 <script>
     $(function () {
         var currentTheme = store.get('wizard-theme');
@@ -88,18 +88,18 @@
 
 @stack('bottom')
 
-<script src="/assets/vendor/popper.js"></script>
-<script src="/assets/vendor/bootstrap-material-design/js/bootstrap-material-design.min.js"></script>
-<script src="/assets/vendor/jquery.easing.js"></script>
-<script src="/assets/vendor/jquery.scrollUp.min.js"></script>
+<script src="{{ cdn_resource('/assets/vendor/popper.js') }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/bootstrap-material-design/js/bootstrap-material-design.min.js') }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/jquery.easing.js') }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/jquery.scrollUp.min.js') }}"></script>
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="/assets/vendor/ie10-viewport-bug-workaround.js"></script>
-<script src="/assets/vendor/layer/layer.js"></script>
-<script src="/assets/vendor/axios.min.js"></script>
+<script src="{{ cdn_resource('/assets/vendor/ie10-viewport-bug-workaround.js') }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/layer/layer.js') }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/axios.min.js') }}"></script>
 <script src="/assets/js/wizard.js?{{ resourceVersion() }}"></script>
 <script src="/assets/js/app.js?{{ resourceVersion() }}"></script>
-<script src="/assets/js/tagmanager.js"></script>
+<script src="{{ cdn_resource('/assets/js/tagmanager.js') }}"></script>
 
 @stack('script-pre')
 

@@ -61,11 +61,11 @@
 @endsection
 
 @push('stylesheet')
-    <link href="/assets/vendor/vis/vis.min.css" rel="stylesheet">
+    <link href="{{ cdn_resource('/assets/vendor/vis/vis.min.css') }}" rel="stylesheet">
 @endpush
 
 @push('script')
-    <script src="/assets/vendor/vis/vis.min.js"></script>
+    <script src="{{ cdn_resource('/assets/vendor/vis/vis.min.js') }}"></script>
     <script>
         $(function () {
             var container = document.getElementById('visualization');
