@@ -17,7 +17,7 @@
 <script src="{{ cdn_resource('/assets/vendor/editor-md/lib/flowchart.min.js') }}"></script>
 <script src="{{ cdn_resource('/assets/vendor/editor-md/lib/jquery.flowchart.min.js') }}"></script>
 <script src="{{ cdn_resource('/assets/vendor/mermaid.js') }}"></script>
-<script src="{{ cdn_resource('/assets/vendor/editor-md/editormd.js') }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/editor-md/editormd.js') }}?{{ resourceVersion() }}"></script>
 
 <script type="text/javascript">
     $(function () {

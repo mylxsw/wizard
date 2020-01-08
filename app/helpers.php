@@ -790,7 +790,7 @@ function cdn_resource(string $resourceUrl)
     }
 
     if (is_null($cdnUrl)) {
-        $cdnUrl = rtrim(config('wizard.cdn.url'), '/') . '/';
+        $cdnUrl = rtrim(config('wizard.cdn.url'), '/');
     }
 
     // 这里替换的目的是，如果使用 七牛 CDN，是无法自己配置跨域的，必须提交工单才行
