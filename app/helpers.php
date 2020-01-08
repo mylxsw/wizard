@@ -36,9 +36,9 @@ function wzRoute($name, $parameters = [], $absolute = false)
 function documentType($type): string
 {
     $types = [
-        Document::TYPE_DOC => 'markdown',
+        Document::TYPE_DOC     => 'markdown',
         Document::TYPE_SWAGGER => 'swagger',
-        Document::TYPE_TABLE => 'table',
+        Document::TYPE_TABLE   => 'table',
     ];
 
     return $types[$type] ?? '';
@@ -68,7 +68,14 @@ function navigator(
     }
 
     $pages = Document::where('project_id', $projectID)->select(
-        'id', 'pid', 'title', 'project_id', 'type', 'status', 'created_at', 'sort_level'
+        'id',
+        'pid',
+        'title',
+        'project_id',
+        'type',
+        'status',
+        'created_at',
+        'sort_level'
     )->orderBy('pid')->get();
 
     $navigators = [];
@@ -79,12 +86,12 @@ function navigator(
         }
 
         $navigators[$page->id] = [
-            'id' => (int)$page->id,
-            'name' => $page->title,
-            'pid' => (int)$page->pid,
-            'url' => route('project:home', ['id' => $projectID, 'p' => $page->id]),
-            'selected' => $pageID === (int)$page->id,
-            'type' => documentType($page->type),
+            'id'         => (int)$page->id,
+            'name'       => $page->title,
+            'pid'        => (int)$page->pid,
+            'url'        => route('project:home', ['id' => $projectID, 'p' => $page->id]),
+            'selected'   => $pageID === (int)$page->id,
+            'type'       => documentType($page->type),
             'created_at' => $page->created_at,
             'sort_level' => $page->sort_level ?? 1000,
         ];
@@ -100,9 +107,12 @@ function navigator(
         }
     }
 
-    $res = array_filter($navigators, function ($nav) {
-        return $nav['pid'] === 0;
-    });
+    $res = array_filter(
+        $navigators,
+        function ($nav) {
+            return $nav['pid'] === 0;
+        }
+    );
 
     $cached[$key] = $res;
 
@@ -134,24 +144,27 @@ function navigatorSort($navItems)
         }
     };
 
-    usort($navItems, function ($a, $b) use ($sortItem) {
+    usort(
+        $navItems,
+        function ($a, $b) use ($sortItem) {
 
-        $aIsFolder = !empty($a['nodes']);
-        $bIsFolder = !empty($b['nodes']);
+            $aIsFolder = !empty($a['nodes']);
+            $bIsFolder = !empty($b['nodes']);
 
-        $bothIsFolder = $aIsFolder && $bIsFolder;
-        $bothNotFolder = !$aIsFolder && !$bIsFolder;
+            $bothIsFolder = $aIsFolder && $bIsFolder;
+            $bothNotFolder = !$aIsFolder && !$bIsFolder;
 
-        if ($bothIsFolder || $bothNotFolder) {
-            return $sortItem($a, $b);
-        } else {
-            if ($aIsFolder) {
-                return -1;
+            if ($bothIsFolder || $bothNotFolder) {
+                return $sortItem($a, $b);
+            } else {
+                if ($aIsFolder) {
+                    return -1;
+                }
+
+                return 1;
             }
-
-            return 1;
         }
-    });
+    );
 
     return $navItems;
 }
@@ -328,9 +341,9 @@ function jwt_create_token(array $payloads, $expire = 3600 * 2)
     }
 
     return $builder->setIssuedAt(time())
-        ->setExpiration(time() + $expire)
-        ->sign(new \Lcobucci\JWT\Signer\Hmac\Sha256(), config('wizard.jwt_secret'))
-        ->getToken();
+                   ->setExpiration(time() + $expire)
+                   ->sign(new \Lcobucci\JWT\Signer\Hmac\Sha256(), config('wizard.jwt_secret'))
+                   ->getToken();
 }
 
 /**
@@ -394,11 +407,15 @@ function users()
  */
 function ui_usernames(\Illuminate\Database\Eloquent\Collection $users, $actived = true)
 {
-    return $users->filter(function (User $user) use ($actived) {
-        return $actived ? $user->isActivated() : true;
-    })->map(function (User $user) {
-        return "'{$user->name}'";
-    })->implode(',');
+    return $users->filter(
+        function (User $user) use ($actived) {
+            return $actived ? $user->isActivated() : true;
+        }
+    )->map(
+        function (User $user) {
+            return "'{$user->name}'";
+        }
+    )->implode(',');
 }
 
 /**
@@ -439,23 +456,29 @@ function comment_filter(string $comment): string
         }
 
         return null;
-    })($comment);
+    })(
+        $comment
+    );
     if (is_null($users) || $users->isEmpty()) {
         return $comment;
     }
 
-    return preg_replace_callback($matchRegexp, function ($matches) use ($users) {
-        if (count($matches) < 2) {
+    return preg_replace_callback(
+        $matchRegexp,
+        function ($matches) use ($users) {
+            if (count($matches) < 2) {
+                return $matches[0];
+            }
+
+            $user = $users->firstWhere('name', '=', $matches[1]);
+            if (!empty($user)) {
+                return "@{uid:{$user->id}} ";
+            }
+
             return $matches[0];
-        }
-
-        $user = $users->firstWhere('name', '=', $matches[1]);
-        if (!empty($user)) {
-            return "@{uid:{$user->id}} ";
-        }
-
-        return $matches[0];
-    }, $comment);
+        },
+        $comment
+    );
 }
 
 
@@ -512,25 +535,28 @@ function isJson($content): bool
  */
 function convertSqlToMarkdownTable(string $sql)
 {
-    return convertSqlTo($sql, function ($markdowns, $tableName, $tableComment) {
-        if (empty($markdowns)) {
-            return '';
+    return convertSqlTo(
+        $sql,
+        function ($markdowns, $tableName, $tableComment) {
+            if (empty($markdowns)) {
+                return '';
+            }
+
+            $headers = [
+                ['字段', '类型', '空', '说明'],
+                ['---', '---', '---', '---',],
+            ];
+
+            array_unshift($markdowns, ...$headers);
+
+            $html = '';
+            foreach ($markdowns as $line) {
+                $html .= '| ' . implode(' | ', $line) . ' | ' . "\n";
+            }
+
+            return "\n表名：**{$tableName}**   \n备注：*{$tableComment}*\n\n{$html}\n";
         }
-
-        $headers = [
-            ['字段', '类型', '空', '说明'],
-            ['---', '---', '---', '---',],
-        ];
-
-        array_unshift($markdowns, ...$headers);
-
-        $html = '';
-        foreach ($markdowns as $line) {
-            $html .= '| ' . implode(' | ', $line) . ' | ' . "\n";
-        }
-
-        return "\n表名：**{$tableName}**   \n备注：*{$tableComment}*\n\n{$html}\n";
-    });
+    );
 }
 
 /**
@@ -542,17 +568,19 @@ function convertSqlToMarkdownTable(string $sql)
  */
 function convertSqlToHTMLTable(string $sql)
 {
-    return convertSqlTo($sql, function ($markdowns, $tableName, $tableComment) {
-        if (empty($markdowns)) {
-            return '';
-        }
+    return convertSqlTo(
+        $sql,
+        function ($markdowns, $tableName, $tableComment) {
+            if (empty($markdowns)) {
+                return '';
+            }
 
-        $html = '';
-        foreach ($markdowns as $line) {
-            $html .= '<tr><td>' . implode('</td><td>', $line) . "</td></tr>";
-        }
+            $html = '';
+            foreach ($markdowns as $line) {
+                $html .= '<tr><td>' . implode('</td><td>', $line) . "</td></tr>";
+            }
 
-        return <<<HEADER
+            return <<<HEADER
 <p class="wz-table-name">❖ 表名： <b>{$tableName}</b></p>
 <p class="wz-table-desc">❖ 备注：<i>{$tableComment}</i></p>
 <table class="table table-hover">
@@ -569,7 +597,8 @@ function convertSqlToHTMLTable(string $sql)
 </table>
 HEADER;
 
-    });
+        }
+    );
 }
 
 /**
@@ -658,26 +687,38 @@ function processSpreedSheet(string $content): string
     $contentArray = json_decode($content, true);
 
     $maxRowNum = collect(array_keys($contentArray['rows']))
-        ->filter(function ($item) {
-            return is_numeric($item);
-        })->map(function ($item) {
-            return (int)$item;
-        })->max();
+        ->filter(
+            function ($item) {
+                return is_numeric($item);
+            }
+        )->map(
+            function ($item) {
+                return (int)$item;
+            }
+        )->max();
 
     $maxColNum = collect($contentArray['rows'])
-        ->filter(function ($item, $key) {
-            return is_numeric($key);
-        })
-        ->map(function ($item) {
-            return collect(array_keys($item['cells'] ?? []))
-                ->filter(function ($item) {
-                    return is_numeric($item);
-                })
-                ->map(function ($item) {
-                    return (int)$item;
-                })
-                ->max();
-        })->max();
+        ->filter(
+            function ($item, $key) {
+                return is_numeric($key);
+            }
+        )
+        ->map(
+            function ($item) {
+                return collect(array_keys($item['cells'] ?? []))
+                    ->filter(
+                        function ($item) {
+                            return is_numeric($item);
+                        }
+                    )
+                    ->map(
+                        function ($item) {
+                            return (int)$item;
+                        }
+                    )
+                    ->max();
+            }
+        )->max();
 
     $contentArray['cols']['len'] = $maxColNum + 1;
     $contentArray['rows']['len'] = $maxRowNum + 1;
@@ -701,10 +742,12 @@ function markdownCompatibilityStrict($pageItem = null)
         return true;
     }
 
-    return $pageItem->created_at->greaterThan(Carbon::createFromFormat(
-        Carbon::RFC3339,
-        '2019-12-16T21:54:00+08:00'
-    ));
+    return $pageItem->created_at->greaterThan(
+        Carbon::createFromFormat(
+            Carbon::RFC3339,
+            '2019-12-16T21:54:00+08:00'
+        )
+    );
 }
 
 /**
@@ -725,4 +768,30 @@ function traverseNavigators(array $navigators, \Closure $callback, array $parent
             array_pop($parents);
         }
     }
+}
+
+/**
+ * 资源地址 CDN 加速
+ *
+ * @param string $resourceUrl
+ * @return string
+ */
+function cdn_resource(string $resourceUrl)
+{
+    static $enabled = null;
+    static $cdnUrl = null;
+
+    if (is_null($enabled)) {
+        $enabled = config('wizard.cdn.enabled', false);
+    }
+
+    if (!$enabled) {
+        return $resourceUrl;
+    }
+
+    if (is_null($cdnUrl)) {
+        $cdnUrl = rtrim(config('wizard.cdn.url'), '/') . '/';
+    }
+
+    return "{$cdnUrl}{$resourceUrl}";
 }

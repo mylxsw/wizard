@@ -49,15 +49,15 @@
 </div>
 
 @push('stylesheet')
-    <link href="/assets/vendor/at/css/jquery.atwho.css" rel="stylesheet">
-    <link href="/assets/vendor/markdown-body.css" rel="stylesheet">
+    <link href="{{ cdn_resource('/assets/vendor/at/css/jquery.atwho.css') }}" rel="stylesheet">
+    <link href="{{ cdn_resource('/assets/vendor/markdown-body.css') }}" rel="stylesheet">
 @endpush
 
 @push('script')
-    <script src="/assets/vendor/jquery.caret.min.js"></script>
-    <script src="/assets/vendor/at/js/jquery.atwho.min.js"></script>
-    <script src="/assets/vendor/moment-with-locales.min.js"></script>
-    <script src="/assets/vendor/markdown-it.min.js"></script>
+    <script src="{{ cdn_resource('/assets/vendor/jquery.caret.min.js') }}"></script>
+    <script src="{{ cdn_resource('/assets/vendor/at/js/jquery.atwho.min.js') }}"></script>
+    <script src="{{ cdn_resource('/assets/vendor/moment-with-locales.min.js') }}"></script>
+    <script src="{{ cdn_resource('/assets/vendor/markdown-it.min.js') }}"></script>
     <script>
         $(function () {
 

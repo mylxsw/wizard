@@ -1,5 +1,5 @@
 @push('stylesheet')
-    <link rel="stylesheet" href="/assets/vendor/x-spreadsheet/xspreadsheet.css">
+    <link rel="stylesheet" href="{{ cdn_resource('/assets/vendor/x-spreadsheet/xspreadsheet.css') }}">
     <style type="text/css">
         #x-spreadsheet {
             border: 1px dashed #159e92;
@@ -22,7 +22,7 @@
 @endpush
 
 @push('script')
-    <script src="/assets/vendor/x-spreadsheet/xspreadsheet.js"></script>
+    <script src="{{ cdn_resource('/assets/vendor/x-spreadsheet/xspreadsheet.js') }}"></script>
     <script>
         $(function () {
             var savedContent = $('#x-spreadsheet-content').val();

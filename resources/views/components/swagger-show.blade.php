@@ -1,10 +1,10 @@
 @push('stylesheet')
-<link href="/assets/vendor/swagger-ui/swagger-ui.css" rel="stylesheet">
+<link href="{{ cdn_resource('/assets/vendor/swagger-ui/swagger-ui.css') }}" rel="stylesheet">
 @endpush
 
 @push('script')
-<script src="/assets/vendor/swagger-ui/swagger-ui-bundle.js"></script>
-<script src="/assets/vendor/swagger-ui/swagger-ui-standalone-preset.js"></script>
+<script src="{{ cdn_resource('/assets/vendor/swagger-ui/swagger-ui-bundle.js') }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/swagger-ui/swagger-ui-standalone-preset.js') }}"></script>
 <script>
     $(function () {
         window.ui = SwaggerUIBundle({

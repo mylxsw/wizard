@@ -182,7 +182,7 @@
 
 @push('script')
 
-<script src="/assets/vendor/moment-with-locales.min.js"></script>
+<script src="{{ cdn_resource('/assets/vendor/moment-with-locales.min.js') }}"></script>
 <script>
     $(function () {
         moment.locale('zh-cn');

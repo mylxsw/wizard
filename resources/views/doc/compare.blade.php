@@ -31,14 +31,14 @@
 @endsection
 
 @push('stylesheet')
-<link href="/assets/vendor/mergely-3.4.4/lib/codemirror.css" rel="stylesheet"/>
-<link href="/assets/vendor/mergely-3.4.4/lib/mergely.css" rel="stylesheet"/>
+<link href="{{ cdn_resource('/assets/vendor/mergely-3.4.4/lib/codemirror.css') }}" rel="stylesheet"/>
+<link href="{{ cdn_resource('/assets/vendor/mergely-3.4.4/lib/mergely.css') }}" rel="stylesheet"/>
 @endpush
 
 @push('script')
-<script src="/assets/vendor/base64.min.js"></script>
-<script src="/assets/vendor/mergely-3.4.4/lib/codemirror.min.js"></script>
-<script src="/assets/vendor/mergely-3.4.4/lib/mergely.min.js"></script>
+<script src="{{ cdn_resource('/assets/vendor/base64.min.js') }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/mergely-3.4.4/lib/codemirror.min.js') }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/mergely-3.4.4/lib/mergely.min.js') }}"></script>
 
 <script>
 $(function () {

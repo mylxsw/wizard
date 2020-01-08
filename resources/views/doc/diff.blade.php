@@ -49,8 +49,8 @@
 @endsection
 
 @push('stylesheet')
-    <link rel="stylesheet" href="/assets/vendor/highlight/styles/github.css">
-    <link href="/assets/vendor/diff2html/diff2html.min.css?{{ resourceVersion() }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ cdn_resource('/assets/vendor/highlight/styles/github.css') }}">
+    <link href="{{ cdn_resource('/assets/vendor/diff2html/diff2html.min.css') }}" rel="stylesheet"/>
     <style type="text/css">
         .d2h-code-side-linenumber {
             padding-right: 10px;
@@ -85,10 +85,10 @@
 @endpush
 
 @push('script')
-    <script src="/assets/vendor/highlight/highlight.pack.js"></script>
-    <script src="/assets/vendor/diff2html/diff2html.min.js"></script>
-    <script src="/assets/vendor/diff2html/diff2html-ui.min.js"></script>
-    <script src="/assets/vendor/base64.min.js"></script>
+    <script src="{{ cdn_resource('/assets/vendor/highlight/highlight.pack.js') }}"></script>
+    <script src="{{ cdn_resource('/assets/vendor/diff2html/diff2html.min.js') }}"></script>
+    <script src="{{ cdn_resource('/assets/vendor/diff2html/diff2html-ui.min.js') }}"></script>
+    <script src="{{ cdn_resource('/assets/vendor/base64.min.js') }}"></script>
     <script>
         $(function () {
             var switchDisplay = function(mode) {
