@@ -93,7 +93,7 @@
                 var modal = $(this);
                 $.wz.request('get', '/user/writable-projects', {}, function (data) {
                     modal.find('#wz-target-project_id').html("<option value='0' selected>选择项目</option>" + data.map(function (item) {
-                        return "<option value='" + item.id + "'>" + (item.catalog_name != null ? item.catalog_name + " - " : "") + item.name + "</option>";
+                        return "<option value='" + item.id + "'>" + (item.catalog_name != null ? item.catalog_name + " ▶ " : "") + item.name + "</option>";
                     }).join(''));
                 });
             });
