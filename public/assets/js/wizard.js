@@ -263,7 +263,7 @@ $.wz = {
      */
     imageResize: function (selector) {
         $(selector).find('img').each(function () {
-            var size = $(this).attr('alt');
+            var size = $(this).attr('title');
             var regexp = /size:\s*\d*,\d*/;
             if (regexp.test(size)) {
                 var sizes = regexp.exec(size)[0].substr(5).split(',');
