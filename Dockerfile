@@ -42,6 +42,8 @@ RUN php /usr/bin/composer install --prefer-dist --no-autoloader --no-scripts --n
 
 COPY ./ /webroot
 
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 RUN cp .env.docker .env \
     && php /usr/bin/composer dump-autoload --optimize \
     && chown www-data:www-data -R ./ \
