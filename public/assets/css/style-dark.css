@@ -360,9 +360,20 @@ body.wz-dark-theme {
 .wz-dark-theme .swagger-ui svg {
   background: none;
 }
+.wz-dark-theme .swagger-ui table {
+  background: none;
+}
 .wz-dark-theme .swagger-ui .info li,
 .wz-dark-theme .swagger-ui .info table,
 .wz-dark-theme .swagger-ui .info p {
+  color: #ffffff;
+}
+.wz-dark-theme .swagger-ui .info h1,
+.wz-dark-theme .swagger-ui .info h2,
+.wz-dark-theme .swagger-ui .info h3,
+.wz-dark-theme .swagger-ui .info h4,
+.wz-dark-theme .swagger-ui .info h5,
+.wz-dark-theme .swagger-ui .info h6 {
   color: #ffffff;
 }
 .wz-dark-theme .swagger-ui .model,
