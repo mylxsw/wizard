@@ -874,6 +874,11 @@ tr.warning {
     margin-bottom: 10px;
 }
 
+.wz-comment-editor .wz-comment-editor-tip {
+    margin-left: 11px;
+    color: #6b6b6b;
+}
+
 .wz-comment-tip {
     display: none;
     position: absolute;

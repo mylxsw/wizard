@@ -24,7 +24,7 @@
                             <div class="wz-tab wz-tab2 wz-markdown-comment" style="display: none;"></div>
                         </div>
                         <div class="wz-comment-editor-footer">
-                            <span style="margin-left: 11px; color: #6b6b6b;"><i class="fa fa-magic m-2"></i>支持Markdown语法</span>
+                            <span class="wz-comment-editor-tip"><i class="fa fa-magic m-2"></i>支持Markdown语法</span>
                             <button type="button" id="wz-comment-submit" class="btn btn-raised btn-success pull-right">评论</button>
                             <div class="clearfix"></div>
                         </div>
@@ -39,7 +39,7 @@
                     <img src="{{ user_face($comment->user->name) }}" class="wz-userface-small" title="{{ $comment->user->name }}（{{ $comment->user->email }}）">
                     <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray wz-comment-box">
                         <div class="d-block text-gray-dark wz-comment-header"><strong>{{ $comment->user->name }}</strong> 评论于 <span class="wz-comment-time" title="{{ $comment->created_at }}">{{ $comment->created_at }}</span></div>
-                        <div class="wz-comment-body wz-markdown-comment">{{ $comment->content }}</div>
+                        <div class="wz-comment-body wz-markdown-comment editormd-html-preview">{{ $comment->content }}</div>
                     </div>
                 </div>
             @empty

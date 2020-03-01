@@ -54,10 +54,10 @@
                 @include('components.navbar', ['navbars' => $navigators])
             </ul>
         </div>
-        <div class="col-12 col-lg-9 wz-panel-right wz-white-panel">
+        <div class="col-12 col-lg-9 wz-panel-right">
             <button class="btn btn-link wz-panel-separator" title="展开/折叠侧边栏"></button>
             <div class="panel panel-default">
-                <div class="panel-body">
+                <div class="panel-body wz-white-panel">
                     @yield('page-content')
                 </div>
             </div>

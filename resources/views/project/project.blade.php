@@ -91,7 +91,7 @@
                 @endif
             </div>
 
-            <div class="text-center wz-panel-limit mt-3">~ END ~</div>
+            <div class="text-center wz-panel-limit mt-3 wz-content-end">~ END ~</div>
 
             @if(count($pageItem->attachments) > 0)
                 <div class="wz-attachments wz-panel-limit">
@@ -132,7 +132,7 @@
             <h1>{{ $project->name ?? '' }}</h1>
 
             <p class="wz-document-header wz-panel-limit">@lang('document.document_create_info', ['username' => $project->user->name, 'time' => $project->created_at])</p>
-            <p class="wz-panel-limit">{{ $project->description ?? '' }}</p>
+            <p class="wz-panel-limit wz-project-description">{{ $project->description ?? '' }}</p>
 
             @if (!Auth::guest())
                 <div class="wz-recently-log wz-panel-limit">

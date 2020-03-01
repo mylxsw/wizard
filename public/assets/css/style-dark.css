@@ -4,6 +4,12 @@ body.wz-dark-theme {
 .wz-dark-theme .wz-main-container {
   background: #343a40;
 }
+.wz-dark-theme .markdown-body table {
+  background: #4e4e4e;
+}
+.wz-dark-theme .wz-panel-right {
+  background: #4e4e4e;
+}
 .wz-dark-theme a.dropdown-item {
   color: #212529;
 }
@@ -177,8 +183,7 @@ body.wz-dark-theme {
 }
 .wz-dark-theme .card.card-white,
 .wz-dark-theme .wz-diff-control,
-.wz-dark-theme .wz-diff-result,
-.wz-dark-theme .swagger-container .Pane2 {
+.wz-dark-theme .wz-diff-result {
   background: #ffffff;
 }
 .wz-dark-theme .wz-white-panel .card {
@@ -192,5 +197,236 @@ body.wz-dark-theme {
 }
 .wz-dark-theme .nav-tabs .nav-item a {
   color: #fffffc;
+}
+.wz-dark-theme .wz-project-main {
+  background: #4e4e4e;
+}
+.wz-dark-theme .wz-project-main img,
+.wz-dark-theme .wz-project-main svg {
+  background: #ffffff;
+}
+.wz-dark-theme .wz-project-main .wz-project-description {
+  color: #ffffff;
+}
+.wz-dark-theme .wz-project-main > h1,
+.wz-dark-theme .wz-project-main .wz-group-allowed-list,
+.wz-dark-theme .wz-project-main .table thead th {
+  color: #ffffff;
+}
+.wz-dark-theme .wz-project-main .wz-page-title {
+  color: #ffffff;
+}
+.wz-dark-theme .wz-project-main .wz-document-header {
+  color: #cecece;
+}
+.wz-dark-theme .wz-project-main .wz-tags input {
+  background: #545454;
+}
+.wz-dark-theme .wz-project-main .wz-content-end {
+  color: #cecece;
+}
+.wz-dark-theme .wz-project-main .wz-attachments h4,
+.wz-dark-theme .wz-project-main .wz-attachments li {
+  color: #ffffff;
+}
+.wz-dark-theme .wz-project-main .wz-comment-panel {
+  background: none;
+}
+.wz-dark-theme .wz-project-main .wz-comment-panel .wz-text-dashed {
+  color: #ffffff !important;
+}
+.wz-dark-theme .wz-project-main .wz-comment-panel .wz-comment-box {
+  border: 1px solid #1f1f1f;
+}
+.wz-dark-theme .wz-project-main .wz-comment-panel .wz-comment-box .wz-comment-header {
+  background: #3a3a3a;
+  border-bottom: 1px solid #1f1f1f;
+  color: #CCCCCC;
+}
+.wz-dark-theme .wz-project-main .wz-comment-panel .wz-comment-editor {
+  border: 1px solid #1f1f1f;
+}
+.wz-dark-theme .wz-project-main .wz-comment-panel .wz-comment-editor .wz-comment-editor-header {
+  background: #3a3a3a;
+  border-bottom: 1px solid #1f1f1f;
+}
+.wz-dark-theme .wz-project-main .wz-comment-panel .wz-comment-editor .wz-comment-editor-header button {
+  color: #CCCCCC;
+}
+.wz-dark-theme .wz-project-main .wz-comment-panel .wz-comment-editor .wz-comment-editor-header .wz-comment-editor-write {
+  background: #4e4e4e;
+  border: 1px solid #1f1f1f;
+  border-bottom: 1px solid #4e4e4e;
+}
+.wz-dark-theme .wz-project-main .wz-comment-panel .wz-comment-editor .wz-comment-editor-header .wz-comment-editor-readonly {
+  background-color: transparent;
+  border: none;
+}
+.wz-dark-theme .wz-project-main .wz-comment-panel .wz-comment-editor .wz-comment-editor-tip {
+  color: #fbfbfb;
+}
+.wz-dark-theme .wz-project-main .wz-comment-panel .wz-comment-editor .wz-comment-editor-body textarea {
+  background: #424242;
+  color: #ffffff;
+}
+.wz-dark-theme .wz-project-main .wz-comment-panel .wz-comment-editor .wz-comment-editor-body textarea:focus {
+  background: #000000;
+}
+.wz-dark-theme .wz-project-main .wz-document-swagger-sync-info {
+  background: #4e4e4e;
+  color: #ffffff;
+}
+.wz-dark-theme .wz-project-main .wz-document-swagger-sync-info a {
+  color: #75d4ff;
+  text-decoration: none;
+}
+.wz-dark-theme .wz-project-main .wz-document-swagger-sync-info a:hover {
+  text-decoration: underline;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview {
+  background: #4e4e4e;
+  color: #ffffff;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview blockquote {
+  color: #cecece;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview code {
+  background: #f6f6f614;
+  color: #ff0057;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview a {
+  color: #75d4ff;
+  text-decoration: none;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview a:hover {
+  text-decoration: underline;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint {
+  border: 1px dashed #000 !important;
+  background: #636363 !important;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint li {
+  background: #4e4e4ead;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint li.L1,
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint li.L3,
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint li.L5,
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint li.L7,
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint li.L9 {
+  background: #4e4e4e !important;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint code {
+  background: none;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint code .pln {
+  color: #CCCCCC;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint code .str {
+  color: #72ff72;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint code .com {
+  color: #949494;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint code .lit {
+  color: #08f1f1;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint code .kwd {
+  color: #000073;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint code .typ {
+  color: #f03;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint code .pun,
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint code .opn,
+.wz-dark-theme .wz-project-main .editormd-html-preview .prettyprint code .clo {
+  color: #ff0;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview table td {
+  color: #ffffff;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview table tr {
+  background: transparent;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview table tr:hover {
+  background: #6f6f6f;
+}
+.wz-dark-theme .wz-project-main .editormd-html-preview .card-white {
+  background: none;
+}
+.wz-dark-theme .swagger-ui {
+  background: #4e4e4e;
+}
+.wz-dark-theme .swagger-ui .info li,
+.wz-dark-theme .swagger-ui .info table,
+.wz-dark-theme .swagger-ui .info p {
+  color: #ffffff;
+}
+.wz-dark-theme .swagger-ui .model,
+.wz-dark-theme .swagger-ui label {
+  color: #ffffff;
+}
+.wz-dark-theme .swagger-ui .opblock-tag {
+  color: #ffffff;
+  background: #616161;
+}
+.wz-dark-theme .swagger-ui .opblock-tag small {
+  color: #cecece;
+}
+.wz-dark-theme .swagger-ui .opblock-description-wrapper p,
+.wz-dark-theme .swagger-ui .opblock-external-docs-wrapper p,
+.wz-dark-theme .swagger-ui .opblock-title_normal p {
+  color: #cecece;
+}
+.wz-dark-theme .swagger-ui .parameter__name {
+  color: #ffffff;
+}
+.wz-dark-theme .swagger-ui .parameter__name.required:after {
+  color: red;
+}
+.wz-dark-theme .swagger-ui .parameter__extension,
+.wz-dark-theme .swagger-ui .parameter__in {
+  color: #cecece;
+}
+.wz-dark-theme .swagger-ui section.models {
+  border: 1px solid #8484846b;
+}
+.wz-dark-theme .swagger-ui section.models h4 {
+  color: #ffffff;
+  border-bottom: 1px solid #8484846b;
+}
+.wz-dark-theme .swagger-ui section.models .model-title {
+  color: #cecece;
+}
+.wz-dark-theme .swagger-ui .parameter__type {
+  color: #ffffff;
+}
+.wz-dark-theme .swagger-ui .prop-format {
+  color: #cecece;
+}
+.wz-dark-theme .swagger-ui .schemes-title {
+  margin: 10px 0;
+}
+.wz-dark-theme .swagger-ui .model-box,
+.wz-dark-theme .swagger-ui .scheme-container {
+  background: rgba(255, 255, 255, 0.4);
+}
+.wz-dark-theme .swagger-ui .tablinks {
+  color: #03a9f4;
+}
+.wz-dark-theme .swagger-ui table thead td,
+.wz-dark-theme .swagger-ui table tbody td {
+  color: #cecece;
+}
+.wz-dark-theme .swagger-ui table thead th,
+.wz-dark-theme .swagger-ui table tbody th {
+  color: #ffffff;
+}
+.wz-dark-theme .swagger-ui .opblock .opblock-summary-description {
+  color: #ffffff;
+}
+.wz-dark-theme .swagger-ui .opblock .opblock-summary-operation-id,
+.wz-dark-theme .swagger-ui .opblock .opblock-summary-path,
+.wz-dark-theme .swagger-ui .opblock .opblock-summary-path__deprecated {
+  color: #cecece;
 }
 /*# sourceMappingURL=style-dark.css.map */
