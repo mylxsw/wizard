@@ -356,6 +356,10 @@ body.wz-dark-theme {
 .wz-dark-theme .swagger-ui {
   background: #4e4e4e;
 }
+.wz-dark-theme .swagger-ui img,
+.wz-dark-theme .swagger-ui svg {
+  background: none;
+}
 .wz-dark-theme .swagger-ui .info li,
 .wz-dark-theme .swagger-ui .info table,
 .wz-dark-theme .swagger-ui .info p {
