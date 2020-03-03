@@ -73,6 +73,29 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
 
 详细安装方法参考 Docker Hub [mylxsw/wizard](https://hub.docker.com/r/mylxsw/wizard)。
 
+#### 方法一
+
+直接运行下面的 Docker 命令即可
+
+    docker run -d --name wizard \
+        -e DB_HOST=host.docker.internal \
+        -e DB_PORT=3306  \
+        -e DB_DATABASE=wizard  \
+        -e DB_USERNAME=wizard  \
+        -e DB_PASSWORD=wizard  \
+        -p 8080:80 \
+        -v /Users/mylxsw/Downloads:/webroot/storage/app/public   \
+        mylxsw/wizard
+        
+简要说明：
+
+- `-e` 指定配置，用环境变量的形式覆盖 `.env` 中的配置
+- `-d` 后台模式运行
+- `-p` 指定映射容器内的80端口为宿主机的 8080 端口，这样就可以在宿主机上以 http://localhost:8080 的形式访问了
+- `-v` 映射数据目录位置，将本地目录映射到文件上传存储目录，避免重启服务时图片等数据丢失
+
+#### 方法二
+
 我们需要创建一个Dockerfile，在Dockerfile中添加环境配置，比如我采用了宿主机上安装的MySQL服务器，就有了下面的这段Dockerfile配置
 
     FROM mylxsw/wizard:latest
