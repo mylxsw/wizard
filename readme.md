@@ -225,6 +225,11 @@ composer 会在在项目目录中创建 **vender** 目录，其中包含了项�
 
     composer install --prefer-dist --ignore-platform-reqs
     php artisan migrate
+    
+如果是用 Docker 部署的话，在重新拉取最新镜像之后，执行下面的命令就可以了
+
+    docker run -it --rm my-wizard php artisan migrate
+
 
 ### 初始化
 
