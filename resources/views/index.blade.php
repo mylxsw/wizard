@@ -24,7 +24,7 @@
                     <div class="col alert alert-info alert-dismissible" data-alert-id="public-home-tip">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
-                        提示： 该页面为公共主页，如果要创建项目，请到 <a href="{{ wzRoute('user:home') }}">@lang('common.user_home')</a>。
+                        提示： 该页面为公共主页，查看您自己创建的项目，请到 <a href="{{ wzRoute('user:home') }}">@lang('common.user_home')</a>。
                     </div>
                 @endunless
                 @if(!empty($catalogs))
@@ -60,12 +60,23 @@
                         </div>
                     @endforeach
                 </div>
+                @can('project-create')
+                <div class="row col-12 wz-new-project-box">
+                    <a href="#" class="wz-new-project-btn" data-toggle="modal" data-target="#wz-new-project">
+                        <span class="fa fa-plus"></span> @lang('project.new_project')
+                    </a>
+                </div>
+                @endcan
                 <div class="wz-pagination">
                     {{ $projects->links() }}
                 </div>
             </div>
         </div>
     </div>
+
+    @can('project-create')
+        @include('components.project-create', ['defaultCatalog' => $catalog->id ?? null])
+    @endcan
 
     @if(!Auth::guest() && empty($name))
 

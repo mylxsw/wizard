@@ -6,10 +6,12 @@
  * @copyright 管宜尧 <mylxsw@aicode.cc>
  */
 
+use App\Repositories\Catalog;
 use App\Repositories\Document;
 use App\Repositories\Template;
 use App\Repositories\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -302,7 +304,7 @@ function userNotificationCount($limit = 0)
  *
  * @param $pid
  *
- * @return \Illuminate\Database\Eloquent\Collection
+ * @return Collection
  */
 function subDocuments($pid)
 {
@@ -385,7 +387,7 @@ function user_face($id)
 /**
  * 获取所有用户列表
  *
- * @return \Illuminate\Database\Eloquent\Collection
+ * @return Collection
  */
 function users()
 {
@@ -400,12 +402,12 @@ function users()
 /**
  * 用户名列表（js数组）
  *
- * @param \Illuminate\Database\Eloquent\Collection $users
+ * @param Collection $users
  * @param bool $actived
  *
  * @return string
  */
-function ui_usernames(\Illuminate\Database\Eloquent\Collection $users, $actived = true)
+function ui_usernames(Collection $users, $actived = true)
 {
     return $users->filter(
         function (User $user) use ($actived) {
@@ -423,7 +425,7 @@ function ui_usernames(\Illuminate\Database\Eloquent\Collection $users, $actived 
  *
  * @param string $content
  *
- * @return \Illuminate\Database\Eloquent\Collection|null
+ * @return Collection|null
  */
 function comment_filter_users($content)
 {
@@ -805,4 +807,19 @@ function cdn_resource(string $resourceUrl)
     }
 
     return "{$cdnUrl}{$resourceUrl}";
+}
+
+/**
+ * Return all catalogs
+ *
+ * @return Catalog[]|Collection
+ */
+function allCatalogs()
+{
+    static $catalogs = null;
+    if (is_null($catalogs)) {
+        $catalogs = Catalog::all();
+    }
+
+    return $catalogs;
 }

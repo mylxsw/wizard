@@ -1372,3 +1372,22 @@ pre.prettyprint *,
 .markdown-body .wz-card-frame .card-header .card-header-tool .bmd-btn-icon {
     line-height: 1.8;
 }
+
+.wz-new-project-box {
+ margin-left: 0;
+}
+.wz-new-project-box  .wz-new-project-btn {
+    display: block;
+    border: 1px dashed #b8b8b8;
+    color: #b8b8b8;
+    padding: 10px;
+    border-radius: 3px;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: -18px;
+}
+.wz-new-project-box .wz-new-project-btn:hover {
+    background: #eaeaea;
+    color: #545454;
+}

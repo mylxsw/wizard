@@ -7,7 +7,7 @@
  */
 
 return [
-    'new_project'            => '新增项目',
+    'new_project'            => '新建项目',
     'basic'                  => '基本信息',
     'setting'                => '配置',
     'project_name'           => '项目名称',

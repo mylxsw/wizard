@@ -60,7 +60,7 @@ class ProjectController extends Controller
             ]);
 
         return view('user-home',
-            ['projects' => $projects, 'name' => $name, 'catalogs' => Catalog::all(),]);
+            ['projects' => $projects, 'name' => $name,]);
     }
 
     /**

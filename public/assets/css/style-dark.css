@@ -226,7 +226,9 @@ body.wz-dark-theme {
   color: #cecece;
 }
 .wz-dark-theme .wz-project-main .wz-attachments h4,
-.wz-dark-theme .wz-project-main .wz-attachments li {
+.wz-dark-theme .wz-project-main .wz-recently-log h4,
+.wz-dark-theme .wz-project-main .wz-attachments li,
+.wz-dark-theme .wz-project-main .wz-recently-log li {
   color: #ffffff;
 }
 .wz-dark-theme .wz-project-main .wz-comment-panel {
