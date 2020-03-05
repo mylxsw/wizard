@@ -14,7 +14,7 @@ class CreateOperationLogsTable extends Migration
     public function up()
     {
         Schema::create('wz_operation_logs', function (Blueprint $table) {
-            $table->engine = 'ARCHIVE';
+//            $table->engine = 'ARCHIVE';
 
             $table->increments('id');
             $table->integer('user_id', false, true)->nullable()->comment('操作用户ID');
