@@ -446,4 +446,7 @@ body.wz-dark-theme {
 .wz-dark-theme .swagger-ui .opblock .opblock-summary-path__deprecated {
   color: #cecece;
 }
+.wz-dark-theme .wz-new-project-btn:hover {
+  background: #000000;
+}
 /*# sourceMappingURL=style-dark.css.map */

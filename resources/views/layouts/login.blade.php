@@ -13,7 +13,7 @@
     <link rel="icon" type="image/png" href="{{ cdn_resource('/favorite.png') }}">
 
     <title>@yield('title') - {{ config('app.name', 'Wizard API') }}</title>
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ cdn_resource('/assets/vendor/bootstrap-material-design/css/bootstrap-material-design.min.css') }}">
     <style type="text/css">
         html,
         body {
@@ -32,7 +32,6 @@
             justify-content: center;
             padding-top: 40px;
             padding-bottom: 40px;
-            background-color: #f5f5f5;
         }
 
         .form-signin {
@@ -66,12 +65,31 @@
             border-top-left-radius: 0;
             border-top-right-radius: 0;
         }
+
+        .main-card {
+            min-width: 500px;
+            background: #ffffff;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                background: url("{{ config('wizard.login-background-img') }}") no-repeat;
+                background-size: 100% auto;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .main-card {
+                background: none;
+                box-shadow: none;
+            }
+        }
     </style>
 </head>
 
 <body class="text-center">
 
-    <div class="card" style="min-width: 500px;">
+    <div class="card main-card">
         <div class="card-body">
             @yield('content')
         </div>
@@ -79,8 +97,8 @@
 
 <script src="{{ cdn_resource('/assets/vendor/jquery.min.js') }}"></script>
 {{--<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>--}}
-<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" crossorigin="anonymous"></script>
+<script src="{{ cdn_resource('/assets/vendor/popper.js') }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/bootstrap-material-design/js/bootstrap-material-design.min.js') }}"></script>
 
 @stack('script')
 

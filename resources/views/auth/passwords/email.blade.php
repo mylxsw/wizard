@@ -1,5 +1,5 @@
 @extends('layouts.login')
-
+@section('title', __('common.change_password'))
 @section('content')
 
     <form class="form-signin" method="POST" action="{{ wzRoute('password.email') }}">

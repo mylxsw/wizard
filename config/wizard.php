@@ -39,9 +39,18 @@ return [
     'copyright'        => env('WIZARD_COPYRIGHT', 'AICODE.CC'),
 
     /**
+     * 登录页面背景图片
+     */
+    'login-background-img' => env('WIZARD_LOGIN_BACKGROUND_IMG', '/assets/background-image.jpeg'),
+
+    /**
      * 是否启用文档评论功能
      */
     'reply_support'    => env('WIZARD_REPLY_SUPPORT', true),
+    /**
+     * 是否必须登录才能查看文档
+     */
+    'must_login' => env('WIZARD_MUST_LOGIN', false),
 
     /**
      * CDN 加速

@@ -1,5 +1,5 @@
 @extends('layouts.login')
-
+@section('title', __('common.register'))
 @section('content')
 
     <form class="form-signin" method="POST" action="{{ wzRoute('register') }}">
