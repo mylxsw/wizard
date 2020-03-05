@@ -39,9 +39,14 @@ return [
     'copyright'        => env('WIZARD_COPYRIGHT', 'AICODE.CC'),
 
     /**
+     * 管理员在公共页面可以查看所有项目
+     */
+    'admin_see_all' => env('WIZARD_ADMIN_SEE_ALL', true),
+
+    /**
      * 登录页面背景图片
      */
-    'login-background-img' => env('WIZARD_LOGIN_BACKGROUND_IMG', '/assets/background-image.jpeg'),
+    'login_background_img' => env('WIZARD_LOGIN_BACKGROUND_IMG', '/assets/background-image.jpeg'),
 
     /**
      * 是否启用文档评论功能

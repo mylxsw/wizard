@@ -73,7 +73,7 @@
 
         @media (min-width: 768px) {
             body {
-                background: url("{{ config('wizard.login-background-img') }}") no-repeat;
+                background: url("{{ config('wizard.login_background_img') }}") no-repeat;
                 background-size: 100% auto;
             }
         }

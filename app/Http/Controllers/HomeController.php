@@ -80,11 +80,10 @@ class HomeController extends Controller
         }
 
         $user = \Auth::user();
-        if (!empty($user) && $user->isAdmin()) {
+        if (!empty($user) && $user->isAdmin() && config('wizard.admin_see_all')) {
             /** @var LengthAwarePaginator $projects */
             $projects = $projectModel->orderBy('sort_level', 'ASC')->paginate($perPage);
         } else {
-
             $userGroups = empty($user) ? null : $user->groups->pluck('id')->toArray();
             $projectModel->where(function ($query) use ($user, $userGroups) {
                 $query->where('visibility', Project::VISIBILITY_PUBLIC);
