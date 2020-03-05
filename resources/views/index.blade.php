@@ -60,18 +60,25 @@
                         </div>
                     @endforeach
                 </div>
-                @can('project-create')
+                <div class="wz-pagination">
+                    {{ $projects->links() }}
+                </div>
+
+            </div>
+
+
+        </div>
+
+        @can('project-create')
+            <div class="card-footer" style="padding: 0">
                 <div class="row col-12 wz-new-project-box">
                     <a href="#" class="wz-new-project-btn" data-toggle="modal" data-target="#wz-new-project">
                         <span class="fa fa-plus"></span> @lang('project.new_project')
                     </a>
                 </div>
-                @endcan
-                <div class="wz-pagination">
-                    {{ $projects->links() }}
-                </div>
             </div>
-        </div>
+        @endcan
+
     </div>
 
     @can('project-create')
