@@ -63,7 +63,9 @@ class HomeController extends Controller
         } else {
             if (empty($catalogId)) {
                 // 首页默认只查询不属于任何目录的项目
-                $projectModel->whereNull('catalog_id');
+                $projectModel->where(function($query) {
+                    $query->whereNull('catalog_id')->orWhere('catalog_id', 0);
+                });
 
                 // 查询项目目录
                 // 在分页查询的第一页之外，不展示目录
