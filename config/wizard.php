@@ -10,38 +10,38 @@ return [
     /**
      * 当前版本
      */
-    'version'          => '1.2.1',
+    'version'              => '1.2.1',
     /**
      * 版本检查
      */
-    'version-check'    => env('WIZARD_VERSION_CHECK', true),
+    'version-check'        => env('WIZARD_VERSION_CHECK', true),
     /**
      * 新注册账号是否需要邮箱激活
      */
-    'need_activate'    => env('WIZARD_NEED_ACTIVATE', false),
+    'need_activate'        => env('WIZARD_NEED_ACTIVATE', false),
     /**
      * JWT 加密密码
      */
-    'jwt_secret'       => env('WIZARD_JWT_SECRET'),
+    'jwt_secret'           => env('WIZARD_JWT_SECRET'),
 
     /**
      * 默认主题
      */
-    'theme'            => env('WIZARD_DEFAULT_THEME', 'default'),
+    'theme'                => env('WIZARD_DEFAULT_THEME', 'default'),
 
     /**
      * 静态资源版本
      */
-    'resource_version' => env('WIZARD_RESOURCE_VERSION', '201709071013'),
+    'resource_version'     => env('WIZARD_RESOURCE_VERSION', '201709071013'),
     /**
      * 版权地址
      */
-    'copyright'        => env('WIZARD_COPYRIGHT', 'AICODE.CC'),
+    'copyright'            => env('WIZARD_COPYRIGHT', 'AICODE.CC'),
 
     /**
      * 管理员在公共页面可以查看所有项目
      */
-    'admin_see_all' => env('WIZARD_ADMIN_SEE_ALL', true),
+    'admin_see_all'        => env('WIZARD_ADMIN_SEE_ALL', true),
 
     /**
      * 登录页面背景图片
@@ -51,16 +51,16 @@ return [
     /**
      * 是否启用文档评论功能
      */
-    'reply_support'    => env('WIZARD_REPLY_SUPPORT', true),
+    'reply_support'        => env('WIZARD_REPLY_SUPPORT', true),
     /**
      * 是否必须登录才能查看文档
      */
-    'must_login' => env('WIZARD_MUST_LOGIN', false),
+    'must_login'           => env('WIZARD_MUST_LOGIN', false),
 
     /**
      * CDN 加速
      */
-    'cdn'              => [
+    'cdn'                  => [
         /**
          * 是否启用 CDN 加速
          */
@@ -74,7 +74,7 @@ return [
     /**
      * LDAP
      */
-    'ldap'             => [
+    'ldap'                 => [
         /**
          * 是否启用ldap
          */
@@ -90,7 +90,7 @@ return [
     /**
      * 表格类型文档配置
      */
-    'spreedsheet'      => [
+    'spreedsheet'          => [
         /**
          * 最大支持的行数
          */
@@ -100,4 +100,15 @@ return [
          */
         'max_cols' => env('WIZARD_SPREEDSHEET_MAX_COLS', 26),
     ],
+
+    /**
+     * 文件附件
+     */
+    'attachments'          => [
+        /**
+         * 支持的文件扩展名列表，使用,分割
+         */
+        'support_extensions' => env('WIZARD_ATTACHMENTS_SUPPORT_EXTENSIONS',
+            'jpg,jpeg,gif,png,bmp,zip,rar,war,mwb,xmind,itmz,mindnode,svg,md,vsd,vsdx,txt,doc,docx,xls,xlsx,ppt,pptx,pdf,sql'),
+    ]
 ];

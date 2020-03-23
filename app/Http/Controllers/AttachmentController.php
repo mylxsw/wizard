@@ -18,35 +18,6 @@ use Illuminate\Http\Request;
 
 class AttachmentController extends Controller
 {
-    private $extensions
-        = [
-            'jpg',
-            'jpeg',
-            'gif',
-            'png',
-            'bmp',
-            'zip',
-            'rar',
-            'war',
-            'mwb',
-            'xmind',
-            'itmz',
-            'mindnode',
-            'svg',
-            'md',
-            'vsd',
-            'vsdx',
-            'txt',
-            'doc',
-            'docx',
-            'xls',
-            'xlsx',
-            'ppt',
-            'pptx',
-            'pdf',
-            'sql',
-        ];
-
     /**
      * 上传文件
      *
@@ -71,7 +42,7 @@ class AttachmentController extends Controller
             ]
         );
 
-        $file      = $request->file('attachment');
+        $file = $request->file('attachment');
         $extension = $this->getFileExtension($file);
 
         $this->validateParameters(
@@ -81,7 +52,7 @@ class AttachmentController extends Controller
                 'page_id'    => $page_id,
             ],
             [
-                'extension'  => 'in:' . implode(',', $this->extensions),
+                'extension'  => 'in:' . implode(',', $this->getSupportExtensions()),
                 'project_id' => "required|integer|min:1|project_exist",
                 'page_id'    => "required|integer|min:1|page_exist:{$id}",
             ],
@@ -130,7 +101,7 @@ class AttachmentController extends Controller
      * 解决上传文件无法获取mime类型而存储为默认的zip格式的问题
      *
      * @param \Illuminate\Http\UploadedFile $file
-     * @param string                        $ext
+     * @param string $ext
      *
      * @return string
      */
@@ -160,20 +131,35 @@ class AttachmentController extends Controller
         $project = Project::findOrFail($id);
 
         $attachments = Attachment::with('user')
-            ->where('page_id', $page_id)
-            ->where('project_id', $id)
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
+                                 ->where('page_id', $page_id)
+                                 ->where('project_id', $id)
+                                 ->orderBy('created_at', 'desc')
+                                 ->paginate(20);
 
         return view('doc.attachments', [
             'attachments' => $attachments,
             'project'     => $project,
             'pageID'      => $page_id,
             'pageItem'    => $page,
-            'extensions'  => $this->extensions,
+            'extensions'  => $this->getSupportExtensions(),
             'navigators'  => navigator($id, $page_id),
             'isFavorited' => $project->isFavoriteByUser(\Auth::user()),
         ]);
+    }
+
+    /**
+     * 返回支持的文件扩展名
+     *
+     * @return array
+     */
+    private function getSupportExtensions()
+    {
+        return collect(explode(',', config('wizard.attachments.support_extensions')))
+            ->map(function ($ext) {
+                return trim($ext);
+            })->filter(function ($ext) {
+                return !empty($ext);
+            })->toArray();
     }
 
     /**
