@@ -75,7 +75,23 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
 
 #### 方法一
 
-直接运行下面的 Docker 命令即可
+首先对于新安装用户，需要执行数据库的初始化
+
+    docker run -it --rm --name wizard \
+        -e DB_HOST=host.docker.internal \
+        -e DB_PORT=3306  \
+        -e DB_DATABASE=wizard  \
+        -e DB_USERNAME=wizard  \
+        -e DB_PASSWORD=wizard  \
+        mylxsw/wizard 初始化命令
+        
+        
+这里的 **初始化命令** 包含两个，依次执行即可
+  
+  - php artisan migrate:install
+  - php artisan migrate
+
+最后，直接运行下面的 Docker 命令即可
 
     docker run -d --name wizard \
         -e DB_HOST=host.docker.internal \
