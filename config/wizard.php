@@ -99,6 +99,14 @@ return [
          * 最大支持的列数
          */
         'max_cols' => env('WIZARD_SPREEDSHEET_MAX_COLS', 26),
+        /**
+         * 最小展示行数
+         */
+        'min_rows' => env('WIZARD_SPREEDSHEET_MIN_ROWS', 10),
+        /**
+         * 最小展示的列数
+         */
+        'min_cols' => env('WIZARD_SPREEDSHEET_MIN_COLS', 6),
     ],
 
     /**

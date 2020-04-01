@@ -80,12 +80,6 @@
                 @if($type === 'table')
                     <textarea id="x-spreadsheet-content" class="d-none">{{ processSpreedSheet($pageItem->content) }}</textarea>
                     <div class="wz-spreadsheet">
-                        <div class="wz-spreadsheet-control">
-                            <button class="btn btn-primary wz-spreadsheet-mode pull-right" data-mode="photo">
-                                <i class="fa fa-clipboard" title="文本复制模式"></i>
-                            </button>
-                            <div class="clearfix"></div>
-                        </div>
                         <div id="x-spreadsheet"></div>
                     </div>
                 @endif

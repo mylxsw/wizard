@@ -194,7 +194,7 @@
         $(function () {
             var version = '{{ config('wizard.version', '1') }}';
             $.getJSON('https://aicode.cc/wizard-update/version?callback=?', function (data) {
-                if (data.tag_name === version) {
+                if (data === undefined || data.tag_name === version) {
                     return;
                 }
 

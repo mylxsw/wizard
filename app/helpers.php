@@ -13,6 +13,7 @@ use App\Repositories\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 /**
  * 生成路由url
@@ -686,8 +687,47 @@ function convertSqlTo(string $sql, $callback)
  */
 function processSpreedSheet(string $content): string
 {
-    $contentArray = json_decode($content, true);
+    $minRow = config('wizard.spreedsheet.min_rows');
+    $minCol = config('wizard.spreedsheet.min_cols');
 
+    $contentArray = json_decode($content, true);
+    if (Str::startsWith($content, '[')) {
+        $maxColsLen = $maxRowsLen = 0;
+        foreach ($contentArray as $k => $arr) {
+            $cur= processSpreedSheetSingle($arr, $minRow, $minCol);
+            $contentArray[$k] = $cur;
+            if ($cur['cols']['len'] > $maxColsLen) {
+                $maxColsLen = $cur['cols']['len'];
+            }
+
+            if ($cur['rows']['len'] > $maxRowsLen) {
+                $maxRowsLen = $cur['rows']['len'];
+            }
+        }
+
+        foreach ($contentArray as $k => $arr) {
+            $contentArray[$k]['cols']['len'] = $maxColsLen;
+            $contentArray[$k]['rows']['len'] = $maxRowsLen;
+        }
+    } else {
+        $contentArray = processSpreedSheetSingle($contentArray, $minRow, $minCol);
+    }
+
+    $content = json_encode($contentArray, JSON_UNESCAPED_UNICODE);
+    return $content;
+}
+
+/**
+ * 处理单一 sheet 的表格
+ *
+ * @param $contentArray
+ * @param int $minRow
+ * @param int $minCol
+ *
+ * @return mixed
+ */
+function processSpreedSheetSingle($contentArray, $minRow, $minCol)
+{
     $maxRowNum = collect(array_keys($contentArray['rows']))
         ->filter(
             function ($item) {
@@ -722,11 +762,9 @@ function processSpreedSheet(string $content): string
             }
         )->max();
 
-    $contentArray['cols']['len'] = $maxColNum + 1;
-    $contentArray['rows']['len'] = $maxRowNum + 1;
-
-    $content = json_encode($contentArray, JSON_UNESCAPED_UNICODE);
-    return $content;
+    $contentArray['cols']['len'] = ($maxColNum > $minCol ? $maxColNum : $minCol) + 1;
+    $contentArray['rows']['len'] = ($maxRowNum > $minRow ? $maxRowNum : $minRow) + 1;
+    return $contentArray;
 }
 
 /**

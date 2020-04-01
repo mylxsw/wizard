@@ -2,22 +2,13 @@
     <link rel="stylesheet" href="{{ cdn_resource('/assets/vendor/x-spreadsheet/xspreadsheet.css') }}">
     <style type="text/css">
         #x-spreadsheet {
-            border: 1px dashed #159e92;
+            /*border: 1px dashed #159e92;*/
             margin-left: 10px;
         }
 
-        .wz-spreadsheet-mode-clipboard {
-            border: 1px solid #159e92!important;
-        }
-
-        .x-spreadsheet-overlayer {
+        .x-spreadsheet-icon-img.add {
             display: none;
         }
-
-        .wz-spreadsheet-control {
-            padding-right: 5px;
-        }
-
     </style>
 @endpush
 
@@ -30,7 +21,7 @@
                 savedContent = "{}";
             }
 
-            var sheetData = {};
+            var sheetData = [];
             var tableHeight = 0;
             var tableWidth = 0;
 
@@ -40,54 +31,57 @@
                     var customHeightCount = 0;
                     var height = 0;
 
-                    for (var i in sheetData.rows) {
+                    for (var i in sheetData[0].rows) {
                         if (!/^\d+$/.test(i)) {
                             continue;
                         }
 
-                        if (sheetData.rows[i]["height"] !== undefined) {
+                        if (sheetData[0].rows[i]["height"] !== undefined) {
                             customHeightCount++;
-                            height += sheetData.rows[i]["height"];
+                            height += sheetData[0].rows[i]["height"];
                         }
                     }
 
 
-                    for (var i = 0; i < sheetData.rows.len - customHeightCount; i++) {
+                    for (var i = 0; i < sheetData[0].rows.len - customHeightCount; i++) {
                         height += 25;
                     }
 
-                    return height + 46;
+                    return height + 46 + 21;
                 })(sheetData);
 
                 tableWidth = (function (sheetData) {
                     var width = 0;
                     var customWidthCount = 0;
 
-                    for (var i in sheetData.cols) {
+                    for (var i in sheetData[0].cols) {
                         if (!/^\d+$/.test(i)) {
                             continue;
                         }
 
-                        if (sheetData.cols[i]["width"] === undefined) {
+                        if (sheetData[0].cols[i]["width"] === undefined) {
                             continue;
                         }
 
-                        width += sheetData.cols[i]["width"];
+                        width += sheetData[0].cols[i]["width"];
                         customWidthCount++;
                     }
 
 
-                    for (var i = 0; i < sheetData.cols.len - customWidthCount; i++) {
+                    for (var i = 0; i < sheetData[0].cols.len - customWidthCount; i++) {
                         width += 100;
                     }
 
-                    return width + 61;
+                    var bottomToolLength = 61 + 87 + 66.5 * sheetData.length;
+                    width = width + 61;
+                    return width > bottomToolLength ? width : bottomToolLength;
                 })(sheetData);
             } catch (e) {
                 console.log(e);
             }
 
             var options = {
+                mode: 'read',
                 showToolbar: false,
                 showGrid: true,
                 showContextmenu: false,
@@ -111,35 +105,6 @@
             sheet.loadData(sheetData);
             sheet.change(function (data) {
             });
-
-
-            // 表格的只读模式设置
-            $('.wz-spreadsheet .wz-spreadsheet-mode').on('click', function (e) {
-                e.preventDefault();
-
-                if ($(this).data('mode') === 'photo') {
-                    $(this).children('i')
-                        .removeClass('fa-clipboard')
-                        .addClass('fa-photo');
-                    $(this).data('mode', 'clipboard');
-                    $(this).parents('div')
-                        .find('.x-spreadsheet-overlayer')
-                        .css('display', 'block');
-
-                    $('#x-spreadsheet').addClass('wz-spreadsheet-mode-clipboard');
-                } else {
-                    $(this).children('i')
-                        .removeClass('fa-photo')
-                        .addClass('fa-clipboard');
-                    $(this).data('mode', 'photo');
-                    $(this).parents('div')
-                        .find('.x-spreadsheet-overlayer')
-                        .css('display', 'none');
-
-                    $('#x-spreadsheet').removeClass('wz-spreadsheet-mode-clipboard');
-                }
-            });
-
         });
     </script>
 @endpush

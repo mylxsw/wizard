@@ -36,17 +36,18 @@
 @push('script')
     <script src="{{ cdn_resource('/assets/vendor/base64.min.js') }}"></script>
     <script src="{{ cdn_resource('/assets/vendor/x-spreadsheet/xspreadsheet.js') }}"></script>
-    {{--<script src="{{ cdn_resource('/assets/vendor/x-spreadsheet/locale/zh-cn.js') }}"></script>--}}
+{{--    <script src="{{ cdn_resource('/assets/vendor/x-spreadsheet/locale/zh-cn.js') }}"></script>--}}
 
     <script>
         $(function() {
 
             var savedContent = $('#xspreadsheet-content').html();
             if (savedContent === '') {
-                savedContent = "{\"cols\":{\"len\":25},\"rows\":{\"len\":100}}";
+                savedContent = "[{\"name\":\"sheet1\",\"cols\":{\"len\":25},\"rows\":{\"len\":100}}]";
             }
 
             var options = {
+                mode: 'edit',
                 showToolbar: true,
                 showGrid: true,
                 showContextmenu: true,
@@ -70,8 +71,11 @@
 
             var sheet = x.spreadsheet('#xspreadsheet', options);
             var data = JSON.parse(savedContent);
-            data.cols.len = options.col.len;
-            data.rows.len = options.row.len;
+            for (var i in data) {
+                data[i].cols.len = options.col.len;
+                data[i].rows.len = options.row.len;
+            }
+            console.log(data);
             sheet.loadData(data);
 
             // 获取编辑器中的内容
