@@ -10,7 +10,7 @@
             @include('components.doc-edit', ['project' => $project, 'pageItem' => $pageItem ?? null, 'navigator' => $navigator])
             <input type="hidden" name="type" value="table" />
 
-            <div id="xspreadsheet-content" style="display: none;">{{ $pageItem->content ?? '' }}</div>
+            <div id="xspreadsheet-content" style="display: none;">{{ processSpreedSheet($pageItem->content ?? '') }}</div>
             <div class="col-row" id="xspreadsheet"></div>
         </form>
     </div>
