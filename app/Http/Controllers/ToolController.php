@@ -58,7 +58,7 @@ class ToolController extends Controller
             })->toArray());
 
             $markdownTable = convertSqlToMarkdownTable($sql);
-            if (!is_null($markdownTable)) {
+            if (!empty($markdownTable)) {
                 $markdowns[] = $markdownTable;
             }
         }
@@ -90,7 +90,7 @@ class ToolController extends Controller
             })->toArray());
 
             $htmlTable = convertSqlToHTMLTable($sql);
-            if (!is_null($htmlTable)) {
+            if (!empty($htmlTable)) {
                 $markdowns[] = $htmlTable;
             }
         }

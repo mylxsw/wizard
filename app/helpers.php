@@ -622,57 +622,61 @@ function convertSqlTo(string $sql, $callback)
             return null;
         }
 
-        $fields = $parsed['TABLE']['create-def']['sub_tree'];
-        $tableName = $parsed['TABLE']['base_expr'];
+//        \Log::error('xxx', ['struct' => $parsed]);
+        if ($parsed['CREATE']['expr_type'] === 'table') {
+            $fields = $parsed['TABLE']['create-def']['sub_tree'];
+            $tableName = $parsed['TABLE']['base_expr'];
 
-        $markdowns = [];
+            $markdowns = [];
 
-        foreach ($fields as $field) {
-            if ($field['sub_tree'][0]['expr_type'] == 'constraint') {
-                continue;
-            }
-
-            // 如果当前行不是列定义，则没有 sub_tree，比如 PRIMARY KEY(id)
-            if (!isset($field['sub_tree'][1]['sub_tree'])) {
-                continue;
-            }
-
-            $type = $length = '';
-            foreach ($field['sub_tree'][1]['sub_tree'] as $item) {
-                if ($item['expr_type'] == 'data-type') {
-                    $type = $item['base_expr'] ?? '';
-                    $length = $item['length'] ?? '';
+            foreach ($fields as $field) {
+                if ($field['sub_tree'][0]['expr_type'] == 'constraint') {
+                    continue;
                 }
-            }
 
-            $name = $field['sub_tree'][0]['base_expr'];
-            $comment = trim($field['sub_tree'][1]['comment'] ?? '', "'");
-            $nullable = $field['sub_tree'][1]['nullable'] ?? false;
+                // 如果当前行不是列定义，则没有 sub_tree，比如 PRIMARY KEY(id)
+                if (!isset($field['sub_tree'][1]['sub_tree'])) {
+                    continue;
+                }
+
+                $type = $length = '';
+                foreach ($field['sub_tree'][1]['sub_tree'] as $item) {
+                    if ($item['expr_type'] == 'data-type') {
+                        $type = $item['base_expr'] ?? '';
+                        $length = $item['length'] ?? '';
+                    }
+                }
+
+                $name = $field['sub_tree'][0]['base_expr'];
+                $comment = trim($field['sub_tree'][1]['comment'] ?? '', "'");
+                $nullable = $field['sub_tree'][1]['nullable'] ?? false;
 
 //        $autoInc      = $field['sub_tree'][1]['auto_inc'] ?? false;
 //        $primary      = $field['sub_tree'][1]['primary'] ?? false;
 //        $defaultValue = $field['sub_tree'][1]['default'] ?? '-';
 
-            $type = empty($length) ? $type : "{$type} ($length)";
-            $markdowns[] = [trim($name, '`'), $type, $nullable ? 'Y' : 'N', $comment];
-        }
-
-
-        $tableComment = '-';
-        $options = $parsed['TABLE']['options'] ?? [];
-        if (!$options || empty($options)) {
-            $options = [];
-        }
-
-        foreach ($options as $option) {
-            $type = strtoupper($option['sub_tree'][0]['base_expr'] ?? '');
-            if ($type === 'COMMENT') {
-                $tableComment = trim($option['sub_tree'][1]['base_expr'] ?? '', "'");
-                break;
+                $type = empty($length) ? $type : "{$type} ($length)";
+                $markdowns[] = [trim($name, '`'), $type, $nullable ? 'Y' : 'N', $comment];
             }
+
+
+            $tableComment = '-';
+            $options = $parsed['TABLE']['options'] ?? [];
+            if (!$options || empty($options)) {
+                $options = [];
+            }
+
+            foreach ($options as $option) {
+                $type = strtoupper($option['sub_tree'][0]['base_expr'] ?? '');
+                if ($type === 'COMMENT') {
+                    $tableComment = trim($option['sub_tree'][1]['base_expr'] ?? '', "'");
+                    break;
+                }
+            }
+            return $callback($markdowns, trim($tableName, '`'), $tableComment);
         }
 
-        return $callback($markdowns, trim($tableName, '`'), $tableComment);
+        return '';
     } catch (Exception $ex) {
         return "{$ex->getMessage()} @{$ex->getFile()}:{$ex->getLine()}";
     }
