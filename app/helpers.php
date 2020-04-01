@@ -714,7 +714,7 @@ function processSpreedSheet(string $content): string
             $contentArray[$k]['rows']['len'] = $maxRowsLen;
         }
     } else {
-        $contentArray = processSpreedSheetSingle($contentArray, $minRow, $minCol);
+        $contentArray = [processSpreedSheetSingle($contentArray, $minRow, $minCol)];
     }
 
     $content = json_encode($contentArray, JSON_UNESCAPED_UNICODE);
