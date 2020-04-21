@@ -692,7 +692,7 @@ function convertSqlTo(string $sql, $callback)
 function processSpreedSheet(string $content): string
 {
     if (empty($content)) {
-        $content = '[]';
+        $content = '[{"name":"sheet1","cols":{"len":25},"rows":{"len":100}}]';
     }
 
     $minRow = config('wizard.spreedsheet.min_rows');
