@@ -51,7 +51,7 @@
                     <i class="fa fa-hashtag" style="color: #909090;" title="文档标题" data-toggle="tooltip"></i>
                     {{ $pageItem->title }}
                     @if($type == 'swagger')
-                        <a title="原始Swagger文档" target="_blank" href="{{ route('swagger:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="fa fa-link"></a>
+                        <a title="原始Swagger文档" target="_blank" href="{{ wzRoute('swagger:doc:json', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" class="fa fa-link"></a>
                     @endif
                 </h1>
             </nav>

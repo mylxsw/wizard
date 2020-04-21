@@ -92,7 +92,7 @@ function navigator(
             'id'         => (int)$page->id,
             'name'       => $page->title,
             'pid'        => (int)$page->pid,
-            'url'        => route('project:home', ['id' => $projectID, 'p' => $page->id]),
+            'url'        => wzRoute('project:home', ['id' => $projectID, 'p' => $page->id]),
             'selected'   => $pageID === (int)$page->id,
             'type'       => documentType($page->type),
             'created_at' => $page->created_at,

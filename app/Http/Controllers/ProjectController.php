@@ -470,7 +470,7 @@ class ProjectController extends Controller
             return redirect($redirectURL);
         }
 
-        return redirect(route('project:setting:handle', ['id' => $id, 'op' => 'privilege']));
+        return redirect(wzRoute('project:setting:handle', ['id' => $id, 'op' => 'privilege']));
     }
 
     /**

@@ -167,7 +167,7 @@ class DocumentController extends Controller
                     'project:doc:edit:show',
                     ['id' => $projectID, 'page_id' => $pageItem->id]
                 ),
-                'show' => route(
+                'show' => wzRoute(
                     'project:home',
                     ['id' => $projectID, 'p' => $pageItem->id]
                 )
@@ -276,7 +276,7 @@ class DocumentController extends Controller
                     'project:doc:edit:show',
                     ['id' => $projectID, 'page_id' => $pageItem->id]
                 ),
-                'show' => route(
+                'show' => wzRoute(
                     'project:home',
                     ['id' => $projectID, 'p' => $pageItem->id]
                 )

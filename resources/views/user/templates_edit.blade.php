@@ -14,7 +14,7 @@
         <div class="card-header">编辑模板</div>
         <div class="card-body">
 
-            <form class="form-horizontal" method="post" action="{{ route('user:templates:edit:handle', ['id' => $template->id])  }}" >
+            <form class="form-horizontal" method="post" action="{{ wzRoute('user:templates:edit:handle', ['id' => $template->id])  }}" >
                 {{ csrf_field() }}{{ method_field('PUT') }}
 
                 <div class="form-group" style="max-width: 300px;">

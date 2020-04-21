@@ -41,7 +41,7 @@
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-raised">添加</button>
-                            <a href="{!! route('admin:groups') !!}" class="btn btn-default">@lang('common.btn_back')</a>
+                            <a href="{!! wzRoute('admin:groups') !!}" class="btn btn-default">@lang('common.btn_back')</a>
                         </div>
                     </form>
                 </div>
@@ -144,9 +144,9 @@
                         <tr>
                             <th scope="row">{{ $project->id }}</th>
                             <td>
-                                <a href="{!! route('project:home', ['id' => $project->id]) !!}">{{ $project->name }}</a>
+                                <a href="{!! wzRoute('project:home', ['id' => $project->id]) !!}">{{ $project->name }}</a>
                                 @if(!empty($project->catalog_id))
-                                    <a target="_blank" class="badge badge-pill badge-info" href="{{ route('home', ['catalog' => $project->catalog_id]) }}">#{{ $project->catalog->name ?? '' }}</a>
+                                    <a target="_blank" class="badge badge-pill badge-info" href="{{ wzRoute('home', ['catalog' => $project->catalog_id]) }}">#{{ $project->catalog->name ?? '' }}</a>
                                 @endif
                             </td>
                             <td>{{ $project->pivot->privilege == 1 ? __('common.yes') : __('common.no') }}</td>

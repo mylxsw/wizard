@@ -1,5 +1,8 @@
 
 @foreach($logs as $log)
+    @if(empty($log->context->username))
+        @continue
+    @endif
     <div class="media text-muted pt-3">
         <img src="{{ user_face($log->context->username) }}" class="wz-userface-small">
         <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">

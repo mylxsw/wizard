@@ -67,7 +67,7 @@
                     <td>{{ $cat->sort_level }}</td>
                     <td><i class="material-icons text-{{ ($cat->show_in_home ?? true) ? 'success':'warning' }}">{{ ($cat->show_in_home ?? true) ? 'check':'close' }}</i></td>
                     <td>
-                        <a href="{!! route('admin:catalogs:view', ['id' => $cat->id]) !!}">
+                        <a href="{!! wzRoute('admin:catalogs:view', ['id' => $cat->id]) !!}">
                             <i class="material-icons" title="编辑">create</i>
                         </a>
                         &nbsp;

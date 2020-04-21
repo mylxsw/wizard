@@ -165,9 +165,9 @@
                         <tr>
                             <td>{{ $proj->id }}</td>
                             <td>
-                                <a href="{!! route('project:home', ['id' => $proj->id]) !!}">{{ $proj->name }}</a>
+                                <a href="{!! wzRoute('project:home', ['id' => $proj->id]) !!}">{{ $proj->name }}</a>
                                 @if(!empty($proj->catalog_id))
-                                    <a target="_blank" class="badge badge-pill badge-info" href="{{ route('home', ['catalog' => $proj->catalog_id]) }}">#{{ $proj->catalog->name ?? '' }}</a>
+                                    <a target="_blank" class="badge badge-pill badge-info" href="{{ wzRoute('home', ['catalog' => $proj->catalog_id]) }}">#{{ $proj->catalog->name ?? '' }}</a>
                                 @endif
                             </td>
                             <td>{{ $proj->pages_count }}</td>

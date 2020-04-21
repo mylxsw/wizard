@@ -13,7 +13,7 @@
     <div class="card card-white">
         <div class="card-body">
             <div class="btn-group wz-nav-control">
-                <form action="{{ route('user:notifications:read-all') }}" method="post" id="form-notifications-readall">{{ method_field('PUT') }}{{ csrf_field() }}</form>
+                <form action="{{ wzRoute('user:notifications:read-all') }}" method="post" id="form-notifications-readall">{{ method_field('PUT') }}{{ csrf_field() }}</form>
                 <button class="btn btn-primary btn-raised" wz-form-submit data-form="#form-notifications-readall">全部标记为已读</button>
             </div>
 
