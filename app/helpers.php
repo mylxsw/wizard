@@ -26,6 +26,9 @@ use Illuminate\Support\Str;
  */
 function wzRoute($name, $parameters = [], $absolute = false)
 {
+    foreach ($parameters as $k => $v) {
+        $parameters[$k] = urlencode($v);
+    }
     return route($name, $parameters, $absolute);
 }
 
