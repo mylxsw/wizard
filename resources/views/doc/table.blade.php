@@ -75,7 +75,7 @@
                 data[i].cols.len = options.col.len;
                 data[i].rows.len = options.row.len;
             }
-            console.log(data);
+
             sheet.loadData(data);
 
             // 获取编辑器中的内容
@@ -92,8 +92,11 @@
             // 更新编辑器内容
             $.global.updateEditorContent = function (content) {
                 var data = JSON.parse(content);
-                data.cols.len = options.col.len;
-                data.rows.len = options.row.len;
+                for (var i in data) {
+                    data[i].cols.len = options.col.len;
+                    data[i].rows.len = options.row.len;
+                }
+
                 sheet.loadData(data);
             };
 
