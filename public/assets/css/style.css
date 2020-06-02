@@ -420,28 +420,41 @@ a:hover {
     margin-top: 20px;
 }
 
+.markdown-body .alert {
+    border-radius: 2px;
+}
+
+.markdown-body .wz-todo {
+    font-weight: bold;
+    color: #0000ff;
+}
+
+.markdown-body .alert p {
+    margin-bottom: 0;
+}
+
 .markdown-body h1 {
     font-size: 24px !important;
 }
 
 .markdown-body h2 {
-    font-size: 20px !important;;
+    font-size: 22px !important;;
 }
 
 .markdown-body h3 {
-    font-size: 16px !important;;
+    font-size: 20px !important;;
 }
 
 .markdown-body h4 {
-    font-size: 14px !important;;
+    font-size: 18px !important;;
 }
 
 .markdown-body h5 {
-    font-size: 12px !important;;
+    font-size: 16px !important;;
 }
 
 .markdown-body h6 {
-    font-size: 11px !important;;
+    font-size: 15px !important;;
 }
 
 .wz-page-content {

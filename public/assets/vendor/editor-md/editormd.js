@@ -3632,6 +3632,10 @@
         };
 
         markedRenderer.paragraph = function(text) {
+            if (text.trim() === 'TODO' || text.trim() === 'todo') {
+                return '<div class="wz-todo" title="待补充"><span class="fa fa-bell"></span> TODO</div>';
+            }
+
             var isTeXInline     = /\$\$(.*)\$\$/g.test(text);
             var isTeXLine       = /^\$\$(.*)\$\$$/.test(text);
             var isTeXAddClass   = (isTeXLine)     ? " class=\"" + editormd.classNames.tex + "\"" : "";
@@ -3697,11 +3701,36 @@
             else if (lang === 'mermaid') {
                 return '<div class="mermaid">' + code + "</div>";
             }
+            else if (lang === '::info::') {
+                return this.codeToAlertBox('info', code);
+            }
+            else if (lang === '::success::') {
+                return this.codeToAlertBox('success', code);
+            }
+            else if (lang === '::error::') {
+                return this.codeToAlertBox('danger', code);
+            }
+            else if (lang === '::warn::') {
+                return this.codeToAlertBox('warning', code);
+            }
             // wizard 添加 END
             else {
                 return marked.Renderer.prototype.code.apply(this, arguments);
             }
         };
+
+        // 代码转换为 alert box
+        markedRenderer.codeToAlertBox = function (style, code) {
+            return '<div class="alert mt-2 md-2 alert-' + style + '">' + marked(code.replace(/(?<= ) /g, '&nbsp;'), {
+                gfm         : settings.gfm,
+                tables      : true,
+                breaks      : false,
+                pedantic    : false,
+                sanitize    : !settings.htmlDecode,
+                smartLists  : true,
+                smartypants : true
+            }) + '</div>';
+        }
 
         // wizard 添加扩展 START
         markedRenderer.table = function(header, body) {
@@ -3709,7 +3738,8 @@
         };
 
         markedRenderer.blockquote = function(quote) {
-            return"<blockquote><i class='fa fa-quote-left'></i>\n"+quote+"</blockquote>\n"
+            return "<blockquote><i class='fa fa-quote-left'></i>\n"+quote+"</blockquote>\n"
+            // return "<div class='alert alert-info'>" + quote + "</div>";
         };
 
         // wizard 添加扩展 END

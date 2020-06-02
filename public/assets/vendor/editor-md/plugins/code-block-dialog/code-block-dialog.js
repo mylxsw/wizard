@@ -18,6 +18,10 @@
 		// for CodeBlock dialog select
 		var codeLanguages = exports.codeLanguages = {
 			// Wizard 增加 START
+			"::info::"    : ["普通提示", "info"],
+			"::success::" : ["成功提示", "success"],
+			"::error::"   : ["错误提示", "error"],
+			"::warn::"    : ["警告提示", "warn"],
 			mermaid       : ["Mermaid", "mermaid"],
 			flow          : ["流程图", "flow"],
 			sequence      : ["时序图/序列图", "sequence"],
