@@ -30,7 +30,7 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $keyword   = $request->input('keyword');
-        $tagName   = $request->input('tag');
+        $tagName   = urldecode($request->input('tag'));
         $projectId = (int)$request->input('project_id');
         $perPage   = (int)$request->input('per_page', 20);
         $range     = $request->input('range', '');
