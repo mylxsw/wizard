@@ -26,7 +26,7 @@ class MindMappingController extends Controller
             'mind-mapping.editor',
             [
                 'widget'   => $widget ?? null,
-                'readonly' => $request->input('readonly', true),
+                'readonly' => $request->input('readonly', 1),
             ]
         );
     }
@@ -66,7 +66,7 @@ class MindMappingController extends Controller
 
         return [
             'ref_id' => $refId,
-            'url'    => wzRoute('mind-mapping:editor', ['ref_id' => $refId, 'readonly' => false]),
+            'url'    => wzRoute('mind-mapping:editor', ['ref_id' => $refId]),
             'name'   => $widget->name,
         ];
     }

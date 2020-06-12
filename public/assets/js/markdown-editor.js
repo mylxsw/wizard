@@ -149,7 +149,7 @@ $.wz.mdEditor = function (editor_id, params) {
                             let iframe = window.top.document.getElementById('mind-mapping-editor').contentWindow;
                             if (iframe !== null && iframe !== undefined) {
                                 iframe.saveMindMapping(function (data) {
-                                    cm.replaceSelection("[" + data.name + "](" + data.url + "&readonly=true \"wizard-style:frame\")");
+                                    cm.replaceSelection("[" + data.name + "](" + data.url + "&readonly=1 \"wizard-style:frame\")");
                                     self.hide().lockScreen(false).hideMask();
                                 });
                             } else {
