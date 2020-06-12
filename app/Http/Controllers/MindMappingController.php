@@ -25,8 +25,8 @@ class MindMappingController extends Controller
         return view(
             'mind-mapping.editor',
             [
-                'widget'        => $widget ?? null,
-                'readonly'      => $request->input('readonly', true),
+                'widget'   => $widget ?? null,
+                'readonly' => $request->input('readonly', true),
             ]
         );
     }
@@ -51,6 +51,7 @@ class MindMappingController extends Controller
         if (!$widget->exists) {
             $widget->type = Widget::TYPE_MIND_MAPPING;
             $widget->user_id = Auth::user()->id;
+            $widget->ref_id = $refId;
         }
 
         $widget->name = $request->input('name');
