@@ -40,7 +40,10 @@ class MindMappingController extends Controller
      */
     public function save(Request $request)
     {
-        $refId = $request->input('ref_id', $this->createRefId());
+        $refId = $request->input('ref_id');
+        if (empty($refId)) {
+            $refId = $this->createRefId();
+        }
 
         /** @var Widget $widget */
         $widget = Widget::where('type', Widget::TYPE_MIND_MAPPING)->where('ref_id', $refId)->firstOrNew(
