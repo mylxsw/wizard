@@ -457,6 +457,15 @@ a:hover {
     font-size: 15px !important;;
 }
 
+.markdown-body .editormd-tex {
+    padding: 10px;
+}
+
+.markdown-body .katex {
+    font-weight: bold;
+    font-size: 1.2em!important;
+}
+
 .wz-page-content {
     margin-top: 20px;
 }
