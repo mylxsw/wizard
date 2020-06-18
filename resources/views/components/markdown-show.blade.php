@@ -32,8 +32,8 @@
 
         // 内容区域解析markdown
         editormd.katexURL  = {
-            css : "{{ cdn_resource('/assets/vendor/katex.min') }}",
-            js  : "{{ cdn_resource('/assets/vendor/katex.min') }}"
+            css : "{{ cdn_resource('/assets/vendor/katex-0.11.min') }}",
+            js  : "{{ cdn_resource('/assets/vendor/katex-0.11.min') }}"
         }
         editormd.markdownToHTML('markdown-body', {
             tocm: true,

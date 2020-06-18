@@ -74,8 +74,8 @@ $.wz.mdEditor = function (editor_id, params) {
     $.extend(true, config, params);
 
     editormd.katexURL  = {
-        css : "/assets/vendor/katex.min",
-        js  : "/assets/vendor/katex.min"
+        css : "/assets/vendor/katex-0.11.min",
+        js  : "/assets/vendor/katex-0.11.min"
     };
 
     var mdEditor = editormd(editor_id, {
