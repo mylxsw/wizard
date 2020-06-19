@@ -169,7 +169,7 @@ class BatchExportController extends Controller
 
         $mpdf = new Mpdf([
             'mode'              => 'utf-8',
-            'tempDir'           => sys_get_temp_dir(),
+            'tempDir'           => sys_get_temp_dir() . '/wizard/',
             'defaultfooterline' => false,
             'useSubstitutions'  => true,
             'backupSubsFont'    => ['dejavusanscondensed', 'arialunicodems', 'sun-exta'],

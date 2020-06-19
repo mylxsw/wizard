@@ -3412,6 +3412,7 @@
 
         markedRenderer.pageBreak = function (text) {
             if (pageBreakReg.test(text) && settings.pageBreak) {
+                // 注意：这里需要同步修改 ExportController
                 text = "<hr style=\"page-break-after:always;\" class=\"page-break editormd-page-break\" />";
             }
 

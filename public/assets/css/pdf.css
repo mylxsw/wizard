@@ -38,7 +38,7 @@
 
 .alert {
     position: relative;
-    padding: 10px;
+    padding: 0 10px;
     margin-bottom: 10px;
     border: 1px solid transparent;
     border-radius: 5px;
@@ -63,4 +63,20 @@
     color: #285b2a;
     background-color: #dbefdc;
     border-color: #cde9ce;
+}
+
+table, th, td {
+    border: 1px solid #dddddd;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th {
+    background-color: #009688;
+    color: #ffffff;
+    padding: 5px;
+}
+td {
+    padding: 5px 10px;
 }

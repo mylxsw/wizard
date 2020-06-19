@@ -51,7 +51,7 @@ class ExportController extends Controller
 
         $mpdf = new Mpdf([
             'mode'             => 'utf-8',
-            'tempDir'          => sys_get_temp_dir(),
+            'tempDir'          => sys_get_temp_dir() . '/wizard/',
             'useSubstitutions' => true,
             'backupSubsFont'   => ['dejavusanscondensed', 'arialunicodems', 'sun-exta'],
         ]);
@@ -81,6 +81,7 @@ class ExportController extends Controller
         $mpdf->WriteHTML($header);
 
         $html = "<div class='markdown-body wz-markdown-style-fix wz-pdf-content'>{$content}</div>";
+
         $mpdf->Bookmark($title, 0);
         try {
             $pages = explode('<hr style="page-break-after:always;" class="page-break editormd-page-break">', $html);
