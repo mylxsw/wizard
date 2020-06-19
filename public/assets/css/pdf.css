@@ -38,7 +38,7 @@
 
 .alert {
     position: relative;
-    padding: 0 10px;
+    padding: 3px 10px;
     margin-bottom: 10px;
     border: 1px solid transparent;
     border-radius: 5px;
@@ -79,4 +79,8 @@ th {
 }
 td {
     padding: 5px 10px;
+}
+
+img {
+    margin: 10px 0;
 }

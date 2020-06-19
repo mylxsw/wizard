@@ -71,7 +71,7 @@
                     isDarkTheme = true;
                 }
 
-                Promise.all($('#markdown-body').children('.editormd-tex, pre, .flowchart, .sequence-diagram, .mermaid').map(function() {
+                Promise.all($('#markdown-body').find('.editormd-tex, pre.prettyprint, .flowchart, .sequence-diagram, .mermaid').map(function() {
                     var self = $(this);
                     return html2canvas(self[0]).then(function(canvas) {
                         var image = new Image();
@@ -79,12 +79,11 @@
                         self.replaceWith(image);
                     });
                 })).then(function() {
-
+                    layer.close(index);
                     if (isDarkTheme) {
                         body.addClass('wz-dark-theme');
                     }
 
-                    layer.close(index);
                     layer.msg('努力渲染中...', {
                         icon: 16, shade: 0.01, time: 50000
                     });
