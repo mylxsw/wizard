@@ -62,14 +62,27 @@
             });
 
             setTimeout(function() {
-                Promise.all($('#markdown-body').children('.editormd-tex').map(function() {
+                // 检查是否是黑暗模式，黑暗模式需要先切换为正常模式
+                // 解决黑暗模式下公式为白色的问题
+                var body = $('body');
+                var isDarkTheme = false;
+                if (body.hasClass('wz-dark-theme')) {
+                    body.removeClass('wz-dark-theme');
+                    isDarkTheme = true;
+                }
+
+                Promise.all($('#markdown-body').children('.editormd-tex, pre, .flowchart, .sequence-diagram, .mermaid').map(function() {
                     var self = $(this);
                     return html2canvas(self[0]).then(function(canvas) {
                         var image = new Image();
                         image.src = canvas.toDataURL("image/png");
-                        self.html(image);
+                        self.replaceWith(image);
                     });
                 })).then(function() {
+
+                    if (isDarkTheme) {
+                        body.addClass('wz-dark-theme');
+                    }
 
                     layer.close(index);
                     layer.msg('努力渲染中...', {

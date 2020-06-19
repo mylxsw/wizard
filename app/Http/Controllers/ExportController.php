@@ -81,7 +81,7 @@ class ExportController extends Controller
         $mpdf->WriteHTML($header);
 
         $html = "<div class='markdown-body wz-markdown-style-fix wz-pdf-content'>{$content}</div>";
-
+//        echo $header.$html;exit;
         $mpdf->Bookmark($title, 0);
         try {
             $pages = explode('<hr style="page-break-after:always;" class="page-break editormd-page-break">', $html);
