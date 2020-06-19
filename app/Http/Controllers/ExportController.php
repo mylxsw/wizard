@@ -66,7 +66,6 @@ class ExportController extends Controller
         $mpdf->author                   = $author ?? \Auth::user()->name ?? 'wizard';
 
         $header = '<link href="/assets/css/normalize.css" rel="stylesheet">';
-
         switch ($type) {
             case 'markdown':
                 $header .= '<link href="/assets/vendor/editor-md/css/editormd.preview.css" rel="stylesheet"/>';
@@ -84,7 +83,13 @@ class ExportController extends Controller
         $html = "<div class='markdown-body wz-markdown-style-fix wz-pdf-content'>{$content}</div>";
         $mpdf->Bookmark($title, 0);
         try {
-            $mpdf->WriteHTML($html);
+            $pages = explode('<hr style="page-break-after:always;" class="page-break editormd-page-break">', $html);
+            foreach ($pages as $index => $page) {
+                if ($index>0) {
+                    $mpdf->AddPage();
+                }
+                $mpdf->WriteHTML($page);
+            }
         } catch (\Exception $ex) {
             Log::error('html_to_pdf_failed', [
                 'error' => $ex->getMessage(),

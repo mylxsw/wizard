@@ -48,6 +48,7 @@
 
 
 @push('script')
+<script src="/assets/vendor/html2canvas.min.js"></script>
 <script>
     $(function () {
 
@@ -56,18 +57,39 @@
         $('.wz-export-pdf').on('click', function (e) {
             e.preventDefault();
 
-            var contentBody = $('#markdown-body').clone();
-            contentBody.find('textarea').remove();
+            var index = layer.msg('预处理中...', {
+                icon: 16, shade: 0.01, time: 30000
+            });
 
-            $.wz.dynamicFormSubmit(
-                'generate-pdf-{{ $pageItem->id }}',
-                'POST',
-                '{{ wzRoute('export:pdf', ['type' => documentType($pageItem->type)]) }}',
-                {
-                    "html": contentBody.html(),
-                    "title": "{{ $pageItem->title }}"
-                }
-        )
+            setTimeout(function() {
+                Promise.all($('#markdown-body').children('.editormd-tex').map(function() {
+                    var self = $(this);
+                    return html2canvas(self[0]).then(function(canvas) {
+                        var image = new Image();
+                        image.src = canvas.toDataURL("image/png");
+                        self.html(image);
+                    });
+                })).then(function() {
+
+                    layer.close(index);
+                    layer.msg('努力渲染中...', {
+                        icon: 16, shade: 0.01, time: 50000
+                    });
+
+                    var contentBody = $('#markdown-body').clone();
+                    contentBody.find('textarea').remove();
+
+                    $.wz.dynamicFormSubmit(
+                        'generate-pdf-{{ $pageItem->id }}',
+                        'POST',
+                        '{{ wzRoute('export:pdf', ['type' => documentType($pageItem->type)]) }}',
+                        {
+                            "html": contentBody.html(),
+                            "title": "{{ $pageItem->title }}"
+                        }
+                    );
+                });
+            }, 100);
         });
 
         // 普通导出
