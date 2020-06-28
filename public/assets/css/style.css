@@ -80,6 +80,40 @@ form {
     }
 }
 
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 0;
+    }
+
+    .card {
+        box-shadow: none;
+    }
+
+    .card .card-body,
+    .col,
+    .wz-project-main,
+    .markdown-body {
+        padding: 3px!important;
+    }
+
+    .opblock-summary-description,
+    .wz-panel-separator,
+    .wz-top-navbar h5 {
+        display: none!important;
+    }
+
+    .wz-top-navbar {
+        flex-direction: inherit!important;
+        padding: 0 10px;
+    }
+    .wz-top-navbar .wz-top-nav-item {
+        padding: 5px 0;
+    }
+    .wz-panel-breadcrumb .nav {
+        float: left!important;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .wz-main-container-full {
         padding: 0;
