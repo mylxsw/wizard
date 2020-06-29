@@ -31,7 +31,7 @@ class ShareController extends Controller
         $share = PageShare::where('code', $hash)->firstOrFail();
 
         $projectId = $share->project_id;
-        $pageId    = $share->page_id;
+        $pageId = $share->page_id;
 
         /** @var Project $project */
         $project = Project::with([
@@ -50,6 +50,32 @@ class ShareController extends Controller
             'code'     => $hash,
             'noheader' => true,
         ]);
+    }
+
+    /**
+     * 删除分享链接
+     *
+     * @param Request $request
+     * @param $project_id
+     * @param $page_id
+     * @return array
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function delete(Request $request, $project_id, $page_id)
+    {
+        $this->validateParameters(
+            ['page_id' => $page_id,],
+            ['page_id' => "required|page_exist:{$project_id}",]
+        );
+
+        $this->authorize('page-share', $page_id);
+
+        PageShare::where('project_id', $project_id)
+                 ->where('page_id', $page_id)
+                 ->delete();
+
+        $this->alertSuccess('取消分享成功');
+        return [];
     }
 
     /**
@@ -72,11 +98,11 @@ class ShareController extends Controller
         $this->authorize('page-share', $page_id);
 
         $share = PageShare::where('project_id', $project_id)
-            ->where('page_id', $page_id)
-            ->where('user_id', \Auth::user()->id)
-            ->first();
+                          ->where('page_id', $page_id)
+                          ->where('user_id', \Auth::user()->id)
+                          ->first();
         if (empty($share)) {
-            $code  = sha1("{$project_id}-{$page_id}-" . microtime() . rand(0, 9999999999));
+            $code = sha1("{$project_id}-{$page_id}-" . microtime() . rand(0, 9999999999));
             $share = PageShare::create([
                 'code'       => $code,
                 'project_id' => $project_id,

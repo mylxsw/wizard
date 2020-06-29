@@ -148,6 +148,9 @@
 
                 if (savedContent !== currentContent) {
                     store.set($.global.getDraftKey(), currentContent);
+                    if (savedContent !== '') {
+                        $.wz.toast('本地草稿已保存');
+                    }
                 }
 
                 autoSaveDraftTimer = setTimeout(autoSaveDraft, 3000);
@@ -187,8 +190,10 @@
                             btn3: function () {
                                 window.location.href = data.redirect.show;
                             }
-                        }, function () {
+                        }, function (index) {
                             window.location.href = data.redirect.edit;
+                            // layer.close(index);
+                            // documentSaving = false;
                         }, function () {
                             window.location.href = '{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => $type, 'pid' => $pid]) !!}';
                         });

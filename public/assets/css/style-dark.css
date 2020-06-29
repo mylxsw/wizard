@@ -213,8 +213,16 @@ body.wz-dark-theme {
 .wz-dark-theme .wz-project-main .table thead th {
   color: #ffffff;
 }
+.wz-dark-theme .wz-project-main .wz-page-control .material-icons,
+.wz-dark-theme .wz-project-main .wz-page-control .label {
+  color: #ffffff;
+}
 .wz-dark-theme .wz-project-main .wz-page-title {
   color: #ffffff;
+}
+.wz-dark-theme .wz-project-main .wz-page-content table th,
+.wz-dark-theme .wz-project-main .wz-page-content table td {
+  color: #ccc;
 }
 .wz-dark-theme .wz-project-main .wz-document-header {
   color: #cecece;
@@ -225,8 +233,10 @@ body.wz-dark-theme {
 .wz-dark-theme .wz-project-main .wz-content-end {
   color: #cecece;
 }
+.wz-dark-theme .wz-project-main .wz-shares h4,
 .wz-dark-theme .wz-project-main .wz-attachments h4,
 .wz-dark-theme .wz-project-main .wz-recently-log h4,
+.wz-dark-theme .wz-project-main .wz-shares li,
 .wz-dark-theme .wz-project-main .wz-attachments li,
 .wz-dark-theme .wz-project-main .wz-recently-log li {
   color: #ffffff;

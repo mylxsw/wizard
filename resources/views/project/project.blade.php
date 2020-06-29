@@ -58,18 +58,33 @@
             @include('components.document-info')
             @include('components.tags')
 
-            @if (!empty($pageItem->sync_url))
+            @if($share || !empty($pageItem->sync_url))
                 <div class="wz-document-swagger-sync-info wz-panel-limit">
-                    文档同步地址：<a href="{{ $pageItem->sync_url }}" target="_blank">{{ $pageItem->sync_url }}</a>，最后同步于 {{ $pageItem->last_sync_at ?? '-' }}
-                    @can('page-edit', $pageItem)
-                        <a href="#" wz-form-submit data-form="#form-document-sync" data-confirm="执行文档同步后，您将成为最后修改人，确定要执行文档同步吗？" class="ml-2" title="同步文档">
-                            <i class="fa fa-refresh" data-toggle="tooltip" title="同步文档"></i>
-                            <form id="form-document-sync" method="post" style="display: none;"
-                                  action="{{ wzRoute('project:doc:sync-from', ['id' => $pageItem->project_id, 'page_id' => $pageItem->id]) }}">
-                                {{ csrf_field() }}
-                            </form>
-                        </a>
-                    @endcan
+                    @if($share)
+                        <p>
+                            该文档已分享，任何拥有分享链接的人都可以查看该文档，您可以
+                            @can('page-edit', $pageItem)
+                                <button class="btn btn-link btn-danger wz-share-cancel mr-2">取消分享</button>
+                                或者
+                            @endcan
+                            <a target="_blank" class="btn btn-primary btn-link" href="{{ wzRoute('share:show', ['hash' => $share->code]) }}">打开分享链接</a>
+                        </p>
+                    @endif
+
+                    @if(!empty($pageItem->sync_url))
+                        <p>
+                            文档同步地址：<a href="{{ $pageItem->sync_url }}" target="_blank">{{ $pageItem->sync_url }}</a>，最后同步于 {{ $pageItem->last_sync_at ?? '-' }}
+                            @can('page-edit', $pageItem)
+                                <a href="#" wz-form-submit data-form="#form-document-sync" data-confirm="执行文档同步后，您将成为最后修改人，确定要执行文档同步吗？" class="ml-2" title="同步文档">
+                                    <i class="fa fa-refresh" data-toggle="tooltip" title="同步文档"></i>
+                                    <form id="form-document-sync" method="post" style="display: none;"
+                                          action="{{ wzRoute('project:doc:sync-from', ['id' => $pageItem->project_id, 'page_id' => $pageItem->id]) }}">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </a>
+                            @endcan
+                        </p>
+                    @endif
                 </div>
             @endif
 
@@ -202,6 +217,20 @@
                 }
             }
         });
+
+        @if($pageID !== 0 && $share)
+        $('.wz-share-cancel').on('click', function (e) {
+            e.preventDefault();
+            $.wz.confirm('确定取消分享？', function () {
+                $.wz.request('delete', '{!! wzRoute('project:doc:share', ['id' => $project->id, 'page_id' => $pageItem->id]) !!}', {}, function(data) {
+                    window.location.reload(true);
+                });
+            });
+        });
+        $('.wz-share-copy').on('click', function (e) {
+            e.preventDefault();
+        });
+        @endif
     });
 </script>
 

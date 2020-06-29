@@ -188,6 +188,7 @@ Route::group(['middleware' => 'locale'], function() {
 
                 // 文档分享
                 Route::post('/{id}/doc/{page_id}/share', 'ShareController@create')->name('doc:share');
+                Route::delete('/{id}/doc/{page_id}/share', 'ShareController@delete')->name('doc:share:delete');
 
                 // 文档评论
                 Route::post('/{id}/doc/{page_id}/comments', 'CommentController@publish')

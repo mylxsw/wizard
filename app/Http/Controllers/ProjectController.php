@@ -17,6 +17,7 @@ use App\Repositories\Catalog;
 use App\Repositories\Document;
 use App\Repositories\Group;
 use App\Repositories\OperationLogs;
+use App\Repositories\PageShare;
 use App\Repositories\Project;
 use App\Repositories\DocumentHistory;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -41,7 +42,7 @@ class ProjectController extends Controller
     public function home(Request $request)
     {
         $perPage = $request->input('per_page', 19);
-        $name    = $request->input('name');
+        $name = $request->input('name');
 
         /** @var Project $projectModel */
         $projectModel = Project::query();
@@ -52,12 +53,12 @@ class ProjectController extends Controller
 
         /** @var LengthAwarePaginator $projects */
         $projects = $projectModel->where('user_id', \Auth::user()->id)
-            ->orderBy('sort_level', 'ASC')
-            ->paginate($perPage)
-            ->appends([
-                'per_page' => $perPage,
-                'name'     => $name,
-            ]);
+                                 ->orderBy('sort_level', 'ASC')
+                                 ->paginate($perPage)
+                                 ->appends([
+                                     'per_page' => $perPage,
+                                     'name'     => $name,
+                                 ]);
 
         return view('user-home',
             ['projects' => $projects, 'name' => $name,]);
@@ -92,10 +93,10 @@ class ProjectController extends Controller
             ]
         );
 
-        $name        = $request->input('name');
+        $name = $request->input('name');
         $description = $request->input('description');
-        $visibility  = $request->input('visibility');
-        $catalog     = $request->input('catalog');
+        $visibility = $request->input('visibility');
+        $catalog = $request->input('catalog');
 
         if (\Auth::user()->can('project-sort')) {
             $sortLevel = $request->input('sort_level', 1000);
@@ -176,7 +177,7 @@ class ProjectController extends Controller
         $page = $type = null;
         if ($pageID !== 0) {
             $queryBuilder = Document::query();
-            
+
             if (config('wizard.reply_support')) {
                 $queryBuilder->with([
                     'comments' => function ($query) {
@@ -184,22 +185,25 @@ class ProjectController extends Controller
                     }
                 ]);
             }
-            
+
             $page = $queryBuilder->where('project_id', $id)
-                ->where('id', $pageID)
-                ->firstOrFail();
+                                 ->where('id', $pageID)
+                                 ->firstOrFail();
             $type = $this->types[$page->type];
 
             $history = DocumentHistory::where('page_id', $page->id)
-                ->where('id', '!=', $page->history_id)
-                ->orderBy('id', 'desc')
-                ->first();
+                                      ->where('id', '!=', $page->history_id)
+                                      ->orderBy('id', 'desc')
+                                      ->first();
+            $share = PageShare::where('page_id', $page->id)
+                              ->where('project_id', $page->project_id)
+                              ->first();
         } else {
             // 查询操作历史
             $operationLogs = OperationLogs::where('project_id', $id)
-                ->whereNotNull('page_id')
-                ->orderBy('created_at', 'desc')
-                ->limit(10)->get();
+                                          ->whereNotNull('page_id')
+                                          ->orderBy('created_at', 'desc')
+                                          ->limit(10)->get();
         }
 
         return view('project.project', [
@@ -212,6 +216,7 @@ class ProjectController extends Controller
             'comment_highlight' => $request->input('cm', ''),
             'navigators'        => navigator($id, $pageID),
             'history'           => $history ?? false,
+            'share'             => $share ?? false,
             'isFavorited'       => $project->isFavoriteByUser(\Auth::user()),
         ]);
     }
@@ -238,7 +243,7 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
         $this->authorize('project-edit', $project);
 
-        $op       = $request->input('op', 'basic');
+        $op = $request->input('op', 'basic');
         $viewData = ['project' => $project, 'op' => $op];
 
         switch ($op) {
@@ -350,16 +355,16 @@ class ProjectController extends Controller
             ]
         );
 
-        $name        = $request->input('name');
+        $name = $request->input('name');
         $description = $request->input('description');
-        $visibility  = $request->input('visibility');
-        $sortLevel   = $request->input('sort_level');
-        $catalog     = $request->input('catalog');
+        $visibility = $request->input('visibility');
+        $sortLevel = $request->input('sort_level');
+        $catalog = $request->input('catalog');
 
-        $project->name        = $name;
+        $project->name = $name;
         $project->description = $description;
-        $project->visibility  = $visibility;
-        $project->catalog_id  = empty($catalog) ? null : $catalog;
+        $project->visibility = $visibility;
+        $project->catalog_id = empty($catalog) ? null : $catalog;
         if (\Auth::user()->can('project-sort') && $sortLevel != null) {
             $project->sort_level = (int)$sortLevel;
         }
@@ -391,7 +396,7 @@ class ProjectController extends Controller
             ]
         );
 
-        $groupID   = $request->input('group_id');
+        $groupID = $request->input('group_id');
         $privilege = $request->input('privilege', 'r');
 
         $project->groups()->detach($groupID);
@@ -424,7 +429,7 @@ class ProjectController extends Controller
         });
 
         /** @var \Illuminate\Database\Eloquent\Collection $documents */
-        $documents   =
+        $documents =
             Document::whereIn('id', $ids->toArray())->where('project_id', $project->id)->get();
         $retrivedIds = $documents->map(function ($s) {
             return $s->id;
@@ -486,9 +491,9 @@ class ProjectController extends Controller
     {
         $this->validate($request, ['action' => 'required|in:fav,unfav']);
 
-        $action  = $request->input('action');
+        $action = $request->input('action');
         $project = Project::where('id', $id)->firstOrFail();
-        $user    = \Auth::user();
+        $user = \Auth::user();
 
         if ($action == 'fav') {
             $user->favoriteProjects()->attach($project->id);
@@ -522,7 +527,7 @@ class ProjectController extends Controller
             abort(403, '您没有访问该项目的权限');
         }
 
-        $exclude       = [];
+        $exclude = [];
         $excludePageID = $request->input('exclude_page_id');
         if (!empty($excludePageID)) {
             $exclude[] = $excludePageID;

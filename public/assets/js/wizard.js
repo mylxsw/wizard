@@ -81,6 +81,14 @@ $.wz = {
     },
 
     /**
+     * Toast 提示消息
+     * @param message
+     */
+    toast: function(message) {
+        layer.msg(message, {time: 2000, offset: 'rb'});
+    },
+
+    /**
      * 消息提示
      *
      * @param message

@@ -446,6 +446,10 @@ a:hover {
     margin: 10px;
 }
 
+.wz-document-swagger-sync-info p {
+    margin: 0;
+}
+
 .markdown-body table {
     display: table !important;
 }
