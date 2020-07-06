@@ -10,7 +10,7 @@
             @include('components.doc-edit', ['project' => $project, 'pageItem' => $pageItem ?? null, 'navigator' => $navigator])
             <input type="hidden" name="type" value="table" />
 
-            <div id="xspreadsheet-content" style="display: none;">{{ processSpreedSheet($pageItem->content ?? '') }}</div>
+            <div id="xspreadsheet-content" style="display: none;">{{ base64_encode(processSpreedSheet($pageItem->content ?? '')) }}</div>
             <div class="col-row" id="xspreadsheet"></div>
         </form>
     </div>
@@ -44,6 +44,8 @@
             var savedContent = $('#xspreadsheet-content').html();
             if (savedContent === '') {
                 savedContent = "[{\"name\":\"sheet1\",\"cols\":{\"len\":25},\"rows\":{\"len\":100}}]";
+            } else {
+                savedContent = Base64.decode(savedContent);
             }
 
             var options = {

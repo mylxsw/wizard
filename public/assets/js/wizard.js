@@ -65,16 +65,20 @@ $.wz = {
         };
         params = params || {};
 
-        var datas = [];
+        var datas = {};
         for (var key in params) {
-            datas.push(key + "=" + params[key]);
+            datas[key] = params[key];
         }
-        datas.push(form.serialize());
+
+        var args = form.serializeArray();
+        for (var key in args) {
+            datas[args[key].name] = args[key].value;
+        }
 
         $.wz.request(
             'post',
             form.attr('action'),
-            datas.join('&'),
+            datas,
             successCallback,
             errorCallback
         );
