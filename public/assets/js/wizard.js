@@ -269,32 +269,12 @@ $.wz = {
         }, 3000);
     },
     /**
-     * 图片缩放支持
+     * 图片点击支持
      *
      * @param selector
      */
-    imageResize: function (selector) {
+    imageClick: function (selector) {
         $(selector).find('img').each(function () {
-            var size = $(this).attr('title');
-            var regexp = /size:\s*\d*,\d*/;
-            if (regexp.test(size)) {
-                var sizes = regexp.exec(size)[0].substr(5).split(',');
-
-                var width = parseInt(sizes[0]);
-                var height = parseInt(sizes[1]);
-
-
-                if (width > 0) {
-                    $(this).css('max-width', width + 'px');
-                }
-
-                if (height > 0) {
-                    $(this).css('max-height', height + 'px');
-                }
-            } else {
-                $(this).css('max-width', '99%');
-            }
-
             if ($(this).parent().get(0).tagName !== 'A') {
                 $(this).wrap('<a href="' + $(this).attr('src') + '" target="_blank"></a>');
             }

@@ -40,6 +40,8 @@
                 editormd.markedURL.js = '{{ cdn_resource('/assets/vendor/editor-md/lib/marked-0.3.3.min') }}';
             @endif
 
+            editormd.defaults.resourcesVersion = "{{ resourceVersion() }}";
+
             // 初始化 Editor.md
             var editor = $.wz.mdEditor('editormd', {
                 template: function () {

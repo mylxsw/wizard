@@ -256,13 +256,13 @@ $.wz.mdEditor = function (editor_id, params) {
                 mermaid.init(undefined, $(".markdown-body .mermaid"));
             });
 
-            $.wz.imageResize('.editormd-preview-container');
+            $.wz.imageClick('.editormd-preview-container');
             $.wz.sqlCreateSyntaxParser('.editormd-preview-container .wz-sql-create');
             $.wz.loadIframe();
         },
         onchange: function () {
-            // 图片缩放支持
-            $.wz.imageResize('.editormd-preview-container');
+            // 图片点击支持
+            $.wz.imageClick('.editormd-preview-container');
             // mermaid 支持
             var mermaidElements = $('.editormd-preview').find('.mermaid');
             if (mermaidElements.length > 0) {

@@ -26,7 +26,7 @@
         });
 
         window.setTimeout(function () {
-            $.wz.imageResize('#markdown-body');
+            $.wz.imageClick('#markdown-body');
             // $('.swagger-ui section.models h4').trigger('click');
         }, 3000);
     });

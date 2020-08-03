@@ -23,7 +23,7 @@
             var editor      = this.editor;
             var settings    = this.settings;
             var cursor      = cm.getCursor();
-            var selection   = cm.getSelection() + " size:800,1000";
+            var selection   = cm.getSelection();
             var imageLang   = lang.dialog.image;
             var classPrefix = this.classPrefix;
             var iframeName  = classPrefix + "image-iframe";
@@ -59,6 +59,11 @@
                                         "<label>" + imageLang.alt + "</label>" +
                                         "<input type=\"text\" value=\"" + selection + "\" data-alt />" +
                                         "<br/>" +
+                                        "<label title='最大展示尺寸，单位 px'>展示尺寸</label>" +
+                                        "<input type=\"number\" min='0' value=\"800\" data-width style='width: 120px; float: left' placeholder='宽度(px)'/>" +
+                                        "<input type=\"number\" min='0' value=\"1000\" data-height  style='width: 120px; float: left; margin-left: 24px' placeholder='高度(px)'/>" +
+                                        "<div style='clear: both'></div><div style='width: 264px; margin-left: 75px; color: #cacaca'>图片最大展示尺寸，如果不限制，请留空</div>" +
+                                        "<br/>" +
                                         "<label>" + imageLang.link + "</label>" +
                                         "<input type=\"text\" value=\"http://\" data-link />" +
                                         "<br/>" +
@@ -69,7 +74,7 @@
                 dialog = this.createDialog({
                     title      : imageLang.title,
                     width      : (settings.imageUpload) ? 465 : 380,
-                    height     : 254,
+                    height     : 320,
                     name       : dialogName,
                     content    : dialogContent,
                     mask       : settings.dialogShowMask,
@@ -84,6 +89,8 @@
                             var url  = this.find("[data-url]").val();
                             var alt  = this.find("[data-alt]").val();
                             var link = this.find("[data-link]").val();
+                            var maxWidth = this.find("[data-width]").val();
+                            var maxHeight = this.find("[data-height]").val();
 
                             if (url === "")
                             {
@@ -91,15 +98,27 @@
                                 return false;
                             }
 
+                            var sizeControl = "";
+                            if (maxWidth !== '' || maxHeight !== '') {
+                                sizeControl += 'size:';
+                                if (maxWidth !== '') {
+                                    sizeControl += maxWidth;
+                                }
+
+                                if (maxHeight !== '') {
+                                    sizeControl += ',' + maxHeight;
+                                }
+                            }
+
 							var altAttr = (alt !== "") ? " \"" + alt + "\"" : "";
 
                             if (link === "" || link === "http://")
                             {
-                                cm.replaceSelection("![" + alt + "](" + url + altAttr + ")");
+                                cm.replaceSelection("![" + (sizeControl !== '' ? sizeControl : alt) + "](" + url + altAttr + ")");
                             }
                             else
                             {
-                                cm.replaceSelection("[![" + alt + "](" + url + altAttr + ")](" + link + altAttr + ")");
+                                cm.replaceSelection("[![" + (sizeControl !== '' ? sizeControl : alt ) + "](" + url + altAttr + ")](" + link + altAttr + ")");
                             }
 
                             if (alt === "") {
@@ -184,7 +203,9 @@
 			dialog.find("[type=\"text\"]").val("");
 			dialog.find("[type=\"file\"]").val("");
 			dialog.find("[data-link]").val("http://");
-			dialog.find("[data-alt]").val("size:800,1000");
+			dialog.find("[data-alt]").val("");
+			dialog.find("[data-width]").val("800");
+			dialog.find("[data-height]").val("1000");
 
 			this.dialogShowMask(dialog);
 			this.dialogLockScreen();

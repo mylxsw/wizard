@@ -83,6 +83,7 @@
     };
 
     editormd.defaults = {
+        resourcesVersion: "", // 静态资源版本
         mode: "gfm",          //gfm or markdown
         name: "",             // Form element name
         value: "",             // value for CodeMirror, if mode not gfm/markdown
@@ -3220,6 +3221,38 @@
         var editormdLogoReg = regexs.editormdLogo;
         var pageBreakReg = regexs.pageBreak;
 
+        markedRenderer.image = function(href, title, text){
+            var out='<img src="' + href + '" alt="' + text + '"';
+            out += ' title="' + (title ? title : '点击查看大图') + '"';
+
+            var cssStyle = '';
+            var regexp = /size:\s*\d*,\d*/;
+            if (regexp.test(text)) {
+                var sizes = regexp.exec(text)[0].substr(5).split(',');
+
+                var width = parseInt(sizes[0]);
+                var height = parseInt(sizes[1]);
+
+                if (width > 0) {
+                    cssStyle += 'max-width:' + width + 'px;';
+                }
+
+                if (height > 0) {
+                    cssStyle += 'max-height:' + height + 'px;';
+                }
+            } else {
+                cssStyle += 'max-width:99%;';
+            }
+
+            if (cssStyle !== '') {
+                out += ' style="' + cssStyle + '" ';
+            }
+
+            out += this.options.xhtml ? "/>" : ">";
+
+            return out
+        };
+
         markedRenderer.emoji = function (text) {
 
             text = text.replace(editormd.regexs.emojiDatetime, function ($1) {
@@ -3968,7 +4001,7 @@
             callback();
         };
 
-        css.href = fileName + ".css";
+        css.href = fileName + ".css" + (editormd.defaults.resourcesVersion ? '?' + editormd.defaults.resourcesVersion : '');
 
         if (into === "head") {
             document.getElementsByTagName("head")[0].appendChild(css);
@@ -3999,7 +4032,7 @@
         script = document.createElement("script");
         script.id = fileName.replace(/[\./]+/g, "-");
         script.type = "text/javascript";
-        script.src = fileName + ".js";
+        script.src = fileName + ".js" + (editormd.defaults.resourcesVersion ? '?' + editormd.defaults.resourcesVersion : '');
 
         if (editormd.isIE8) {
             script.onreadystatechange = function () {

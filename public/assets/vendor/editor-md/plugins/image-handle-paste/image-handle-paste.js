@@ -46,7 +46,7 @@
                         if(ret.success == 1){
                             var dialog = $("." + classPrefix + "image-dialog");
                             dialog.find("input[data-url]").val(ret.url);
-                            dialog.find('input[data-alt]').val('size:800,1000');
+                            // dialog.find('input[data-alt]').val(ret.url.split('/').pop());
                             //cm.replaceSelection("![](" + ret.url  + ")");
                         }
                         console.log(ret.message);

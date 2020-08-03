@@ -30,6 +30,7 @@
         // mermaid.initialize({startOnLoad:true});
         mermaid.init(undefined, $(".markdown-body .mermaid"));
 
+        editormd.defaults.resourcesVersion = "{{ resourceVersion() }}";
         // 内容区域解析markdown
         editormd.katexURL  = {
             css : "{{ cdn_resource('/assets/vendor/katex-0.11.min') }}",
@@ -101,7 +102,7 @@
                 }
             });
             // 图片缩放支持
-            $.wz.imageResize('#markdown-body');
+            $.wz.imageClick('#markdown-body');
 
             // sql-create 标签解析
             $.wz.sqlCreateSyntaxParser('#markdown-body .wz-sql-create');
