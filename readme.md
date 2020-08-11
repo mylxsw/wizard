@@ -30,10 +30,7 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
 - [流程图，序列图，饼图，Tex LaTex 科学公式支持](https://github.com/mylxsw/wizard/wiki/%E6%B5%81%E7%A8%8B%E5%9B%BE%EF%BC%8C%E5%BA%8F%E5%88%97%E5%9B%BE%EF%BC%8C%E9%A5%BC%E5%9B%BE%EF%BC%8CTex-LaTex-%E7%A7%91%E5%AD%A6%E5%85%AC%E5%BC%8F%E6%94%AF%E6%8C%81)
 - [多主题切换](https://github.com/mylxsw/wizard/wiki/%E9%BB%91%E6%9A%97%E4%B8%BB%E9%A2%98%E5%88%87%E6%8D%A2)
 
-如果想快速体验一下Wizard的功能，有两种方式
-
-- 在线体验请访问 [http://wizard.aicode.cc/](http://wizard.aicode.cc/) ，目前只提供部分功能的体验，功能预览和使用说明请参考 [Wiki](https://github.com/mylxsw/wizard/wiki)。
-- 使用Docker来创建一个完整的Wizard服务
+如果想快速体验一下Wizard的功能，可以使用Docker来创建一个完整的Wizard服务
     
     进入项目的根目录，执行 `docker-compose up`，就可以快速创建一个Wizard服务了，访问地址 http://localhost:8080 。
 
