@@ -705,7 +705,7 @@ function processSpreedSheet(string $content): string
     if (Str::startsWith($content, '[')) {
         $maxColsLen = $maxRowsLen = 0;
         foreach ($contentArray as $k => $arr) {
-            $cur= processSpreedSheetSingle($arr, $minRow, $minCol);
+            $cur = processSpreedSheetSingle($arr, $minRow, $minCol);
             $contentArray[$k] = $cur;
             if ($cur['cols']['len'] > $maxColsLen) {
                 $maxColsLen = $cur['cols']['len'];
@@ -740,38 +740,45 @@ function processSpreedSheet(string $content): string
 function processSpreedSheetSingle($contentArray, $minRow, $minCol)
 {
     $maxRowNum = collect(array_keys($contentArray['rows']))
-        ->filter(
-            function ($item) {
-                return is_numeric($item);
-            }
-        )->map(
-            function ($item) {
-                return (int)$item;
-            }
-        )->max();
+        ->filter(function ($item) {
+            return is_numeric($item);
+        })->map(function ($item) {
+            return (int)$item;
+        })->max();
 
     $maxColNum = collect($contentArray['rows'])
-        ->filter(
-            function ($item, $key) {
-                return is_numeric($key);
+        ->filter(function ($item, $key) {
+            return is_numeric($key);
+        })
+        ->map(function ($item) {
+            $cells = $item['cells'] ?? [];
+            $lastIndex = count($cells);
+            if ($lastIndex === 0) {
+                return $cells;
             }
-        )
-        ->map(
-            function ($item) {
-                return collect(array_keys($item['cells'] ?? []))
-                    ->filter(
-                        function ($item) {
-                            return is_numeric($item);
-                        }
-                    )
-                    ->map(
-                        function ($item) {
-                            return (int)$item;
-                        }
-                    )
-                    ->max();
+
+            for ($i = $lastIndex; $i > 0; $i--) {
+                if (!empty($cells[$i]['text'])) {
+                    break;
+                }
+
+                $lastIndex = $i;
             }
-        )->max();
+
+            array_splice($cells, 0, $lastIndex);
+            return $cells;
+        })
+        ->map(function ($item) {
+            return collect(array_keys($item['cells'] ?? []))->map(function ($item) {
+                return (int)$item;
+            })->max();
+        })->max();
+
+    $contentArray['rows'] = collect($contentArray['rows'])->filter(function ($item, $key) {
+        return !is_numeric($key) || collect($item['cells'] ?? [])->filter(function ($cell) {
+                return !empty($cell['text']);
+            })->count() > 0;
+    })->toArray();
 
     $contentArray['cols']['len'] = ($maxColNum > $minCol ? $maxColNum : $minCol) + 1;
     $contentArray['rows']['len'] = ($maxRowNum > $minRow ? $maxRowNum : $minRow) + 1;
