@@ -12,9 +12,9 @@ return [
      */
     'version'              => '1.2.3',
     /**
-     * 版本检查
+     * 版本检查，暂时不可用
      */
-    'version-check'        => env('WIZARD_VERSION_CHECK', true),
+    'version-check'        => env('WIZARD_VERSION_CHECK', false),
     /**
      * 新注册账号是否需要邮箱激活
      */
