@@ -739,22 +739,18 @@ function processSpreedSheet(string $content): string
  */
 function processSpreedSheetSingle($contentArray, $minRow, $minCol)
 {
-    $maxRowNum = collect(array_keys($contentArray['rows']))
-        ->filter(function ($item) {
-            return is_numeric($item);
-        })->map(function ($item) {
-            return (int)$item;
-        })->max();
-
+    // 获取最大列号
     $maxColNum = collect($contentArray['rows'])
+        // 只处理key为列的对象
         ->filter(function ($item, $key) {
             return is_numeric($key);
         })
+        // 列过滤，去掉每一行最后多余的空列
         ->map(function ($item) {
             $cells = $item['cells'] ?? [];
             $lastIndex = count($cells);
             if ($lastIndex === 0) {
-                return $cells;
+                return $item;
             }
 
             for ($i = $lastIndex; $i > 0; $i--) {
@@ -765,24 +761,62 @@ function processSpreedSheetSingle($contentArray, $minRow, $minCol)
                 $lastIndex = $i;
             }
 
-            array_splice($cells, 0, $lastIndex);
-            return $cells;
-        })
-        ->map(function ($item) {
-            return collect(array_keys($item['cells'] ?? []))->map(function ($item) {
-                return (int)$item;
-            })->max();
+            return $lastIndex - 1;
         })->max();
 
-    $contentArray['rows'] = collect($contentArray['rows'])->filter(function ($item, $key) {
-        return !is_numeric($key) || collect($item['cells'] ?? [])->filter(function ($cell) {
-                return !empty($cell['text']);
-            })->count() > 0;
-    })->toArray();
+    // 行数据过滤，去掉多余的空行
+    $contentArray['rows'] = processSpreedSheetRows($contentArray['rows']);
+
+    // 获取最大行号
+    $maxRowNum = collect(array_keys($contentArray['rows']))
+        ->filter(function ($item) {
+            return is_numeric($item);
+        })->map(function ($item) {
+            return (int)$item;
+        })->max();
 
     $contentArray['cols']['len'] = ($maxColNum > $minCol ? $maxColNum : $minCol) + 1;
     $contentArray['rows']['len'] = ($maxRowNum > $minRow ? $maxRowNum : $minRow) + 1;
     return $contentArray;
+}
+
+/**
+ * 行数据过滤，去掉多余的空行
+ *
+ * 只移除尾部的空行
+ *
+ * @param $originalRows
+ * @return array
+ */
+function processSpreedSheetRows($originalRows): array
+{
+    // 提取行的元信息
+    $rows = collect($originalRows)->filter(function ($item, $key) {
+        return !is_numeric($key);
+    })->toArray();
+    // 每一行的数据
+    $rowsForCol = collect($originalRows)->filter(function ($item, $key) {
+        return is_numeric($key);
+    })->sortKeys()->toArray();
+
+    // 逆序遍历行，直到遇到第一个存在非空列的行未知，截取从第一行开始到当前行
+    $lastIndex = count($rowsForCol);
+    if ($lastIndex > 0) {
+        for ($i = $lastIndex; $i > 0; $i--) {
+            $colCount = collect($rowsForCol[$i]['cells'] ?? [])->filter(function ($cell) {
+                return !empty($cell['text']);
+            })->count();
+
+            if ($colCount > 0) {
+                foreach (array_slice($rowsForCol, 0, $i + 1) as $index => $v) {
+                    $rows["{$index}"] = $v;
+                }
+
+                break;
+            }
+        }
+    }
+    return $rows;
 }
 
 /**
