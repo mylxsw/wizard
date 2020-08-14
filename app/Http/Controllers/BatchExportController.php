@@ -262,7 +262,7 @@ class BatchExportController extends Controller
      */
     private function traverseNavigators(array $navigators, \Closure $callback, array $parents = [])
     {
-        $this->traverseNavigators($navigators, $callback, $parents);
+        traverseNavigators($navigators, $callback, $parents);
     }
 
     /**
