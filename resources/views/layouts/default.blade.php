@@ -139,17 +139,32 @@
         window.setTimeout(function () {
             // 重置窗口大小，避免内容过少无法撑开页面
             var resize_window = function () {
-                var window_height = $(window).height() - $('.wz-top-navbar').height() - $('.footer').height() - 82;
-                var frame_height = $('.wz-main-container').height();
-                if (frame_height === null) {
-                    frame_height = $('.wz-main-container-full').height();
+                var minHeight = 0;
+                var window_height = $(window).height() - $('.wz-top-navbar').height() - $('.footer').height() - 26;
+
+                if ($('.wz-left-main .wz-left-nav').length > 0) {
+                    var mainPanelHeight = 0;
+                    $('.wz-panel-right').children('div').each(function() {
+                        mainPanelHeight += $(this).height();
+                    });
+
+                    minHeight = window_height > mainPanelHeight ? window_height : mainPanelHeight;
+
+                    $('.wz-left-main').height(minHeight + 'px').css('overflow-y', 'hidden');
+                    $('.wz-left-main .wz-left-nav').css('overflow-y', 'auto').height((minHeight - $('.wz-left-main .wz-project-title').height() - 20) + 'px')
+                } else {
+                    var frame_height = $('.wz-main-container').height();
+                    if (frame_height === null) {
+                        frame_height = $('.wz-main-container-full').height();
+                    }
+                    window_height = window_height - 56;
+                    minHeight = (window_height > frame_height ? window_height : frame_height) + "px";
                 }
 
-                var minHeight = (window_height > frame_height ? window_height : frame_height) + "px";
-                $($('.wz-panel-right').length ? '.wz-panel-right' : '.wz-body').css('min-height', minHeight);
+                $($('.wz-panel-right').length ? '.wz-panel-right' : '.wz-body').css('min-height', minHeight + "px");
 
                 $.global.windowResize();
-                $.global.panel_height = minHeight;
+                $.global.panel_height = minHeight + "px";
             };
 
             resize_window();
