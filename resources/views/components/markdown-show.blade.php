@@ -1,5 +1,6 @@
 @push('stylesheet')
 <link href="{{ cdn_resource('/assets/vendor/editor-md/css/editormd.preview.css') }}" rel="stylesheet"/>
+<link href="{{ cdn_resource('/assets/vendor/viewer/viewer.min.css') }}" rel="stylesheet" />
 @endpush
 
 @push('script')
@@ -18,6 +19,7 @@
 <script src="{{ cdn_resource('/assets/vendor/editor-md/lib/jquery.flowchart.min.js') }}"></script>
 <script src="{{ cdn_resource('/assets/vendor/mermaid.js') }}"></script>
 <script src="{{ cdn_resource('/assets/vendor/editor-md/editormd.js') }}?{{ resourceVersion() }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/viewer/viewer.min.js') }}"></script>
 
 <script type="text/javascript">
     $(function () {
@@ -101,11 +103,12 @@
                     $(this).parents('.wz-wrap-table').find('table').css('word-break', 'break-all');
                 }
             });
-            // 图片缩放支持
-            $.wz.imageClick('#markdown-body');
 
             // sql-create 标签解析
             $.wz.sqlCreateSyntaxParser('#markdown-body .wz-sql-create');
+
+            // 图片放大查看
+            new Viewer(document.getElementById('markdown-body'));
         }, 0);
     });
 </script>
