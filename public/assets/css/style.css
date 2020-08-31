@@ -1450,3 +1450,7 @@ pre.prettyprint *,
     color: #545454;
 }
 
+.viewer-container img {
+    background: url(/assets/white-bg.jpg);
+    background-size: 30px 30px;
+}
