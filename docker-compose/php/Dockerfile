@@ -24,7 +24,7 @@ RUN wget https://getcomposer.org/download/1.6.4/composer.phar \
     && mv composer.phar /usr/bin/composer.phar \
     && chmod +x /usr/bin/composer.phar \
     && ln -s /usr/bin/composer.phar /usr/bin/composer \
-    && php /usr/bin/composer config -g repo.packagist composer https://packagist.laravel-china.org
+    && php /usr/bin/composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
 COPY ./init.sh /opt/init.sh
 CMD ["bash", "/opt/init.sh"]
