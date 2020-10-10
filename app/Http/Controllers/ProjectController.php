@@ -15,6 +15,7 @@ use App\Events\ProjectModified;
 use App\Policies\ProjectPolicy;
 use App\Repositories\Catalog;
 use App\Repositories\Document;
+use App\Repositories\DocumentScore;
 use App\Repositories\Group;
 use App\Repositories\OperationLogs;
 use App\Repositories\PageShare;
@@ -24,6 +25,8 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class ProjectController extends Controller
@@ -198,6 +201,17 @@ class ProjectController extends Controller
             $share = PageShare::where('page_id', $page->id)
                               ->where('project_id', $page->project_id)
                               ->first();
+            // 文档评分
+            $scores = DocumentScore::select(DB::raw('score_type, count(*) as count'))
+                                   ->where('page_id', $page->id)
+                                   ->groupBy('score_type')
+                                   ->get()
+                                   ->mapWithKeys(function ($item) {
+                                       return [$item['score_type'] => $item['count']];
+                                   });
+            if (!Auth::guest()) {
+                $userScoreType = DocumentScore::where('page_id', $page->id)->where('user_id', Auth::user()->id)->value('score_type');
+            }
         } else {
             // 查询操作历史
             $operationLogs = OperationLogs::where('project_id', $id)
@@ -210,6 +224,8 @@ class ProjectController extends Controller
             'project'           => $project,
             'pageID'            => $pageID,
             'pageItem'          => $page,
+            'scores'            => $scores ?? [],
+            'user_score_type'   => $userScoreType ?? 0,
             'type'              => $type,
             'code'              => '',
             'operationLogs'     => isset($operationLogs) ? $operationLogs : [],

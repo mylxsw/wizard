@@ -203,8 +203,9 @@ Route::group(['middleware' => 'locale'], function() {
                      ->name('doc:attachment:upload');
 
                 // ajax获取文档是否过期
-                Route::get('/{id}/doc/{page_id}/expired', 'DocumentController@checkPageExpired')
-                     ->name('doc:expired');
+                Route::get('/{id}/doc/{page_id}/expired', 'DocumentController@checkPageExpired')->name('doc:expired');
+                // 文档评价
+                Route::post('/{id}/doc/{page_id}/score', 'DocumentController@updateDocumentScore')->name('doc:score');
 
                 // 文档历史记录
                 Route::get('/{id}/doc/{page_id}/histories', 'HistoryController@pages')

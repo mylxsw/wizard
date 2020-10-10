@@ -15,9 +15,11 @@ use App\Events\DocumentModified;
 use App\Policies\ProjectPolicy;
 use App\Repositories\Document;
 use App\Repositories\DocumentHistory;
+use App\Repositories\DocumentScore;
 use App\Repositories\Project;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use SoapBox\Formatter\Formatter;
 
@@ -53,7 +55,7 @@ class DocumentController extends Controller
         $this->authorize('page-add', $project);
 
         $type = $request->input('type', 'markdown');
-        $pid  = $request->input('pid', 0);
+        $pid = $request->input('pid', 0);
         return view("doc.{$type}", [
             'newPage'   => true,
             'project'   => $project,
@@ -122,13 +124,13 @@ class DocumentController extends Controller
 
         $this->authorize('page-add', $id);
 
-        $pid       = $request->input('pid', 0);
+        $pid = $request->input('pid', 0);
         $projectID = $request->input('project_id');
-        $title     = $request->input('title');
-        $content   = $request->input('content');
-        $type      = $request->input('type', 'markdown');
+        $title = $request->input('title');
+        $content = $request->input('content');
+        $type = $request->input('type', 'markdown');
         $sortLevel = $request->input('sort_level', 1000);
-        $syncUrl   = $request->input('sync_url');
+        $syncUrl = $request->input('sync_url');
 
         // 类型如果是表格，则需要检验表格内容是否合法
         if ($type === 'table') {
@@ -209,15 +211,15 @@ class DocumentController extends Controller
             ]
         );
 
-        $pid            = $request->input('pid', 0);
-        $projectID      = $request->input('project_id');
-        $title          = $request->input('title');
-        $content        = $request->input('content');
+        $pid = $request->input('pid', 0);
+        $projectID = $request->input('project_id');
+        $title = $request->input('title');
+        $content = $request->input('content');
         $lastModifiedAt = Carbon::parse($request->input('last_modified_at'));
-        $history_id     = $request->input('history_id');
-        $forceSave      = $request->input('force', false);
-        $sortLevel      = $request->input('sort_level', 1000);
-        $syncUrl        = $request->input('sync_url');
+        $history_id = $request->input('history_id');
+        $forceSave = $request->input('force', false);
+        $sortLevel = $request->input('sort_level', 1000);
+        $syncUrl = $request->input('sync_url');
 
         /** @var Document $pageItem */
         $pageItem = Document::where('id', $page_id)->firstOrFail();
@@ -251,12 +253,12 @@ class DocumentController extends Controller
             ]);
         }
 
-        $pageItem->pid        = $pid;
+        $pageItem->pid = $pid;
         $pageItem->project_id = $projectID;
-        $pageItem->title      = $title;
-        $pageItem->content    = $content;
+        $pageItem->title = $title;
+        $pageItem->content = $content;
         $pageItem->sort_level = $sortLevel;
-        $pageItem->sync_url   = $syncUrl;
+        $pageItem->sync_url = $syncUrl;
 
         // 只有文档内容发生修改才进行保存
         if ($pageItem->isDirty()) {
@@ -425,7 +427,7 @@ class DocumentController extends Controller
         if (isJson($yaml)) {
             $jsonContent = $yaml;
         } else {
-            $formatter   = Formatter::make($yaml, Formatter::YAML);
+            $formatter = Formatter::make($yaml, Formatter::YAML);
             $jsonContent = $formatter->toJson();
         }
 
@@ -452,8 +454,8 @@ class DocumentController extends Controller
         }
 
         $page = Document::where('project_id', $id)
-            ->where('id', $page_id)
-            ->firstOrFail();
+                        ->where('id', $page_id)
+                        ->firstOrFail();
         if ($page->type != Document::TYPE_SWAGGER) {
             abort(422, '该文档不是Swagger文档');
         }
@@ -473,7 +475,7 @@ class DocumentController extends Controller
     {
         /** @var Project $project */
         $project = Project::query()->findOrFail($id);
-        $policy  = new ProjectPolicy();
+        $policy = new ProjectPolicy();
         if (!$policy->view(\Auth::user(), $project)) {
             abort(403, '您没有访问该项目的权限');
         }
@@ -496,24 +498,22 @@ class DocumentController extends Controller
      *
      * @param $id
      * @param $page_id
-     *
-     * @return array
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
-     * @throws \Exception
      */
     public function syncFromRemote($id, $page_id)
     {
         /** @var Document $pageItem */
         $pageItem = Document::where('id', $page_id)
-            ->where('project_id', $id)
-            ->firstOrFail();
+                            ->where('project_id', $id)
+                            ->firstOrFail();
 
         $this->authorize('page-edit', $pageItem);
 
         $synced = false;
         if (!empty($pageItem->sync_url)) {
-            $client   = new \GuzzleHttp\Client();
-            $resp     = $client->get($pageItem->sync_url);
+            $client = new \GuzzleHttp\Client();
+            $resp = $client->get($pageItem->sync_url);
             $respCode = $resp->getStatusCode();
             $respBody = $resp->getBody()->getContents();
 
@@ -533,7 +533,7 @@ class DocumentController extends Controller
             // 只有文档内容发生修改才进行保存
             if ($pageItem->isDirty()) {
                 $pageItem->last_modified_uid = \Auth::user()->id;
-                $pageItem->last_sync_at      = Carbon::now();
+                $pageItem->last_sync_at = Carbon::now();
 
                 $pageItem->save();
 
@@ -555,6 +555,16 @@ class DocumentController extends Controller
         return redirect(wzRoute('project:home', ['id' => $id, 'p' => $page_id]));
     }
 
+    /**
+     * 文档移动
+     *
+     * @param Request $request
+     * @param $project_id
+     * @param $page_id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function move(Request $request, $project_id, $page_id)
     {
         $this->validate(
@@ -572,7 +582,7 @@ class DocumentController extends Controller
 
         // 检查目标项目权限
         $targetProjectId = $request->input('target_project_id', 0);
-        $targetPageId    = $request->input('target_page_id', 0);
+        $targetPageId = $request->input('target_page_id', 0);
 
         /** @var Project $targetProject */
         $targetProject = Project::where('id', $targetProjectId)->firstOrFail();
@@ -594,7 +604,7 @@ class DocumentController extends Controller
         DB::transaction(function () use ($pageItem, $targetProject, $targetPage, $navigators) {
             // 修改当前页面的pid和project_id
             $pageItem->project_id = $targetProject->id;
-            $pageItem->pid        = $targetPage->id ?? 0;
+            $pageItem->pid = $targetPage->id ?? 0;
 
             $pageItem->save();
 
@@ -623,9 +633,54 @@ class DocumentController extends Controller
     }
 
     /**
+     * 更新文档评价
+     *
+     * @param Request $request
+     * @param $id
+     * @param $page_id
+     * @return array
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updateDocumentScore(Request $request, $id, $page_id)
+    {
+        $this->validate($request, [
+            'score_type' => 'required|in:1,2,3',
+        ]);
+
+        $policy = new ProjectPolicy();
+        if (!$policy->view(\Auth::user(), Project::where('id', $id)->firstOrFail())) {
+            abort(403, '您没有访问该项目的权限');
+        }
+
+        /** @var Document $pageItem */
+        $pageItem = Document::where('id', $page_id)->where('project_id', $id)->firstOrFail();
+        $scoreType = (int)$request->input('score_type');
+
+        /** @var DocumentScore $existedScore */
+        $existedScore = DocumentScore::where('page_id', $pageItem->id)->where('user_id', Auth::user()->id)->first();
+        if ($existedScore) {
+            if ($existedScore->score_type == $scoreType) {
+                $existedScore->delete();
+            } else {
+                $existedScore->score_type = $scoreType;
+                $existedScore->save();
+            }
+        } else {
+            DocumentScore::create([
+                'user_id'    => Auth::user()->id,
+                'page_id'    => $pageItem->id,
+                'score_type' => $scoreType,
+            ]);
+        }
+
+        $this->alertSuccess('操作成功');
+        return [];
+    }
+
+    /**
      * 过滤要导出的文档
      *
-     * @param array    $navigators
+     * @param array $navigators
      * @param \Closure $filter
      *
      * @return array|mixed
@@ -644,9 +699,9 @@ class DocumentController extends Controller
     /**
      * 遍历所有目录
      *
-     * @param array    $navigators
+     * @param array $navigators
      * @param \Closure $callback
-     * @param array    $parents
+     * @param array $parents
      */
     private function traverseNavigators(array $navigators, \Closure $callback, array $parents = [])
     {

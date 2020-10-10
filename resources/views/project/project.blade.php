@@ -100,7 +100,26 @@
                 @endif
             </div>
 
-            <div class="text-center wz-panel-limit mt-3 wz-content-end">~ END ~</div>
+            <div class="wz-panel-limit mt-3 wz-content-end">
+                <div style="border-bottom: 1px dashed #CCCCCC; width: 95%; margin: auto;"></div>
+            </div>
+
+            <div class="wz-panel-limit text-center mt-3 wz-content-end wz-score-box">
+                <fieldset {{ Auth::guest() ? 'disabled':'' }}>
+                    <div class="wz-score-opt">
+                        <button type="button" class="btn btn-default {{ $user_score_type == 1 ? 'active' : '' }} bmd-btn-fab" style="color: #21b351" data-type="1"><i class="material-icons">sentiment_satisfied</i></button>
+                        <p>{{ $scores[1] ?? '' }} 很赞</p>
+                    </div>
+                    <div class="wz-score-opt">
+                        <button type="button" class="btn btn-default {{ $user_score_type == 2 ? 'active' : '' }} bmd-btn-fab" style="color: #989898" data-type="2"><i class="material-icons">sentiment_very_dissatisfied</i></button>
+                        <p>{{ $scores[2] ?? '' }} 看不懂</p>
+                    </div>
+                    <div class="wz-score-opt">
+                        <button type="button" class="btn btn-default {{ $user_score_type == 3 ? 'active' : '' }} bmd-btn-fab" style="color: #fed612" data-type="3"><i class="material-icons">sentiment_dissatisfied</i></button>
+                        <p>{{ $scores[3] ?? '' }} 潦草</p>
+                    </div>
+                </fieldset>
+            </div>
 
             @if(count($pageItem->attachments) > 0)
                 <div class="wz-attachments wz-panel-limit">
@@ -217,6 +236,21 @@
                 }
             }
         });
+
+        @if($pageID !== 0 && !Auth::guest())
+        // 文档评分
+        $('.wz-score-box .wz-score-opt button').on('click', function (e) {
+            e.preventDefault();
+            $.wz.request(
+                'post',
+                '{!! wzRoute('project:doc:score', ['id' => $project->id, 'page_id' => $pageItem->id]) !!}',
+                {score_type: $(this).data('type')},
+                function(data) {
+                    window.location.reload(true);
+                }
+            );
+        });
+        @endif
 
         @if($pageID !== 0 && $share)
         $('.wz-share-cancel').on('click', function (e) {

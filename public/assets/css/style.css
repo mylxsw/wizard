@@ -1354,7 +1354,7 @@ pre.prettyprint *,
 }
 
 .markdown-body .wz-sql-create {
-    border: 1px dashed #e6e6e6;
+    /*border: 1px dashed #e6e6e6;*/
     box-shadow: none;
 }
 
@@ -1453,4 +1453,17 @@ pre.prettyprint *,
 .viewer-container img {
     background: url(/assets/white-bg.jpg);
     background-size: 30px 30px;
+}
+
+.wz-score-box {
+    margin: 10px 0;
+    padding-top: 20px;
+}
+.wz-score-box .wz-score-opt {
+    display: inline-block;
+    margin-right: 30px;
+}
+.wz-score-box .wz-score-opt p {
+    color: #989898;
+    font-size: 90%;
 }
