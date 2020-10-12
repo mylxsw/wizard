@@ -140,9 +140,9 @@
 
     <div class="wz-version-suggest">
         <ul class="wz-version-suggest-items">
-           <li>1、Markdown 文档增加<a target="_blank" href="https://github.com/mylxsw/wizard/wiki/Markdown-%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95">扩展语法</a>，用于展示彩色背景的提示文案</li>
-           <li>2、优化 Latex 公式展示效果，解决导出 PDF 文档中无法展示公式的问题</li>
-           <li>3、Markdown 文档上传图片后，支持弹窗中修改图片展示宽度和高度</li>
+           <li>1、Markdown 文档图片支持点击查看大图，支持图片缩放查看</li>
+           <li>2、支持文档评价，可以对文档按照 “很赞”、“看不懂”、“潦草” 打分</li>
+           <li>3、解决历史文档查看不支持表格文档的问题</li>
            <li>4、其它 Bugfix</li>
         </ul>
     </div>
