@@ -1464,8 +1464,7 @@ pre.prettyprint *,
     margin-right: 30px;
 }
 .wz-score-box .wz-score-opt p,
-.wz-score-box .wz-score-useful-users,
-.wz-score-box .wz-score-useful-users .wz-score-user {
+.wz-score-box .wz-score-useful-users {
     color: #989898;
     font-size: 90%;
 }
