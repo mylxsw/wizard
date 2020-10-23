@@ -119,6 +119,14 @@
                         <p>{{ $scores[3] ?? '' }} 潦草</p>
                     </div>
                 </fieldset>
+                @if ($useful_score_users)
+                <div class="wz-score-useful-users">
+                    {!! $useful_score_users->map(function($u){return sprintf('<span class="wz-score-user">%s</span>', $u->user->name ?? 'unknown');})->join(', ') !!}
+                    @if (count($useful_score_users) > 0)
+                        等人觉得本文很赞
+                    @endif
+                </div>
+                @endif
             </div>
 
             @if(count($pageItem->attachments) > 0)

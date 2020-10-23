@@ -1463,7 +1463,12 @@ pre.prettyprint *,
     display: inline-block;
     margin-right: 30px;
 }
-.wz-score-box .wz-score-opt p {
+.wz-score-box .wz-score-opt p,
+.wz-score-box .wz-score-useful-users,
+.wz-score-box .wz-score-useful-users .wz-score-user {
     color: #989898;
     font-size: 90%;
+}
+.wz-score-box .wz-score-useful-users .wz-score-user {
+    border-bottom: 1px dashed #cccccc;
 }
