@@ -32,7 +32,7 @@ Wizard是一款开源文档管理系统，目前支持三种类型的文档管�
 
 如果想快速体验一下Wizard的功能，可以使用Docker来创建一个完整的Wizard服务
     
-    进入项目的根目录，执行 `docker-compose up`，就可以快速创建一个Wizard服务了，访问地址 http://localhost:8080 。
+> 进入项目的根目录，执行 `docker-compose up`，就可以快速创建一个Wizard服务了，访问地址 http://localhost:8080 。
 
 ## 起源
 
