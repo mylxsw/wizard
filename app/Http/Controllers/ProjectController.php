@@ -28,7 +28,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
-use function foo\func;
 
 class ProjectController extends Controller
 {
