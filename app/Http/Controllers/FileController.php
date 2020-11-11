@@ -28,7 +28,7 @@ class FileController extends Controller
                 __('common.upload.failed', ['reason' => $file->getErrorMessage()]));
         }
 
-        if (!in_array(strtolower($file->extension()), ["jpg", "jpeg", "gif", "png", "bmp"])) {
+        if (!in_array(strtolower($file->extension()), ["jpg", "jpeg", "gif", "png", "bmp", "svg"])) {
             return $this->response(false, __('common.upload.invalid_type'));
         }
 
