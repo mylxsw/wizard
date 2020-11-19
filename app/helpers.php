@@ -913,3 +913,20 @@ function allCatalogs()
 
     return $catalogs;
 }
+
+/**
+ * 返回扮演者基本信息
+ *
+ * @return array|null
+ */
+function impersonateUser()
+{
+    /** @var User $user */
+    $user = Auth::user();
+    if (!$user->isImpersonated()) {
+        return null;
+    }
+
+    $impersonateUser = $user->impersonator();
+    return ['id' => $impersonateUser->id, 'name' => $impersonateUser->name];
+}

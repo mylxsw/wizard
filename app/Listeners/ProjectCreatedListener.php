@@ -46,7 +46,8 @@ class ProjectCreatedListener
                 'user_id'      => \Auth::user()->id,
                 'project_name' => $project->name,
                 'project_id'   => $project->id
-            ]
+            ],
+            impersonateUser()
         );
 
         // 通知管理员有新项目创建

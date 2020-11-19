@@ -13,6 +13,7 @@
         "fideloper/proxy": "^4.0",
         "greenlion/php-sql-parser": "^4.3",
         "guzzlehttp/guzzle": "^6.3",
+        "lab404/laravel-impersonate": "1.5",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "~1.0",
         "lcobucci/jwt": "^3.2",

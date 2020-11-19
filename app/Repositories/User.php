@@ -11,28 +11,30 @@ namespace App\Repositories;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Lab404\Impersonate\Models\Impersonate;
+use Lab404\Impersonate\Services\ImpersonateManager;
 
 /**
  * Class User
  *
- * @property integer                                                                                                        $id
- * @property string                                                                                                         $name
- * @property string                                                                                                         $password
- * @property integer                                                                                                        $role
- * @property integer                                                                                                        $status
- * @property string                                                                                                         $objectguid
- * @property Carbon                                                                                                         $created_at
- * @property Carbon                                                                                                         $updated_at
+ * @property integer $id
+ * @property string $name
+ * @property string $password
+ * @property integer $role
+ * @property integer $status
+ * @property string $objectguid
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  * @package App\Repositories
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Project[]                                      $favoriteProjects
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Group[]                                        $groups
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\DocumentHistory[]                              $histories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Project[] $favoriteProjects
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Group[] $groups
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\DocumentHistory[] $histories
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Document[]                                     $pages
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Project[]                                      $projects
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Document[] $pages
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Repositories\Project[] $projects
  * @mixin \Eloquent
- * @property string                                                                                                         $email
- * @property string|null                                                                                                    $remember_token
+ * @property string $email
+ * @property string|null $remember_token
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\User whereId($value)
@@ -45,7 +47,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Impersonate;
 
     /**
      * 普通用户
@@ -56,9 +58,9 @@ class User extends Authenticatable
      */
     const ROLE_ADMIN = 2;
 
-    const STATUS_NONE      = 0;
+    const STATUS_NONE = 0;
     const STATUS_ACTIVATED = 1;
-    const STATUS_DISABLED  = 2;
+    const STATUS_DISABLED = 2;
 
     protected $table = 'wz_users';
 
@@ -166,5 +168,35 @@ class User extends Authenticatable
     public function isDisabled()
     {
         return (int)$this->status === self::STATUS_DISABLED;
+    }
+
+    /**
+     * 用户是否可以扮演其它用户
+     *
+     * @return bool
+     */
+    public function canImpersonate()
+    {
+        return $this->isAdmin();
+    }
+
+    /**
+     * 用户是否可以被扮演
+     *
+     * @return bool
+     */
+    public function canBeImpersonated()
+    {
+        return !$this->isAdmin();
+    }
+
+    /**
+     * 查询扮演者信息
+     *
+     * @return User
+     */
+    public function impersonator()
+    {
+        return app(ImpersonateManager::class)->getImpersonator();
     }
 }

@@ -31,11 +31,11 @@ class UserController extends Controller
      */
     public function users(Request $request)
     {
-        $username   = $request->input('name');
-        $email      = $request->input('email');
+        $username = $request->input('name');
+        $email = $request->input('email');
         $objectguid = $request->input('guid');
-        $role       = $request->input('role', null);
-        $status     = $request->input('status', null);
+        $role = $request->input('role', null);
+        $status = $request->input('status', null);
 
         $userQuery = User::query();
         if (!empty($username)) {
@@ -86,8 +86,8 @@ class UserController extends Controller
     public function user(Request $request, $id)
     {
         /** @var User $user */
-        $user           = User::where('id', $id)->firstOrFail();
-        $subQuery       = function ($query) use ($user) {
+        $user = User::where('id', $id)->firstOrFail();
+        $subQuery = function ($query) use ($user) {
             $query->where('user_id', $user->id);
         };
         $groupForSelect = Group::whereDoesntHave('users', $subQuery)->get();
@@ -169,12 +169,12 @@ class UserController extends Controller
         );
 
         $username = $request->input('username');
-        $role     = $request->input('role');
-        $status   = $request->input('status');
+        $role = $request->input('role');
+        $status = $request->input('status');
 
-        $user         = User::where('id', $id)->firstOrFail();
-        $user->name   = $username;
-        $user->role   = $role;
+        $user = User::where('id', $id)->firstOrFail();
+        $user->name = $username;
+        $user->role = $role;
         $user->status = $status;
 
         $user->save();
@@ -241,9 +241,9 @@ class UserController extends Controller
     public function activate(Request $request)
     {
         try {
-            $token   = jwt_parse_token($request->input('token'));
+            $token = jwt_parse_token($request->input('token'));
             $user_id = $token->getClaim('uid');
-            $email   = $token->getClaim('email');
+            $email = $token->getClaim('email');
 
             /** @var User $user */
             $user = User::findOrFail($user_id);
@@ -280,7 +280,7 @@ class UserController extends Controller
             abort(422, '不符合发送激活邮件的条件');
         }
 
-        $session                   = $request->session();
+        $session = $request->session();
         $lastSendActivateEmailTime = $session->get('send_activate_email');
         // 5分钟内只允许发送一次激活邮件
         $retryDelay = 5 * 60;
@@ -342,11 +342,11 @@ class UserController extends Controller
             $query = Project::query();
         } else {
             $groupIds = $user->groups->pluck('id');
-            $query    = Project::Where('user_id', $user->id)
-                ->orWhereHas('groups', function (Builder $query) use ($groupIds) {
-                    $query->whereIn('group_id', $groupIds)
-                        ->where('privilege', Project::PRIVILEGE_WR);
-                });
+            $query = Project::Where('user_id', $user->id)
+                            ->orWhereHas('groups', function (Builder $query) use ($groupIds) {
+                                $query->whereIn('group_id', $groupIds)
+                                      ->where('privilege', Project::PRIVILEGE_WR);
+                            });
 
         }
         return $query

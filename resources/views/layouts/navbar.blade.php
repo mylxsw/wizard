@@ -1,4 +1,4 @@
-<div class="wz-top-navbar d-flex flex-column flex-md-row align-items-center px-md-4 bg-white border-bottom box-shadow ">
+<div class="wz-top-navbar d-flex flex-column flex-md-row align-items-center px-md-4 bg-white border-bottom box-shadow @impersonating() wz-impersonating @endImpersonating">
     <h5 class="my-0 mr-md-auto font-weight-normal wz-top-nav-item">
         <a href="/">{{ config('app.name', 'Wizard API') }}</a>
     </h5>
@@ -17,6 +17,7 @@
     @else
         <nav class="my-2 my-md-0 wz-top-nav-item">
             <a class="p-2 text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @impersonating() 扮演：@endImpersonating
                 {{ Auth::user()->name ?? Auth::user()->email }}
                 @if(userHasNotifications())
                     <sup class="wz-message-tip" title="您有未读消息">{{ userNotificationCount(99) }}</sup>
@@ -54,6 +55,12 @@
                 </a>
             </div>
         </nav>
+        @impersonating()
+        <button type="button" class="btn bmd-btn-icon" data-toggle="tooltip" title="停止扮演" wz-form-submit data-form="#stop-impersonate">
+            <i class="fa fa-user-secret wz-theme-support-icon"></i>
+            <form action="{{ wzRoute('impersonate:stop') }}" method="post" id="stop-impersonate">{{method_field('DELETE')}}{{ csrf_field() }}</form>
+        </button>
+        @endImpersonating
     @endif
 </div>
 

@@ -46,7 +46,8 @@ class DocumentCreatedListener
                 'project_id'   => $doc->project_id,
                 'doc_title'    => $doc->title,
                 'doc_id'       => $doc->id
-            ]
+            ],
+            impersonateUser()
         );
     }
 }

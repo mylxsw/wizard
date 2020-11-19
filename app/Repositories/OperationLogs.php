@@ -55,13 +55,18 @@ class OperationLogs extends Repository
      * 记录业务日志
      *
      * @param integer $user_id
-     * @param string  $message
-     * @param array   $context
+     * @param string $message
+     * @param array $context
+     * @param array $impersonateUser
      *
      * @return $this|\Illuminate\Database\Eloquent\Model
      */
-    public static function log($user_id, string $message, array $context = [])
+    public static function log($user_id, string $message, array $context = [], $impersonateUser = [])
     {
+        if (!empty($impersonateUser)) {
+            $context['impersonate'] = $impersonateUser;
+        }
+
         $data = [
             'user_id' => $user_id,
             'message' => $message,
@@ -74,8 +79,10 @@ class OperationLogs extends Repository
 
         if (isset($context['page_id'])) {
             $data['page_id'] = $context['page_id'];
-        } else if (isset($context['doc_id'])) {
-            $data['page_id'] = $context['doc_id'];
+        } else {
+            if (isset($context['doc_id'])) {
+                $data['page_id'] = $context['doc_id'];
+            }
         }
 
         return self::create($data);
@@ -85,9 +92,9 @@ class OperationLogs extends Repository
      * 记录业务日志
      *
      * @param        $user_id
-     * @param array  $context
+     * @param array $context
      * @param string $message
-     * @param array  ...$args
+     * @param array ...$args
      *
      * @return OperationLogs|\Illuminate\Database\Eloquent\Model
      */

@@ -1471,3 +1471,7 @@ pre.prettyprint *,
 .wz-score-box .wz-score-useful-users .wz-score-user {
     border-bottom: 1px dashed #cccccc;
 }
+
+.wz-impersonating {
+    border-top: 3px solid red;
+}

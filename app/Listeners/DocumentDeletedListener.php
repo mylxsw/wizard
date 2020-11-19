@@ -47,7 +47,8 @@ class DocumentDeletedListener
                 'project_id'   => $doc->project_id,
                 'doc_title'    => $doc->title,
                 'doc_id'       => $doc->id
-            ]
+            ],
+            impersonateUser()
         );
 
         // 发送消息通知相关用户

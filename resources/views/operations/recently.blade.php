@@ -7,7 +7,11 @@
         <img src="{{ user_face($log->context->username) }}" class="wz-userface-small">
         <p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
             <span class="d-block text-gray-dark">
-                <span class="wz-text-dashed">{{ $log->context->username }}</span> 在
+                <span class="wz-text-dashed">{{ $log->context->username }}
+                    @if(!empty($log->context->impersonate))
+                        <i style="font-size: 90%; color: #848484">（扮演者：{{ $log->context->impersonate->name ?? ''}}） </i>
+                    @endif
+                </span> 在
                 <span class="wz-operation-log-time" title="{{ $log->created_at }}">{{ $log->created_at }}</span>
             </span>
             @if ($log->message == 'document_updated')

@@ -40,8 +40,9 @@ class CommentCreatedListener
                 'project_name' => $comment->document->project->name,
                 'project_id'   => $comment->document->project->id,
                 'doc_title'    => $comment->document->title,
-                'doc_id'       => $comment->document->id
-            ]
+                'doc_id'       => $comment->document->id,
+            ],
+            impersonateUser()
         );
 
         // 通知相关用户

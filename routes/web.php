@@ -76,6 +76,12 @@ Route::group(['middleware' => 'locale'], function() {
             Route::get('/{id}/doc/{page_id}.json', 'DocumentController@getJson')->name('doc:json');
         });
 
+        // 用户扮演
+        Route::group(['prefix' => 'impersonate', 'as' => 'impersonate:'], function() {
+            Route::post('/{id}', 'ImpersonateController@impersonate')->name('start');
+            Route::delete('/', 'ImpersonateController@stopImpersonate')->name('stop');
+        });
+
         // 系统管理
         Route::group(['middleware' => ['auth', 'auth.admin'], 'prefix' => 'admin', 'as' => 'admin:'],
             function () {

@@ -44,7 +44,8 @@ class ProjectDeletedListener
                 'user_id'      => \Auth::user()->id,
                 'project_name' => $project->name,
                 'project_id'   => $project->id
-            ]
+            ],
+            impersonateUser()
         );
 
     }

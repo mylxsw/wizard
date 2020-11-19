@@ -45,7 +45,8 @@ class ProjectModifiedListener
                 'project_name' => $project->name,
                 'project_id'   => $project->id,
                 'type'         => $event->getOp(),
-            ]
+            ],
+            impersonateUser()
         );
     }
 }

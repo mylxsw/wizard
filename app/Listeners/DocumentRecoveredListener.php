@@ -48,7 +48,8 @@ class DocumentRecoveredListener
                 'doc_title'    => $doc->title,
                 'doc_id'       => $doc->id,
                 'history_id'   => $doc->history_id,
-            ]
+            ],
+            impersonateUser()
         );
 
         // 发送消息通知相关用户
