@@ -70,6 +70,15 @@ class Document extends Repository
     const TYPE_SWAGGER = 2;
     const TYPE_TABLE   = 3;
 
+    /**
+     * 状态：正常
+     */
+    const STATUS_NORMAL = 1;
+    /**
+     * 状态：已过时
+     */
+    const STATUS_OUTDATED = 2;
+
     protected $table = 'wz_pages';
     protected $fillable
         = [

@@ -98,6 +98,7 @@ function navigator(
             'url'        => wzRoute('project:home', ['id' => $projectID, 'p' => $page->id]),
             'selected'   => $pageID === (int)$page->id,
             'type'       => documentType($page->type),
+            'status'     => $page->status,
             'created_at' => $page->created_at,
             'sort_level' => $page->sort_level ?? 1000,
         ];

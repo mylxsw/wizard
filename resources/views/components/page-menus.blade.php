@@ -26,6 +26,17 @@
                     @lang('common.btn_share')
                 </a>
 
+                <a href="#" wz-form-submit data-form="#form-outdated-{{ $pageItem->id }}"
+                   data-confirm="确定要将文档标记为 {{ $pageItem->status == \App\Repositories\Document::STATUS_NORMAL ? '已过时' : '正常' }}" class="dropdown-item">
+                    <span class="fa fa-outdent mr-2"></span>
+                    {{ $pageItem->status == \App\Repositories\Document::STATUS_NORMAL ? '标记' : '取消' }}<del style="font-style: oblique">已过时</del>
+                    <form id="form-outdated-{{ $pageItem->id }}" method="post"
+                          action="{{ wzRoute('project:doc:mark-status', ['id' => $project->id, 'page_id' => $pageItem->id]) }}">
+                        {{ method_field('PUT') }}{{ csrf_field() }}
+                        <input type="hidden" name="status" value="{{ $pageItem->status == \App\Repositories\Document::STATUS_NORMAL ? \App\Repositories\Document::STATUS_OUTDATED : \App\Repositories\Document::STATUS_NORMAL }}">
+                    </form>
+                </a>
+
                 <a href="#" wz-form-submit data-form="#form-{{ $pageItem->id }}"
                    data-confirm="@lang('document.delete_confirm', ['title' => $pageItem->title])" class="dropdown-item">
                     <span class="fa fa-trash mr-2"></span>

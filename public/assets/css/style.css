@@ -1475,3 +1475,7 @@ pre.prettyprint *,
 .wz-impersonating {
     border-top: 3px solid red;
 }
+
+.doc-outdated {
+    color: #808080;
+}

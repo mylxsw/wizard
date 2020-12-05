@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Events\DocumentCreated;
 use App\Events\DocumentDeleted;
+use App\Events\DocumentMarkModified;
 use App\Events\DocumentModified;
 use App\Policies\ProjectPolicy;
 use App\Repositories\Document;
@@ -153,7 +154,7 @@ class DocumentController extends Controller
             'user_id'           => \Auth::user()->id,
             'last_modified_uid' => \Auth::user()->id,
             'type'              => array_flip($this->types)[$type],
-            'status'            => 1,
+            'status'            => Document::STATUS_NORMAL,
             'sort_level'        => $sortLevel,
             'sync_url'          => $syncUrl,
         ]);
@@ -284,6 +285,42 @@ class DocumentController extends Controller
                 )
             ]
         ];
+    }
+
+    /**
+     * 标记文档为过时装填
+     *
+     * @param Request $request
+     * @param $id
+     * @param $page_id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function markStatus(Request $request, $id, $page_id)
+    {
+        $this->validate(
+            $request,
+            [
+                'status' => 'required|in:1,2',
+            ]
+        );
+
+        /** @var Document $pageItem */
+        $pageItem = Document::where('project_id', $id)->where('id', $page_id)->firstOrFail();
+        $this->authorize('page-edit', $pageItem);
+
+        $pageItem->status = $request->input('status');
+        // 只有文档内容发生修改才进行保存
+        if ($pageItem->isDirty()) {
+            $pageItem->last_modified_uid = \Auth::user()->id;
+            $pageItem->save();
+
+            event(new DocumentMarkModified($pageItem));
+        }
+
+        $this->alertSuccess('操作成功');
+        return redirect(wzRoute('project:home', ['id' => $id, 'p' => $page_id]));
     }
 
     /**

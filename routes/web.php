@@ -192,6 +192,9 @@ Route::group(['middleware' => 'locale'], function() {
                 Route::post('/{id}/doc/{page_id}/sync-from', 'DocumentController@syncFromRemote')
                      ->name('doc:sync-from');
 
+                // 文档标记
+                Route::put('/{id}/doc/{page_id}/mark-status', 'DocumentController@markStatus')->name('doc:mark-status');
+
                 // 文档分享
                 Route::post('/{id}/doc/{page_id}/share', 'ShareController@create')->name('doc:share');
                 Route::delete('/{id}/doc/{page_id}/share', 'ShareController@delete')->name('doc:share:delete');

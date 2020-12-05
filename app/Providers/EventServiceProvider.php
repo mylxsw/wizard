@@ -12,8 +12,10 @@ use Adldap\Laravel\Events\Importing;
 use Adldap\Laravel\Events\Synchronized;
 use Adldap\Laravel\Events\Synchronizing;
 use App\Events\CommentCreated;
+use App\Events\DocumentMarkModified;
 use App\Events\UserCreated;
 use App\Listeners\CommentCreatedListener;
+use App\Listeners\DocumentMarkModifiedListener;
 use App\Listeners\LdapImportingListener;
 use App\Listeners\LdapSynchronizedListener;
 use App\Listeners\LdapSynchronizingListener;
@@ -49,6 +51,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\ProjectDeleted'    => [
             'App\Listeners\ProjectDeletedListener'
+        ],
+        DocumentMarkModified::class => [
+            DocumentMarkModifiedListener::class,
         ],
         CommentCreated::class          => [
             CommentCreatedListener::class,

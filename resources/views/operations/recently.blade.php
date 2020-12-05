@@ -28,6 +28,10 @@
             @elseif ($log->message == 'document_deleted')
                 删除了文档
                 <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $log->project_id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
+            @elseif ($log->message == 'document_mark_updated')
+                将文档
+                <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $log->project_id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
+                标记为 {{ $log->context->status == \App\Repositories\Document::STATUS_NORMAL ? '正常' : '已过时' }}
             @elseif ($log->message == 'document_recovered')
                 还原了文档
                 <span class="wz-text-dashed"><a href="{{ wzRoute('project:home', ['id' => $log->project_id, 'p' => $log->context->doc_id]) }}">{{ $log->context->doc_title }}</a></span>
