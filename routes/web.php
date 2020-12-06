@@ -180,6 +180,7 @@ Route::group(['middleware' => 'locale'], function() {
                 // 创建新的文档
                 Route::get('/{id}/doc', 'DocumentController@newPage')->name('doc:new:show');
                 Route::post('/{id}/doc', 'DocumentController@newPageHandle')->name('doc:new:handle');
+                Route::post('/{id}/doc-import', 'ImportController@documents')->name('doc:import');
 
                 // 编辑文档
                 Route::get('/{id}/doc/{page_id}', 'DocumentController@editPage')->name('doc:edit:show');

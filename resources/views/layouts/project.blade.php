@@ -31,6 +31,9 @@
                             <a href="{!! wzRoute('project:doc:new:show', ['id' => $project->id, 'type' => 'table', 'pid' => $pageID]) !!}" class="dropdown-item">
                                 <i class="fa fa-table mr-2"></i> 创建 表格
                             </a>
+                            <a data-toggle="modal" data-target="#wz-document-import" class="dropdown-item">
+                                <i class="fa fa-upload mr-2"></i> 批量导入
+                            </a>
                         </ul>
                         <button type="button" class="btn bmd-btn-icon" data-href="{!! wzRoute('search:search', ['project_id' => $project->id]) !!}" data-toggle="tooltip" title="搜索">
                             <i class="material-icons">search</i>
@@ -62,6 +65,47 @@
                 </div>
             </div>
             @stack('page-panel')
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="wz-document-import" tabindex="-1" role="dialog" aria-labelledby="wz-document-import">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">文档批量导入</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning" role="alert" style="font-size: 85%;">
+                        <p><span style="padding: 0 14px 0 0;">⚠️</span> 扩展名为 <span class="code">md/markdown</span> 的文件将会被导入为 Markdown 文档，
+                            扩展名为 <span class="code">json/yml/yaml</span> 的文件将会被导入为 Swagger 文档。</p>
+                        <hr>
+                        <p class="mb-0">当前暂不支持导入表格类型文档，不支持图片文件导入。</p>
+                    </div>
+                    <form id="form-document-import" method="post" action="{{ wzRoute('project:doc:import', ['id' => $project->id]) }}" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="form-document-import">
+                            <div class="form-group">
+                                <label for="form-pid" class="bmd-label-floating">上级页面</label>
+                                <select class="form-control" name="page_id" id="form-pid">
+                                    <option value="0">@lang('document.no_parent_page')</option>
+                                    @include('components.doc-options', ['navbars' => navigator($project->id, $pageItem->id ?? 0), 'level' => 0])
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-document-upload" class="bmd-label-floating">选择文件</label>
+                                <input type="file" name="file" class="form-control-file" id="form-document-upload" required>
+                                <small class="text-muted">支持文件格式：{{ implode('，', ['zip', 'md', 'markdown', 'json', 'yaml', 'yml']) }}</small>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-raised float-right mt-2">确认导入</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 

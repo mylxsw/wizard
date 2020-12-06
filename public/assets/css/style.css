@@ -1479,3 +1479,9 @@ pre.prettyprint *,
 .doc-outdated {
     color: #808080;
 }
+
+.form-document-import {
+    border: 1px dashed #ccc;
+    padding: 10px;
+    background: #fdfdfd;
+}

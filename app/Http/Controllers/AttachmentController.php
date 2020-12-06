@@ -13,7 +13,6 @@ namespace App\Http\Controllers;
 use App\Repositories\Attachment;
 use App\Repositories\Document;
 use App\Repositories\Project;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 
 class AttachmentController extends Controller
@@ -76,7 +75,7 @@ class AttachmentController extends Controller
             'page_id'    => $page_id,
             'project_id' => $id
         ]);
-
+        $this->alertSuccess(__('common.operation_success'));
         return redirect(wzRoute('project:doc:attachment', ['id' => $id, 'page_id' => $page_id]));
     }
 

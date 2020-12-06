@@ -849,15 +849,20 @@ function markdownCompatibilityStrict($pageItem = null)
  * @param array $navigators
  * @param Closure $callback
  * @param array $parents
+ * @param bool $callbackWithFullNavItem 是否在回调函数中传递完整的nav对象
  */
-function traverseNavigators(array $navigators, \Closure $callback, array $parents = [])
-{
+function traverseNavigators(
+    array $navigators,
+    \Closure $callback,
+    array $parents = [],
+    $callbackWithFullNavItem = false
+) {
     foreach ($navigators as $nav) {
-        $callback($nav['id'], $parents);
+        $callback($callbackWithFullNavItem ? $nav : $nav['id'], $parents);
 
         if (!empty($nav['nodes'])) {
             array_push($parents, ['id' => $nav['id'], 'name' => $nav['name']]);
-            traverseNavigators($nav['nodes'], $callback, $parents);
+            traverseNavigators($nav['nodes'], $callback, $parents, $callbackWithFullNavItem);
             array_pop($parents);
         }
     }
