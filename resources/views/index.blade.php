@@ -140,10 +140,11 @@
 
     <div class="wz-version-suggest">
         <ul class="wz-version-suggest-items">
-           <li>1、Markdown 文档图片支持点击查看大图，支持图片缩放查看</li>
-           <li>2、支持文档评价，可以对文档按照 “很赞”、“看不懂”、“潦草” 打分</li>
-           <li>3、解决历史文档查看不支持表格文档的问题</li>
-           <li>4、其它 Bugfix</li>
+            <li>1. 支持文档批量导入</li>
+            <li>2. 支持用户扮演功能，管理员可以扮演为其它用户</li>
+            <li>3. 增加将文档标记为已过时的功能</li>
+            <li>4. Markdown 图片上传现在支持 SVG 格式了</li>
+            <li>5. 文档点赞后显示用户名</li>
         </ul>
     </div>
 
