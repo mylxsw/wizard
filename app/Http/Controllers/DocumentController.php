@@ -633,9 +633,8 @@ class DocumentController extends Controller
         }
 
         $navigators = navigatorSort(navigator($project_id, 0));
-
         $navigators = $this->filterNavigators($navigators, function (array $nav) use ($pageItem) {
-            return (int)$nav['id'] === $pageItem->id;
+            return (int)$nav['id'] === (int)$pageItem->id;
         });
 
         DB::transaction(function () use ($pageItem, $targetProject, $targetPage, $navigators) {
@@ -727,6 +726,12 @@ class DocumentController extends Controller
         foreach ($navigators as $nav) {
             if ($filter($nav)) {
                 return $nav['nodes'] ?? [];
+            }
+            if (!empty($nav['nodes'])) {
+                $sub = $this->filterNavigators($nav['nodes'], $filter);
+                if (!empty($sub)) {
+                    return $sub;
+                }
             }
         }
 

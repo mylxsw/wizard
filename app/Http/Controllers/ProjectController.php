@@ -162,11 +162,6 @@ class ProjectController extends Controller
      */
     public function project(Request $request, $id)
     {
-        $this->validate(
-            $request,
-            ['p' => 'integer|min:1']
-        );
-
         $pageID = (int)$request->input('p', 0);
 
         /** @var Project $project */

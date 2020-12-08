@@ -48,14 +48,14 @@ class BatchExportController extends Controller
             ]
         );
 
-        $pid  = (int)$request->input('pid', 0);
+        $pid = (int)$request->input('pid', 0);
         $type = $request->input('type');
 
         /** @var Project $project */
         $project = Project::where('id', $project_id)->firstOrFail();
 
         /** @var Collection $documents */
-        $documents  = $project->pages;
+        $documents = $project->pages;
         $navigators = navigatorSort(navigator($project_id, 0));
 
         if ($pid !== 0) {
@@ -77,7 +77,7 @@ class BatchExportController extends Controller
     /**
      * 过滤要导出的文档
      *
-     * @param array    $navigators
+     * @param array $navigators
      * @param \Closure $filter
      *
      * @return array|mixed
@@ -88,6 +88,13 @@ class BatchExportController extends Controller
             if ($filter($nav)) {
                 return $nav['nodes'] ?? [];
             }
+
+            if (!empty($nav['nodes'])) {
+                $sub = $this->filterNavigators($nav['nodes'], $filter);
+                if (!empty($sub)) {
+                    return $sub;
+                }
+            }
         }
 
         return [];
@@ -96,8 +103,8 @@ class BatchExportController extends Controller
     /**
      * Export to zip archive
      *
-     * @param array      $navigators
-     * @param Project    $project
+     * @param array $navigators
+     * @param Project $project
      * @param Collection $documents
      *
      * @throws \ZipStream\Exception\OverflowException
@@ -120,27 +127,27 @@ class BatchExportController extends Controller
 
                 switch ($doc->type) {
                     case Document::TYPE_DOC:
-                        $ext     = 'md';
+                        $ext = 'md';
                         $content = $doc->content;
                         break;
                     case Document::TYPE_SWAGGER:
                         $ext = 'yml';
                         if (isJson($doc->content)) {
                             $formatter = Formatter::make($doc->content, Formatter::JSON);
-                            $content   = $formatter->toYaml();
+                            $content = $formatter->toYaml();
                         } else {
                             $content = $doc->content;
                         }
                         break;
                     default:
-                        $ext     = 'txt';
+                        $ext = 'txt';
                         $content = $doc->content;
                 }
 
                 $content = preg_replace('/\!\[(.*?)\]\(\/storage\/(.*?).(jpg|png|jpeg|gif)(.*?)\)/',
                     '![$1](' . $url . '/storage/$2.$3$4)', $content);
 
-                $path     = collect($parents)->implode('name', '/');
+                $path = collect($parents)->implode('name', '/');
                 $filename = "{$path}/{$doc->title}.{$ext}";
 
                 $fp = fopen('php://memory', 'r+');
@@ -157,8 +164,8 @@ class BatchExportController extends Controller
     /**
      * Export to pdf document
      *
-     * @param array      $navigators
-     * @param Project    $project
+     * @param array $navigators
+     * @param Project $project
      * @param Collection $documents
      *
      * @throws \Mpdf\MpdfException
@@ -176,10 +183,10 @@ class BatchExportController extends Controller
         ]);
 
         $mpdf->allow_charset_conversion = true;
-        $mpdf->useAdobeCJK              = true;
-        $mpdf->autoLangToFont           = true;
-        $mpdf->autoScriptToLang         = true;
-        $mpdf->author                   = $author ?? \Auth::user()->name ?? 'wizard';
+        $mpdf->useAdobeCJK = true;
+        $mpdf->autoLangToFont = true;
+        $mpdf->autoScriptToLang = true;
+        $mpdf->author = $author ?? \Auth::user()->name ?? 'wizard';
 
         $mpdf->SetFooter('{PAGENO} / {nbpg}');
         $mpdf->SetTitle($project->name);
@@ -206,10 +213,10 @@ class BatchExportController extends Controller
 
                 $title = "* {$doc->title}";
 
-                $author           = $doc->user->name ?? '-';
-                $createdTime      = $doc->created_at ?? '-';
+                $author = $doc->user->name ?? '-';
+                $createdTime = $doc->created_at ?? '-';
                 $lastModifiedUser = $doc->lastModifiedUser->name ?? '-';
-                $updatedTime      = $doc->updated_at ?? '-';
+                $updatedTime = $doc->updated_at ?? '-';
 
                 $intro =
                     "该文档由 {$author} 创建于 {$createdTime} ， {$lastModifiedUser} 在 {$updatedTime} 修改了该文档。\n\n";
@@ -256,9 +263,9 @@ class BatchExportController extends Controller
     /**
      * 遍历所有目录
      *
-     * @param array    $navigators
+     * @param array $navigators
      * @param \Closure $callback
-     * @param array    $parents
+     * @param array $parents
      */
     private function traverseNavigators(array $navigators, \Closure $callback, array $parents = [])
     {

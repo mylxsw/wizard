@@ -236,6 +236,13 @@ class ImportController extends Controller
             if ($filter($nav)) {
                 return $nav['nodes'] ?? [];
             }
+
+            if (!empty($nav['nodes'])) {
+                $sub = $this->filterNavigators($nav['nodes'], $filter);
+                if (!empty($sub)) {
+                    return $sub;
+                }
+            }
         }
 
         return [];
