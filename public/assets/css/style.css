@@ -680,7 +680,7 @@ a:hover {
 
 .wz-markdown-style-fix img {
     max-width: 99%;
-    box-shadow: 3px 3px 7px #ccc;
+    /*box-shadow: 3px 3px 7px #ccc;*/
 }
 
 .wz-text-dashed {
