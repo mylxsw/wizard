@@ -3549,10 +3549,9 @@
             return '<div class="table-responsive"><table class="table table-hover"><thead>' + header + '</thead><tbody>' + body + '</tbody></table></div>';
         };
 
-        markedRenderer.blockquote = function (quote) {
-            return "<blockquote><i class='fa fa-quote-left'></i>\n" + quote + "</blockquote>\n"
-            // return "<div class='alert alert-info'>" + quote + "</div>";
-        };
+        // markedRenderer.blockquote = function (quote) {
+        //     return "<blockquote>" + quote + "</blockquote>\n"
+        // };
 
         // wizard 添加扩展 END
 

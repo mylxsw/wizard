@@ -1305,12 +1305,13 @@ li.L1, li.L3, li.L5, li.L7, li.L9 {
     color: #eaeaeae8;
 }
 
-.markdown-body blockquote {
-    border: none!important;
-}
-.markdown-body blockquote>p {
-    text-indent: 2em;
-}
+/*.markdown-body blockquote {*/
+/*    border: none!important;*/
+/*}*/
+/*.markdown-body blockquote>p {*/
+/*    text-indent: 2em;*/
+/*}*/
+
 .markdown-body pre.prettyprint {
     border: 1px dashed #ddd!important;
 }
