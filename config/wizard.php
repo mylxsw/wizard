@@ -88,9 +88,19 @@ return [
     ],
 
     /**
+     * Markdown 配置
+     */
+    'markdown'    => [
+        /**
+         * 是否启用严格的 Markdown 解释器，如果你的 markdown 格式并不标准，可以将该选项设置为 false
+         */
+        'strict' => env('WIZARD_MARKDOWN_STRICT', true),
+    ],
+
+    /**
      * 表格类型文档配置
      */
-    'spreedsheet'          => [
+    'spreedsheet' => [
         /**
          * 最大支持的行数
          */
@@ -112,7 +122,7 @@ return [
     /**
      * 文件附件
      */
-    'attachments'          => [
+    'attachments' => [
         /**
          * 支持的文件扩展名列表，使用,分割
          */

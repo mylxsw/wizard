@@ -831,6 +831,10 @@ function processSpreedSheetRows($originalRows): array
  */
 function markdownCompatibilityStrict($pageItem = null)
 {
+    if (!config('wizard.markdown.strict')) {
+        return false;
+    }
+
     if (empty($pageItem) || empty($pageItem->created_at)) {
         return true;
     }
