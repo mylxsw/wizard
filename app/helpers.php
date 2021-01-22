@@ -687,6 +687,26 @@ function convertSqlTo(string $sql, $callback)
 }
 
 /**
+ * Markdown 预处理
+ *
+ * @param string $markdown
+ * @return string
+ */
+function processMarkdown(string $markdown): string
+{
+    $defaultTOC = config('wizard.markdown.default_toc');
+    if (!in_array($defaultTOC, ['TOC', 'TOCM'])) {
+        return $markdown;
+    }
+
+    if (Str::contains($markdown, ['[TOC]', '[TOCM]'])) {
+        return $markdown;
+    }
+
+    return "[{$defaultTOC}]\n\n{$markdown}";
+}
+
+/**
  * 预处理 X-spreadsheet 表格内容
  *
  * @param string $content
