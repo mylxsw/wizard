@@ -15,7 +15,7 @@ class InvitationCode extends Migration
     {
         Schema::create('wz_invitation_code', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code', 255)->comment('注册邀请码')->unique();
+            $table->string('code', 128)->comment('注册邀请码')->unique();
             $table->dateTime('expired_at')->nullable()->comment('邀请码有效期限');
             $table->integer('user_id', false, true)->comment('创建用户ID');
 
