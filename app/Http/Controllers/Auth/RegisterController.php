@@ -43,30 +43,36 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $rules = [
             'name'     => 'required|string|max:255',
             'email'    => 'required|string|email|max:255|unique:wz_users',
             'password' => 'required|string|min:6|confirmed',
-        ]);
+        ];
+
+        if (config('wizard.register_invitation')) {
+            $rules['invitation_code'] = 'required|string|max:255|invitation_code';
+        }
+
+        return Validator::make($data, $rules);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return \App\Repositories\User
      */
     protected function create(array $data)
     {
         $needActivate = config('wizard.need_activate');
-        $user         = User::create([
+        $user = User::create([
             'name'     => $data['name'],
             'email'    => $data['email'],
             'password' => bcrypt($data['password']),

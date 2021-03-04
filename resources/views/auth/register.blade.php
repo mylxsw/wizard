@@ -8,6 +8,19 @@
 
         {{ csrf_field() }}
 
+        @if (config('wizard.register_invitation'))
+            <div class="text-left form-group{{ $errors->has('invitation_code') ? ' has-error' : '' }}">
+                <label for="invitation_code" class="bmd-label-floating">邀请码</label>
+                <input id="invitation_code" type="text" class="form-control" name="invitation_code" value="{{ old('invitation_code') }}" required autofocus>
+
+                @if ($errors->has('invitation_code'))
+                    <div class="invalid-feedback d-block">
+                        {{ $errors->first('invitation_code') }}
+                    </div>
+                @endif
+            </div>
+        @endif
+
         <div class="text-left form-group{{ $errors->has('name') ? ' has-error' : '' }}">
             <label for="name" class="bmd-label-floating">@lang('common.username')</label>
             <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>

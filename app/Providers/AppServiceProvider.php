@@ -12,9 +12,11 @@ use Adldap\Laravel\Commands\Import;
 use App\Components\LdapUserImportScope;
 use App\Repositories\Document;
 use App\Repositories\Group;
+use App\Repositories\InvitationCode;
 use App\Repositories\Project;
 use App\Repositories\Template;
 use App\Repositories\User;
+use Carbon\Carbon;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -38,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         $this->addGroupExistRule('group_exist');
         $this->addCheckUserPasswordRules('user_password');
         $this->addUsernameUniqueRules('username_unique');
+        $this->addInvitationCodeRules('invitation_code');
 
         // 在日志中输出sql历史
 //        \DB::listen(function (QueryExecuted $query) {
@@ -71,14 +74,14 @@ class AppServiceProvider extends ServiceProvider
             $ruleName,
             '参数 %s 对应的页面不存在',
             function ($attribute, $value, $parameters, $validator) {
-                $projectID         = $parameters[0] ?? 0;
+                $projectID = $parameters[0] ?? 0;
                 $validateZeroValue = isset($parameters[1]) ? ($parameters[1] == 'true') : true;
 
                 if (empty($value)) {
                     return !$validateZeroValue;
                 }
 
-                $conditions   = [];
+                $conditions = [];
                 $conditions[] = ['id', $value];
 
                 if (!empty($projectID)) {
@@ -147,6 +150,38 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
+     * 添加邀请码校验规则
+     *
+     * @param string $ruleName
+     */
+    private function addInvitationCodeRules(string $ruleName)
+    {
+        $this->registerValidationRule(
+            $ruleName,
+            '邀请码无效',
+            function ($attribute, $value, $parameters, $validator) {
+                $staticCode = config('wizard.register_invitation_static');
+                if (empty($staticCode)) {
+                    return false;
+                }
+
+                if ($value === $staticCode) {
+                    return true;
+                }
+
+                /** @var InvitationCode $invitationCode */
+                $invitationCode = InvitationCode::where('code', $value)->first();
+                if (empty($invitationCode)) {
+                    return false;
+                }
+
+                return $invitationCode->expired_at === null
+                       || Carbon::now()->isBefore(Carbon::createFromTimeString($invitationCode->expired_at));
+            }
+        );
+    }
+
+    /**
      * 添加检查分组名称是否存在的规则
      *
      * @param string $ruleName
@@ -188,8 +223,8 @@ class AppServiceProvider extends ServiceProvider
     /**
      * 注册校验规则
      *
-     * @param string   $ruleName
-     * @param string   $validationMessage
+     * @param string $ruleName
+     * @param string $validationMessage
      * @param \Closure $callback
      */
     private function registerValidationRule(
