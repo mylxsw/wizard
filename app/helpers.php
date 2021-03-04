@@ -787,7 +787,6 @@ function processSpreedSheetSingle($contentArray, $minRow, $minCol)
 
     // 行数据过滤，去掉多余的空行
     $contentArray['rows'] = processSpreedSheetRows($contentArray['rows']);
-
     // 获取最大行号
     $maxRowNum = collect(array_keys($contentArray['rows']))
         ->filter(function ($item) {
@@ -824,12 +823,12 @@ function processSpreedSheetRows($originalRows): array
     $lastIndex = count($rowsForCol);
     if ($lastIndex > 0) {
         for ($i = $lastIndex; $i > 0; $i--) {
-            $colCount = collect($rowsForCol[$i]['cells'] ?? [])->filter(function ($cell) {
+            $colCount = collect($rowsForCol[$i-1]['cells'] ?? [])->filter(function ($cell) {
                 return !empty($cell['text']);
             })->count();
 
             if ($colCount > 0) {
-                foreach (array_slice($rowsForCol, 0, $i + 1) as $index => $v) {
+                foreach (array_slice($rowsForCol, 0, $i+1) as $index => $v) {
                     $rows["{$index}"] = $v;
                 }
 
