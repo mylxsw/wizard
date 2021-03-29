@@ -254,7 +254,7 @@ $.wz.mdEditor = function (editor_id, params) {
                 mdEditor.imagePaste();
             });
 
-            editormd.loadPlugin('/assets/vendor/mermaid', function() {
+            editormd.loadPlugin('/assets/vendor/mermaid.min', function() {
                 mermaid.init(undefined, $(".markdown-body .mermaid"));
             });
 

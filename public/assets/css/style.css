@@ -504,6 +504,11 @@ a:hover {
     font-size: 1.2em!important;
 }
 
+.markdown-body .mermaid {
+    max-width: 100%;
+    overflow: auto;
+}
+
 .wz-page-content {
     margin-top: 20px;
 }

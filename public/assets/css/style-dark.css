@@ -7,6 +7,16 @@ body.wz-dark-theme {
 .wz-dark-theme .markdown-body table {
   background: #4e4e4e;
 }
+.wz-dark-theme .markdown-body .editormd-toc-menu > .markdown-toc > ul {
+  background: #4e4e4e;
+  color: #ffffff;
+}
+.wz-dark-theme .markdown-body .editormd-toc-menu > .markdown-toc > ul > li > a {
+  color: #ffffff;
+}
+.wz-dark-theme .markdown-body .editormd-toc-menu > .markdown-toc > ul > li > a:hover {
+  background-color: #0a001f;
+}
 .wz-dark-theme .wz-theme-support-icon {
   color: #ffffff;
 }
