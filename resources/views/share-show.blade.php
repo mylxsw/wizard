@@ -5,6 +5,9 @@
     <h1 class="wz-page-title">
         {{ $pageItem->title }}
     </h1>
+    <a href="{{ wzRoute('project:home', ['id' => $project->id, 'p' => $pageItem->id]) }}"
+       title="返回"
+       class="btn btn-link float-right print-hide"><i class="material-icons">clear</i></a>
     <hr />
 </nav>
 <div class="markdown-body" id="markdown-body">

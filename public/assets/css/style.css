@@ -1491,3 +1491,9 @@ pre.prettyprint *,
     padding: 10px;
     background: #fdfdfd;
 }
+
+@media print {
+    .print-hide {
+        display: none;
+    }
+}
