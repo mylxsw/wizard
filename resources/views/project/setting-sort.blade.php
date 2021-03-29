@@ -89,19 +89,17 @@
                 };
 
                 items = items.sort(function (a, b) {
-                    // var aIsFolder = a.ele.find('ul').length > 0;
-                    // var bIsFolder = b.ele.find('ul').length > 0;
-                    //
-                    // var bothIsFolder = aIsFolder && bIsFolder;
-                    // var bothNotFolder = (!aIsFolder) && (!bIsFolder);
-                    //
-                    // if (bothIsFolder || bothNotFolder) {
-                    //     return sortInner(a, b);
-                    // } else {
-                    //     return aIsFolder ? 1 : -1;
-                    // }
+                    var aIsFolder = a.ele.find('ul').length > 0;
+                    var bIsFolder = b.ele.find('ul').length > 0;
 
-                    return sortInner(a, b);
+                    var bothIsFolder = aIsFolder && bIsFolder;
+                    var bothNotFolder = (!aIsFolder) && (!bIsFolder);
+
+                    if (bothIsFolder || bothNotFolder) {
+                        return sortInner(a, b);
+                    } else {
+                        return aIsFolder ? 1 : -1;
+                    }
                 });
 
                 for (var i in items) {
