@@ -1,5 +1,5 @@
 
-@foreach(navigatorSort($navbars) as $nav)
+@foreach(navigatorSort($navbars, $project->catalog_sort_style) as $nav)
     <li class="{{ $nav['selected'] ? 'active' : '' }} {{ !empty($nav['nodes']) ? 'wz-has-child' : '' }}" data-type="{{ $nav['type'] }}">
         <a href="{{ $nav['url'] }}" title="{{ $nav['name'] }}" class="wz-nav-item">
             @if($nav['status'] == \App\Repositories\Document::STATUS_OUTDATED)
@@ -11,7 +11,7 @@
 
         @if(!empty($nav['nodes']))
             <ul>
-                @include('components.navbar', ['navbars' => $nav['nodes']])
+                @include('components.navbar', ['navbars' => $nav['nodes'], 'project' => $project])
             </ul>
         @endif
     </li>

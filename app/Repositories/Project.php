@@ -36,6 +36,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon|null $deleted_at
  * @property int $sort_level 项目排序，排序值越大越靠后
  * @property int|null $catalog_id 目录ID
+ * @property int $catalog_fold_style 目录展示样式
+ * @property int $catalog_sort_style 目录排序样式
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereCatalogId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Repositories\Project whereDeletedAt($value)
@@ -70,6 +72,27 @@ class Project extends Repository
      */
     const PRIVILEGE_RO = 2;
 
+    /**
+     * 目录折叠样式：自动
+     */
+    const FOLD_STYLE_AUTO = 0;
+    /**
+     * 目录折叠样式：全部展开
+     */
+    const FOLD_STYLE_UNFOLD = 1;
+    /**
+     * 目录折叠样式：全部折叠
+     */
+    const FOLD_STYLE_FOLD = 2;
+    /**
+     * 排序样式：文件夹优先
+     */
+    const SORT_STYLE_DIR_FIRST = 0;
+    /**
+     * 排序样式：自由排序
+     */
+    const SORT_STYLE_FREE = 1;
+
     protected $table = 'wz_projects';
     protected $fillable
         = [
@@ -79,6 +102,8 @@ class Project extends Repository
             'user_id',
             'sort_level',
             'catalog_id',
+            'catalog_fold_style',
+            'catalog_sort_style',
         ];
 
     public $dates = ['deleted_at'];
@@ -111,7 +136,7 @@ class Project extends Repository
     public function groups()
     {
         return $this->belongsToMany(Group::class, 'wz_project_group_ref', 'project_id', 'group_id')
-            ->withPivot('created_at', 'updated_at', 'privilege');
+                    ->withPivot('created_at', 'updated_at', 'privilege');
     }
 
     /**

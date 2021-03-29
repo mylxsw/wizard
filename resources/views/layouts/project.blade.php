@@ -54,7 +54,7 @@
                 </div>
             </div>
             <ul class="nav nav-pills nav-stacked wz-left-nav {{-- hide --}}">
-                @include('components.navbar', ['navbars' => $navigators])
+                @include('components.navbar', ['navbars' => $navigators, 'project' => $project])
             </ul>
         </div>
         <div class="col-12 col-lg-9 wz-panel-right">
@@ -116,7 +116,7 @@
     <script>
         // 侧边导航自动折叠
         $(function () {
-            $.wz.navigator_tree($('.wz-left-nav'));
+            $.wz.navigator_tree($('.wz-left-nav'), {{ $project->catalog_fold_style }});
 //            window.setTimeout(function () {
 //                $('.wz-left-nav').removeClass('hide').addClass('animated fadeIn');
 //            }, 20);

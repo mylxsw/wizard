@@ -8,6 +8,7 @@
 
 use App\Repositories\Catalog;
 use App\Repositories\Document;
+use App\Repositories\Project;
 use App\Repositories\Template;
 use App\Repositories\User;
 use Carbon\Carbon;
@@ -130,10 +131,11 @@ function navigator(
  * 导航排序，排序后，文件夹靠前，普通文件靠后
  *
  * @param array $navItems
+ * @param int $sortStyle
  *
  * @return array
  */
-function navigatorSort($navItems)
+function navigatorSort($navItems, $sortStyle = Project::SORT_STYLE_DIR_FIRST)
 {
     $sortItem = function ($a, $b) {
         try {
@@ -153,7 +155,10 @@ function navigatorSort($navItems)
 
     usort(
         $navItems,
-        function ($a, $b) use ($sortItem) {
+        function ($a, $b) use ($sortItem, $sortStyle) {
+            if ($sortStyle == Project::SORT_STYLE_FREE) {
+                return $sortItem($a, $b);
+            }
 
             $aIsFolder = !empty($a['nodes']);
             $bIsFolder = !empty($b['nodes']);

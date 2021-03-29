@@ -364,12 +364,14 @@ class ProjectController extends Controller
         $this->validate(
             $request,
             [
-                'name'        => 'required|between:1,100',
-                'description' => 'max:255',
-                'project_id'  => "required|in:{$project->id}|project_exist",
-                'visibility'  => 'required|in:1,2',
-                'sort_level'  => 'integer|between:-999999999,999999999',
-                'catalog'     => 'required|integer',
+                'name'               => 'required|between:1,100',
+                'description'        => 'max:255',
+                'project_id'         => "required|in:{$project->id}|project_exist",
+                'visibility'         => 'required|in:1,2',
+                'sort_level'         => 'integer|between:-999999999,999999999',
+                'catalog'            => 'required|integer',
+                'catalog_sort_style' => 'in:0,1',
+                'catalog_fold_style' => 'in:0,1,2',
             ],
             [
                 'name.required'   => __('project.validation.project_name_required'),
@@ -383,11 +385,15 @@ class ProjectController extends Controller
         $visibility = $request->input('visibility');
         $sortLevel = $request->input('sort_level');
         $catalog = $request->input('catalog');
+        $catalogSortStyle = $request->input('catalog_sort_style', Project::SORT_STYLE_DIR_FIRST);
+        $catalogFoldStyle = $request->input('catalog_fold_style', Project::FOLD_STYLE_AUTO);
 
         $project->name = $name;
         $project->description = $description;
         $project->visibility = $visibility;
         $project->catalog_id = empty($catalog) ? null : $catalog;
+        $project->catalog_fold_style = $catalogFoldStyle;
+        $project->catalog_sort_style = $catalogSortStyle;
         if (\Auth::user()->can('project-sort') && $sortLevel != null) {
             $project->sort_level = (int)$sortLevel;
         }

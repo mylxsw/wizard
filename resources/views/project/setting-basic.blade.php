@@ -14,7 +14,7 @@
                            value="{{ old('name', $project->name) }}" >
                 </div>
                 <div class="form-group">
-                    <label for="catalog-status" class="bmd-label-floating">目录</label>
+                    <label for="catalog-status" class="bmd-label-floating">项目目录</label>
                     <select id="catalog-status" name="catalog" class="form-control">
                         <option value="0" {{ empty($project->catalog) ? 'selected' : '' }}>无</option>
                         @foreach($catalogs as $cat)
@@ -40,10 +40,26 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="project-sort" class="bmd-label-floating">排序（值越大越靠后）</label>
+                    <label for="project-sort" class="bmd-label-floating">项目排序（值越大越靠后）</label>
                     <input type="number" name="sort_level" class="form-control float-left w-75" id="project-sort" value="{{ old('sort_level', $project->sort_level) }}" {{ Auth::user()->can('project-sort') ? '' : 'disabled' }}/>
                     <i class="fa fa-question-circle ml-2" data-toggle="tooltip" title="" data-original-title="只有管理员可以修改"></i>
                 </div>
+                <div class="form-group">
+                    <label for="catalog-sort-style" class="bmd-label-floating">排序样式</label>
+                    <select id="catalog-sort-style" name="catalog_sort_style" class="form-control">
+                        <option value="0" {{ $project->catalog_sort_style == 0 ? 'selected' : '' }}>文件夹优先</option>
+                        <option value="1" {{ $project->catalog_sort_style == 1 ? 'selected' : '' }}>自由</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="catalog-fold-style" class="bmd-label-floating">文件夹样式</label>
+                    <select id="catalog-fold-style" name="catalog_fold_style" class="form-control">
+                        <option value="0" {{ $project->catalog_fold_style == 0 ? 'selected' : '' }}>自动</option>
+                        <option value="1" {{ $project->catalog_fold_style == 1 ? 'selected' : '' }}>全部展开</option>
+                        <option value="2" {{ $project->catalog_fold_style == 2 ? 'selected' : '' }}>全部折叠</option>
+                    </select>
+                </div>
+
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-success btn-raised mr-2">@lang('common.btn_save')</button>

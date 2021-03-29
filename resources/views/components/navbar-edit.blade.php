@@ -1,5 +1,5 @@
 @php $___index = 0; @endphp
-@foreach(navigatorSort($navbars) as $nav)
+@foreach(navigatorSort($navbars, $project->catalog_sort_style) as $nav)
     <li class="wz-nav-editor-line" data-type="{{ $nav['type'] }}">
         <input type="number" class="wz-sort-level" data-id="{{ $nav['id'] }}" data-index="{{ $___index ++ }}" data-original="{{ $nav['sort_level'] }}" value="{{ $nav['sort_level'] }}">
         <a href="{{ $nav['url'] }}" target="_blank" title="{{ $nav['url'] }}" >
@@ -13,7 +13,7 @@
 
         @if(!empty($nav['nodes']))
             <ul>
-                @include('components.navbar-edit', ['navbars' => $nav['nodes'], 'indent' => $indent + 1])
+                @include('components.navbar-edit', ['navbars' => $nav['nodes'], 'indent' => $indent + 1, 'project' => $project])
             </ul>
         @endif
     </li>

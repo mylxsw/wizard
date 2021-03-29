@@ -56,7 +56,7 @@ class BatchExportController extends Controller
 
         /** @var Collection $documents */
         $documents = $project->pages;
-        $navigators = navigatorSort(navigator($project_id, 0));
+        $navigators = navigatorSort(navigator($project_id, 0), $project->catalog_sort_style);
 
         if ($pid !== 0) {
             $navigators = $this->filterNavigators($navigators, function (array $nav) use ($pid) {

@@ -10,7 +10,7 @@
                 <input type="hidden" name="op" value="{{ $op }}">
 
                 <div class="form-group wz-nav-editor">
-                    <ul>@include('components.navbar-edit', ['navbars' => $navigators, 'indent' => 0])</ul>
+                    <ul>@include('components.navbar-edit', ['navbars' => $navigators, 'indent' => 0, 'project' => $project])</ul>
                 </div>
 
                 <div class="form-group">
@@ -89,6 +89,7 @@
                 };
 
                 items = items.sort(function (a, b) {
+                    @if ($project->catalog_sort_style == 0)
                     var aIsFolder = a.ele.find('ul').length > 0;
                     var bIsFolder = b.ele.find('ul').length > 0;
 
@@ -100,6 +101,9 @@
                     } else {
                         return aIsFolder ? 1 : -1;
                     }
+                    @else
+                    return sortInner(a, b);
+                    @endif
                 });
 
                 for (var i in items) {
