@@ -204,43 +204,47 @@ class ProjectController extends Controller
                                    ->mapWithKeys(function ($item) {
                                        return [$item['score_type'] => $item['count']];
                                    });
-            $usefulScoreUsers = DocumentScore::where('page_id', $page->id)
-                                             ->where('score_type', DocumentScore::SCORE_USEFUL)
-                                             ->with([
-                                                 'user' => function ($query) {
-                                                     $query->select('id', 'name');
-                                                 }
-                                             ])
-                                             ->select('id', 'user_id', 'page_id')
-                                             ->orderBy('updated_at', 'desc')
-                                             ->limit(10)->get();
+            $usefulScoreUsers =
+                DocumentScore::query()
+                             ->where('page_id', $page->id)
+                             ->where('score_type', DocumentScore::SCORE_USEFUL)
+                             ->with([
+                                 'user' => function ($query) {
+                                     $query->select('id', 'name');
+                                 }
+                             ])
+                             ->select('id', 'user_id', 'page_id')
+                             ->orderBy('updated_at', 'desc')
+                             ->limit(10)->get();
             if (!Auth::guest()) {
                 $userScoreType = DocumentScore::where('page_id', $page->id)->where('user_id',
                     Auth::user()->id)->value('score_type');
             }
         } else {
             // 查询操作历史
-            $operationLogs = OperationLogs::where('project_id', $id)
+            $operationLogs = OperationLogs::query()
+                                          ->where('project_id', $id)
                                           ->whereNotNull('page_id')
                                           ->orderBy('created_at', 'desc')
                                           ->limit(10)->get();
+
         }
 
         return view('project.project', [
-            'project'            => $project,
-            'pageID'             => $pageID,
-            'pageItem'           => $page,
-            'scores'             => $scores ?? [],
-            'useful_score_users' => $usefulScoreUsers ?? [],
-            'user_score_type'    => $userScoreType ?? 0,
-            'type'               => $type,
-            'code'               => '',
-            'operationLogs'      => isset($operationLogs) ? $operationLogs : [],
-            'comment_highlight'  => $request->input('cm', ''),
-            'navigators'         => navigator($id, $pageID),
-            'history'            => $history ?? false,
-            'share'              => $share ?? false,
-            'isFavorited'        => $project->isFavoriteByUser(\Auth::user()),
+            'project'             => $project,
+            'pageID'              => $pageID,
+            'pageItem'            => $page,
+            'scores'              => $scores ?? [],
+            'useful_score_users'  => $usefulScoreUsers ?? [],
+            'user_score_type'     => $userScoreType ?? 0,
+            'type'                => $type,
+            'code'                => '',
+            'operationLogs'       => isset($operationLogs) ? $operationLogs : [],
+            'comment_highlight'   => $request->input('cm', ''),
+            'navigators'          => navigator($id, $pageID),
+            'history'             => $history ?? false,
+            'share'               => $share ?? false,
+            'isFavorited'         => $project->isFavoriteByUser(\Auth::user()),
         ]);
     }
 

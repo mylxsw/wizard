@@ -8,12 +8,14 @@
 
 use App\Repositories\Catalog;
 use App\Repositories\Document;
+use App\Repositories\DocumentScore;
 use App\Repositories\Project;
 use App\Repositories\Template;
 use App\Repositories\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 /**
@@ -964,4 +966,28 @@ function impersonateUser()
 
     $impersonateUser = $user->impersonator();
     return ['id' => $impersonateUser->id, 'name' => $impersonateUser->name];
+}
+
+/**
+ * 项目页面点赞排行
+ *
+ * @param $projectId
+ * @return array
+ */
+function projectPageScores($projectId)
+{
+    $sql = <<<SQL
+select 
+       wz_page_score.page_id as page_id, 
+       wz_pages.title as title, 
+       count(wz_page_score.id) as count 
+from wz_page_score 
+left join wz_pages 
+    on wz_pages.id = wz_page_score.page_id 
+where wz_page_score.project_id=? and wz_page_score.score_type = ? and wz_pages.title is not null 
+group by wz_page_score.page_id 
+order by count desc
+SQL;
+
+    return DB::select($sql, [$projectId, DocumentScore::SCORE_USEFUL]);
 }

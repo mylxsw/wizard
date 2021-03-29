@@ -13,6 +13,7 @@ namespace App\Repositories;
  *
  * @property integer $id
  * @property integer $page_id
+ * @property integer $project_id
  * @property integer $user_id
  * @property integer $score_type
  *
@@ -29,6 +30,7 @@ class DocumentScore extends Repository
     protected $fillable
         = [
             'page_id',
+            'project_id',
             'user_id',
             'score_type',
         ];

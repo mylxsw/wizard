@@ -698,6 +698,7 @@ class DocumentController extends Controller
             if ($existedScore->score_type == $scoreType) {
                 $existedScore->delete();
             } else {
+                $existedScore->project_id = $pageItem->project_id;
                 $existedScore->score_type = $scoreType;
                 $existedScore->save();
             }
@@ -705,6 +706,7 @@ class DocumentController extends Controller
             DocumentScore::create([
                 'user_id'    => Auth::user()->id,
                 'page_id'    => $pageItem->id,
+                'project_id' => $pageItem->project_id,
                 'score_type' => $scoreType,
             ]);
         }
