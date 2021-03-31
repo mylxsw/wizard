@@ -19,8 +19,10 @@
         "lcobucci/jwt": "^3.2",
         "maennchen/zipstream-php": "^1.1",
         "mpdf/mpdf": "^8.0",
+        "php-http/guzzle6-adapter": "^2.0",
         "sebastian/diff": "3.0.2",
         "soapbox/laravel-formatter": "^3.0",
+        "thecodingmachine/gotenberg-php-client": "^6.3",
         "yzalis/identicon": "^1.2"
     },
     "require-dev": {

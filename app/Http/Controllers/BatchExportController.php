@@ -44,7 +44,7 @@ class BatchExportController extends Controller
             $request,
             [
                 'pid'  => 'integer',
-                'type' => 'required|in:pdf,raw'
+                'type' => 'required|in:pdf,raw,html'
             ]
         );
 
@@ -70,6 +70,9 @@ class BatchExportController extends Controller
                 break;
             case 'raw':
                 $this->exportRaw($navigators, $project, $documents);
+                break;
+            case 'html':
+                return $this->exportHTML($navigators, $project, $documents);
                 break;
         }
     }
@@ -290,5 +293,29 @@ class BatchExportController extends Controller
         }
 
         return $project;
+    }
+
+    private function exportHTML(array $navigators, Project $project, Collection $documents)
+    {
+        set_time_limit(self::TIMEOUT);
+
+        $chapters = [];
+
+        $this->traverseNavigators(
+            $navigators,
+            function ($id, array $parents) use ($documents, &$chapters) {
+                /** @var Document $doc */
+                $doc = $documents->where('id', $id)->first();
+
+                switch ($doc->type) {
+                    case Document::TYPE_DOC:
+                        $chapters[] = $doc;
+                        break;
+                }
+            },
+            []
+        );
+
+        return view('html-export', ['chapters' => $chapters]);
     }
 }

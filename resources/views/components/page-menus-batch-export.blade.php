@@ -28,6 +28,10 @@
                     <span class="fa fa-download mr-2"></span>
                     PDF
                 </a>
+                <a href="#" class="dropdown-item wz-export" data-type="html">
+                    <span class="fa fa-download mr-2"></span>
+                    HTML
+                </a>
                 <a href="#" class="dropdown-item wz-export" data-type="raw">
                     <span class="fa fa-download mr-2"></span>
                     原始内容
