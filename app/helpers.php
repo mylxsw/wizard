@@ -510,6 +510,21 @@ function ldap_enabled(): bool
 }
 
 /**
+ * 是否启用注册功能支持
+ *
+ * @return bool
+ */
+function register_enabled(): bool
+{
+    static $enabled = null;
+    if (is_null($enabled)) {
+        $enabled = (bool)config('wizard.register_enabled');
+    }
+
+    return $enabled;
+}
+
+/**
  * 站长统计代码区域
  *
  * @return string

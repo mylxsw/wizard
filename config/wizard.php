@@ -20,6 +20,10 @@ return [
      */
     'need_activate'              => env('WIZARD_NEED_ACTIVATE', false),
     /**
+     * 是否启用用户注册支持
+     */
+    'register_enabled'           => env('WIZARD_REGISTER_ENABLED', true),
+    /**
      * 新账号注册是否需要邀请码
      */
     'register_invitation'        => env('WIZARD_REGISTER_INVITATION', false),
