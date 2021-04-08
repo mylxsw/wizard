@@ -148,5 +148,15 @@ return [
          */
         'support_extensions' => env('WIZARD_ATTACHMENTS_SUPPORT_EXTENSIONS',
             'jpg,jpeg,gif,png,bmp,zip,rar,war,mwb,xmind,itmz,mindnode,svg,md,vsd,vsdx,txt,doc,docx,xls,xlsx,ppt,pptx,pdf,sql'),
+    ],
+
+    /**
+     * 功能增强
+     *
+     * 该功能依赖 wizard-enhance 服务
+     */
+    'enhance'                    => [
+        'server' => env('WIZARD_ENHANCE_SERVER', ''),
+        'secret' => env('WIZARD_ENHANCE_SECRET', ''),
     ]
 ];
