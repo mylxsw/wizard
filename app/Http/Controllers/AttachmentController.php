@@ -42,11 +42,11 @@ class AttachmentController extends Controller
         );
 
         $file = $request->file('attachment');
-        $extension = $this->getFileExtension($file);
+        $extension = strtolower($this->getFileExtension($file));
 
         $this->validateParameters(
             [
-                'extension'  => strtolower($extension),
+                'extension'  => $extension,
                 'project_id' => $id,
                 'page_id'    => $page_id,
             ],
@@ -73,7 +73,8 @@ class AttachmentController extends Controller
             'path'       => \Storage::url($path),
             'user_id'    => \Auth::user()->id,
             'page_id'    => $page_id,
-            'project_id' => $id
+            'project_id' => $id,
+            'file_type'  => $extension,
         ]);
         $this->alertSuccess(__('common.operation_success'));
         return redirect(wzRoute('project:doc:attachment', ['id' => $id, 'page_id' => $page_id]));

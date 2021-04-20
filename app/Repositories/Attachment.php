@@ -21,6 +21,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $page_id
  * @property integer $project_id
  * @property integer $user_id
+ * @property string  $preview_path
+ * @property string  $file_type
  * @property Carbon  $created_at
  * @property Carbon  $updated_at
  * @property Carbon  $deleted_at
@@ -55,7 +57,9 @@ class Attachment extends Repository
             'path',
             'page_id',
             'project_id',
-            'user_id'
+            'user_id',
+            'preview_path',
+            'file_type',
         ];
 
     public $dates = ['deleted_at'];

@@ -147,8 +147,8 @@
                                         {{ $attachment->created_at }}】
                                     </span>
                                 </a>
-                                @if(\Illuminate\Support\Str::endsWith($attachment->path, '.pdf'))
-                                    <button class="btn btn-primary wz-pdf-preview" data-path="{{ $attachment->path }}" title="在线预览">
+                                @if(!empty($attachment->preview_path))
+                                    <button class="btn btn-primary wz-pdf-preview" data-path="{{ $attachment->preview_path }}" title="在线预览">
                                         <i class="fa fa-file-pdf-o"></i>
                                     </button>
                                 @endif
