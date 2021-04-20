@@ -3347,28 +3347,34 @@
                 }
             }
 
+            var createIframe = function(iframeURL) {
+                var header = "";
+                if (text !== '') {
+                    header = "<div class='card-header'>" +
+                        "   <div class='card-header-title'>" + text + "</div>" +
+                        "   <div class='card-header-tool'>" +
+                        "       <a href='" + iframeURL + "' target='_blank' class='btn bmd-btn-icon' title='新窗口打开'>" +
+                        "           <i class='material-icons'>open_in_new</i>" +
+                        "       </a>" +
+                        "   </div>" +
+                        "</div>";
+                }
+
+                return "<div class='card card-white wz-card-frame'>" + header +
+                    "   <div class='card-body'>" +
+                    "       <iframe frameborder=\"0\" style=\"display:block; width: 100%; min-height:500px;\" data-src=\"" + iframeURL + "\" allowfullscreen=\"true\"></iframe>" +
+                    "   </div>" +
+                    "</div>";
+            };
+
             // Wizard 功能增强 START
             var wizardEnhanceReg = /^wizard-style:\s*(.*?)$/;
             if (wizardEnhanceReg.test(title)) {
                 switch (title.match(wizardEnhanceReg)[1]) {
                     case 'frame':
-                        var header = "";
-                        if (text !== '') {
-                            header = "<div class='card-header'>" +
-                                "   <div class='card-header-title'>" + text + "</div>" +
-                                "   <div class='card-header-tool'>" +
-                                "       <a href='" + href + "' target='_blank' class='btn bmd-btn-icon' title='新窗口打开'>" +
-                                "           <i class='material-icons'>open_in_new</i>" +
-                                "       </a>" +
-                                "   </div>" +
-                                "</div>";
-                        }
-
-                        return "<div class='card card-white wz-card-frame'>" + header +
-                            "   <div class='card-body'>" +
-                            "       <iframe frameborder=\"0\" style=\"display:block; width: 100%; height:500px;\" data-src=\"" + href + "\" allowfullscreen=\"true\"></iframe>" +
-                            "   </div>" +
-                            "</div>";
+                        return createIframe(href);
+                    case 'pdf':
+                        return createIframe('/tools/pdf-preview?pdf=' + href);
                     default:
                 }
             }

@@ -55,6 +55,7 @@ Route::group(['middleware' => 'locale'], function () {
             Route::post('json-to-markdown', 'ToolController@convertJsonToTable')->name('json-to-markdown');
             Route::post('sql-to-markdown', 'ToolController@convertSQLToMarkdownTable')->name('sql-to-markdown');
             Route::post('sql-to-html', 'ToolController@convertSQLToHTMLTable')->name('sql-to-html');
+            Route::get('pdf-preview', 'ToolController@pdfPreview')->name('pdf-preview');
         });
 
         // 文件导出

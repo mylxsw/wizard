@@ -14,6 +14,18 @@ use Illuminate\Support\Str;
 
 class ToolController extends Controller
 {
+    /**
+     * PDF Preivew
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function pdfPreview(Request $request)
+    {
+        $file = $request->input('pdf');
+        $mode = $request->input('mode', 'default');
+        return view('doc.pdf-preview', ['pdf' => $file, 'mode' => $mode]);
+    }
 
     /**
      * 将 Json 转换为 Markdown 表格
@@ -50,7 +62,7 @@ class ToolController extends Controller
         );
 
         $markdowns = [];
-        $sqls      = explode(";\n", $request->input('content'));
+        $sqls = explode(";\n", $request->input('content'));
         foreach ($sqls as $sql) {
             $sql = implode("\n", collect(explode("\n", $sql))->filter(function ($line) {
                 $line = trim($line);
@@ -82,7 +94,7 @@ class ToolController extends Controller
         );
 
         $markdowns = [];
-        $sqls      = explode(";\n", $request->input('content'));
+        $sqls = explode(";\n", $request->input('content'));
         foreach ($sqls as $sql) {
             $sql = implode("\n", collect(explode("\n", $sql))->filter(function ($line) {
                 $line = trim($line);

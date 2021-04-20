@@ -141,13 +141,17 @@
                         @foreach($pageItem->attachments as $attachment)
                             <li>
                                 <a href="{{ $attachment->path }}">
-                                    <span class="fa fa-download"></span>
-                                    {{ $attachment->name }}
-                                    <span class="wz-attachment-info">
-                                【{{ $attachment->user->name }}，
-                                {{ $attachment->created_at }}】
-                            </span>
+                                    <span class="fa fa-download"></span> {{ $attachment->name }}
+                                            <span class="wz-attachment-info">
+                                        【{{ $attachment->user->name }}，
+                                        {{ $attachment->created_at }}】
+                                    </span>
                                 </a>
+                                @if(\Illuminate\Support\Str::endsWith($attachment->path, '.pdf'))
+                                    <button class="btn btn-primary wz-pdf-preview" data-path="{{ $attachment->path }}" title="在线预览">
+                                        <i class="fa fa-file-pdf-o"></i>
+                                    </button>
+                                @endif
                             </li>
                         @endforeach
                     </ol>
@@ -278,6 +282,16 @@
             e.preventDefault();
         });
         @endif
+
+        // PDF 附件预览
+        $('.wz-pdf-preview').on('click', function(e) {
+            e.preventDefault();
+            let path = $(this).data('path');
+
+            $.wz.dialogOpen('pdf-preview', 'PDF Preview', function(iframe) {
+                $('#' + iframe).attr('src', path);
+            });
+        });
     });
 </script>
 

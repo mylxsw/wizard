@@ -304,8 +304,19 @@ $.wz = {
      * 加载延迟的 iframe
      */
     loadIframe: function () {
+        function resizeIframe(iframe){
+            try{
+                let doc = iframe.contentWindow.document;
+                iframe.height = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
+            }catch (ex){}
+        }
+
         $('.markdown-body iframe').each(function () {
             $(this).attr('src', $(this).data('src'));
+            var that = $(this);
+            window.setInterval(function () {
+                resizeIframe(that[0]);
+            }, 1000);
         });
     }
 };
