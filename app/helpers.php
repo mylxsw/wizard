@@ -613,10 +613,10 @@ function convertSqlToHTMLTable(string $sql)
 <table class="table table-hover">
     <thead>
         <tr>
-           <th>字段</th> 
-           <th>类型</th> 
-           <th>空</th> 
-           <th>说明</th> 
+           <th>字段</th>
+           <th>类型</th>
+           <th>空</th>
+           <th>说明</th>
         </tr>
     </thead>
     <tbody>{$html}</tbody>
@@ -791,7 +791,7 @@ function processSpreedSheetSingle($contentArray, $minRow, $minCol)
             $cells = $item['cells'] ?? [];
             $lastIndex = count($cells);
             if ($lastIndex === 0) {
-                return $item;
+                return 0;
             }
 
             for ($i = $lastIndex; $i > 0; $i--) {
@@ -831,33 +831,22 @@ function processSpreedSheetSingle($contentArray, $minRow, $minCol)
  */
 function processSpreedSheetRows($originalRows): array
 {
-    // 提取行的元信息
-    $rows = collect($originalRows)->filter(function ($item, $key) {
-        return !is_numeric($key);
-    })->toArray();
-    // 每一行的数据
-    $rowsForCol = collect($originalRows)->filter(function ($item, $key) {
-        return is_numeric($key);
-    })->sortKeys()->toArray();
-
-    // 逆序遍历行，直到遇到第一个存在非空列的行未知，截取从第一行开始到当前行
-    $lastIndex = count($rowsForCol);
-    if ($lastIndex > 0) {
-        for ($i = $lastIndex; $i > 0; $i--) {
-            $colCount = collect($rowsForCol[$i]['cells'] ?? [])->filter(function ($cell) {
-                return !empty($cell['text']);
-            })->count();
-
-            if ($colCount > 0) {
-                foreach (array_slice($rowsForCol, 0, $i + 1) as $index => $v) {
-                    $rows["{$index}"] = $v;
-                }
-
-                break;
-            }
+    return collect($originalRows)->filter(function ($item, $key) {
+        // 保留行元信息
+        if (!is_numeric($key)) {
+            return true;
         }
-    }
-    return $rows;
+        else {
+            foreach ($item['cells'] as $k => $v) {
+                if (is_numeric($k) && !empty($v['text'])) {
+                    // 保留非空行数据
+                    return true;
+                }
+            }
+            // 过滤空行数据
+            return false;
+        }
+    })->toArray();
 }
 
 /**
