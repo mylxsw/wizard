@@ -33,6 +33,13 @@ body.wz-dark-theme {
     table {
       background: #4e4e4e;
     }
+    .table-hover {
+        tbody {
+            tr:hover {
+                background-color: #fafafae0;
+            }
+        }
+    }
     .editormd-toc-menu {
       &>.markdown-toc > ul {
         background: #4e4e4e;
@@ -269,6 +276,9 @@ body.wz-dark-theme {
       .border-bottom {
         border-bottom: 1px solid #848484 !important;
       }
+      .border-bottom.wz-comment-box {
+        border-bottom: 1px solid #212529 !important;
+      }
     }
 
     .card-footer {
@@ -443,7 +453,7 @@ body.wz-dark-theme {
         color: #ff0057;
       }
       a {
-        color: #75d4ff;
+        color: #03a9f4;
         text-decoration: none;
         &:hover {
           text-decoration: underline;
@@ -507,6 +517,16 @@ body.wz-dark-theme {
 
   .swagger-ui  {
     background: #4e4e4e;
+    border-radius: 5px;
+    padding: 5px;
+    .wz-white-panel {
+        .card a {
+            color: #c7c7c7;
+        }
+        .card a:hover {
+            color: #ffffff;
+        }
+    }
 
     img, svg {
       background: none;
@@ -614,5 +634,16 @@ body.wz-dark-theme {
     &:hover {
       background: #000000;
     }
+  }
+
+  .wz-markdown-comment {
+      pre {
+          background-color: #2b2b2b;
+          border: 1px solid #000;
+
+          code {
+              background: none;
+          }
+      }
   }
 }
