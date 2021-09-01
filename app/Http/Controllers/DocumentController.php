@@ -17,6 +17,7 @@ use App\Policies\ProjectPolicy;
 use App\Repositories\Document;
 use App\Repositories\DocumentHistory;
 use App\Repositories\DocumentScore;
+use App\Repositories\PageShare;
 use App\Repositories\Project;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -648,6 +649,11 @@ class DocumentController extends Controller
             DocumentHistory::where('page_id', $pageItem->id)->update([
                 'project_id' => $targetProject->id,
                 'pid'        => $targetPage->id ?? 0,
+            ]);
+
+            // 修改文档分享信息
+            PageShare::where('page_id', $pageItem->id)->update([
+                'project_id' => $targetProject->id,
             ]);
 
             // 修改子页面的project_id
