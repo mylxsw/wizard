@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.1.3",
         "adldap2/adldap2-laravel": "^6.0",
+        "babenkoivan/scout-elasticsearch-driver": "^4.3",
         "barryvdh/laravel-ide-helper": "^2.6",
         "doctrine/dbal": "~2.3",
         "erusev/parsedown": "^1.6",

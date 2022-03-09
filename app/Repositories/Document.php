@@ -8,8 +8,10 @@
 
 namespace App\Repositories;
 
+use App\Components\Index\DocumentIndexConfigurator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use ScoutElastic\Searchable;
 
 /**
  * Class Page
@@ -65,6 +67,33 @@ class Document extends Repository
 {
 
     use SoftDeletes;
+    use Searchable;
+
+    /**
+     * @var string
+     */
+    protected $indexConfigurator = DocumentIndexConfigurator::class;
+
+    /**
+     * @var array
+     */
+    protected $searchRules = [
+        //
+    ];
+
+    /**
+     * @var array
+     */
+    protected $mapping = [
+        'properties' => [
+            'title'   => [
+                'type'   => 'text',
+            ],
+            'content' => [
+                'type'   => 'text',
+            ],
+        ],
+    ];
 
     const TYPE_DOC     = 1;
     const TYPE_SWAGGER = 2;
@@ -233,6 +262,16 @@ class Document extends Repository
     public function isTable()
     {
         return (int)$this->type === self::TYPE_TABLE;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return $this->toArray();
     }
 
 }

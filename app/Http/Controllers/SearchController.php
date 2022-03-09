@@ -36,7 +36,12 @@ class SearchController extends Controller
         $range     = $request->input('range', '');
 
         /** @var Document $documentModel */
-        $documentModel = Document::query()->with('project', 'user');
+        if (empty($keyword)) {
+            $documentModel = Document::with('project', 'user');
+        } else {
+            $documentModel = Document::search($keyword)->with('project', 'user');
+        }
+
         if (!empty($projectId)) {
             $documentModel->where('project_id', $projectId);
         }
@@ -47,11 +52,7 @@ class SearchController extends Controller
             });
         }
 
-        if (empty($keyword)) {
-            $documentModel->orderBy('updated_at', 'DESC');
-        } else {
-            $documentModel->where('title', 'like', "%{$keyword}%")->orderBy('updated_at', 'DESC');
-        }
+//        $documentModel->orderBy('updated_at', 'DESC');
 
         // 用户已登录，则全量搜索
         // 用户未登录，则只搜索公开文档
