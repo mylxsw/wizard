@@ -4,6 +4,11 @@ body.wz-dark-theme {
 .wz-dark-theme .wz-main-container {
   background: #343a40;
 }
+
+.wz-dark-theme .wz-login-btn {
+  color: white;
+}
+
 .wz-dark-theme .markdown-body table {
   background: #4e4e4e;
 }

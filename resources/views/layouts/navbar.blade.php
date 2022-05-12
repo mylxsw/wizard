@@ -2,18 +2,17 @@
     <h5 class="my-0 mr-md-auto font-weight-normal wz-top-nav-item">
         <a href="/">{{ config('app.name', 'Wizard API') }}</a>
     </h5>
+
     <div class="wz-top-nav-search ml-md-auto d-flex justify-content-end">
         <form action="{{ wzRoute('search:search') }}" method="get">
             <label for="search-keyword"></label>
             <input type="text" placeholder="@lang('common.search')" id="search-keyword" name="keyword" value="{{ $keyword ?? '' }}">
         </form>
     </div>
-    <button type="button" class="btn bmd-btn-icon wz-theme-indicator" data-toggle="tooltip" title="切换主题">
-        <i class="material-icons">wb_sunny</i>
-    </button>
+
     @if (Auth::guest())
-        <a class="btn btn-info active" href="{{ wzRoute('login') }}">@lang('common.login')</a>
-        {{--<a class="btn btn-outline-primary" href="{{ wzRoute('register') }}">@lang('common.register')</a>--}}
+        <a class="btn wz-login-btn active {{ ($must_show_login_btn ?? false) ? '' : 'wz-hide-small-screen' }}" href="{{ wzRoute('login') }}">@lang('common.login')</a>
+{{--        <a class="btn btn-outline-primary ml-2" href="{{ wzRoute('register') }}">@lang('common.register')</a>--}}
     @else
         <nav class="my-2 my-md-0 wz-top-nav-item">
             <a class="p-2 text-dark dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -62,6 +61,9 @@
         </button>
         @endImpersonating
     @endif
+    <button type="button" class="wz-hide-small-screen btn bmd-btn-icon wz-theme-indicator ml-2" data-toggle="tooltip" title="切换主题">
+        <i class="material-icons">wb_sunny</i>
+    </button>
 </div>
 
 @push('script')

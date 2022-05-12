@@ -63,7 +63,7 @@ class HomeController extends Controller
         } else {
             if (empty($catalogId)) {
                 // 首页默认只查询不属于任何目录的项目
-                $projectModel->where(function($query) {
+                $projectModel->where(function ($query) {
                     $query->whereNull('catalog_id')->orWhere('catalog_id', 0);
                 });
 
@@ -71,7 +71,8 @@ class HomeController extends Controller
                 // 在分页查询的第一页之外，不展示目录
                 if ($page === 1) {
                     /** @var Collection $catalogs */
-                    $catalogs = Catalog::withCount('projects')->where('show_in_home', Catalog::SHOW_IN_HOME)->orderBy('sort_level', 'ASC')->get();
+                    $catalogs = Catalog::withCount('projects')->where('show_in_home',
+                        Catalog::SHOW_IN_HOME)->orderBy('sort_level', 'ASC')->get();
                 }
             } else {
                 $catalog = Catalog::where('id', $catalogId)->firstOrFail();
@@ -90,9 +91,9 @@ class HomeController extends Controller
                 if (!empty($userGroups)) {
                     $query->orWhere(function ($query) use ($userGroups) {
                         $query->where('visibility', '!=', Project::VISIBILITY_PUBLIC)
-                            ->whereHas('groups', function ($query) use ($userGroups) {
-                                $query->where('wz_groups.id', $userGroups);
-                            });
+                              ->whereHas('groups', function ($query) use ($userGroups) {
+                                  $query->where('wz_groups.id', $userGroups);
+                              });
                     })->orWhere('user_id', $user->id);
                 }
             });
@@ -110,8 +111,8 @@ class HomeController extends Controller
             if (!empty($catalogId)) {
                 $favorites =
                     $user->favoriteProjects()->where('catalog_id', $catalogId)->withCount('pages')
-                        ->with('catalog')
-                        ->get();
+                         ->with('catalog')
+                         ->get();
             } else {
                 $favorites =
                     $user->favoriteProjects()->withCount('pages')->with('catalog')->get();
@@ -124,17 +125,18 @@ class HomeController extends Controller
         }
 
         return view('index', [
-            'projects'   => $projects->appends([
+            'projects'            => $projects->appends([
                 'per_page' => $perPage,
                 'name'     => $name,
                 'catalog'  => $catalogId ?? null,
             ]),
-            'name'       => $name,
-            'catalogs'   => $catalogs ?? [],
-            'catalog_id' => $catalogId ?? 0,
-            'catalog'    => $catalog ?? null,
-            'favorites'  => $favorites ?? [],
-            'tags'       => $tags ?? [],
+            'name'                => $name,
+            'catalogs'            => $catalogs ?? [],
+            'catalog_id'          => $catalogId ?? 0,
+            'catalog'             => $catalog ?? null,
+            'favorites'           => $favorites ?? [],
+            'tags'                => $tags ?? [],
+            'must_show_login_btn' => true,
         ]);
     }
 

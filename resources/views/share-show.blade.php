@@ -5,14 +5,16 @@
     <h1 class="wz-page-title">
         {{ $pageItem->title }}
     </h1>
+    @if(Auth::user())
     <a href="{{ wzRoute('project:home', ['id' => $project->id, 'p' => $pageItem->id]) }}"
        title="返回"
        class="btn btn-link float-right print-hide"><i class="material-icons">clear</i></a>
     <hr />
+    @endif
 </nav>
 <div class="markdown-body" id="markdown-body">
     @if($type == 'markdown')
-        <textarea id="append-test" style="display:none;">{{ $pageItem->content }}</textarea>
+        <textarea id="append-test" style="display:none;">{{ str_replace('[SUB]', '', processMarkdown($pageItem->content)) }}</textarea>
     @endif
     @if($type == 'table')
         <textarea id="x-spreadsheet-content" class="d-none">{{ processSpreedSheet($pageItem->content) }}</textarea>

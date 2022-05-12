@@ -67,7 +67,8 @@ $.wz.mdEditor = function (editor_id, params) {
             sqlCreateBox: 'SQL建表语句',
             mindMapping: '思维导图',
             confirmBtn: '确定',
-            cancelBtn: '取消'
+            cancelBtn: '取消',
+            subIndex: '插入子文档目录'
         }
     };
 
@@ -97,7 +98,7 @@ $.wz.mdEditor = function (editor_id, params) {
                 "h1", "h2", "h3", "h4", "h5", "|",
                 "list-ul", "list-ol", "hr", "|",
                 "link", "image", "code", "code-block", "table", "pagebreak", "|",
-                "template", "mindMapping", "jsonToTable", "sqlToTable", "sqlCreateBox", "|",
+                "template", "mindMapping", "jsonToTable", "sqlToTable", "sqlCreateBox", "subIndex", "|",
                 "watch", "preview", "fullscreen", "|",
                 "help"
             ];
@@ -108,6 +109,7 @@ $.wz.mdEditor = function (editor_id, params) {
             jsonToTable: "JSON-&gt;表格",
             sqlToTable: "SQL-&gt;表格",
             sqlCreateBox: 'SQL建表语句',
+            subIndex: '子文档目录',
         },
         toolbarHandlers: {
             template: function (cm, icon, cursor, selection) {
@@ -238,6 +240,9 @@ $.wz.mdEditor = function (editor_id, params) {
                         }]
                     }
                 });
+            },
+            subIndex: function (cm, icon, cursor, selection) {
+                cm.replaceSelection("[SUB]");
             }
         },
         lang: {
@@ -247,6 +252,7 @@ $.wz.mdEditor = function (editor_id, params) {
                 sqlToTable: config.lang.sqlToTable,
                 sqlCreateBox: config.lang.sqlCreateBox,
                 mindMapping: config.lang.mindMapping,
+                subIndex: config.lang.subIndex,
             }
         },
         onload: function () {

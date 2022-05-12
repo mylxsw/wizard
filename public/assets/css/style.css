@@ -112,6 +112,15 @@ form {
     .wz-panel-breadcrumb .nav {
         float: left!important;
     }
+
+    .wz-hide-small-screen {
+        display: none;
+    }
+
+    .wz-login-btn {
+        width: 100%;
+        margin-top: 5px;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -1496,4 +1505,27 @@ pre.prettyprint *,
     .print-hide {
         display: none;
     }
+}
+
+.wz-nav-normalize {
+    /*border: 1px dashed #ccc;*/
+    padding: 20px;
+}
+
+.wz-nav-normalize .wz-nav-item {
+    display: inline;
+}
+
+.wz-nav-normalize .fa {
+    display: none;
+}
+
+.wz-nav-normalize ul {
+    display: block!important;
+    margin-bottom: auto!important;
+    margin-left: 30px;
+}
+
+.wz-nav-normalize li {
+    list-style: circle;
 }

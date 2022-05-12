@@ -10,7 +10,7 @@
                 <li class="breadcrumb-item"><a href="{{ wzRoute('project:home', ['id' => $project->id]) }}">{{ $project->name }}</a></li>
                 <li class="breadcrumb-item active">{{ $pageItem->title }}</li>
             </ol>
-            <ul class="nav nav-pills pull-right">
+            <ul class="nav nav-pills pull-right wz-hide-small-screen">
                 @can('page-edit', $pageItem)
                     <li role="presentation" class="mr-2">
                         <button type="button" data-href="{{ wzRoute('project:doc:edit:show', ['id' => $project->id, 'page_id' => $pageItem->id]) }}" data-toggle="tooltip" title="@lang('common.btn_edit')" class="btn btn-primary bmd-btn-icon">
@@ -95,7 +95,7 @@
 
             <div class="markdown-body wz-panel-limit {{ $type == 'markdown' ? 'wz-markdown-style-fix' : '' }}" id="markdown-body">
                 @if($type === 'markdown')
-                    <textarea class="d-none wz-markdown-content">{{ processMarkdown($pageItem->content ?? '') }}</textarea>
+                    <textarea class="d-none wz-markdown-content">{{ str_replace('[SUB]', '<div class="wz-nav-container-in-doc"></div>', processMarkdown($pageItem->content ?? '')) }}</textarea>
                 @endif
                 @if($type === 'table')
                     <textarea id="x-spreadsheet-content" class="d-none">{{ processSpreedSheet($pageItem->content) }}</textarea>
@@ -110,20 +110,22 @@
             </div>
 
             <div class="wz-panel-limit text-center mt-3 wz-content-end wz-score-box">
-                <fieldset {{ Auth::guest() ? 'disabled':'' }}>
-                    <div class="wz-score-opt">
-                        <button type="button" class="btn btn-default {{ $user_score_type == 1 ? 'active' : '' }} bmd-btn-fab" style="color: #21b351" data-type="1"><i class="material-icons">sentiment_satisfied</i></button>
-                        <p>{{ $scores[1] ?? '' }} 很赞</p>
-                    </div>
-                    <div class="wz-score-opt">
-                        <button type="button" class="btn btn-default {{ $user_score_type == 2 ? 'active' : '' }} bmd-btn-fab" style="color: #989898" data-type="2"><i class="material-icons">sentiment_very_dissatisfied</i></button>
-                        <p>{{ $scores[2] ?? '' }} 看不懂</p>
-                    </div>
-                    <div class="wz-score-opt">
-                        <button type="button" class="btn btn-default {{ $user_score_type == 3 ? 'active' : '' }} bmd-btn-fab" style="color: #fed612" data-type="3"><i class="material-icons">sentiment_dissatisfied</i></button>
-                        <p>{{ $scores[3] ?? '' }} 潦草</p>
-                    </div>
-                </fieldset>
+                @if (!Auth::guest())
+                    <fieldset {{ Auth::guest() ? 'disabled':'' }}>
+                        <div class="wz-score-opt">
+                            <button type="button" class="btn btn-default {{ $user_score_type == 1 ? 'active' : '' }} bmd-btn-fab" style="color: #21b351" data-type="1"><i class="material-icons">sentiment_satisfied</i></button>
+                            <p>{{ $scores[1] ?? '' }} 很赞</p>
+                        </div>
+                        <div class="wz-score-opt">
+                            <button type="button" class="btn btn-default {{ $user_score_type == 2 ? 'active' : '' }} bmd-btn-fab" style="color: #989898" data-type="2"><i class="material-icons">sentiment_very_dissatisfied</i></button>
+                            <p>{{ $scores[2] ?? '' }} 看不懂</p>
+                        </div>
+                        <div class="wz-score-opt">
+                            <button type="button" class="btn btn-default {{ $user_score_type == 3 ? 'active' : '' }} bmd-btn-fab" style="color: #fed612" data-type="3"><i class="material-icons">sentiment_dissatisfied</i></button>
+                            <p>{{ $scores[3] ?? '' }} 潦草</p>
+                        </div>
+                    </fieldset>
+                @endif
                 @if ($useful_score_users)
                 <div class="wz-score-useful-users">
                     {!! $useful_score_users->map(function($u){return sprintf('<span class="wz-score-user">%s</span>', $u->user->name ?? 'unknown');})->join(', ') !!}
@@ -164,7 +166,7 @@
                 @endif
                 <li class="breadcrumb-item active">{{ $project->name }}</li>
             </ol>
-            <ul class="nav nav-pills pull-right">
+            <ul class="nav nav-pills pull-right wz-hide-small-screen">
                 @include('components.page-menus-batch-export', ['project' => $project])
             </ul>
             <div class="clearfix"></div>
@@ -278,6 +280,15 @@
             e.preventDefault();
         });
         @endif
+
+        var documentIsEmpty = {{ trim($pageItem->content ?? '') === '' ? 'true' : 'false' }};
+        if ($('.markdown-body .wz-nav-container-in-doc').length > 0) {
+            $('.markdown-body .wz-nav-container-in-doc').replaceWith("<div class='wz-nav-normalize'>" + $('.wz-has-child.active').children('ul').html() + "</div>");
+        } else {
+            if (documentIsEmpty && $('.wz-has-child.active') !== null && $('.wz-has-child.active').children('ul') !== null && $('.wz-has-child.active').children('ul').html() != null) {
+                $('.markdown-body').prepend("<div class='wz-nav-normalize'>" + $('.wz-has-child.active').children('ul').html() + "</div>");
+            }
+        }
     });
 </script>
 
