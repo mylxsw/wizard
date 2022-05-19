@@ -6,6 +6,11 @@ use App\Repositories\Document;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * GoFoundDriver
+ *
+ * https://github.com/newpanjing/gofound
+ */
 class GoFoundDriver implements Driver
 {
     /**
