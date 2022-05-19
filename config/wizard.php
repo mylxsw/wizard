@@ -155,8 +155,12 @@ return [
     'search'                     => [
         /**
          * 全文搜索驱动 Class
+         *
+         * GoFound: App\Components\Search\GoFoundDriver
+         * Null: App\Components\Search\NullDriver
          */
-        'driver'  => env('WIZARD_SEARCH_DRIVER', 'App\Components\Search\GoFoundDriver'),
+        'driver'  => env('WIZARD_SEARCH_DRIVER', 'App\Components\Search\NullDriver'),
+
         /**
          * 驱动配置
          */
