@@ -140,7 +140,7 @@
             enableNode: $.proxy(this.enableNode, this),
             toggleNodeDisabled: $.proxy(this.toggleNodeDisabled, this),
 
-            // Search methods
+            // GoFoundDriver methods
             search: $.proxy(this.search, this),
             clearSearch: $.proxy(this.clearSearch, this)
         };
@@ -1100,7 +1100,7 @@
     /**
      Searches the tree for nodes (text) that match given criteria
      @param {String} pattern - A given string to match against
-     @param {optional Object} options - Search criteria options
+     @param {optional Object} options - GoFoundDriver criteria options
      @return {Array} nodes - Matching nodes
      */
     Tree.prototype.search = function (pattern, options) {

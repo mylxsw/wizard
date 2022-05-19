@@ -13,6 +13,7 @@ use App\Repositories\Template;
 use App\Repositories\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -20,8 +21,8 @@ use Illuminate\Support\Str;
  * 生成路由url
  *
  * @param string $name
- * @param array $parameters
- * @param bool $absolute
+ * @param array  $parameters
+ * @param bool   $absolute
  *
  * @return string
  */
@@ -56,9 +57,9 @@ function documentType($type): string
  *
  * 必须保证pages是按照pid进行asc排序的，否则可能会出现菜单丢失
  *
- * @param int $projectID 当前项目ID
- * @param int $pageID 选中的文档ID
- * @param array $exclude 排除的文档ID列表
+ * @param int   $projectID 当前项目ID
+ * @param int   $pageID    选中的文档ID
+ * @param array $exclude   排除的文档ID列表
  *
  * @return array
  */
@@ -131,7 +132,7 @@ function navigator(
  * 导航排序，排序后，文件夹靠前，普通文件靠后
  *
  * @param array $navItems
- * @param int $sortStyle
+ * @param int   $sortStyle
  *
  * @return array
  */
@@ -163,7 +164,7 @@ function navigatorSort($navItems, $sortStyle = Project::SORT_STYLE_DIR_FIRST)
             $aIsFolder = !empty($a['nodes']);
             $bIsFolder = !empty($b['nodes']);
 
-            $bothIsFolder = $aIsFolder && $bIsFolder;
+            $bothIsFolder  = $aIsFolder && $bIsFolder;
             $bothNotFolder = !$aIsFolder && !$bIsFolder;
 
             if ($bothIsFolder || $bothNotFolder) {
@@ -184,7 +185,7 @@ function navigatorSort($navItems, $sortStyle = Project::SORT_STYLE_DIR_FIRST)
 /**
  * 文档模板
  *
- * @param int $type
+ * @param int       $type
  * @param User|null $user
  *
  * @return array
@@ -209,7 +210,7 @@ function convertJsonToMarkdownTable(string $json): string
 {
     $markdowns = [
         ['参数名', '类型', '是否必须', '说明'],
-        ['---', '---', '---', '---']
+        ['---', '---', '---', '---'],
     ];
 
     foreach (jsonFlatten($json) as $key => $type) {
@@ -341,7 +342,7 @@ function resourceVersion()
  * 创建一个JWT Token
  *
  * @param array $payloads
- * @param int $expire
+ * @param int   $expire
  *
  * @return \Lcobucci\JWT\Token
  */
@@ -413,7 +414,7 @@ function users()
  * 用户名列表（js数组）
  *
  * @param Collection $users
- * @param bool $actived
+ * @param bool       $actived
  *
  * @return string
  */
@@ -648,7 +649,7 @@ function convertSqlTo(string $sql, $callback)
 
 //        \Log::error('xxx', ['struct' => $parsed]);
         if ($parsed['CREATE']['expr_type'] === 'table') {
-            $fields = $parsed['TABLE']['create-def']['sub_tree'];
+            $fields    = $parsed['TABLE']['create-def']['sub_tree'];
             $tableName = $parsed['TABLE']['base_expr'];
 
             $markdowns = [];
@@ -666,26 +667,26 @@ function convertSqlTo(string $sql, $callback)
                 $type = $length = '';
                 foreach ($field['sub_tree'][1]['sub_tree'] as $item) {
                     if ($item['expr_type'] == 'data-type') {
-                        $type = $item['base_expr'] ?? '';
+                        $type   = $item['base_expr'] ?? '';
                         $length = $item['length'] ?? '';
                     }
                 }
 
-                $name = $field['sub_tree'][0]['base_expr'];
-                $comment = trim($field['sub_tree'][1]['comment'] ?? '', "'");
+                $name     = $field['sub_tree'][0]['base_expr'];
+                $comment  = trim($field['sub_tree'][1]['comment'] ?? '', "'");
                 $nullable = $field['sub_tree'][1]['nullable'] ?? false;
 
 //        $autoInc      = $field['sub_tree'][1]['auto_inc'] ?? false;
 //        $primary      = $field['sub_tree'][1]['primary'] ?? false;
 //        $defaultValue = $field['sub_tree'][1]['default'] ?? '-';
 
-                $type = empty($length) ? $type : "{$type} ($length)";
+                $type        = empty($length) ? $type : "{$type} ($length)";
                 $markdowns[] = [trim($name, '`'), $type, $nullable ? 'Y' : 'N', $comment];
             }
 
 
             $tableComment = '-';
-            $options = $parsed['TABLE']['options'] ?? [];
+            $options      = $parsed['TABLE']['options'] ?? [];
             if (!$options || empty($options)) {
                 $options = [];
             }
@@ -710,6 +711,7 @@ function convertSqlTo(string $sql, $callback)
  * Markdown 预处理
  *
  * @param string $markdown
+ *
  * @return string
  */
 function processMarkdown(string $markdown): string
@@ -746,7 +748,7 @@ function processSpreedSheet(string $content): string
     if (Str::startsWith($content, '[')) {
         $maxColsLen = $maxRowsLen = 0;
         foreach ($contentArray as $k => $arr) {
-            $cur = processSpreedSheetSingle($arr, $minRow, $minCol);
+            $cur              = processSpreedSheetSingle($arr, $minRow, $minCol);
             $contentArray[$k] = $cur;
             if ($cur['cols']['len'] > $maxColsLen) {
                 $maxColsLen = $cur['cols']['len'];
@@ -772,7 +774,7 @@ function processSpreedSheet(string $content): string
 /**
  * 处理单一 sheet 的表格
  *
- * @param $contentArray
+ * @param     $contentArray
  * @param int $minRow
  * @param int $minCol
  *
@@ -788,7 +790,7 @@ function processSpreedSheetSingle($contentArray, $minRow, $minCol)
         })
         // 列过滤，去掉每一行最后多余的空列
         ->map(function ($item) {
-            $cells = $item['cells'] ?? [];
+            $cells     = $item['cells'] ?? [];
             $lastIndex = count($cells);
             if ($lastIndex === 0) {
                 return $item;
@@ -827,6 +829,7 @@ function processSpreedSheetSingle($contentArray, $minRow, $minCol)
  * 只移除尾部的空行
  *
  * @param $originalRows
+ *
  * @return array
  */
 function processSpreedSheetRows($originalRows): array
@@ -890,10 +893,10 @@ function markdownCompatibilityStrict($pageItem = null)
 /**
  * 遍历导航项
  *
- * @param array $navigators
+ * @param array   $navigators
  * @param Closure $callback
- * @param array $parents
- * @param bool $callbackWithFullNavItem 是否在回调函数中传递完整的nav对象
+ * @param array   $parents
+ * @param bool    $callbackWithFullNavItem 是否在回调函数中传递完整的nav对象
  */
 function traverseNavigators(
     array $navigators,
@@ -916,6 +919,7 @@ function traverseNavigators(
  * 资源地址 CDN 加速
  *
  * @param string $resourceUrl
+ *
  * @return string
  */
 function cdn_resource(string $resourceUrl)
@@ -979,4 +983,43 @@ function impersonateUser()
 
     $impersonateUser = $user->impersonator();
     return ['id' => $impersonateUser->id, 'name' => $impersonateUser->name];
+}
+
+/**
+ * 文档按照指定 ID 顺序排列
+ *
+ * @param LengthAwarePaginator $docs
+ * @param array|null           $sortIds
+ *
+ * @return mixed
+ */
+function sortDocumentBySortIds(LengthAwarePaginator $docs, array $sortIds = null)
+{
+    if (empty($sortIds)) {
+        return $docs;
+    }
+
+    return $docs->sortBy(function ($doc) use ($sortIds) {
+        return array_search($doc->id, $sortIds);
+    });
+}
+
+/**
+ * 关键字高亮
+ *
+ * @param string      $content
+ * @param string|null $keyword
+ *
+ * @return string
+ */
+function highlight(string $content, string $keyword = null) :string {
+    if (empty($keyword)) {
+        return $content;
+    }
+
+    foreach (explode(',', $keyword) as $key) {
+        $content = str_replace($key, "<span class='highlight'>{$key}</span>", $content);
+    }
+
+    return $content;
 }

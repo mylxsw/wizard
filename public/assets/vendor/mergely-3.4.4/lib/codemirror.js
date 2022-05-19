@@ -6310,7 +6310,7 @@
     this.from = from; this.to = to;
   }
 
-  // Search an array of spans for a span matching the given marker.
+  // GoFoundDriver an array of spans for a span matching the given marker.
   function getMarkedSpanFor(spans, marker) {
     if (spans) for (var i = 0; i < spans.length; ++i) {
       var span = spans[i];
@@ -8776,7 +8776,7 @@
         else prev = type;
       }
 
-      // W2. Search backwards from each instance of a European number
+      // W2. GoFoundDriver backwards from each instance of a European number
       // until the first strong type (R, L, AL, or sor) is found. If an
       // AL is found, change the type of the European number to Arabic
       // number.
@@ -8813,7 +8813,7 @@
         }
       }
 
-      // W7. Search backwards from each instance of a European number
+      // W7. GoFoundDriver backwards from each instance of a European number
       // until the first strong type (R, L, or sor) is found. If an L is
       // found, then change the type of the European number to L.
       for (var i = 0, cur = outerType; i < len; ++i) {

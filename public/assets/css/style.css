@@ -1529,3 +1529,7 @@ pre.prettyprint *,
 .wz-nav-normalize li {
     list-style: circle;
 }
+
+.highlight {
+    background: #f3f136;
+}

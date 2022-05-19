@@ -476,12 +476,13 @@ class DocumentController extends Controller
     /**
      * 获取Swagger文档内容
      *
+     * @param Request $request
      * @param $id
      * @param $page_id
      *
      * @return string
      */
-    private function getSwaggerContent($id, $page_id): string
+    private function getSwaggerContent(Request $request, $id, $page_id): string
     {
         /** @var Project $project */
         $project = Project::findOrFail($id);
@@ -498,7 +499,7 @@ class DocumentController extends Controller
             abort(422, '该文档不是Swagger文档');
         }
 
-        return $page->content;
+        return highlight($page->content, $request->input('keyword', ''));
     }
 
     /**

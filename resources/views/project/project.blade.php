@@ -95,10 +95,10 @@
 
             <div class="markdown-body wz-panel-limit {{ $type == 'markdown' ? 'wz-markdown-style-fix' : '' }}" id="markdown-body">
                 @if($type === 'markdown')
-                    <textarea class="d-none wz-markdown-content">{{ str_replace('[SUB]', '<div class="wz-nav-container-in-doc"></div>', processMarkdown($pageItem->content ?? '')) }}</textarea>
+                    <textarea class="d-none wz-markdown-content">{{ str_replace('[SUB]', '<div class="wz-nav-container-in-doc"></div>', highlight(processMarkdown($pageItem->content ?? ''), $keyword ?? null)) }}</textarea>
                 @endif
                 @if($type === 'table')
-                    <textarea id="x-spreadsheet-content" class="d-none">{{ processSpreedSheet($pageItem->content) }}</textarea>
+                    <textarea id="x-spreadsheet-content" class="d-none">{{ highlight(processSpreedSheet($pageItem->content), $keyword ?? null) }}</textarea>
                     <div class="wz-spreadsheet">
                         <div id="x-spreadsheet"></div>
                     </div>

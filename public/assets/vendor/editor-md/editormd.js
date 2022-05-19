@@ -2576,7 +2576,7 @@
 
         /**
          * 搜索替换
-         * Search & replace
+         * GoFoundDriver & replace
          *
          * @param   {String}     command    CodeMirror serach commands, "find, fintNext, fintPrev, clearSearch, replace, replaceAll"
          * @returns {editormd}              return this

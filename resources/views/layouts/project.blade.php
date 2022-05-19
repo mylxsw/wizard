@@ -5,7 +5,7 @@
 
     <div class="row wz-main-container">
         <div class="col-12 wz-left-main-full">
-            <a class="wz-left-main-switch btn"><i class="fa fa-angle-double-down"></i> </a>
+            <a class="wz-left-main-switch btn"><i class="fa fa-angle-double-down"></i> 点击查看目录</a>
         </div>
         <div class="col-12 col-lg-3 wz-left-main">
             <div class="wz-project-title">

@@ -8,10 +8,11 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Components\Search\Search;
 use App\Repositories\Document;
 use App\Repositories\Project;
 use Illuminate\Http\Request;
+use Log;
 
 /**
  * 文档搜索
@@ -47,10 +48,20 @@ class SearchController extends Controller
             });
         }
 
+        $sortIds    = null;
+        $searchWord = $keyword;
         if (empty($keyword)) {
             $documentModel->orderBy('updated_at', 'DESC');
         } else {
-            $documentModel->where('title', 'like', "%{$keyword}%")->orderBy('updated_at', 'DESC');
+            $result = Search::get()->search($keyword, (int)$request->input('page', 1), $perPage);
+            if (empty($result)) {
+                $documentModel->where('title', 'like', "%{$keyword}%")->orderBy('updated_at', 'DESC');
+            } else {
+                $documentModel->whereIn('id', $result->ids);
+                if (!empty($result->words)) {
+                    $searchWord = implode(',', $result->words);
+                }
+            }
         }
 
         // 用户已登录，则全量搜索
@@ -67,17 +78,19 @@ class SearchController extends Controller
         }
 
         return view('search', [
-            'documents'  => $documentModel->paginate($perPage)->appends([
+            'documents'   => $documentModel->paginate($perPage)->appends([
                 'keyword'    => $keyword,
                 'per_page'   => $perPage,
                 'project_id' => $projectId,
                 'tag'        => $tagName,
                 'range'      => $range,
             ]),
-            'keyword'    => $keyword,
-            'project_id' => $projectId,
-            'tag'        => $tagName,
-            'range'      => $range,
+            'sort_ids'    => $sortIds,
+            'keyword'     => $keyword,
+            'search_word' => $searchWord,
+            'project_id'  => $projectId,
+            'tag'         => $tagName,
+            'range'       => $range,
         ]);
     }
 }

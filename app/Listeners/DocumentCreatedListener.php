@@ -8,10 +8,10 @@
 
 namespace App\Listeners;
 
+use App\Components\Search\Search;
 use App\Events\DocumentCreated;
 use App\Repositories\OperationLogs;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 
 class DocumentCreatedListener
 {
@@ -28,7 +28,7 @@ class DocumentCreatedListener
     /**
      * Handle the event.
      *
-     * @param  DocumentCreated $event
+     * @param DocumentCreated $event
      *
      * @return void
      */
@@ -45,9 +45,15 @@ class DocumentCreatedListener
                 'project_name' => $doc->project->name,
                 'project_id'   => $doc->project_id,
                 'doc_title'    => $doc->title,
-                'doc_id'       => $doc->id
+                'doc_id'       => $doc->id,
             ],
             impersonateUser()
         );
+
+        try {
+            Search::get()->syncIndex($doc);
+        } catch (\Exception $ex) {
+            Log::error('create document index failed', ['message' => $ex->getMessage()]);
+        }
     }
 }

@@ -8,10 +8,10 @@
 
 namespace App\Listeners;
 
+use App\Components\Search\Search;
 use App\Events\ProjectDeleted;
+use App\Repositories\Document;
 use App\Repositories\OperationLogs;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ProjectDeletedListener
 {
@@ -48,5 +48,8 @@ class ProjectDeletedListener
             impersonateUser()
         );
 
+        foreach (Document::where('project_id', $project->id)->pluck('id') as $id) {
+            Search::get()->deleteIndex($id);
+        }
     }
 }

@@ -148,5 +148,30 @@ return [
          */
         'support_extensions' => env('WIZARD_ATTACHMENTS_SUPPORT_EXTENSIONS',
             'jpg,jpeg,gif,png,bmp,zip,rar,war,mwb,xmind,itmz,mindnode,svg,md,vsd,vsdx,txt,doc,docx,xls,xlsx,ppt,pptx,pdf,sql'),
-    ]
+    ],
+    /**
+     * 全文搜索
+     */
+    'search'                     => [
+        /**
+         * 全文搜索驱动 Class
+         */
+        'driver'  => env('WIZARD_SEARCH_DRIVER', 'App\Components\Search\GoFoundDriver'),
+        /**
+         * 驱动配置
+         */
+        'drivers' => [
+            /**
+             * GoFound 搜索引擎驱动
+             *
+             * https://github.com/newpanjing/gofound
+             */
+            'gofound' => [
+                'server'   => env('WIZARD_GOFOUND_SERVER', 'http://localhost:5678'),
+                'database' => env('WIZARD_GOFOUND_DATABASE', 'default'),
+                'username' => env('WIZARD_GOFOUND_USERNAME', ''),
+                'password' => env('WIZARD_GOFOUND_PASSWORD', ''),
+            ],
+        ],
+    ],
 ];

@@ -71,11 +71,11 @@
     return query;
   }
   var queryDialog =
-    'Search: <input type="text" style="width: 10em" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(Use /re/ syntax for regexp search)</span>';
+    'GoFoundDriver: <input type="text" style="width: 10em" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(Use /re/ syntax for regexp search)</span>';
   function doSearch(cm, rev) {
     var state = getSearchState(cm);
     if (state.query) return findNext(cm, rev);
-    dialog(cm, queryDialog, "Search for:", cm.getSelection(), function(query) {
+    dialog(cm, queryDialog, "GoFoundDriver for:", cm.getSelection(), function(query) {
       cm.operation(function() {
         if (!query || state.query) return;
         state.query = parseQuery(query);

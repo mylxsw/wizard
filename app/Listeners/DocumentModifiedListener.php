@@ -8,13 +8,12 @@
 
 namespace App\Listeners;
 
+use App\Components\Search\Search;
 use App\Events\DocumentModified;
 use App\Notifications\DocumentUpdated;
-use App\Repositories\DocumentHistory;
 use App\Repositories\OperationLogs;
 use App\Repositories\User;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 
 class DocumentModifiedListener
 {
@@ -64,6 +63,12 @@ class DocumentModifiedListener
 
         if (count($users) > 0) {
             \Notification::send($users, new DocumentUpdated($doc));
+        }
+
+        try {
+            Search::get()->syncIndex($doc);
+        } catch (\Exception $ex) {
+            Log::error('update document index failed', ['message' => $ex->getMessage()]);
         }
     }
 }

@@ -8,11 +8,10 @@
 
 namespace App\Listeners;
 
+use App\Components\Search\Search;
 use App\Events\DocumentDeleted;
 use App\Repositories\OperationLogs;
 use App\Repositories\User;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class DocumentDeletedListener
 {
@@ -62,5 +61,7 @@ class DocumentDeletedListener
         if (count($users) > 0) {
             \Notification::send($users, new \App\Notifications\DocumentDeleted($doc));
         }
+
+        Search::get()->deleteIndex($doc->id);
     }
 }
