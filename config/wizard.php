@@ -158,6 +158,7 @@ return [
          *
          * GoFound: App\Components\Search\GoFoundDriver
          * Null: App\Components\Search\NullDriver
+         * ZincSearch: App\Components\Search\ZincSearchDriver
          */
         'driver'  => env('WIZARD_SEARCH_DRIVER', 'App\Components\Search\NullDriver'),
 
@@ -175,6 +176,20 @@ return [
                 'database' => env('WIZARD_GOFOUND_DATABASE', 'default'),
                 'username' => env('WIZARD_GOFOUND_USERNAME', ''),
                 'password' => env('WIZARD_GOFOUND_PASSWORD', ''),
+            ],
+            /**
+             *  ZincSearchDriver
+             *
+             * https://docs.zincsearch.com/
+             */
+            'zinc'    => [
+                'server'      => env('WIZARD_ZINC_SERVER', 'http://localhost:4080'),
+                'index'       => env('WIZARD_ZINC_INDEX', 'wizard'),
+                'username'    => env('WIZARD_ZINC_USERNAME', ''),
+                'password'    => env('WIZARD_ZINC_PASSWORD', ''),
+                // 支持： alldocuments,wildcard,fuzzy,term,daterange,matchall,match,matchphrase,multiphrase,prefix,querystring
+                // 参考文档： https://docs.zincsearch.com/API%20Reference/search/1_search/
+                'search_type' => env('WIZARD_ZINC_SEARCH_TYPE', 'matchphrase'),
             ],
         ],
     ],

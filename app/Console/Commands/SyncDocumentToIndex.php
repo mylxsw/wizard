@@ -40,7 +40,7 @@ class SyncDocumentToIndex extends Command
                     Search::get()->syncIndex($doc);
                     $this->info(sprintf("sync document %s ok", $doc->title));
                 } catch (\Exception $ex) {
-                    $this->error($ex->getMessage());
+                    $this->error("{$ex->getFile()}:{$ex->getLine()} {$ex->getMessage()}");
                 }
             }
         });

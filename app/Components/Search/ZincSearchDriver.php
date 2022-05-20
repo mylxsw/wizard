@@ -7,11 +7,11 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
 /**
- * GoFoundDriver
+ * ZincSearchDriver
  *
- * https://github.com/newpanjing/gofound
+ * https://docs.zincsearch.com/
  */
-class GoFoundDriver implements Driver
+class ZincSearchDriver implements Driver
 {
     /**
      * @var Client
@@ -19,11 +19,11 @@ class GoFoundDriver implements Driver
     private $client = null;
 
     /**
-     * Database
+     * Index name
      *
      * @var string
      */
-    private $database = '';
+    private $index = '';
 
     /**
      * Basic Auth username
@@ -38,15 +38,23 @@ class GoFoundDriver implements Driver
      */
     private $authPassword = '';
 
+    /**
+     * 搜索类型
+     *
+     * @var string
+     */
+    private $searchType = 'matchphrase';
+
     public function __construct()
     {
         $this->client       = new Client([
-            'base_uri' => config('wizard.search.drivers.gofound.server', 'http://localhost:5678'),
+            'base_uri' => config('wizard.search.drivers.zinc.server', 'http://localhost:4080'),
             'timeout'  => 3.0,
         ]);
-        $this->database     = config('wizard.search.drivers.gofound.database', 'default');
-        $this->authUsername = config('wizard.search.drivers.gofound.username');
-        $this->authPassword = config('wizard.search.drivers.gofound.password');
+        $this->index        = config('wizard.search.drivers.zinc.index', 'wizard');
+        $this->authUsername = config('wizard.search.drivers.zinc.username');
+        $this->authPassword = config('wizard.search.drivers.zinc.password');
+        $this->searchType   = config('wizard.search.drivers.zinc.search_type');
     }
 
     /**
@@ -72,10 +80,9 @@ class GoFoundDriver implements Driver
      */
     public function deleteIndex($id)
     {
-        $this->client->post(
-            "/api/index/remove?database={$this->database}",
+        $this->client->delete(
+            "/api/{$this->index}/_doc/{$id}",
             [
-                'json' => ['id' => $id],
                 'auth' => $this->auth(),
             ]
         );
@@ -93,15 +100,13 @@ class GoFoundDriver implements Driver
     public function syncIndex(Document $doc)
     {
         $req = [
-            'id'       => $doc->id,
-            'text'     => $doc->title . '\n\n' . $doc->content,
-            'document' => [
-                'id'         => $doc->id,
-                'project_id' => $doc->project_id,
-            ],
+            'id'      => $doc->id,
+            'type'    => $doc->type,
+            'title'   => $doc->title,
+            'content' => $doc->content,
         ];
 
-        $resp = $this->client->post("/api/index?database={$this->database}", [
+        $resp = $this->client->put("/api/{$this->index}/_doc/{$doc->id}", [
             'json' => $req,
             'auth' => $this->auth(),
         ]);
@@ -124,11 +129,15 @@ class GoFoundDriver implements Driver
     public function search(string $keyword, int $page, int $perPage): ?Result
     {
         try {
-            $resp = $this->client->post("/api/query?database={$this->database}", [
+            $resp = $this->client->post("/api/{$this->index}/_search", [
                 'json' => [
-                    'query' => $keyword,
-                    'page'  => $page,
-                    'limit' => $perPage * 2,
+                    'search_type' => $this->searchType,
+                    'query'       => [
+                        'term' => $keyword,
+                    ],
+                    'from'        => $page * $perPage,
+                    'max_results' => $perPage * 2,
+                    '_source'     => ['id', 'type'],
                 ],
                 'auth' => $this->auth(),
             ]);
@@ -141,12 +150,12 @@ class GoFoundDriver implements Driver
 
             Log::info('search-request', $respBody);
 
-            if ($respBody['state']) {
-                $sortIds = collect($respBody['data']['documents'] ?? [])->map(function ($doc) {
-                    return $doc['id'];
+            if (empty($respBody['error'])) {
+                $sortIds = collect($respBody['hits']['hits'] ?? [])->map(function ($doc) {
+                    return $doc['_id'];
                 })->toArray();
 
-                return new Result(array_slice($sortIds, 0, $perPage), $respBody['data']['words'] ?? []);
+                return new Result(array_slice($sortIds, 0, $perPage), [$keyword]);
             }
 
             return null;
