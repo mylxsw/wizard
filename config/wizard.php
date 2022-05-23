@@ -159,6 +159,7 @@ return [
          * GoFound: App\Components\Search\GoFoundDriver
          * Null: App\Components\Search\NullDriver
          * ZincSearch: App\Components\Search\ZincSearchDriver
+         * ElasticSearch: App\Components\Search\ElasticSearchDriver
          */
         'driver'  => env('WIZARD_SEARCH_DRIVER', 'App\Components\Search\NullDriver'),
 
@@ -190,6 +191,17 @@ return [
                 // 支持： alldocuments,wildcard,fuzzy,term,daterange,matchall,match,matchphrase,multiphrase,prefix,querystring
                 // 参考文档： https://docs.zincsearch.com/API%20Reference/search/1_search/
                 'search_type' => env('WIZARD_ZINC_SEARCH_TYPE', 'matchphrase'),
+            ],
+            /**
+             *  ElasticSearchDriver
+             *
+             * https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+             */
+            'elasticsearch'    => [
+                'server'      => env('WIZARD_ES_SERVER', 'http://localhost:4080'),
+                'index'       => env('WIZARD_ES_INDEX', 'wizard'),
+                'username'    => env('WIZARD_ES_USERNAME', ''),
+                'password'    => env('WIZARD_ES_PASSWORD', ''),
             ],
         ],
     ],

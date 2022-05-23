@@ -135,7 +135,7 @@ class ZincSearchDriver implements Driver
                     'query'       => [
                         'term' => $keyword,
                     ],
-                    'from'        => $page * $perPage,
+                    'from'        => $page * $perPage - $perPage,
                     'max_results' => $perPage * 2,
                     '_source'     => ['id', 'type'],
                 ],
@@ -148,14 +148,16 @@ class ZincSearchDriver implements Driver
 
             $respBody = json_decode($resp->getBody()->getContents(), true);
 
-            Log::info('search-request', $respBody);
-
             if (empty($respBody['error'])) {
                 $sortIds = collect($respBody['hits']['hits'] ?? [])->map(function ($doc) {
                     return $doc['_id'];
                 })->toArray();
 
-                return new Result(array_slice($sortIds, 0, $perPage), [$keyword]);
+                return new Result(
+                    array_slice($sortIds, 0, $perPage),
+                    [$keyword],
+                    $respBody['hits']['total']['value'] ?? null
+                );
             }
 
             return null;

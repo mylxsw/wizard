@@ -3,15 +3,23 @@
 namespace App\Components\Search;
 
 use App\Repositories\Document;
+use Illuminate\Support\Facades\Log;
 
 class Search implements Driver
 {
+    private $driver = null;
+
     /**
      * 搜索驱动实例
      *
      * @var Driver
      */
-    private static $driver;
+    private static $instance;
+
+    /**
+     * @param null $driver
+     */
+    public function __construct($driver) { $this->driver = $driver; }
 
     /**
      * 获取搜索实现驱动实例
@@ -20,12 +28,12 @@ class Search implements Driver
      */
     public static function get(): Driver
     {
-        if (is_null(self::$driver)) {
-            $driverName   = config('wizard.search.driver');
-            self::$driver = new $driverName();
+        if (is_null(self::$instance)) {
+            $driverName     = config('wizard.search.driver');
+            self::$instance = new self(new $driverName());
         }
 
-        return self::$driver;
+        return self::$instance;
     }
 
     /**
@@ -37,7 +45,16 @@ class Search implements Driver
      */
     public function deleteIndex($id)
     {
-        self::$driver->deleteIndex($id);
+        try {
+            $this->driver->deleteIndex($id);
+        } catch (\Exception $ex) {
+            Log::error("search: delete index for documents failed", [
+                'id'      => $id,
+                'message' => $ex->getMessage(),
+                'code'    => $ex->getCode(),
+                'pos'     => "{$ex->getFile()}:{$ex->getLine()}",
+            ]);
+        }
     }
 
     /**
@@ -50,7 +67,16 @@ class Search implements Driver
      */
     public function syncIndex(Document $doc)
     {
-        self::$driver->syncIndex($doc);
+        try {
+            $this->driver->syncIndex($doc);
+        } catch (\Exception $ex) {
+            Log::error("search: sync index for documents failed", [
+                'id'      => $doc->id,
+                'message' => $ex->getMessage(),
+                'code'    => $ex->getCode(),
+                'pos'     => "{$ex->getFile()}:{$ex->getLine()}",
+            ]);
+        }
     }
 
     /**
@@ -64,6 +90,6 @@ class Search implements Driver
      */
     public function search(string $keyword, int $page, int $perPage): ?Result
     {
-        return self::$driver->search($keyword, $page, $perPage);
+        return $this->driver->search($keyword, $page, $perPage);
     }
 }

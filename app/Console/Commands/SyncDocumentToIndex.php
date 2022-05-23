@@ -33,12 +33,17 @@ class SyncDocumentToIndex extends Command
      */
     public function handle()
     {
-        Document::chunk(10, function ($docs) {
+        Document::withTrashed()->chunk(10, function ($docs) {
             /** @var Document $doc */
             foreach ($docs as $doc) {
                 try {
-                    Search::get()->syncIndex($doc);
-                    $this->info(sprintf("sync document %s ok", $doc->title));
+                    if (!empty($doc->deleted_at)) {
+                        Search::get()->deleteIndex($doc->id);
+                        $this->info(sprintf("delete document %s ok", $doc->title));
+                    } else {
+                        Search::get()->syncIndex($doc);
+                        $this->info(sprintf("sync document %s ok", $doc->title));
+                    }
                 } catch (\Exception $ex) {
                     $this->error("{$ex->getFile()}:{$ex->getLine()} {$ex->getMessage()}");
                 }

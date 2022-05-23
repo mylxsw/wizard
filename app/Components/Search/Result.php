@@ -22,12 +22,21 @@ class Result
     public $words;
 
     /**
-     * @param array $ids
-     * @param array $words
+     * 总记录条数
+     *
+     * @var int|null
      */
-    public function __construct(array $ids, array $words)
+    public $total;
+
+    /**
+     * @param array    $ids
+     * @param array    $words
+     * @param int|null $total
+     */
+    public function __construct(array $ids, array $words, int $total = null)
     {
         $this->ids   = $ids;
         $this->words = $words;
+        $this->total = $total;
     }
 }

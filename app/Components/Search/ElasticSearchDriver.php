@@ -7,11 +7,11 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
 /**
- * GoFoundDriver
+ * ElasticSearchDriver
  *
- * https://github.com/newpanjing/gofound
+ * https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
  */
-class GoFoundDriver implements Driver
+class ElasticSearchDriver implements Driver
 {
     /**
      * @var Client
@@ -19,11 +19,11 @@ class GoFoundDriver implements Driver
     private $client = null;
 
     /**
-     * Database
+     * Index name
      *
      * @var string
      */
-    private $database = '';
+    private $index = '';
 
     /**
      * Basic Auth username
@@ -41,12 +41,12 @@ class GoFoundDriver implements Driver
     public function __construct()
     {
         $this->client       = new Client([
-            'base_uri' => config('wizard.search.drivers.gofound.server', 'http://localhost:5678'),
+            'base_uri' => config('wizard.search.drivers.elasticsearch.server', 'http://localhost:9200'),
             'timeout'  => 3.0,
         ]);
-        $this->database     = config('wizard.search.drivers.gofound.database', 'default');
-        $this->authUsername = config('wizard.search.drivers.gofound.username');
-        $this->authPassword = config('wizard.search.drivers.gofound.password');
+        $this->index        = config('wizard.search.drivers.elasticsearch.index', 'wizard');
+        $this->authUsername = config('wizard.search.drivers.elasticsearch.username');
+        $this->authPassword = config('wizard.search.drivers.elasticsearch.password');
     }
 
     /**
@@ -72,10 +72,9 @@ class GoFoundDriver implements Driver
      */
     public function deleteIndex($id)
     {
-        $this->client->post(
-            "/api/index/remove?database={$this->database}",
+        $this->client->delete(
+            "/{$this->index}/_doc/{$id}",
             [
-                'json' => ['id' => $id],
                 'auth' => $this->auth(),
             ]
         );
@@ -93,20 +92,19 @@ class GoFoundDriver implements Driver
     public function syncIndex(Document $doc)
     {
         $req = [
-            'id'       => $doc->id,
-            'text'     => $doc->title . '\n\n' . $doc->content,
-            'document' => [
-                'id'         => $doc->id,
-                'project_id' => $doc->project_id,
-            ],
+            'id'      => $doc->id,
+            'type'    => $doc->type,
+            'title'   => $doc->title,
+            'content' => $doc->content,
         ];
 
-        $resp = $this->client->post("/api/index?database={$this->database}", [
+        $resp = $this->client->put("/{$this->index}/_doc/{$doc->id}", [
             'json' => $req,
             'auth' => $this->auth(),
         ]);
 
-        if ($resp->getStatusCode() !== 200) {
+
+        if ($resp->getStatusCode() < 200 || $resp->getStatusCode() >= 300) {
             throw new \Exception("sync document to server failed: " . $resp->getReasonPhrase() . ", response: " . $resp->getBody()->getContents());
         }
     }
@@ -123,13 +121,27 @@ class GoFoundDriver implements Driver
      */
     public function search(string $keyword, int $page, int $perPage): ?Result
     {
-        try {
-            $resp = $this->client->post("/api/query?database={$this->database}", [
-                'json' => [
-                    'query' => $keyword,
-                    'page'  => $page,
-                    'limit' => $perPage * 2,
+        $req = [
+            'query'   => [
+                'bool' => [
+                    'must' => [
+                        [
+                            'query_string' => [
+                                'query'            => $keyword,
+                                'analyze_wildcard' => true,
+                            ],
+                        ],
+                    ],
                 ],
+            ],
+            'from'    => $page * $perPage - $perPage,
+            'size'    => $perPage * 2,
+            '_source' => ['id', 'type'],
+        ];
+
+        try {
+            $resp = $this->client->post("/{$this->index}/_search", [
+                'json' => $req,
                 'auth' => $this->auth(),
             ]);
 
@@ -138,17 +150,12 @@ class GoFoundDriver implements Driver
             }
 
             $respBody = json_decode($resp->getBody()->getContents(), true);
-
-            if ($respBody['state']) {
-                $sortIds = collect($respBody['data']['documents'] ?? [])->map(function ($doc) {
-                    return $doc['id'];
+            if (empty($respBody['error'])) {
+                $sortIds = collect($respBody['hits']['hits'] ?? [])->map(function ($doc) {
+                    return (int)$doc['_id'];
                 })->toArray();
 
-                return new Result(
-                    array_slice($sortIds, 0, $perPage),
-                    $respBody['data']['words'] ?? [],
-                    $respBody['data']['total']
-                );
+                return new Result(array_slice($sortIds, 0, $perPage), [$keyword], $respBody['hits']['total']);
             }
 
             return null;

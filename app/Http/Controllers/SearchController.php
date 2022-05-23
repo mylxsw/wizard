@@ -12,6 +12,7 @@ use App\Components\Search\Search;
 use App\Repositories\Document;
 use App\Repositories\Project;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Log;
 
 /**
@@ -35,6 +36,7 @@ class SearchController extends Controller
         $projectId = (int)$request->input('project_id');
         $perPage   = (int)$request->input('per_page', 20);
         $range     = $request->input('range', '');
+        $page      = (int)$request->input('page', 1);
 
         /** @var Document $documentModel */
         $documentModel = Document::query()->with('project', 'user');
@@ -50,13 +52,15 @@ class SearchController extends Controller
 
         $sortIds    = null;
         $searchWord = $keyword;
+        $total      = 0;
         if (empty($keyword)) {
             $documentModel->orderBy('updated_at', 'DESC');
         } else {
-            $result = Search::get()->search($keyword, (int)$request->input('page', 1), $perPage);
+            $result = Search::get()->search($keyword, $page, $perPage);
             if (empty($result)) {
                 $documentModel->where('title', 'like', "%{$keyword}%")->orderBy('updated_at', 'DESC');
             } else {
+                $total = $result->total;
                 $documentModel->whereIn('id', $result->ids);
                 if (!empty($result->words)) {
                     $searchWord = implode(',', $result->words);
@@ -77,8 +81,23 @@ class SearchController extends Controller
             $documentModel->where('user_id', \Auth::user()->id);
         }
 
+        if (!empty($total)) {
+            /** @var LengthAwarePaginator $paginate */
+            $paginate = $documentModel->paginate($perPage, ['*'], 'page', 1);
+            $paginate = new LengthAwarePaginator(
+                $paginate->items(),
+                $total,
+                $paginate->perPage(),
+                $page,
+                $paginate->getOptions()
+            );
+        } else {
+            /** @var LengthAwarePaginator $paginate */
+            $paginate = $documentModel->paginate();
+        }
+
         return view('search', [
-            'documents'   => $documentModel->paginate($perPage)->appends([
+            'documents'   => $paginate->appends([
                 'keyword'    => $keyword,
                 'per_page'   => $perPage,
                 'project_id' => $projectId,
