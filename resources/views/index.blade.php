@@ -140,10 +140,8 @@
 
     <div class="wz-version-suggest">
         <ul class="wz-version-suggest-items">
-            <li>1. 增加使用<a href="https://github.com/mylxsw/wizard/wiki/%E7%B3%BB%E7%BB%9F%E5%AE%9A%E5%88%B6%E9%85%8D%E7%BD%AE#%E9%82%80%E8%AF%B7%E6%B3%A8%E5%86%8C%E5%8A%9F%E8%83%BD" target="_blank">邀请码注册的功能</a>，目前没有管理界面，通过数据库操作 </li>
-            <li>2. 增加<a href="https://github.com/mylxsw/wizard/wiki/%E7%B3%BB%E7%BB%9F%E5%AE%9A%E5%88%B6%E9%85%8D%E7%BD%AE#%E5%85%B3%E9%97%AD%E7%94%A8%E6%88%B7%E6%B3%A8%E5%86%8C%E5%8A%9F%E8%83%BD" target="_blank">是否启用用户注册功能</a>支持</li>
-            <li>3. 阅读模式增加退出按钮，项目文档排序增强，支持文件夹优先、自定义排序，增加项目目录展开折叠配置</li>
-            <li>4. 部分页面样式优化以及 bugfix</li>
+            <li>1. 增加<a href="https://github.com/mylxsw/wizard/wiki/%E5%90%AF%E7%94%A8%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD" target="_blank">全文搜索支持</a></li>
+            <li>2. 移动端页面样式优化，父文档支持插入子文档目录</li>
         </ul>
     </div>
 
