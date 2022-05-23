@@ -174,7 +174,7 @@ return [
              */
             'gofound' => [
                 'server'   => env('WIZARD_GOFOUND_SERVER', 'http://localhost:5678'),
-                'database' => env('WIZARD_GOFOUND_DATABASE', 'default'),
+                'database' => env('WIZARD_GOFOUND_DATABASE', 'wizard'),
                 'username' => env('WIZARD_GOFOUND_USERNAME', ''),
                 'password' => env('WIZARD_GOFOUND_PASSWORD', ''),
             ],
@@ -198,7 +198,7 @@ return [
              * https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
              */
             'elasticsearch'    => [
-                'server'      => env('WIZARD_ES_SERVER', 'http://localhost:4080'),
+                'server'      => env('WIZARD_ES_SERVER', 'http://localhost:9200'),
                 'index'       => env('WIZARD_ES_INDEX', 'wizard'),
                 'username'    => env('WIZARD_ES_USERNAME', ''),
                 'password'    => env('WIZARD_ES_PASSWORD', ''),
