@@ -28,7 +28,7 @@
                     <tr>
                         <th scope="row">{{ $history->id }}</th>
                         <td>{{ $history->created_at }}</td>
-                        <td>{{ $history->operator->name }}</td>
+                        <td>{{ $history->operator->name ?? '-' }}</td>
                         <td>
                             <a href="{{ wzRoute('project:doc:history:show', ['id' => $project->id, 'p' => $pageItem->id, 'history_id' => $history->id]) }}">
                                 <i class="material-icons" data-toggle="tooltip" title="@lang('common.btn_view')">remove_red_eye</i>

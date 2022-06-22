@@ -29,7 +29,7 @@
             <table class="table table-bordered">
                 <tr>
                     <th>@lang('document.creator')</th>
-                    <td>{{ $pageItem->user->name }}</td>
+                    <td>{{ $pageItem->user->name ?? '-' }}</td>
                 </tr>
                 <tr>
                     <th>@lang('document.create_time')</th>
@@ -37,7 +37,7 @@
                 </tr>
                 <tr>
                     <th>@lang('document.modified_user')</th>
-                    <td>{{ $history->operator->name }}</td>
+                    <td>{{ $history->operator->name ?? '-' }}</td>
                 </tr>
                 <tr>
                     <th>@lang('document.operation_time')</th>

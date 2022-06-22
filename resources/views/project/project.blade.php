@@ -146,7 +146,7 @@
                                     <span class="fa fa-download"></span>
                                     {{ $attachment->name }}
                                     <span class="wz-attachment-info">
-                                【{{ $attachment->user->name }}，
+                                【{{ $attachment->user->name ?? '-' }}，
                                 {{ $attachment->created_at }}】
                             </span>
                                 </a>
@@ -174,7 +174,7 @@
         <div class="wz-project-main">
             <h1>{{ $project->name ?? '' }}</h1>
 
-            <p class="wz-document-header wz-panel-limit">@lang('document.document_create_info', ['username' => $project->user->name, 'time' => $project->created_at])</p>
+            <p class="wz-document-header wz-panel-limit">@lang('document.document_create_info', ['username' => $project->user->name ?? '-', 'time' => $project->created_at])</p>
             <p class="wz-panel-limit wz-project-description">{{ $project->description ?? '' }}</p>
 
             @if (!Auth::guest())

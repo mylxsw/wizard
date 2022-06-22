@@ -90,17 +90,12 @@ return [
     */
 
     'scopes' => [
-
-        // Only allows users with a user principal name to authenticate.
-        // Suitable when using ActiveDirectory.
-        Adldap\Laravel\Scopes\UpnScope::class,
+        // Adldap\Laravel\Scopes\UpnScope: Only allows users with a user principal name to authenticate. Suitable when using ActiveDirectory.
+        // Adldap\Laravel\Scopes\UidScope：Only allows users with a uid to authenticate. Suitable when using OpenLDAP.
+        env('LDAP_SCOPES_CLASS', 'Adldap\Laravel\Scopes\UpnScope'),
 
         // Only allows users with a specified member to authenticate.
         \App\Components\Ldap\MemberOfScope::class,
-
-        // Only allows users with a uid to authenticate.
-        // Suitable when using OpenLDAP.
-        // Adldap\Laravel\Scopes\UidScope::class,
 
     ],
 

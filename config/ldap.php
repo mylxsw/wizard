@@ -101,7 +101,7 @@ return [
                 |
                 */
 
-                'schema' => Adldap\Schemas\ActiveDirectory::class,
+                'schema' => env('LDAP_SCHEMA', 'Adldap\Schemas\ActiveDirectory'),
 
                 /*
                 |--------------------------------------------------------------------------
