@@ -155,7 +155,13 @@ class ElasticSearchDriver implements Driver
                     return (int)$doc['_id'];
                 })->toArray();
 
-                return new Result(array_slice($sortIds, 0, $perPage), [$keyword], $respBody['hits']['total']);
+                if (is_numeric($respBody['hits']['total'])) {
+                    $total = (int)$respBody['hits']['total'];
+                } else {
+                    $total = (int)($respBody['hits']['total']['value'] ?? 0);
+                }
+
+                return new Result(array_slice($sortIds, 0, $perPage), [$keyword], $total);
             }
 
             return null;

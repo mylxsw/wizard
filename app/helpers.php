@@ -1006,6 +1006,8 @@ function sortDocumentBySortIds(LengthAwarePaginator $docs, array $sortIds = null
 
 /**
  * 关键字高亮
+ * 
+ * TODO：采用简单的关键词替换会出现 Markdown 代码段中包含关键词时，代码段内容被插入的 span 标签破坏问题，因此暂时不进行高亮展示。
  *
  * @param string      $content
  * @param string|null $keyword
@@ -1013,13 +1015,13 @@ function sortDocumentBySortIds(LengthAwarePaginator $docs, array $sortIds = null
  * @return string
  */
 function highlight(string $content, string $keyword = null) :string {
-    if (empty($keyword)) {
-        return $content;
-    }
+    // if (empty($keyword)) {
+    //     return $content;
+    // }
 
-    foreach (explode(',', $keyword) as $key) {
-        $content = str_replace($key, "<span class='highlight'>{$key}</span>", $content);
-    }
+    // foreach (explode(',', $keyword) as $key) {
+    //     $content = str_replace($key, "<span class='highlight'>{$key}</span>", $content);
+    // }
 
     return $content;
 }
