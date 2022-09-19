@@ -714,8 +714,10 @@ function convertSqlTo(string $sql, $callback)
  *
  * @return string
  */
-function processMarkdown(string $markdown): string
+function processMarkdown(string $markdown = null): string
 {
+    if (is_null($markdown)) {$markdown = '';}
+    
     $defaultTOC = config('wizard.markdown.default_toc');
     if (!in_array($defaultTOC, ['TOC', 'TOCM'])) {
         return $markdown;
