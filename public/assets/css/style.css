@@ -647,6 +647,7 @@ a:hover {
     border: 1px solid #d1d5da;
     padding: 8px;
     border-radius: 4px;
+    max-width: 96%;
 }
 
 .wz-comments-box .wz-comment-box .wz-comment-header {

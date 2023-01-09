@@ -327,7 +327,7 @@ body.wz-dark-theme {
   color: #cecece;
 }
 .wz-dark-theme .wz-project-main .editormd-html-preview code {
-  background: #f6f6f614;
+  background: none;
   color: #ff0057;
 }
 .wz-dark-theme .wz-project-main .editormd-html-preview a {
