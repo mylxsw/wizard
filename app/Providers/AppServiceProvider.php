@@ -43,12 +43,12 @@ class AppServiceProvider extends ServiceProvider
         $this->addInvitationCodeRules('invitation_code');
 
         // 在日志中输出sql历史
-//        \DB::listen(function (QueryExecuted $query) {
-//            \Log::debug('sql_execute', [
-//                'sql'   => $query->sql,
-//                'binds' => $query->bindings,
-//            ]);
-//        });
+       \DB::listen(function (QueryExecuted $query) {
+           \Log::debug('sql_execute', [
+               'sql'   => $query->sql,
+               'binds' => $query->bindings,
+           ]);
+       });
     }
 
     /**
