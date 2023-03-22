@@ -21,8 +21,8 @@ use Illuminate\Support\Str;
  * 生成路由url
  *
  * @param string $name
- * @param array  $parameters
- * @param bool   $absolute
+ * @param array $parameters
+ * @param bool $absolute
  *
  * @return string
  */
@@ -44,9 +44,9 @@ function wzRoute($name, $parameters = [], $absolute = false)
 function documentType($type): string
 {
     $types = [
-        Document::TYPE_DOC     => 'markdown',
+        Document::TYPE_DOC => 'markdown',
         Document::TYPE_SWAGGER => 'swagger',
-        Document::TYPE_TABLE   => 'table',
+        Document::TYPE_TABLE => 'table',
     ];
 
     return $types[$type] ?? '';
@@ -57,17 +57,18 @@ function documentType($type): string
  *
  * 必须保证pages是按照pid进行asc排序的，否则可能会出现菜单丢失
  *
- * @param int   $projectID 当前项目ID
- * @param int   $pageID    选中的文档ID
- * @param array $exclude   排除的文档ID列表
+ * @param int $projectID 当前项目ID
+ * @param int $pageID 选中的文档ID
+ * @param array $exclude 排除的文档ID列表
  *
  * @return array
  */
 function navigator(
     int $projectID,
     int $pageID = 0,
-    $exclude = []
-) {
+        $exclude = []
+)
+{
     static $cached = [];
 
     $key = "{$projectID}:{$pageID}:" . implode(':', $exclude);
@@ -94,13 +95,13 @@ function navigator(
         }
 
         $navigators[$page->id] = [
-            'id'         => (int)$page->id,
-            'name'       => $page->title,
-            'pid'        => (int)$page->pid,
-            'url'        => wzRoute('project:home', ['id' => $projectID, 'p' => $page->id]),
-            'selected'   => $pageID === (int)$page->id,
-            'type'       => documentType($page->type),
-            'status'     => $page->status,
+            'id' => (int)$page->id,
+            'name' => $page->title,
+            'pid' => (int)$page->pid,
+            'url' => wzRoute('project:home', ['id' => $projectID, 'p' => $page->id]),
+            'selected' => $pageID === (int)$page->id,
+            'type' => documentType($page->type),
+            'status' => $page->status,
             'created_at' => $page->created_at,
             'sort_level' => $page->sort_level ?? 1000,
         ];
@@ -132,7 +133,7 @@ function navigator(
  * 导航排序，排序后，文件夹靠前，普通文件靠后
  *
  * @param array $navItems
- * @param int   $sortStyle
+ * @param int $sortStyle
  *
  * @return array
  */
@@ -164,7 +165,7 @@ function navigatorSort($navItems, $sortStyle = Project::SORT_STYLE_DIR_FIRST)
             $aIsFolder = !empty($a['nodes']);
             $bIsFolder = !empty($b['nodes']);
 
-            $bothIsFolder  = $aIsFolder && $bIsFolder;
+            $bothIsFolder = $aIsFolder && $bIsFolder;
             $bothNotFolder = !$aIsFolder && !$bIsFolder;
 
             if ($bothIsFolder || $bothNotFolder) {
@@ -185,7 +186,7 @@ function navigatorSort($navItems, $sortStyle = Project::SORT_STYLE_DIR_FIRST)
 /**
  * 文档模板
  *
- * @param int       $type
+ * @param int $type
  * @param User|null $user
  *
  * @return array
@@ -209,16 +210,28 @@ function wzTemplates($type = Template::TYPE_DOC, User $user = null): array
 function convertJsonToMarkdownTable(string $json): string
 {
     $markdowns = [
-        ['参数名', '类型', '是否必须', '说明'],
-        ['---', '---', '---', '---'],
+        ['参数名', '类型', '说明'],
+        ['---', '---', '---'],
     ];
-
     foreach (jsonFlatten($json) as $key => $type) {
-        $markdowns[] = [$key, $type, '', ''];
+        $segs = explode('.', $key);
+        $prefix = str_repeat('&emsp; &emsp; ', count($segs) - 1);
+        $markdowns[] = [count($segs) > 1 ? $prefix . '┣ ' . $segs[count($segs) - 1] : $segs[count($segs) - 1], $type, ''];
+    }
+
+    $lastEmp = '';
+    $rev = array_reverse($markdowns);
+    foreach ($rev as $index => $item) {
+        $empPart = explode('┣', $item[0])[0];
+        if ($empPart !== '' && $empPart !== $lastEmp) {
+            $rev[$index][0] = str_replace('┣', '┗', $item[0]);
+        }
+
+        $lastEmp = $empPart;
     }
 
     $html = '';
-    foreach ($markdowns as $line) {
+    foreach (array_reverse($rev) as $line) {
         $html .= '| ' . implode(' | ', $line) . ' | ' . "\n";
     }
 
@@ -342,7 +355,7 @@ function resourceVersion()
  * 创建一个JWT Token
  *
  * @param array $payloads
- * @param int   $expire
+ * @param int $expire
  *
  * @return \Lcobucci\JWT\Token
  */
@@ -354,9 +367,9 @@ function jwt_create_token(array $payloads, $expire = 3600 * 2)
     }
 
     return $builder->setIssuedAt(time())
-                   ->setExpiration(time() + $expire)
-                   ->sign(new \Lcobucci\JWT\Signer\Hmac\Sha256(), config('wizard.jwt_secret'))
-                   ->getToken();
+        ->setExpiration(time() + $expire)
+        ->sign(new \Lcobucci\JWT\Signer\Hmac\Sha256(), config('wizard.jwt_secret'))
+        ->getToken();
 }
 
 /**
@@ -414,7 +427,7 @@ function users()
  * 用户名列表（js数组）
  *
  * @param Collection $users
- * @param bool       $actived
+ * @param bool $actived
  *
  * @return string
  */
@@ -649,7 +662,7 @@ function convertSqlTo(string $sql, $callback)
 
 //        \Log::error('xxx', ['struct' => $parsed]);
         if ($parsed['CREATE']['expr_type'] === 'table') {
-            $fields    = $parsed['TABLE']['create-def']['sub_tree'];
+            $fields = $parsed['TABLE']['create-def']['sub_tree'];
             $tableName = $parsed['TABLE']['base_expr'];
 
             $markdowns = [];
@@ -667,26 +680,26 @@ function convertSqlTo(string $sql, $callback)
                 $type = $length = '';
                 foreach ($field['sub_tree'][1]['sub_tree'] as $item) {
                     if ($item['expr_type'] == 'data-type') {
-                        $type   = $item['base_expr'] ?? '';
+                        $type = $item['base_expr'] ?? '';
                         $length = $item['length'] ?? '';
                     }
                 }
 
-                $name     = $field['sub_tree'][0]['base_expr'];
-                $comment  = trim($field['sub_tree'][1]['comment'] ?? '', "'");
+                $name = $field['sub_tree'][0]['base_expr'];
+                $comment = trim($field['sub_tree'][1]['comment'] ?? '', "'");
                 $nullable = $field['sub_tree'][1]['nullable'] ?? false;
 
 //        $autoInc      = $field['sub_tree'][1]['auto_inc'] ?? false;
 //        $primary      = $field['sub_tree'][1]['primary'] ?? false;
 //        $defaultValue = $field['sub_tree'][1]['default'] ?? '-';
 
-                $type        = empty($length) ? $type : "{$type} ($length)";
+                $type = empty($length) ? $type : "{$type} ($length)";
                 $markdowns[] = [trim($name, '`'), $type, $nullable ? 'Y' : 'N', $comment];
             }
 
 
             $tableComment = '-';
-            $options      = $parsed['TABLE']['options'] ?? [];
+            $options = $parsed['TABLE']['options'] ?? [];
             if (!$options || empty($options)) {
                 $options = [];
             }
@@ -716,8 +729,10 @@ function convertSqlTo(string $sql, $callback)
  */
 function processMarkdown(string $markdown = null): string
 {
-    if (is_null($markdown)) {$markdown = '';}
-    
+    if (is_null($markdown)) {
+        $markdown = '';
+    }
+
     $defaultTOC = config('wizard.markdown.default_toc');
     if (!in_array($defaultTOC, ['TOC', 'TOCM'])) {
         return $markdown;
@@ -750,7 +765,7 @@ function processSpreedSheet(string $content): string
     if (Str::startsWith($content, '[')) {
         $maxColsLen = $maxRowsLen = 0;
         foreach ($contentArray as $k => $arr) {
-            $cur              = processSpreedSheetSingle($arr, $minRow, $minCol);
+            $cur = processSpreedSheetSingle($arr, $minRow, $minCol);
             $contentArray[$k] = $cur;
             if ($cur['cols']['len'] > $maxColsLen) {
                 $maxColsLen = $cur['cols']['len'];
@@ -792,7 +807,7 @@ function processSpreedSheetSingle($contentArray, $minRow, $minCol)
         })
         // 列过滤，去掉每一行最后多余的空列
         ->map(function ($item) {
-            $cells     = $item['cells'] ?? [];
+            $cells = $item['cells'] ?? [];
             $lastIndex = count($cells);
             if ($lastIndex === 0) {
                 return $item;
@@ -895,17 +910,18 @@ function markdownCompatibilityStrict($pageItem = null)
 /**
  * 遍历导航项
  *
- * @param array   $navigators
+ * @param array $navigators
  * @param Closure $callback
- * @param array   $parents
- * @param bool    $callbackWithFullNavItem 是否在回调函数中传递完整的nav对象
+ * @param array $parents
+ * @param bool $callbackWithFullNavItem 是否在回调函数中传递完整的nav对象
  */
 function traverseNavigators(
-    array $navigators,
+    array    $navigators,
     \Closure $callback,
-    array $parents = [],
-    $callbackWithFullNavItem = false
-) {
+    array    $parents = [],
+             $callbackWithFullNavItem = false
+)
+{
     foreach ($navigators as $nav) {
         $callback($callbackWithFullNavItem ? $nav : $nav['id'], $parents);
 
@@ -944,7 +960,7 @@ function cdn_resource(string $resourceUrl)
     // 这里替换的目的是，如果使用 七牛 CDN，是无法自己配置跨域的，必须提交工单才行
     // 这里用公共 CDN，可以避免字体跨域
     $replace = [
-        '/assets/vendor/font-awesome4/css/font-awesome.min.css'   => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+        '/assets/vendor/font-awesome4/css/font-awesome.min.css' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
         '/assets/vendor/material-design-icons/material-icons.css' => 'https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css',
     ];
 
@@ -991,7 +1007,7 @@ function impersonateUser()
  * 文档按照指定 ID 顺序排列
  *
  * @param LengthAwarePaginator $docs
- * @param array|null           $sortIds
+ * @param array|null $sortIds
  *
  * @return mixed
  */
@@ -1008,15 +1024,16 @@ function sortDocumentBySortIds(LengthAwarePaginator $docs, array $sortIds = null
 
 /**
  * 关键字高亮
- * 
+ *
  * TODO：采用简单的关键词替换会出现 Markdown 代码段中包含关键词时，代码段内容被插入的 span 标签破坏问题，因此暂时不进行高亮展示。
  *
- * @param string      $content
+ * @param string $content
  * @param string|null $keyword
  *
  * @return string
  */
-function highlight(string $content, string $keyword = null) :string {
+function highlight(string $content, string $keyword = null): string
+{
     // if (empty($keyword)) {
     //     return $content;
     // }
