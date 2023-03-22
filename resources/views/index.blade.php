@@ -142,6 +142,7 @@
         <ul class="wz-version-suggest-items">
             <li>1. 增加<a href="https://github.com/mylxsw/wizard/wiki/%E5%90%AF%E7%94%A8%E5%85%A8%E6%96%87%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD" target="_blank">全文搜索支持</a></li>
             <li>2. 移动端页面样式优化，父文档支持插入子文档目录</li>
+            <li>3. Markdown 编辑器工具 JSON 转 Markdown 表格 转换格式优化</li>
         </ul>
     </div>
 
